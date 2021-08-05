@@ -1,2 +1,6 @@
+out/
+.idea/workspace.xml
+.idea/codeStyles/*
 *.class
 *.log
+*.DS_Store
