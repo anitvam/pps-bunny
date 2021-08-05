@@ -1,6 +1,15 @@
-out/
+# sbt files
+project/*
+target/*
+.bsp
+
+# intellij files
+.idea/*
 .idea/workspace.xml
 .idea/codeStyles/*
+out/*
 *.class
 *.log
-*.DS_Store
+
+# macOs files
+.DS_Store
