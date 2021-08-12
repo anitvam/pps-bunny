@@ -1,13 +1,13 @@
 # sbt files
-project/*
-target/*
+target/
+project/project/+
 .bsp
 
 # intellij files
-.idea/*
-.idea/workspace.xml
-.idea/codeStyles/*
-out/*
+.idea
+out/
+
+# Scala files
 *.class
 *.log
 
