@@ -1,7 +1,10 @@
 name: pps-bunny CI
 on:
   pull_request:
+    branches: [master, develop]
   push:
+    branches: [master, develop]
+
 jobs:
   test:
     strategy:
