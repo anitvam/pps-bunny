@@ -6,10 +6,8 @@ jobs:
   test:
     strategy:
       matrix:
-        include:
           os: [ macos-latest, windows-latest, ubuntu-18.04 ]
           java: [ adopt@1.8, adopt@1.11 ]
-
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
