@@ -1,3 +1,5 @@
 package model
 
-class IllegalAlleleException extends IllegalStateException
+class IllegalAlleleException(expl: String) extends IllegalStateException{
+  print(expl + "\n")
+}

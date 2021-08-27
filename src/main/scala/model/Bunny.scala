@@ -28,8 +28,9 @@ case class Gene(kind: GeneKind,
                 dadAllele: Allele,
                 letters: Option[String] = Option.empty) {
   def getPhenotype(): Phenotype = ???
+
   if (!(momAllele.kind == kind.mutated || momAllele.kind == kind.base) && (dadAllele.kind == kind.mutated || dadAllele.kind == kind.base))
-    throw new IllegalAlleleException
+    throw new IllegalAlleleException("Gene initialization: one of the Alleles (momAllele or dadAllele) has a kind which is not suitable with the kind of the Gene!")
 }
 
 case class Phenotype(traits: Seq[AlleleKind])
