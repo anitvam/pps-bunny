@@ -29,8 +29,8 @@ object GeneKind extends Enumeration {
   val EARS =        GeneKindVal(base = AlleleKind.HIGH_EARS,
                                 mutated = AlleleKind.LOW_EARS,
                                 letter = "e")
-  val JUMP =        GeneKindVal(base = AlleleKind.HIGH_JUMP,
-                                mutated = AlleleKind.LOW_JUMP,
+  val JUMP =        GeneKindVal(base = AlleleKind.LOW_JUMP,
+                                mutated = AlleleKind.HIGH_JUMP,
                                 letter = "j")
 }
 

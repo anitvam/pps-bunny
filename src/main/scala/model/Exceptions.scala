@@ -1,0 +1,3 @@
+package model
+
+class IllegalAlleleException extends IllegalStateException
