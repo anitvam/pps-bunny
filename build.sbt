@@ -28,3 +28,7 @@ libraryDependencies ++= {
 
 // Add ScalaTest dependencies
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % "test"
+
+//Add Cats dependencies
+libraryDependencies += "org.typelevel" %% "cats-core" % "2.0.0"
+libraryDependencies += "org.typelevel" %% "cats-effect" % "2.2.0"
