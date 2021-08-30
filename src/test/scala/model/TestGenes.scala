@@ -1,8 +1,8 @@
-import model.BunnyUtils.{getCouples, getStandardBunny}
-import model._
+package model
+
 import org.scalatest.{FlatSpec, Matchers}
 
-class TestBunny extends FlatSpec with Matchers {
+class TestGenes extends FlatSpec with Matchers {
   "Each AlleleKind" should "be in max one GeneKind" in {
     AlleleKind.values.foreach(anyAlleleKind => {
       assert(GeneKind.values.flatMap(gk => List(gk.base, gk.mutated))
@@ -16,7 +16,7 @@ class TestBunny extends FlatSpec with Matchers {
   }
 
 
-  "Each Gene" should "should throw an Exception if initialized with Alleles of the wrong kind" in {
+  "Any Gene" should "should throw an Exception if initialized with Alleles of the wrong kind" in {
     assertThrows[IllegalAlleleException] {
       Gene(GeneKind.FUR_COLOR, Allele(AlleleKind.LONG_FUR), Allele(AlleleKind.BROWN_FUR))
     }
@@ -24,20 +24,5 @@ class TestBunny extends FlatSpec with Matchers {
 
   it should "should be initialized with Alleles of the right kind" in {
     noException should be thrownBy Gene(GeneKind.FUR_COLOR, Allele(AlleleKind.WHITE_FUR), Allele(AlleleKind.WHITE_FUR))
-  }
-
-
-  "Each StandardBunny" should "be instantiated without exceptions" in {
-    noException should be thrownBy getStandardBunny()
-  }
-
-  it should "have all kind of Genes" in {
-    assert(getStandardBunny().genotype.genes.size == GeneKind.values.size)
-  }
-
-  "Couples of bunnies " should "be generated from any group of Bunnies" in {
-    val someBunnies = Seq.fill(9)(getStandardBunny())
-    val someCouples = getCouples(someBunnies)
-    assert(someCouples.size == someBunnies.size/2)
   }
 }
