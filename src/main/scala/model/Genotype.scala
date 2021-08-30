@@ -11,6 +11,10 @@ case class Genotype(genes: Map[GeneType, Gene]) {
 
   if (AllGenes.values.count(!genes.keySet.contains(_)) > 1)
     throw new IllegalGenotypeException("Genotype initialization EXCEPTION: the Genotype must contain all the Genes")
+
+  if (genes.count(g => g._1 != g._2.kind) > 1)
+    throw new IllegalGenotypeException("Genotype initialization EXCEPTION: the GeneType in the key must be coherent with the kind in the corresponding Gene\n"
+    + genes.filter(g => g._1 == g._2.kind))
 }
 
 case class Allele(kind: AlleleType,

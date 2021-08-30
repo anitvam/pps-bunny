@@ -4,7 +4,7 @@ import model.BunnyUtils.{getCouples, getStandardBunny}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestBunny extends FlatSpec with Matchers {
-  "Each StandardBunny" should "be instantiated without exceptions" in {
+  "Any StandardBunny" should "be instantiated without exceptions" in {
     noException should be thrownBy getStandardBunny
   }
 
