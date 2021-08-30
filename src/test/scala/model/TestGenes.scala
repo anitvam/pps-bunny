@@ -1,6 +1,7 @@
 package model
 
 import model.AllGenes.{AlleleKind, FUR_COLOR, FUR_LENGTH}
+import model.BunnyUtils.getStandardBunny
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestGenes extends FlatSpec with Matchers {
@@ -54,5 +55,16 @@ class TestGenes extends FlatSpec with Matchers {
       Genotype(Map( FUR_COLOR -> Gene(AllGenes.EARS, Allele(AlleleKind.WHITE_FUR), Allele(AlleleKind.BROWN_FUR)),
                     FUR_LENGTH -> Gene(AllGenes.FUR_LENGTH, Allele(AlleleKind.SHORT_FUR), Allele(AlleleKind.SHORT_FUR))))
     }
+  }
+
+  it should "be editable adding any Gene, which will replace the previous one with the same GeneType" in {
+    val geneKind = AllGenes.FUR_COLOR
+    val standardGene =  Gene(geneKind, Allele(geneKind.base),  Allele(geneKind.base))
+    val updatedGene =  Gene(geneKind, Allele(geneKind.base),  Allele(geneKind.mutated))
+    val standardBunny = getStandardBunny
+    val updatedBunny = Bunny(Genotype(standardBunny.genotype + updatedGene))
+
+    assert(standardBunny.genotype.genes.get(geneKind).get == standardGene)
+    assert(updatedBunny.genotype.genes.get(geneKind).get == updatedGene)
   }
 }
