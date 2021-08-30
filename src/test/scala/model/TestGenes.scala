@@ -43,14 +43,7 @@ class TestGenes extends FlatSpec with Matchers {
     noException should be thrownBy Gene(AllGenes.FUR_COLOR, Allele(AlleleKind.WHITE_FUR), Allele(AlleleKind.WHITE_FUR))
   }
 
-  "Any Genotype" should "throw an Exception if it does not contain all kind of Genes" in {
-    assertThrows[IllegalGenotypeException] {
-      Genotype(Map( FUR_COLOR ->  Gene(AllGenes.FUR_COLOR, Allele(AlleleKind.WHITE_FUR), Allele(AlleleKind.BROWN_FUR)),
-                    FUR_LENGTH -> Gene(AllGenes.FUR_LENGTH, Allele(AlleleKind.SHORT_FUR), Allele(AlleleKind.SHORT_FUR))))
-    }
-  }
-
-  it should "throw an Exception if the GeneType in the key is not coherent with the kind in the corresponding Gene" in {
+  "Any Genotype" should "throw an Exception if the GeneType in the key is not coherent with the kind in the corresponding Gene" in {
     assertThrows[IllegalGenotypeException] {
       Genotype(Map( FUR_COLOR -> Gene(AllGenes.EARS, Allele(AlleleKind.WHITE_FUR), Allele(AlleleKind.BROWN_FUR)),
                     FUR_LENGTH -> Gene(AllGenes.FUR_LENGTH, Allele(AlleleKind.SHORT_FUR), Allele(AlleleKind.SHORT_FUR))))

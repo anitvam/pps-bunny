@@ -1,6 +1,7 @@
 package model
 
 object AllGenes extends Enumeration {
+  type GeneType = Value
   object AlleleKind extends Enumeration{
     type AlleleType = Value
 
@@ -11,7 +12,6 @@ object AllGenes extends Enumeration {
     HIGH_JUMP, LOW_JUMP = Value
   }
 
-  type GeneType = Value
   import AlleleKind.AlleleType
   protected case class GeneKindVal(base: AlleleType, mutated: AlleleType, letter: String) extends super.Val
   import scala.language.implicitConversions
