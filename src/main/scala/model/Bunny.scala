@@ -6,14 +6,17 @@ import model.GeneKind.GeneKind
 object BunnyUtils {
   def getChildren(mom: Bunny, dad:Bunny): Seq[Bunny] = ???
   def getCouples(bunnies: Seq[Bunny]): Pair[Bunny, Bunny] = ???
-  def getStandardBunny(): Bunny = ???
+
+  def getStandardBunny(): Bunny =
+    Bunny(Genotype(GeneKind.values.unsorted.map(gk => Gene(gk, Allele(gk.base), Allele(gk.base))).toList))
 }
 
-case class Bunny(mom: Option[Bunny] = Option.empty,
+
+case class Bunny(genotype: Genotype,
+                 mom: Option[Bunny] = Option.empty,
                  dad: Option[Bunny] = Option.empty,
                  age: Int = 0,
-                 isAlive: Boolean = true,
-                 genotype: Genotype){
+                 isAlive: Boolean = true){
   def getTree(gens: Int) = ???
 }
 
