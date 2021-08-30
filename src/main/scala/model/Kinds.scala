@@ -1,7 +1,7 @@
 package model
 
 object AlleleKind extends Enumeration{
-  type AlleleKind = Value
+  type AlleleKindType = Value
 
   val WHITE_FUR, BROWN_FUR,
       LONG_FUR, SHORT_FUR,
@@ -11,9 +11,9 @@ object AlleleKind extends Enumeration{
 }
 
 object GeneKind extends Enumeration {
-  type GeneKind = Value
-  import AlleleKind.AlleleKind
-  protected case class GeneKindVal(base: AlleleKind, mutated: AlleleKind, letter: String) extends super.Val
+  type GeneKindType = Value
+  import AlleleKind.AlleleKindType
+  protected case class GeneKindVal(base: AlleleKindType, mutated: AlleleKindType, letter: String) extends super.Val
   import scala.language.implicitConversions
   implicit def valueToGeneKindVal(x: Value): GeneKindVal = x.asInstanceOf[GeneKindVal]
 

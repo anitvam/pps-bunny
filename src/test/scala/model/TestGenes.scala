@@ -15,6 +15,23 @@ class TestGenes extends FlatSpec with Matchers {
     GeneKind.values.foreach(gk => assert(gk.base != gk.mutated))
   }
 
+  "Any Allele " should "produce an uppercase letter if dominant " in {
+    val geneKind = GeneKind.FUR_COLOR
+    val dominantAllele = Allele(geneKind.base, Option(true))
+    assert(dominantAllele.getCaseSensitiveLetter(geneKind.letter).toCharArray()(0).isUpper)
+  }
+
+  it should "produce a lowercase letter if recessive" in {
+    val geneKind = GeneKind.FUR_COLOR
+    val dominantAllele = Allele(geneKind.base, Option(false))
+    assert(dominantAllele.getCaseSensitiveLetter(geneKind.letter).toCharArray()(0).isLower)
+  }
+
+  it should "not produce letters if the dominance is not defined yet" in {
+    val geneKind = GeneKind.FUR_COLOR
+    val dominantAllele = Allele(geneKind.base)
+    assert(dominantAllele.getCaseSensitiveLetter(geneKind.letter) == "")
+  }
 
   "Any Gene" should "should throw an Exception if initialized with Alleles of the wrong kind" in {
     assertThrows[IllegalAlleleException] {
