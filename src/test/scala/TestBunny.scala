@@ -1,8 +1,8 @@
-import model.BunnyUtils.getStandardBunny
+import model.BunnyUtils.{getCouples, getStandardBunny}
 import model._
 import org.scalatest.{FlatSpec, Matchers}
 
-class TestBunny extends FlatSpec with Matchers{
+class TestBunny extends FlatSpec with Matchers {
   "Each AlleleKind" should "be in max one GeneKind" in {
     AlleleKind.values.foreach(anyAlleleKind => {
       assert(GeneKind.values.flatMap(gk => List(gk.base, gk.mutated))
@@ -33,5 +33,11 @@ class TestBunny extends FlatSpec with Matchers{
 
   it should "have all kind of Genes" in {
     assert(getStandardBunny().genotype.genes.size == GeneKind.values.size)
+  }
+
+  "Couples of bunnies " should "be generated from any group of Bunnies" in {
+    val someBunnies = Seq.fill(9)(getStandardBunny())
+    val someCouples = getCouples(someBunnies)
+    assert(someCouples.size == someBunnies.size/2)
   }
 }
