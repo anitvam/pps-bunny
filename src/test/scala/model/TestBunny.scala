@@ -40,17 +40,17 @@ class TestBunny extends FlatSpec with Matchers {
     val dad = getRandomBunny
     val children = getChildren(mom, dad)
 
-    Genes.values.foreach(genetype => {
-      val grandmaMomAllele= mom.genotype.genes(genetype).momAllele.kind
-      val grandpaMomAllele = mom.genotype.genes(genetype).dadAllele.kind
-      val grandmaDadAllele= dad.genotype.genes(genetype).momAllele.kind
-      val grandpaDadAllele= dad.genotype.genes(genetype).dadAllele.kind
-      val childrenGenesOfType = children.map(b => b.genotype.genes(genetype))
+    Genes.values.foreach(genekind => {
+      val grandmaMomAllele= mom.genotype.genes(genekind).momAllele.kind
+      val grandpaMomAllele = mom.genotype.genes(genekind).dadAllele.kind
+      val grandmaDadAllele= dad.genotype.genes(genekind).momAllele.kind
+      val grandpaDadAllele= dad.genotype.genes(genekind).dadAllele.kind
+      val childrenGenesOfType = children.map(b => b.genotype.genes(genekind))
 
-      assert(childrenGenesOfType.contains(Gene(genetype, Allele(grandmaMomAllele), Allele(grandmaDadAllele))))
-      assert(childrenGenesOfType.contains(Gene(genetype, Allele(grandmaMomAllele), Allele(grandpaDadAllele))))
-      assert(childrenGenesOfType.contains(Gene(genetype, Allele(grandpaMomAllele), Allele(grandmaDadAllele))))
-      assert(childrenGenesOfType.contains(Gene(genetype, Allele(grandpaMomAllele), Allele(grandpaDadAllele))))
+      assert(childrenGenesOfType.contains(Gene(genekind, Allele(grandmaMomAllele), Allele(grandmaDadAllele))))
+      assert(childrenGenesOfType.contains(Gene(genekind, Allele(grandmaMomAllele), Allele(grandpaDadAllele))))
+      assert(childrenGenesOfType.contains(Gene(genekind, Allele(grandpaMomAllele), Allele(grandmaDadAllele))))
+      assert(childrenGenesOfType.contains(Gene(genekind, Allele(grandpaMomAllele), Allele(grandpaDadAllele))))
     })
   }
 

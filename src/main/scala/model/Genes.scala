@@ -7,16 +7,16 @@ object Genes extends Enumeration {
     import scala.language.implicitConversions
     implicit def valueToAllelesVal(x: Value): AllelesVal = x.asInstanceOf[AllelesVal]
 
-    val WHITE_FUR = AllelesVal()
-    val BROWN_FUR = AllelesVal()
-    val LONG_FUR = AllelesVal()
-    val SHORT_FUR = AllelesVal()
-    val LONG_TEETH = AllelesVal()
-    val SHORT_TEETH = AllelesVal()
-    val HIGH_EARS = AllelesVal()
-    val LOW_EARS = AllelesVal()
-    val HIGH_JUMP = AllelesVal()
-    val LOW_JUMP = AllelesVal()
+    val WHITE_FUR: AllelesVal = AllelesVal()
+    val BROWN_FUR: AllelesVal = AllelesVal()
+    val LONG_FUR: AllelesVal = AllelesVal()
+    val SHORT_FUR: AllelesVal = AllelesVal()
+    val LONG_TEETH: AllelesVal = AllelesVal()
+    val SHORT_TEETH: AllelesVal = AllelesVal()
+    val HIGH_EARS: AllelesVal = AllelesVal()
+    val LOW_EARS: AllelesVal = AllelesVal()
+    val HIGH_JUMP: AllelesVal = AllelesVal()
+    val LOW_JUMP: AllelesVal = AllelesVal()
   }
 
   type GeneKind = Value
@@ -43,7 +43,8 @@ object Genes extends Enumeration {
                                 mutated = Alleles.HIGH_JUMP,
                                 letter = "j")
 
-  def getGeneKind(kind:AlleleKind) = ???
+  def getGeneKind(alleleKind:AlleleKind) :GeneKind =
+    Genes.values.filter(genekind => genekind.base == alleleKind || genekind.mutated == alleleKind).firstKey
 }
 
 

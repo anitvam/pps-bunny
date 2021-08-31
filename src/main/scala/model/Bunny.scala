@@ -43,17 +43,17 @@ object BunnyUtils {
 
   def getChildren(mom: Bunny, dad:Bunny): Seq[Bunny] = {
     var children = List.fill(CHILDREN_NUMBER)(Genotype(Map()))
-    Genes.values.foreach(genetype => {
-      val grandmaMomAllele= mom.genotype.genes(genetype).momAllele
-      val grandpaMomAllele = mom.genotype.genes(genetype).dadAllele
-      val grandmaDadAllele= dad.genotype.genes(genetype).momAllele
-      val grandpaDadAllele= dad.genotype.genes(genetype).dadAllele
+    Genes.values.foreach(genekind => {
+      val grandmaMomAllele= mom.genotype.genes(genekind).momAllele
+      val grandpaMomAllele = mom.genotype.genes(genekind).dadAllele
+      val grandmaDadAllele= dad.genotype.genes(genekind).momAllele
+      val grandpaDadAllele= dad.genotype.genes(genekind).dadAllele
 
       val childrenGenes = Random.shuffle(
-        List( Gene(genetype, grandmaMomAllele, grandmaDadAllele),
-          Gene(genetype, grandpaMomAllele, grandmaDadAllele),
-          Gene(genetype, grandmaMomAllele, grandpaDadAllele),
-          Gene(genetype, grandpaMomAllele, grandpaDadAllele)))
+        List( Gene(genekind, grandmaMomAllele, grandmaDadAllele),
+          Gene(genekind, grandpaMomAllele, grandmaDadAllele),
+          Gene(genekind, grandmaMomAllele, grandpaDadAllele),
+          Gene(genekind, grandpaMomAllele, grandpaDadAllele)))
       children = (for (i <- 0 until CHILDREN_NUMBER) yield Genotype(children(i) + childrenGenes(i))).toList
     })
     children.map(Bunny(_))

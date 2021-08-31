@@ -1,6 +1,6 @@
 package model
 
-import model.Genes.{Alleles, FUR_COLOR, FUR_LENGTH}
+import model.Genes.{Alleles, FUR_COLOR, FUR_LENGTH, getGeneKind}
 import model.BunnyUtils.getStandardBunny
 import org.scalatest.{FlatSpec, Matchers}
 
@@ -15,7 +15,7 @@ class TestGenes extends FlatSpec with Matchers {
     Genes.values.foreach(gk => assert(gk.base != gk.mutated))
   }
 
-  "Any Allel" should "not produce letters if the dominance is not defined yet" in {
+  "Any Allele" should "not produce letters if the dominance is not defined yet" in {
     val geneKind = Genes.FUR_COLOR
     val dominantAllele = Allele(geneKind.base)
     assert(dominantAllele.getCaseSensitiveLetter(geneKind.letter) == "")
@@ -43,6 +43,13 @@ class TestGenes extends FlatSpec with Matchers {
 
   it should " be initialized with Alleles of the right kind" in {
     noException should be thrownBy Gene(Genes.FUR_COLOR, Allele(Alleles.WHITE_FUR), Allele(Alleles.WHITE_FUR))
+  }
+
+  it should " be inferable from any of its Alleles" in {
+    Genes.values.foreach(genekind => {
+      assert(getGeneKind(genekind.base) == genekind)
+      assert(getGeneKind(genekind.mutated) == genekind)
+    })
   }
 
   "Any Genotype" should "throw an Exception if the GeneType in the key is not coherent with the kind in the corresponding Gene" in {
