@@ -1,14 +1,14 @@
 package model
 
-import model.AllGenes.{AlleleKind, FUR_COLOR, FUR_LENGTH}
+import model.Genes.{Alleles, FUR_COLOR, FUR_LENGTH}
 import model.BunnyUtils.{getAllChildren, getChildren, getCouples, getNextGenerationBunnies, getRandomBunny, getStandardBunny}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestBunny extends FlatSpec with Matchers {
   "Any Bunny" should "throw an Exception if its Genotype does not contain all kind of Genes" in {
     assertThrows[IllegalGenotypeException] {
-      Bunny(Genotype(Map( FUR_COLOR ->  Gene(AllGenes.FUR_COLOR, Allele(AlleleKind.WHITE_FUR), Allele(AlleleKind.BROWN_FUR)),
-                          FUR_LENGTH -> Gene(AllGenes.FUR_LENGTH, Allele(AlleleKind.SHORT_FUR), Allele(AlleleKind.SHORT_FUR)))))
+      Bunny(Genotype(Map( FUR_COLOR ->  Gene(Genes.FUR_COLOR, Allele(Alleles.WHITE_FUR), Allele(Alleles.BROWN_FUR)),
+                          FUR_LENGTH -> Gene(Genes.FUR_LENGTH, Allele(Alleles.SHORT_FUR), Allele(Alleles.SHORT_FUR)))))
     }
   }
 
@@ -17,7 +17,7 @@ class TestBunny extends FlatSpec with Matchers {
   }
 
   it should "have all kind of Genes" in {
-    assert(getStandardBunny.genotype.genes.size == AllGenes.values.size)
+    assert(getStandardBunny.genotype.genes.size == Genes.values.size)
   }
 
   it should "have a Phenotype with only base attributes" in {
@@ -40,7 +40,7 @@ class TestBunny extends FlatSpec with Matchers {
     val dad = getRandomBunny
     val children = getChildren(mom, dad)
 
-    AllGenes.values.foreach(genetype => {
+    Genes.values.foreach(genetype => {
       val grandmaMomAllele= mom.genotype.genes(genetype).momAllele.kind
       val grandpaMomAllele = mom.genotype.genes(genetype).dadAllele.kind
       val grandmaDadAllele= dad.genotype.genes(genetype).momAllele.kind
