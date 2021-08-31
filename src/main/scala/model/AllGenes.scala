@@ -13,7 +13,9 @@ object AllGenes extends Enumeration {
   }
 
   import AlleleKind.AlleleType
-  protected case class GeneKindVal(base: AlleleType, mutated: AlleleType, letter: String) extends super.Val
+  protected case class GeneKindVal(base: AlleleType,
+                                   mutated: AlleleType,
+                                   letter: String) extends super.Val
   import scala.language.implicitConversions
   implicit def valueToGeneKindVal(x: Value): GeneKindVal = x.asInstanceOf[GeneKindVal]
 

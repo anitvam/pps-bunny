@@ -10,10 +10,10 @@ object BunnyUtils {
   def getRandomBunny: Bunny =
     Bunny(
       Genotype(
-        AllGenes.values.unsorted.map(gk => (gk, Gene(gk,
-          Allele(List(gk.base, gk.mutated)(Random.nextInt(2))),
-          Allele(List(gk.base, gk.mutated)(Random.nextInt(2)))))
-        ).toMap
+        AllGenes.values.unsorted.map(gk => {
+          (gk, Gene(gk, Allele(List(gk.base, gk.mutated)(Random.nextInt(2))),
+                        Allele(List(gk.base, gk.mutated)(Random.nextInt(2)))))
+        }).toMap
       )
     )
 
@@ -22,23 +22,29 @@ object BunnyUtils {
     split._1.zip(split._2)
   }
 
-  def getChildren(mom: Bunny, dad:Bunny): List[Bunny] = {
+  def getChildren(mom: Bunny, dad:Bunny): Seq[Bunny] = {
     var children = List.fill(CHILDREN_NUMBER)(Genotype(Map()))
     AllGenes.values.foreach(genetype => {
-      val grandmaMomAllele= mom.genotype.genes.get(genetype).get.momAllele.kind
-      val granpaMomAllele = mom.genotype.genes.get(genetype).get.dadAllele.kind
-      val grandmaDadAllele= dad.genotype.genes.get(genetype).get.momAllele.kind
-      val granpaDadAllele= dad.genotype.genes.get(genetype).get.dadAllele.kind
+      val grandmaMomAllele= mom.genotype.genes(genetype).momAllele
+      val grandpaMomAllele = mom.genotype.genes(genetype).dadAllele
+      val grandmaDadAllele= dad.genotype.genes(genetype).momAllele
+      val grandpaDadAllele= dad.genotype.genes(genetype).dadAllele
 
       val childrenGenes = Random.shuffle(
-        List( Gene(genetype, Allele(grandmaMomAllele), Allele(grandmaDadAllele)),
-              Gene(genetype, Allele(granpaMomAllele), Allele(grandmaDadAllele)),
-              Gene(genetype, Allele(grandmaMomAllele), Allele(granpaDadAllele)),
-              Gene(genetype, Allele(granpaMomAllele), Allele(granpaDadAllele))))
-      children = (for (i <- 0 to 3) yield Genotype(children(i) + childrenGenes(i))).toList
+        List( Gene(genetype, grandmaMomAllele, grandmaDadAllele),
+              Gene(genetype, grandpaMomAllele, grandmaDadAllele),
+              Gene(genetype, grandmaMomAllele, grandpaDadAllele),
+              Gene(genetype, grandpaMomAllele, grandpaDadAllele)))
+      children = (for (i <- 0 until CHILDREN_NUMBER) yield Genotype(children(i) + childrenGenes(i))).toList
     })
     children.map(Bunny(_))
   }
+
+  def getAllChildren(bunnies: Seq[Bunny]): Seq[Bunny] =
+    getCouples(bunnies).flatMap(couple => getChildren(couple._1, couple._2))
+
+  def getNextGenerationBunnies(bunnies: Seq[Bunny]): Seq[Bunny] =
+    getAllChildren(bunnies) ++ bunnies
 }
 
 case class Bunny(genotype: Genotype,
@@ -56,5 +62,5 @@ case class Bunny(genotype: Genotype,
       .replace("_", " ") + "\n"
   }
 
-  genotype.completed
+  genotype.completed()
 }

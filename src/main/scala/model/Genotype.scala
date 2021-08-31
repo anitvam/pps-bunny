@@ -7,12 +7,12 @@ case class Phenotype(attributes: Map[GeneType, AlleleType])
 case class Genotype(genes: Map[GeneType, Gene]) {
   def getPhenotype: Phenotype = Phenotype(genes.map(entry => (entry._1, entry._2.getAttribute)))
   def +(gene: Gene): Map[GeneType, Gene] = genes + (gene.kind -> gene)
-  def completed: Unit = {
-    if (AllGenes.values.count(!genes.keySet.contains(_)) > 1)
+  def completed(): Unit = {
+    if (AllGenes.values.count(!genes.keySet.contains(_)) > 0)
       throw new IllegalGenotypeException("Genotype initialization EXCEPTION: the Genotype must contain all the Genes")
   }
 
-  if (genes.count(g => g._1 != g._2.kind) > 1)
+  if (genes.count(g => g._1 != g._2.kind) > 0)
     throw new IllegalGenotypeException("Genotype initialization EXCEPTION: the GeneType in the key must be coherent "
       + "with the kind in the corresponding Gene\n"
       + genes.filter(g => g._1 == g._2.kind))

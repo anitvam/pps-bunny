@@ -57,7 +57,7 @@ class TestGenes extends FlatSpec with Matchers {
     val standardBunny = getStandardBunny
     val updatedBunny = Bunny(Genotype(standardBunny.genotype + updatedGene))
 
-    assert(standardBunny.genotype.genes.get(geneKind).get == standardGene)
-    assert(updatedBunny.genotype.genes.get(geneKind).get == updatedGene)
+    assert(standardBunny.genotype.genes(geneKind) == standardGene)
+    assert(updatedBunny.genotype.genes(geneKind) == updatedGene)
   }
 }
