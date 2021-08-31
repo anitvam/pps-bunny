@@ -11,7 +11,7 @@ sealed trait Phenotype {
 
 /**
  * Represents a standard Phenotype.
- * @param visibleTraits
+ * @param visibleTraits traits that need to be shown
  */
 case class StandardPhenotype(visibleTraits: Map[GeneKind, AlleleKind]) extends Phenotype
 
