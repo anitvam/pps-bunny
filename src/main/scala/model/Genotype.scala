@@ -1,11 +1,11 @@
 package model
 import model.Genes.Alleles.AlleleKind
-import model.Genes.GeneKind
+import model.Genes.{GeneKind, getAlternativeAlleleKind}
 
-case class Phenotype(attributes: Map[GeneKind, AlleleKind])
+case class Phenotype(visibleTraits: Map[GeneKind, AlleleKind])
 
 case class Genotype(genes: Map[GeneKind, Gene]) {
-  def getPhenotype: Phenotype = Phenotype(genes.map(entry => (entry._1, entry._2.getAttribute)))
+  def getPhenotype: Phenotype = Phenotype(genes.map(entry => (entry._1, entry._2.getVisibleTrait)))
   def +(gene: Gene): Map[GeneKind, Gene] = genes + (gene.kind -> gene)
   def completed(): Unit = {
     if (Genes.values.count(!genes.keySet.contains(_)) > 0)
@@ -19,8 +19,7 @@ case class Genotype(genes: Map[GeneKind, Gene]) {
 }
 
 case class Allele(kind: AlleleKind,
-                  isMutated: Option[Boolean] = Option.empty){
-
+                  isMutated: Option[Boolean] = Option.empty) {
   def getCaseSensitiveLetter(letter: String): String = {
     if (kind.isDominant.isDefined) {
       if (kind.isDominant.get) letter.toUpperCase else letter.toLowerCase
@@ -31,7 +30,7 @@ case class Allele(kind: AlleleKind,
 case class Gene(kind: GeneKind,
                 momAllele: Allele,
                 dadAllele: Allele) {
-  def getAttribute: AlleleKind =
+  def getVisibleTrait: AlleleKind =
     if (momAllele.kind == dadAllele.kind || momAllele.kind.isDominant.getOrElse(false)) momAllele.kind else dadAllele.kind
   def getLetters: String = momAllele.getCaseSensitiveLetter(kind.letter) + dadAllele.getCaseSensitiveLetter(kind.letter)
 
@@ -41,5 +40,8 @@ case class Gene(kind: GeneKind,
 }
 
 object GenotypeUtils {
-  def setAlleleDominance(kind: AlleleKind) = ???
+  def setAlleleDominance(alleleKind: AlleleKind): Unit = {
+    alleleKind.isDominant = Option(true)
+    getAlternativeAlleleKind(alleleKind).isDominant = Option(false)
+  }
 }

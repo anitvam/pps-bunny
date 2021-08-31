@@ -43,8 +43,13 @@ object Genes extends Enumeration {
                                 mutated = Alleles.HIGH_JUMP,
                                 letter = "j")
 
-  def getGeneKind(alleleKind:AlleleKind) :GeneKind =
-    Genes.values.filter(genekind => genekind.base == alleleKind || genekind.mutated == alleleKind).firstKey
+  def getGeneKind(alleleKind:AlleleKind): GeneKind =
+    Genes.values.filter(gk => gk.base == alleleKind || gk.mutated == alleleKind).firstKey
+
+  def getAlternativeAlleleKind(alleleKind:AlleleKind): AlleleKind = {
+    val geneKind = getGeneKind(alleleKind)
+    if (getGeneKind(alleleKind).base == alleleKind) geneKind.mutated else geneKind.base
+  }
 }
 
 

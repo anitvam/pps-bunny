@@ -1,8 +1,11 @@
 package model
 
-import model.Genes.{Alleles, FUR_COLOR, FUR_LENGTH, getGeneKind}
 import model.BunnyUtils.getStandardBunny
+import model.Genes.{Alleles, FUR_COLOR, FUR_LENGTH, getAlternativeAlleleKind, getGeneKind}
+import model.GenotypeUtils.setAlleleDominance
 import org.scalatest.{FlatSpec, Matchers}
+
+import scala.util.Random
 
 class TestGenes extends FlatSpec with Matchers {
   "Each AlleleKind" should "be in max one GeneKind" in {
@@ -16,23 +19,35 @@ class TestGenes extends FlatSpec with Matchers {
   }
 
   "Any Allele" should "not produce letters if the dominance is not defined yet" in {
-    val geneKind = Genes.FUR_COLOR
-    val dominantAllele = Allele(geneKind.base)
-    assert(dominantAllele.getCaseSensitiveLetter(geneKind.letter) == "")
+    Alleles.values.foreach(allelekind => {
+      val geneKind = getGeneKind(allelekind)
+      val dominantAllele = Allele(geneKind.base)
+      assert(dominantAllele.getCaseSensitiveLetter(geneKind.letter) == "")
+    })
+  }
+
+  it should "be settable as dominant" in {
+    Alleles.values.foreach(ak => {
+      setAlleleDominance(ak)
+      assert(ak.isDominant.get == true)
+      assert(getAlternativeAlleleKind(ak).isDominant.get == false)
+    })
   }
 
   it should "produce an uppercase letter if dominant" in {
-    val geneKind = Genes.FUR_COLOR
-    geneKind.base.isDominant = Option(true)
-    val dominantAllele = Allele(geneKind.base)
-    assert(dominantAllele.getCaseSensitiveLetter(geneKind.letter).toCharArray()(0).isUpper)
+    Genes.values.foreach(gk => {
+      val dominantAlleleKind = List(gk.base, gk.mutated)(Random.nextInt(2))
+      setAlleleDominance(dominantAlleleKind)
+      assert(Allele(dominantAlleleKind).getCaseSensitiveLetter(gk.letter).toCharArray()(0).isUpper)
+    })
   }
 
   it should "produce a lowercase letter if recessive" in {
-    val geneKind = Genes.FUR_COLOR
-    geneKind.base.isDominant = Option(false)
-    val dominantAllele = Allele(geneKind.base)
-    assert(dominantAllele.getCaseSensitiveLetter(geneKind.letter).toCharArray()(0).isLower)
+    Genes.values.foreach(gk => {
+      val recessiveAlleleKind = List(gk.base, gk.mutated)(Random.nextInt(2))
+      setAlleleDominance(getAlternativeAlleleKind(recessiveAlleleKind))
+      assert(Allele(recessiveAlleleKind).getCaseSensitiveLetter(gk.letter).toCharArray()(0).isLower)
+    })
   }
 
   "Any Gene" should "throw an Exception if initialized with Alleles of the wrong kind" in {

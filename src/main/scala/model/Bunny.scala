@@ -12,7 +12,7 @@ case class Bunny(genotype: Genotype,
 
   override def toString: String = {
     super.toString + "\n" + genotype.genes
-      .map(g => "\t" + g._1 + ": "+ g._2.getAttribute.toString.toLowerCase + " (" + g._2.getLetters + ")")
+      .map(g => "\t" + g._1 + ": "+ g._2.getVisibleTrait.toString.toLowerCase + " (" + g._2.getLetters + ")")
       .reduce(_ + "\n" + _)
       .replace("_", " ") + "\n"
   }
@@ -31,7 +31,7 @@ object BunnyUtils {
       Genotype(
         Genes.values.unsorted.map(gk => {
           (gk, Gene(gk, Allele(List(gk.base, gk.mutated)(Random.nextInt(2))),
-            Allele(List(gk.base, gk.mutated)(Random.nextInt(2)))))
+                        Allele(List(gk.base, gk.mutated)(Random.nextInt(2)))))
         }).toMap
       )
     )

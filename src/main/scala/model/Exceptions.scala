@@ -1,8 +1,8 @@
 package model
 
-class IllegalArgumentExceptionExplained(expl: String) extends IllegalArgumentException {
-  print(expl + "\n")
+class IllegalArgumentExceptionExplained(exp: String) extends IllegalArgumentException {
+  print(exp + "\n")
 }
 
-class IllegalAlleleException(expl: String) extends IllegalArgumentExceptionExplained(expl)
-class IllegalGenotypeException(expl: String) extends IllegalArgumentExceptionExplained(expl)
+class IllegalAlleleException(exp: String) extends IllegalArgumentExceptionExplained(exp)
+class IllegalGenotypeException(exp: String) extends IllegalArgumentExceptionExplained(exp)

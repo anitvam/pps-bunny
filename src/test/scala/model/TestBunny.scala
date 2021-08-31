@@ -21,7 +21,7 @@ class TestBunny extends FlatSpec with Matchers {
   }
 
   it should "have a Phenotype with only base attributes" in {
-    getStandardBunny.genotype.getPhenotype.attributes.foreach(entry =>
+    getStandardBunny.genotype.getPhenotype.visibleTraits.foreach(entry =>
       assert(entry._2 == entry._1.base))
   }
 
