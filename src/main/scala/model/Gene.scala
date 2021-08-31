@@ -2,6 +2,7 @@ package model
 
 import model.Alleles.AlleleKind
 import model.Genes.GeneKind
+import model.GenesUtils.getGeneKind
 
 /**
  * Represents an Allele of a Gene of a specific Bunny.
@@ -28,8 +29,9 @@ case class StandardAllele(kind: AlleleKind) extends Allele {
  * Represents an allele which has just been mutated.
  * @param kind the kind of the Allele.
  */
-case class MutatedAllele(kind:AlleleKind) extends Allele{
+case class JustMutatedAllele(kind:AlleleKind) extends Allele{
   override val isMutated: Boolean = false
+  if (getGeneKind(kind).mutated != kind) throw new InconsistentMutatedAlleleException
 }
 
 /**

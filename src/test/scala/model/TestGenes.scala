@@ -30,6 +30,14 @@ class TestGenes extends FlatSpec with Matchers {
     })
   }
 
+  it should "throw and Exception if is set as mutated but the kind is the base one" in {
+    Alleles.values.filter(ak => getGeneKind(ak).base == ak).foreach(ak => {
+      assertThrows[InconsistentMutatedAlleleException] {
+        JustMutatedAllele(ak)
+      }
+    })
+  }
+
   "Any Gene" should "throw an Exception if initialized with Alleles of the wrong kind" in {
     assertThrows[InconsistentAlleleException] {
       StandardGene(Genes.FUR_COLOR, StandardAllele(Alleles.LONG_FUR), StandardAllele(Alleles.BROWN_FUR))

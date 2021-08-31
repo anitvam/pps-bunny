@@ -19,3 +19,6 @@ class InconsistentGenotypeException(genes: Map[GeneKind, Gene])
 
 class MultipleDominanceAssignmentException
   extends ExplainedException ("Dominance assignment EXCEPTION: the dominance is already defined for this allele and its corresponding Gene")
+
+class InconsistentMutatedAlleleException
+  extends ExplainedException("mutated allele EXCEPTION: the allele has isMutated as true, but the kind of the allele is the base one")

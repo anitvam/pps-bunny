@@ -3,9 +3,9 @@ package model
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestKinds extends FlatSpec with Matchers {
-  "Each AlleleKind" should "be in max one GeneKind" in {
-    Alleles.values.foreach(anyAlleleKind => {
-      assert(Genes.values.flatMap(gk => List(gk.base, gk.mutated)).count(_ == anyAlleleKind) <= 1)
+  "Each AlleleKind" should "be the mutated or base Allele of exactly one GeneKind" in {
+    Alleles.values.foreach(ak => {
+      assert(Genes.values.flatMap(gk => List(gk.base, gk.mutated)).count(_ == ak) == 1)
     })
   }
 
