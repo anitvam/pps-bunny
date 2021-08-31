@@ -34,13 +34,13 @@ class TestBunny extends FlatSpec with Matchers {
   it should "contain every Bunny in the original group except from one, if they are odd" in {
     val someBunnies = Seq.fill(11)(getRandomFirstBunny)
     val bunniesInCouples = getCouples(someBunnies).flatMap(couple => List(couple._1, couple._2))
-    assert(someBunnies.filter(b => !bunniesInCouples.contains(b)).size == 1)
+    assert(someBunnies.count(b => !bunniesInCouples.contains(b)) == 1)
     someBunnies.filter(b => bunniesInCouples.contains(b)).foreach(b => assert(bunniesInCouples.contains(b)))
   }
 
-  val mom = getRandomFirstBunny
-  val dad = getRandomFirstBunny
-  val children = getChildren(mom, dad)
+  val mom: FirstBunny = getRandomFirstBunny
+  val dad: FirstBunny = getRandomFirstBunny
+  val children: Seq[Bunny] = getChildren(mom, dad)
   "Children of a couple" should "be 4" in {
     assert(children.size == 4)
   }

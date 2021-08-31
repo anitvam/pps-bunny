@@ -6,16 +6,6 @@ import GenesUtils.{assignRandomDominance, getGeneKind}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestGenes extends FlatSpec with Matchers {
-  "Each AlleleKind" should "be in max one GeneKind" in {
-    Alleles.values.foreach(anyAlleleKind => {
-      assert(Genes.values.flatMap(gk => List(gk.base, gk.mutated)).count(_ == anyAlleleKind) <= 1)
-    })
-  }
-
-  "Each GeneKind" should "have two different AlleleKind as base and muted" in {
-    Genes.values.foreach(gk => assert(gk.base != gk.mutated))
-  }
-
   "Any Allele" should "not produce letters if the dominance is not defined yet" in {
     Alleles.values.foreach(ak => {
       val geneKind = getGeneKind(ak)
@@ -51,9 +41,9 @@ class TestGenes extends FlatSpec with Matchers {
   }
 
   it should " be inferable from any of its Alleles" in {
-    Genes.values.foreach(genekind => {
-      assert(getGeneKind(genekind.base) == genekind)
-      assert(getGeneKind(genekind.mutated) == genekind)
+    Genes.values.foreach(gk => {
+      assert(getGeneKind(gk.base) == gk)
+      assert(getGeneKind(gk.mutated) == gk)
     })
   }
 

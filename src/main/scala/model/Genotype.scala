@@ -2,12 +2,23 @@ package model
 import Alleles.AlleleKind
 import Genes.GeneKind
 
-trait Phenotype {
+/**
+ * Represents Phenotype of the Bunny, which is the visible traits.
+ */
+sealed trait Phenotype {
   val visibleTraits: Map[GeneKind, AlleleKind]
 }
+
+/**
+ * Represents a standard Phenotype.
+ * @param visibleTraits
+ */
 case class StandardPhenotype(visibleTraits: Map[GeneKind, AlleleKind]) extends Phenotype
 
-trait Genotype {
+/**
+ * Represents the genetic heritage of the Bunny, with visible and invisible traits.
+ */
+sealed trait Genotype {
   val genes: Map[GeneKind, Gene]
   def getPhenotype: Phenotype = StandardPhenotype(genes.map(entry => (entry._1, entry._2.getVisibleTrait)))
   def +(gene: Gene): Map[GeneKind, Gene] = genes + (gene.kind -> gene)
@@ -15,7 +26,16 @@ trait Genotype {
     throw new InconsistentGenotypeException(genes)
 }
 
+/**
+ * Represents a Genotype which many not contain all the Genes of the world, so it's incomplete.
+ * @param genes the Genes of the Genotype
+ */
 case class PartialGenotype(genes: Map[GeneKind, Gene]) extends Genotype
+
+/**
+ * Represents a Genotype which for sure contains all the Genes of the world.
+ * @param genes the Genes of the Genotype
+ */
 case class CompletedGenotype(genes: Map[GeneKind, Gene]) extends Genotype{
   if (Genes.values.count(!genes.keySet.contains(_)) > 0)
     throw new IllegalGenotypeBuildException
