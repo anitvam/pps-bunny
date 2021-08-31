@@ -26,9 +26,22 @@ class TestBunny extends FlatSpec with Matchers {
   }
 
   "Couples of bunnies " should "be generated from any group of Bunnies" in {
-    val someBunnies = Seq.fill(9)(getStandardBunny)
+    val someBunnies = Seq.fill(9)(getRandomBunny)
     val someCouples = getCouples(someBunnies)
     assert(someCouples.size == someBunnies.size/2)
+  }
+
+  it should "contain every Bunny in the original group, if they are even" in {
+    val someBunnies = Seq.fill(6)(getRandomBunny)
+    val bunniesInCouples = getCouples(someBunnies).flatMap(couple => List(couple._1, couple._2))
+    someBunnies.foreach(b => assert(bunniesInCouples.contains(b)))
+  }
+
+  it should "contain every Bunny in the original group except from one, if they are odd" in {
+    val someBunnies = Seq.fill(11)(getRandomBunny)
+    val bunniesInCouples = getCouples(someBunnies).flatMap(couple => List(couple._1, couple._2))
+    assert(someBunnies.filter(b => !bunniesInCouples.contains(b)).size == 1)
+    someBunnies.filter(b => bunniesInCouples.contains(b)).foreach(b => assert(bunniesInCouples.contains(b)))
   }
 
   "Children of a couple" should "be 4" in {
