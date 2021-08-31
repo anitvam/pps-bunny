@@ -7,11 +7,16 @@ object Genes extends Enumeration {
     import scala.language.implicitConversions
     implicit def valueToAllelesVal(x: Value): AllelesVal = x.asInstanceOf[AllelesVal]
 
-    val WHITE_FUR, BROWN_FUR,
-        LONG_FUR, SHORT_FUR,
-        LONG_TEETH, SHORT_TEETH,
-        HIGH_EARS, LOW_EARS,
-        HIGH_JUMP, LOW_JUMP = Value
+    val WHITE_FUR = AllelesVal()
+    val BROWN_FUR = AllelesVal()
+    val LONG_FUR = AllelesVal()
+    val SHORT_FUR = AllelesVal()
+    val LONG_TEETH = AllelesVal()
+    val SHORT_TEETH = AllelesVal()
+    val HIGH_EARS = AllelesVal()
+    val LOW_EARS = AllelesVal()
+    val HIGH_JUMP = AllelesVal()
+    val LOW_JUMP = AllelesVal()
   }
 
   type GeneKind = Value
