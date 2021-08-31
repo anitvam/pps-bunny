@@ -1,74 +1,71 @@
 package model
 
-import model.Genes.{FUR_COLOR, FUR_LENGTH}
-import model.BunnyUtils.{getAllChildren, getChildren, getCouples, getNextGenerationBunnies, getRandomBunny, getStandardBunny}
+import model.BunnyUtils._
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestBunny extends FlatSpec with Matchers {
-  "Any Bunny" should "throw an Exception if its Genotype does not contain all kind of Genes" in {
-    assertThrows[IllegalGenotypeCompletedException] {
-      Bunny(Genotype(Map( FUR_COLOR ->  Gene(Genes.FUR_COLOR, Allele(Alleles.WHITE_FUR), Allele(Alleles.BROWN_FUR)),
-                          FUR_LENGTH -> Gene(Genes.FUR_LENGTH, Allele(Alleles.SHORT_FUR), Allele(Alleles.SHORT_FUR)))))
-    }
-  }
 
-  "Any StandardBunny" should "be instantiated without exceptions" in {
-    noException should be thrownBy getStandardBunny
+  "Any FirstBunny" should "be instantiated without exceptions" in {
+    noException should be thrownBy getBaseFirstBunny
+    noException should be thrownBy getRandomFirstBunny
   }
 
   it should "have all kind of Genes" in {
-    assert(getStandardBunny.genotype.genes.size == Genes.values.size)
+    assert(getBaseFirstBunny.genotype.genes.size == Genes.values.size)
   }
 
   it should "have a Phenotype with only base attributes" in {
-    getStandardBunny.genotype.getPhenotype.visibleTraits.foreach(entry =>
+    getBaseFirstBunny.genotype.getPhenotype.visibleTraits.foreach(entry =>
       assert(entry._2 == entry._1.base))
   }
 
   "Couples of bunnies " should "be generated from any group of Bunnies" in {
-    val someBunnies = Seq.fill(9)(getRandomBunny)
+    val someBunnies = Seq.fill(9)(getRandomFirstBunny)
     val someCouples = getCouples(someBunnies)
     assert(someCouples.size == someBunnies.size/2)
   }
 
   it should "contain every Bunny in the original group, if they are even" in {
-    val someBunnies = Seq.fill(6)(getRandomBunny)
+    val someBunnies = Seq.fill(6)(getRandomFirstBunny)
     val bunniesInCouples = getCouples(someBunnies).flatMap(couple => List(couple._1, couple._2))
     someBunnies.foreach(b => assert(bunniesInCouples.contains(b)))
   }
 
   it should "contain every Bunny in the original group except from one, if they are odd" in {
-    val someBunnies = Seq.fill(11)(getRandomBunny)
+    val someBunnies = Seq.fill(11)(getRandomFirstBunny)
     val bunniesInCouples = getCouples(someBunnies).flatMap(couple => List(couple._1, couple._2))
     assert(someBunnies.filter(b => !bunniesInCouples.contains(b)).size == 1)
     someBunnies.filter(b => bunniesInCouples.contains(b)).foreach(b => assert(bunniesInCouples.contains(b)))
   }
 
+  val mom = getRandomFirstBunny
+  val dad = getRandomFirstBunny
+  val children = getChildren(mom, dad)
   "Children of a couple" should "be 4" in {
-    assert(getChildren(getRandomBunny, getRandomBunny).size == 4)
+    assert(children.size == 4)
+  }
+
+  it should "have the original bunnies as mom and dad " in {
+    children.foreach(child => assert(child.mom.get == mom && child.dad.get == dad))
   }
 
   it should "be one for each cell of the Punnett square, for each Gene" in {
-    val mom = getRandomBunny
-    val dad = getRandomBunny
-    val children = getChildren(mom, dad)
+    Genes.values.foreach(gk => {
+      val grandmaMomAllele= mom.genotype.genes(gk).momAllele.kind
+      val grandpaMomAllele = mom.genotype.genes(gk).dadAllele.kind
+      val grandmaDadAllele= dad.genotype.genes(gk).momAllele.kind
+      val grandpaDadAllele= dad.genotype.genes(gk).dadAllele.kind
+      val childrenGenesOfType = children.map(b => b.genotype.genes(gk))
 
-    Genes.values.foreach(genekind => {
-      val grandmaMomAllele= mom.genotype.genes(genekind).momAllele.kind
-      val grandpaMomAllele = mom.genotype.genes(genekind).dadAllele.kind
-      val grandmaDadAllele= dad.genotype.genes(genekind).momAllele.kind
-      val grandpaDadAllele= dad.genotype.genes(genekind).dadAllele.kind
-      val childrenGenesOfType = children.map(b => b.genotype.genes(genekind))
-
-      assert(childrenGenesOfType.contains(Gene(genekind, Allele(grandmaMomAllele), Allele(grandmaDadAllele))))
-      assert(childrenGenesOfType.contains(Gene(genekind, Allele(grandmaMomAllele), Allele(grandpaDadAllele))))
-      assert(childrenGenesOfType.contains(Gene(genekind, Allele(grandpaMomAllele), Allele(grandmaDadAllele))))
-      assert(childrenGenesOfType.contains(Gene(genekind, Allele(grandpaMomAllele), Allele(grandpaDadAllele))))
+      assert(childrenGenesOfType.contains(StandardGene(gk, StandardAllele(grandmaMomAllele), StandardAllele(grandmaDadAllele))))
+      assert(childrenGenesOfType.contains(StandardGene(gk, StandardAllele(grandmaMomAllele), StandardAllele(grandpaDadAllele))))
+      assert(childrenGenesOfType.contains(StandardGene(gk, StandardAllele(grandpaMomAllele), StandardAllele(grandmaDadAllele))))
+      assert(childrenGenesOfType.contains(StandardGene(gk, StandardAllele(grandpaMomAllele), StandardAllele(grandpaDadAllele))))
     })
   }
 
   val bunniesNum = 7
-  val bunnies: Seq[Bunny] = List.fill(bunniesNum)(getRandomBunny)
+  val bunnies: Seq[Bunny] = List.fill(bunniesNum)(getRandomFirstBunny)
   "Children of all bunnies" should "be 4 for each couple" in {
     val children = getAllChildren(bunnies)
     assert(children.size == (bunniesNum/2)*4)

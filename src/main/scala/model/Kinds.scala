@@ -2,15 +2,14 @@ package model
 
 import model.Alleles.AlleleKind
 import model.Genes.GeneKind
-import model.GenotypeUtils.setAlleleDominance
 
+import scala.language.implicitConversions
 import scala.util.Random
 
 object Alleles extends Enumeration{
   type AlleleKind = Value
   protected case class AllelesVal(var isDominant: Option[Boolean] = Option.empty,
-                                  var locked: Boolean = false) extends super.Val
-  import scala.language.implicitConversions
+                                  var isLocked: Boolean = false) extends super.Val
   implicit def valueToAllelesVal(x: Value): AllelesVal = x.asInstanceOf[AllelesVal]
 
   val WHITE_FUR: AllelesVal = AllelesVal()
@@ -58,6 +57,15 @@ object GenesUtils {
   def getAlternativeAlleleKind(alleleKind:AlleleKind): AlleleKind = {
     val geneKind = getGeneKind(alleleKind)
     if (getGeneKind(alleleKind).base == alleleKind) geneKind.mutated else geneKind.base
+  }
+
+  def setAlleleDominance(alleleKind: AlleleKind): Unit = {
+    if (alleleKind.isLocked || getAlternativeAlleleKind(alleleKind).isLocked)
+      throw new MultipleDominanceAssignmentException(alleleKind)
+    alleleKind.isDominant = Option(true)
+    alleleKind.isLocked = true
+    getAlternativeAlleleKind(alleleKind).isDominant = Option(false)
+    getAlternativeAlleleKind(alleleKind).isLocked = true
   }
 
   def assignRandomDominance(): Unit =

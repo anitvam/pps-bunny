@@ -1,8 +1,8 @@
 package model
 
-import model.BunnyUtils.getStandardBunny
-import model.Genes.{FUR_COLOR, FUR_LENGTH}
-import model.GenesUtils.{assignRandomDominance, getGeneKind}
+import model.BunnyUtils.getBaseFirstBunny
+import Genes.{FUR_COLOR, FUR_LENGTH, GeneKind}
+import GenesUtils.{assignRandomDominance, getGeneKind}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestGenes extends FlatSpec with Matchers {
@@ -19,7 +19,7 @@ class TestGenes extends FlatSpec with Matchers {
   "Any Allele" should "not produce letters if the dominance is not defined yet" in {
     Alleles.values.foreach(ak => {
       val geneKind = getGeneKind(ak)
-      val dominantAllele = Allele(geneKind.base)
+      val dominantAllele = StandardAllele(geneKind.base)
       assert(dominantAllele.getCaseSensitiveLetter(geneKind.letter) == "")
     })
   }
@@ -30,24 +30,24 @@ class TestGenes extends FlatSpec with Matchers {
 
   it should "produce an uppercase letter if dominant" in {
     Alleles.values.filter(_.isDominant.get).foreach(ak => {
-      assert(Allele(ak).getCaseSensitiveLetter(getGeneKind(ak).letter).toCharArray()(0).isUpper)
+      assert(StandardAllele(ak).getCaseSensitiveLetter(getGeneKind(ak).letter).toCharArray()(0).isUpper)
     })
   }
 
   it should "produce a lowercase letter if recessive" in {
     Alleles.values.filter(!_.isDominant.get).foreach(ak => {
-      assert(Allele(ak).getCaseSensitiveLetter(getGeneKind(ak).letter).toCharArray()(0).isLower)
+      assert(StandardAllele(ak).getCaseSensitiveLetter(getGeneKind(ak).letter).toCharArray()(0).isLower)
     })
   }
 
   "Any Gene" should "throw an Exception if initialized with Alleles of the wrong kind" in {
-    assertThrows[IllegalAlleleArgumentException] {
-      Gene(Genes.FUR_COLOR, Allele(Alleles.LONG_FUR), Allele(Alleles.BROWN_FUR))
+    assertThrows[InconsistentAlleleException] {
+      StandardGene(Genes.FUR_COLOR, StandardAllele(Alleles.LONG_FUR), StandardAllele(Alleles.BROWN_FUR))
     }
   }
 
   it should " be initialized with Alleles of the right kind" in {
-    noException should be thrownBy Gene(Genes.FUR_COLOR, Allele(Alleles.WHITE_FUR), Allele(Alleles.WHITE_FUR))
+    noException should be thrownBy StandardGene(Genes.FUR_COLOR, StandardAllele(Alleles.WHITE_FUR), StandardAllele(Alleles.WHITE_FUR))
   }
 
   it should " be inferable from any of its Alleles" in {
@@ -58,18 +58,28 @@ class TestGenes extends FlatSpec with Matchers {
   }
 
   "Any Genotype" should "throw an Exception if the GeneType in the key is not coherent with the kind in the corresponding Gene" in {
-    assertThrows[GenotypeInconsistencyException] {
-      Genotype(Map( FUR_COLOR -> Gene(Genes.EARS, Allele(Alleles.WHITE_FUR), Allele(Alleles.BROWN_FUR)),
-                    FUR_LENGTH -> Gene(Genes.FUR_LENGTH, Allele(Alleles.SHORT_FUR), Allele(Alleles.SHORT_FUR))))
+    assertThrows[InconsistentGenotypeException] {
+      val genes: Map[GeneKind, Gene] = Map(
+        FUR_COLOR -> StandardGene(Genes.EARS, StandardAllele(Alleles.WHITE_FUR), StandardAllele(Alleles.BROWN_FUR)),
+        FUR_LENGTH -> StandardGene(Genes.FUR_LENGTH, StandardAllele(Alleles.SHORT_FUR), StandardAllele(Alleles.SHORT_FUR)))
+      PartialGenotype(genes)
+    }
+  }
+
+  "Any completed Genotype" should "throw an Exception if does not contain kind of Genes" in {
+    assertThrows[IllegalGenotypeBuildException] {
+      CompletedGenotype(Map(
+        FUR_COLOR ->  StandardGene(Genes.FUR_COLOR, StandardAllele(Alleles.WHITE_FUR), StandardAllele(Alleles.BROWN_FUR)),
+        FUR_LENGTH -> StandardGene(Genes.FUR_LENGTH, StandardAllele(Alleles.SHORT_FUR), StandardAllele(Alleles.SHORT_FUR))))
     }
   }
 
   it should "be editable adding any Gene, which will replace the previous one with the same GeneType" in {
     val geneKind = Genes.FUR_COLOR
-    val standardGene =  Gene(geneKind, Allele(geneKind.base),  Allele(geneKind.base))
-    val updatedGene =  Gene(geneKind, Allele(geneKind.base),  Allele(geneKind.mutated))
-    val standardBunny = getStandardBunny
-    val updatedBunny = Bunny(Genotype(standardBunny.genotype + updatedGene))
+    val standardGene =  StandardGene(geneKind, StandardAllele(geneKind.base),  StandardAllele(geneKind.base))
+    val updatedGene =  StandardGene(geneKind, StandardAllele(geneKind.base),  StandardAllele(geneKind.mutated))
+    val standardBunny = getBaseFirstBunny
+    val updatedBunny = FirstBunny(CompletedGenotype(standardBunny.genotype + updatedGene))
 
     assert(standardBunny.genotype.genes(geneKind) == standardGene)
     assert(updatedBunny.genotype.genes(geneKind) == updatedGene)
