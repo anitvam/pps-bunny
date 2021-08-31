@@ -1,12 +1,12 @@
 package model
 
-import model.Genes.{Alleles, FUR_COLOR, FUR_LENGTH}
+import model.Genes.{FUR_COLOR, FUR_LENGTH}
 import model.BunnyUtils.{getAllChildren, getChildren, getCouples, getNextGenerationBunnies, getRandomBunny, getStandardBunny}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestBunny extends FlatSpec with Matchers {
   "Any Bunny" should "throw an Exception if its Genotype does not contain all kind of Genes" in {
-    assertThrows[IllegalGenotypeException] {
+    assertThrows[IllegalGenotypeCompletedException] {
       Bunny(Genotype(Map( FUR_COLOR ->  Gene(Genes.FUR_COLOR, Allele(Alleles.WHITE_FUR), Allele(Alleles.BROWN_FUR)),
                           FUR_LENGTH -> Gene(Genes.FUR_LENGTH, Allele(Alleles.SHORT_FUR), Allele(Alleles.SHORT_FUR)))))
     }

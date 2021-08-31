@@ -1,11 +1,9 @@
 package model
 
 import model.BunnyUtils.getStandardBunny
-import model.Genes.{Alleles, FUR_COLOR, FUR_LENGTH, getAlternativeAlleleKind, getGeneKind}
-import model.GenotypeUtils.setAlleleDominance
+import model.Genes.{FUR_COLOR, FUR_LENGTH}
+import model.GenesUtils.{assignRandomDominance, getGeneKind}
 import org.scalatest.{FlatSpec, Matchers}
-
-import scala.util.Random
 
 class TestGenes extends FlatSpec with Matchers {
   "Each AlleleKind" should "be in max one GeneKind" in {
@@ -19,39 +17,31 @@ class TestGenes extends FlatSpec with Matchers {
   }
 
   "Any Allele" should "not produce letters if the dominance is not defined yet" in {
-    Alleles.values.foreach(allelekind => {
-      val geneKind = getGeneKind(allelekind)
+    Alleles.values.foreach(ak => {
+      val geneKind = getGeneKind(ak)
       val dominantAllele = Allele(geneKind.base)
       assert(dominantAllele.getCaseSensitiveLetter(geneKind.letter) == "")
     })
   }
 
-  it should "be settable as dominant" in {
-    Alleles.values.foreach(ak => {
-      setAlleleDominance(ak)
-      assert(ak.isDominant.get == true)
-      assert(getAlternativeAlleleKind(ak).isDominant.get == false)
-    })
+  it should "be settable as dominant" in{
+    noException should be thrownBy assignRandomDominance()
   }
 
   it should "produce an uppercase letter if dominant" in {
-    Genes.values.foreach(gk => {
-      val dominantAlleleKind = List(gk.base, gk.mutated)(Random.nextInt(2))
-      setAlleleDominance(dominantAlleleKind)
-      assert(Allele(dominantAlleleKind).getCaseSensitiveLetter(gk.letter).toCharArray()(0).isUpper)
+    Alleles.values.filter(_.isDominant.get).foreach(ak => {
+      assert(Allele(ak).getCaseSensitiveLetter(getGeneKind(ak).letter).toCharArray()(0).isUpper)
     })
   }
 
   it should "produce a lowercase letter if recessive" in {
-    Genes.values.foreach(gk => {
-      val recessiveAlleleKind = List(gk.base, gk.mutated)(Random.nextInt(2))
-      setAlleleDominance(getAlternativeAlleleKind(recessiveAlleleKind))
-      assert(Allele(recessiveAlleleKind).getCaseSensitiveLetter(gk.letter).toCharArray()(0).isLower)
+    Alleles.values.filter(!_.isDominant.get).foreach(ak => {
+      assert(Allele(ak).getCaseSensitiveLetter(getGeneKind(ak).letter).toCharArray()(0).isLower)
     })
   }
 
   "Any Gene" should "throw an Exception if initialized with Alleles of the wrong kind" in {
-    assertThrows[IllegalAlleleException] {
+    assertThrows[IllegalAlleleArgumentException] {
       Gene(Genes.FUR_COLOR, Allele(Alleles.LONG_FUR), Allele(Alleles.BROWN_FUR))
     }
   }
@@ -68,7 +58,7 @@ class TestGenes extends FlatSpec with Matchers {
   }
 
   "Any Genotype" should "throw an Exception if the GeneType in the key is not coherent with the kind in the corresponding Gene" in {
-    assertThrows[IllegalGenotypeException] {
+    assertThrows[GenotypeInconsistencyException] {
       Genotype(Map( FUR_COLOR -> Gene(Genes.EARS, Allele(Alleles.WHITE_FUR), Allele(Alleles.BROWN_FUR)),
                     FUR_LENGTH -> Gene(Genes.FUR_LENGTH, Allele(Alleles.SHORT_FUR), Allele(Alleles.SHORT_FUR))))
     }

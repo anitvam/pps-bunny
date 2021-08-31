@@ -1,24 +1,31 @@
 package model
 
+import model.Alleles.AlleleKind
+import model.Genes.GeneKind
+import model.GenotypeUtils.setAlleleDominance
+
+import scala.util.Random
+
+object Alleles extends Enumeration{
+  type AlleleKind = Value
+  protected case class AllelesVal(var isDominant: Option[Boolean] = Option.empty,
+                                  var locked: Boolean = false) extends super.Val
+  import scala.language.implicitConversions
+  implicit def valueToAllelesVal(x: Value): AllelesVal = x.asInstanceOf[AllelesVal]
+
+  val WHITE_FUR: AllelesVal = AllelesVal()
+  val BROWN_FUR: AllelesVal = AllelesVal()
+  val LONG_FUR: AllelesVal = AllelesVal()
+  val SHORT_FUR: AllelesVal = AllelesVal()
+  val LONG_TEETH: AllelesVal = AllelesVal()
+  val SHORT_TEETH: AllelesVal = AllelesVal()
+  val HIGH_EARS: AllelesVal = AllelesVal()
+  val LOW_EARS: AllelesVal = AllelesVal()
+  val HIGH_JUMP: AllelesVal = AllelesVal()
+  val LOW_JUMP: AllelesVal = AllelesVal()
+}
+
 object Genes extends Enumeration {
-  object Alleles extends Enumeration{
-    type AlleleKind = Value
-    protected case class AllelesVal(var isDominant: Option[Boolean] = Option.empty) extends super.Val
-    import scala.language.implicitConversions
-    implicit def valueToAllelesVal(x: Value): AllelesVal = x.asInstanceOf[AllelesVal]
-
-    val WHITE_FUR: AllelesVal = AllelesVal()
-    val BROWN_FUR: AllelesVal = AllelesVal()
-    val LONG_FUR: AllelesVal = AllelesVal()
-    val SHORT_FUR: AllelesVal = AllelesVal()
-    val LONG_TEETH: AllelesVal = AllelesVal()
-    val SHORT_TEETH: AllelesVal = AllelesVal()
-    val HIGH_EARS: AllelesVal = AllelesVal()
-    val LOW_EARS: AllelesVal = AllelesVal()
-    val HIGH_JUMP: AllelesVal = AllelesVal()
-    val LOW_JUMP: AllelesVal = AllelesVal()
-  }
-
   type GeneKind = Value
   import Alleles.AlleleKind
   protected case class GenesVal(base: AlleleKind,
@@ -42,7 +49,9 @@ object Genes extends Enumeration {
   val JUMP: GenesVal =       GenesVal(base = Alleles.LOW_JUMP,
                                 mutated = Alleles.HIGH_JUMP,
                                 letter = "j")
+}
 
+object GenesUtils {
   def getGeneKind(alleleKind:AlleleKind): GeneKind =
     Genes.values.filter(gk => gk.base == alleleKind || gk.mutated == alleleKind).firstKey
 
@@ -50,6 +59,9 @@ object Genes extends Enumeration {
     val geneKind = getGeneKind(alleleKind)
     if (getGeneKind(alleleKind).base == alleleKind) geneKind.mutated else geneKind.base
   }
+
+  def assignRandomDominance(): Unit =
+    Genes.values.foreach(gk => setAlleleDominance(List(gk.base, gk.mutated)(Random.nextInt(2))))
 }
 
 
