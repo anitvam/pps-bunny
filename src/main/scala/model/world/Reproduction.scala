@@ -2,18 +2,8 @@ package model.world
 
 import model._
 import model.genome._
-import model.world.BunnyIdGenerator.getNextId
 
 import scala.util.Random
-
-object BunnyIdGenerator {
-  var nextId: Int = -1
-
-  def getNextId: Int = {
-    nextId += 1
-    nextId
-  }
-}
 
 object Reproduction {
   val CHILDREN_EACH_COUPLE = 4
@@ -23,7 +13,7 @@ object Reproduction {
    * @param bunnies a seq of bunnies
    * @return a seq of random couples formed from all of the bunnies (or most of them, if they are odd)
    */
-  def combineCouples(bunnies: Seq[AliveBunny]): Seq[(AliveBunny, AliveBunny)] = {
+  def combineCouples(bunnies: Seq[Bunny]): Seq[(Bunny, Bunny)] = {
     val split = Random.shuffle(bunnies).splitAt(bunnies.size / 2)
     split._1.zip(split._2)
   }
@@ -33,7 +23,7 @@ object Reproduction {
    * @param dad another bunny
    * @return the 4 children of the couple, one for each cell of the Punnett's square
    */
-  def generateChildren(mom: Bunny, dad: Bunny): Seq[AliveBunny] = {
+  def generateChildren(mom: Bunny, dad: Bunny): Seq[Bunny] = {
     var childrenGenotypes = List.fill(CHILDREN_EACH_COUPLE)(PartialGenotype(Map()))
     Genes.values.foreach(gk => {
       val grandmaMomAllele = mom.genotype.genes(gk).momAllele
@@ -55,23 +45,18 @@ object Reproduction {
    * @param bunnies a seq of bunnies
    * @return a seq with the children of the bunnies
    */
-  def generateAllChildren(bunnies: Seq[AliveBunny]): Seq[AliveBunny] =
+  def generateAllChildren(bunnies: Seq[Bunny]): Seq[Bunny] =
     combineCouples(bunnies).flatMap(couple => generateChildren(couple._1, couple._2))
 
   /**
-   * @param bunnies the bunnies in the previous generation, the alive and dead ones
-   * @return the bunnies of the next generation:
-   *         the alive will contain the children and the bunnies still alive,
-   *         the dead will contain all the dead bunnies, the ones which died in the past the ones who died in this generation
+   * @param bunnies bunnies from the last generation
+   * @return        the new bunnies, adding the children and removing the ones who are dead
    */
-  def nextGenerationBunnies(bunnies: GenerationBunnies): GenerationBunnies = {
-    val children = generateAllChildren(bunnies.aliveBunnies.values.toSeq)
-    val nextBunnies = bunnies.aliveBunnies.map(entry => (entry._1, entry._2.nextBunny))
-    val nextAliveBunnies: Map[Int, AliveBunny] = nextBunnies.filter(_._2.isInstanceOf[AliveBunny])
-                                                          .map(entry => (entry._1, entry._2.asInstanceOf[AliveBunny]))
-    val nextDeadBunnies: Map[Int, DeadBunny] = nextBunnies.filter(_._2.isInstanceOf[DeadBunny])
-                                                          .map(entry => (entry._1, entry._2.asInstanceOf[DeadBunny]))
-    StandardGenerationBunnies(children.map((getNextId, _)).toMap ++ nextAliveBunnies,
-                              bunnies.deadBunnies ++ nextDeadBunnies)
+  def nextGenerationBunnies(bunnies: Seq[Bunny]): Seq[Bunny] = {
+    val children = generateAllChildren(bunnies)
+    bunnies.foreach(_.age+=1)
+    bunnies.foreach(b => if (b.age >= MAX_BUNNY_AGE) b.alive = false)
+    val stillAlive = bunnies.filter(_.alive)
+    children ++ stillAlive
   }
 }

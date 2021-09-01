@@ -1,6 +1,5 @@
 package model
 import model.genome.Alleles.AlleleKind
-import model.world.Reproduction.MAX_BUNNY_AGE
 import model.genome.{CompletedGenotype, Genes, StandardAllele, StandardGene}
 
 import scala.util.Random
@@ -12,8 +11,8 @@ sealed trait Bunny {
   val genotype: CompletedGenotype
   val mom: Option[Bunny]
   val dad: Option[Bunny]
-  val age: Int
-  val alive: Boolean
+  var age: Int
+  var alive: Boolean
 
   override def toString: String = {
     super.toString+ "\n alive:" + alive + " \n age: " + age + "\n"+ genotype.genes
@@ -24,33 +23,12 @@ sealed trait Bunny {
 }
 
 /**
- * Represents a Bunny which is still alive.
- * @param genotype  contains the Bunny genes, it must be completed (contain all the available Genes of the world)
- * @param mom       the bunny's mom
- * @param dad       the bunny's dad
- * @param age       how many generations the Bunny has spent in the world.
- */
-case class AliveBunny(genotype: CompletedGenotype, mom:Option[Bunny], dad:Option[Bunny], age:Int) extends Bunny{
-  override val alive: Boolean = true
-  def nextBunny: Bunny =
-    if (age+1 < MAX_BUNNY_AGE) AliveBunny(genotype, mom, dad, age+1) else DeadBunny(genotype, mom, dad, age+1)
-}
-
-/**
- * Represents a Bunny which is dead.
- * @param genotype  contains the Bunny genes, it must be completed (contain all the available Genes of the world)
- * @param mom       the bunny's mom
- * @param dad       the bunny's dad
- * @param age       how many generations the Bunny has spent in the world.
- */
-case class DeadBunny(genotype: CompletedGenotype, mom:Option[Bunny], dad:Option[Bunny], age:Int) extends Bunny {
-  override val alive: Boolean = false
-}
-
-/**
  * Represents a Bunny that as just been created.
  */
-class ChildBunny(genotype: CompletedGenotype, mom:Option[Bunny], dad:Option[Bunny]) extends AliveBunny(genotype, mom, dad, 0)
+class ChildBunny(override val genotype: CompletedGenotype, override val mom:Option[Bunny], override val dad:Option[Bunny]) extends Bunny {
+  override var age: Int = 0
+  override var alive: Boolean = true
+}
 
 /**
  * Represents the first Bunny which appears in the world, so it does not have a mom and a dad.
@@ -91,5 +69,5 @@ object BunnyUtils {
    * @param alleleKind the kind of Allele required
    * @return           all the bunnies with that kind of Allele
    */
-  def getBunniesWithAllele(alleleKind: AlleleKind): Set[AliveBunny] = ???
+  def getBunniesWithAllele(alleleKind: AlleleKind): Set[Bunny] = ???
 }

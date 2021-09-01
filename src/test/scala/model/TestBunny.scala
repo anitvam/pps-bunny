@@ -2,8 +2,6 @@ package model
 import model.BunnyUtils.{generateBaseFirstBunny, generateRandomFirstBunny}
 import model.world.Reproduction.{MAX_BUNNY_AGE, combineCouples, generateAllChildren, generateChildren, nextGenerationBunnies}
 import model.genome.{Genes, StandardAllele, StandardGene}
-import model.world.BunnyIdGenerator.getNextId
-import model.world.{GenerationBunnies, StandardGenerationBunnies}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestBunny extends FlatSpec with Matchers {
@@ -68,28 +66,26 @@ class TestBunny extends FlatSpec with Matchers {
   }
 
   val bunniesNum = 7
-  val bunnies: Seq[AliveBunny] = List.fill(bunniesNum)(generateRandomFirstBunny)
+  val bunnies: Seq[Bunny] = List.fill(bunniesNum)(generateRandomFirstBunny)
   "Children of all bunnies" should "be 4 for each couple" in {
     val children = generateAllChildren(bunnies)
     assert(children.size == (bunniesNum/2)*4)
   }
 
-  val firstGenBunnies: GenerationBunnies = StandardGenerationBunnies(bunnies.map(getNextId -> _).toMap, Map.empty)
-  val nextGenBunnies: GenerationBunnies = nextGenerationBunnies(firstGenBunnies)
+  val nextGenBunnies = nextGenerationBunnies(bunnies)
   "Next generation bunnies" should "4 children for each couple and the previous bunnies" in {
-    assert(nextGenBunnies.aliveBunnies.values.size == (bunniesNum/2)*4 + bunniesNum)
-    assert(nextGenBunnies.deadBunnies.values.isEmpty)
+    assert(nextGenBunnies.size == (bunniesNum/2)*4 + bunniesNum)
   }
 
-  it should "contain the next alive version of all the original bunnies" in {
-    assert(bunnies.map(_.nextBunny).toSet.subsetOf(nextGenBunnies.aliveBunnies.values.toSet))
+  it should "contain all of the original bunnies in the next generation" in {
+    assert(bunnies.toSet.subsetOf(nextGenBunnies.toSet))
   }
 
-  it should "contain as many dead bunnies after MAX_AGE generations as there where in the beginning" in {
-    var nextGen: GenerationBunnies = firstGenBunnies
-    for (_ <- 0 until MAX_BUNNY_AGE) {
+  it should "not contain any of the original bunnies after MAX_AGE generations" in {
+    var nextGen = bunnies
+    for (_ <- 0 to MAX_BUNNY_AGE) {
       nextGen = nextGenerationBunnies(nextGen)
     }
-    assert(nextGen.deadBunnies.values.size == bunniesNum)
+    bunnies.foreach(b => assert(!nextGen.contains(b)))
   }
 }
