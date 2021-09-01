@@ -7,26 +7,28 @@ import view.scalaFX.utilities.Direction._
 
 import scala.util.Random
 
-object BunnyTypes {
+object BunnyTypesDeprecated {
   val NORMAL_BUNNY = new Image("/bunnies/brown/long_ears/normal_teeth/thick_fur/normal.png")
   val JUMPING_BUNNY = new Image("/bunnies/brown/long_ears/normal_teeth/thick_fur/jumping.png")
 }
 
 /** Bunny wrapper in order to manage its movement */
 trait BunnyView {
-  /** The image of the this displayed on the GUI */
+  /** The image of the bunny displayed on the GUI */
   val imageView: ImageView
 
-  /** The Direction of the this jumps */
+  /** The Direction of the bunny jumps */
   var direction: Direction
 
-  /** The X-Axis position of the this */
+  /** The X-Axis position of the bunny */
   var positionX: Double
 
-  /** The Y-Axis position of the this */
+  /** The Y-Axis position of the bunny */
   var positionY: Double
 
-  /** Method that returns the Set[KeyFrame] representing a bunny jump */
+  /** Method that returns the steps to perform a bunny jump
+   * @return      a Set[KeyFrame] containing the representation of a bunny jump
+   * */
   def jump(): Seq[KeyFrame]
 }
 
@@ -55,7 +57,7 @@ object BunnyView {
       checkDirection()
       Seq(
         at(0 s){
-          Set(imageView.image -> BunnyTypes.JUMPING_BUNNY)
+          Set(imageView.image -> BunnyTypesDeprecated.JUMPING_BUNNY)
         },
         at(0.5 s) {
           if (direction == Right) positionX += 50 else positionX -= 50
@@ -70,12 +72,12 @@ object BunnyView {
           Set(imageView.x -> positionX, imageView.y -> positionY)
         },
         at(1.1 s) {
-          Set(imageView.image -> BunnyTypes.NORMAL_BUNNY)
+          Set(imageView.image -> BunnyTypesDeprecated.NORMAL_BUNNY)
         }
       )
     }
 
-    /** Method that checks the actual direction of the this and update the orientation of its image */
+    /** Method that checks the actual direction of the bunny and update the orientation of its image */
     private def checkDirection(): Unit = {
       if ((positionX + 100) >= 1000-100) {
         direction = Left
