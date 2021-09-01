@@ -8,8 +8,8 @@ import view.scalaFX.utilities.Direction._
 import scala.util.Random
 
 object BunnyTypes {
-  val NORMAL_BUNNY = new Image("/bunny/normal.png")
-  val JUMPING_BUNNY = new Image("/bunny/jumping.png")
+  val NORMAL_BUNNY = new Image("/bunnies/brown/long_ears/normal_teeth/thick_fur/normal.png")
+  val JUMPING_BUNNY = new Image("/bunnies/brown/long_ears/normal_teeth/thick_fur/jumping.png")
 }
 
 /** Bunny wrapper in order to manage its movement */
