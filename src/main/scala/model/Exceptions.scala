@@ -1,6 +1,7 @@
 package model
 
-import model.Genes.GeneKind
+import model.genome.Gene
+import model.genome.Genes.GeneKind
 
 class ExplainedException(exp: String) extends Exception {
   print(exp + "\n")

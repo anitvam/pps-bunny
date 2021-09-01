@@ -1,6 +1,8 @@
-package model
-import Alleles.AlleleKind
-import Genes.GeneKind
+package model.genome
+
+import model.genome.Alleles.AlleleKind
+import model.genome.Genes.GeneKind
+import model.{IllegalGenotypeBuildException, InconsistentGenotypeException}
 
 /**
  * Represents Phenotype of the Bunny, which is the visible traits.

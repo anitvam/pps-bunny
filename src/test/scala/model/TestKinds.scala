@@ -1,5 +1,6 @@
 package model
 
+import model.genome.{Alleles, Genes}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestKinds extends FlatSpec with Matchers {

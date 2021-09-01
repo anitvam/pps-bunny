@@ -1,8 +1,9 @@
-package model
+package model.genome
 
-import model.Alleles.AlleleKind
-import model.Genes.GeneKind
-import model.GenesUtils.getGeneKind
+import model.genome.Alleles.AlleleKind
+import model.genome.Genes.GeneKind
+import model.genome.GenesUtils.getGeneKind
+import model.{InconsistentAlleleException, InconsistentMutatedAlleleException}
 
 /**
  * Represents an Allele of a Gene of a specific Bunny.
@@ -22,7 +23,7 @@ sealed trait Allele {
  * @param kind the kind of the Allele.
  */
 case class StandardAllele(kind: AlleleKind) extends Allele {
-  override val isMutated: Boolean = true
+  override val isMutated: Boolean = false
 }
 
 /**
@@ -30,7 +31,7 @@ case class StandardAllele(kind: AlleleKind) extends Allele {
  * @param kind the kind of the Allele.
  */
 case class JustMutatedAllele(kind:AlleleKind) extends Allele{
-  override val isMutated: Boolean = false
+  override val isMutated: Boolean = true
   if (getGeneKind(kind).mutated != kind) throw new InconsistentMutatedAlleleException
 }
 

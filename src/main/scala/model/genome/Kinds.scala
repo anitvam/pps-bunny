@@ -1,7 +1,8 @@
-package model
+package model.genome
 
-import model.Alleles.AlleleKind
-import model.Genes.GeneKind
+import model.MultipleDominanceAssignmentException
+import model.genome.Alleles.AlleleKind
+import model.genome.Genes.GeneKind
 
 import scala.language.implicitConversions
 import scala.util.Random
