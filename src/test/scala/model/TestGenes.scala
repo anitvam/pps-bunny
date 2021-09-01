@@ -59,7 +59,7 @@ class TestGenes extends FlatSpec with Matchers {
   "Any Genotype" should "throw an Exception if the GeneType in the key is not coherent with the kind in the corresponding Gene" in {
     assertThrows[InconsistentGenotypeException] {
       val genes: Map[GeneKind, Gene] = Map(
-        FUR_COLOR -> StandardGene(Genes.EARS, StandardAllele(Alleles.WHITE_FUR), StandardAllele(Alleles.BROWN_FUR)),
+        FUR_COLOR -> StandardGene(Genes.EARS, StandardAllele(Alleles.HIGH_EARS), StandardAllele(Alleles.HIGH_EARS)),
         FUR_LENGTH -> StandardGene(Genes.FUR_LENGTH, StandardAllele(Alleles.SHORT_FUR), StandardAllele(Alleles.SHORT_FUR)))
       PartialGenotype(genes)
     }

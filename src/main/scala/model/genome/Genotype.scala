@@ -11,6 +11,7 @@ sealed trait Phenotype {
   val visibleTraits: Map[GeneKind, AlleleKind]
 }
 
+
 /**
  * Represents a standard Phenotype.
  * @param visibleTraits traits that need to be shown

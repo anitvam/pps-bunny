@@ -16,16 +16,10 @@ object Alleles extends Enumeration{
   /**
    * The information each AlleleKind must have
    * @param dominant specifies if it's dominant or not, it could be empty it not chosen yet
-   * @param locked   show if the dominance has already been chosen (becoming unmodifiable) or not
    */
-  protected case class AllelesVal(private var dominant: Option[Boolean] = Option.empty,
-                                  var locked: Boolean = false) extends super.Val {
-    def setDominance(cond: Boolean): Unit = {
-      if (locked) throw new MultipleDominanceAssignmentException else {
-        dominant = Option(cond)
-        locked = true
-      }
-    }
+  protected case class AllelesVal(private var dominant: Option[Boolean] = Option.empty) extends super.Val {
+    def setDominance(cond: Boolean): Unit =
+      if(dominant.isDefined) throw new MultipleDominanceAssignmentException else dominant = Option(cond)
     def isDominant: Option[Boolean] = dominant
   }
   implicit def valueToAllelesVal(x: Value): AllelesVal = x.asInstanceOf[AllelesVal]
@@ -100,8 +94,8 @@ object GenesUtils {
    * @param alleleKind the AlleleKind that has to be set as dominant
    */
   def setAlleleDominance(alleleKind: AlleleKind): Unit = {
-    alleleKind.setDominance(cond = true)
-    getAlternativeAlleleKind(alleleKind).setDominance(cond = false)
+    alleleKind.setDominance(true)
+    getAlternativeAlleleKind(alleleKind).setDominance(false)
   }
 
   /**

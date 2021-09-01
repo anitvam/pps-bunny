@@ -11,6 +11,7 @@ import model.{InconsistentAlleleException, InconsistentMutatedAlleleException}
 sealed trait Allele {
   val kind: AlleleKind
   val isMutated: Boolean
+  def isDominant = kind.isDominant.getOrElse(false)
   def getCaseSensitiveLetter(letter: String): String = {
     if (kind.isDominant.isDefined) {
       if (kind.isDominant.get) letter.toUpperCase else letter.toLowerCase
@@ -43,12 +44,12 @@ trait Gene {
   val momAllele: Allele
   val dadAllele: Allele
 
-  def getVisibleTrait: AlleleKind =
-    if (momAllele.kind == dadAllele.kind || momAllele.kind.isDominant.getOrElse(false)) momAllele.kind else dadAllele.kind
+  def isHomozygous: Boolean = momAllele.kind == dadAllele.kind
+  def getVisibleTrait: AlleleKind = if (isHomozygous || momAllele.isDominant) momAllele.kind else dadAllele.kind
   def getLetters: String = momAllele.getCaseSensitiveLetter(kind.letter) + dadAllele.getCaseSensitiveLetter(kind.letter)
+  private def checkKind(allele: Allele) = allele.kind == kind.base || allele.kind == kind.mutated
 
-  if (!(momAllele.kind == kind.mutated || momAllele.kind == kind.base)
-    && (dadAllele.kind == kind.mutated || dadAllele.kind == kind.base))
+  if (!(checkKind(momAllele) && checkKind(dadAllele)))
     throw new InconsistentAlleleException
 }
 
