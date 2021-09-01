@@ -87,7 +87,7 @@ object GenesUtils {
 
   /**
    * @param alleleKind  the AlleleKind of which alternative AlleleKind is needed
-   * @return            the AlleleKind uniquely associated with this AlleleKind
+   * @return            the AlleleKind uniquely associated with the specified AlleleKind
    */
   def getAlternativeAlleleKind(alleleKind:AlleleKind): AlleleKind = {
     val geneKind = getGeneKind(alleleKind)

@@ -32,7 +32,7 @@ case class AliveBunny(genotype: CompletedGenotype, mom:Option[Bunny], dad:Option
 }
 
 /**
- * Represents a Bunny which dead.
+ * Represents a Bunny which is dead.
  * @param genotype  contains the Bunny genes, it must be completed (contain all the available Genes of the world)
  * @param mom       the bunny's mom
  * @param dad       the bunny's dad
@@ -114,7 +114,7 @@ object BunnyUtils {
               StandardGene(gk, grandpaMomAllele, grandmaDadAllele),
               StandardGene(gk, grandmaMomAllele, grandpaDadAllele),
               StandardGene(gk, grandpaMomAllele, grandpaDadAllele)))
-      children = (for (i <- 0 until CHILDREN_NUMBER) yield PartialGenotype(children(i) + childrenGenes(i))).toList
+      children = (for (i <- 0 until CHILDREN_NUMBER) yield children(i) + childrenGenes(i)).toList
     })
     children.map(child => ChildBunny(genotype = CompletedGenotype(child.genes), mom = Option(mom), dad = Option(dad)))
   }
