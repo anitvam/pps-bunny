@@ -1,0 +1,106 @@
+package view.scalaFX.components
+
+import model.Bunny
+import model.genome.Alleles
+import scalafx.Includes.{at, double2DurationHelper}
+import scalafx.animation.KeyFrame
+import scalafx.scene.image.{Image, ImageView}
+import view.scalaFX.utilities.Direction
+import view.scalaFX.utilities.Direction._
+import view.utilities.ImageType.{Jumping, Normal}
+import view.utilities.{BunnyImageUtils, ImageType}
+
+import scala.language.postfixOps
+import scala.util.Random
+
+/** Bunny wrapper in order to manage its movement inside of the GUI */
+trait BunnyView {
+  /** Reference to the model bunny entity */
+  val bunny: Bunny
+
+  /** The image of the bunny displayed on the GUI */
+  val imageView: ImageView
+
+  /** The Direction of the bunny jumps */
+  var direction: Direction
+
+  /** The X-Axis position of the bunny */
+  var positionX: Double
+
+  /** The Y-Axis position of the bunny */
+  var positionY: Double
+
+  /** Method that returns the steps to perform a bunny jump
+   * @return      a Seq[KeyFrame] containing the representation of a bunny jump
+   * */
+  def jump(): Seq[KeyFrame]
+}
+
+object BunnyView {
+  val PREFERRED_PANEL_WIDTH = 700
+  val PREFERRED_PANEL_HEIGHT = 200
+  val PANEL_SKY_ZONE = 80
+  val PREFERRED_BUNNY_SIZE = 80
+  val BUNNY_NORMAL_JUMP = 40
+  val BUNNY_HIGH_JUMP = 80
+
+  def apply(bunny: Bunny): BunnyView = {
+    val newX = Random.nextInt(PREFERRED_PANEL_WIDTH)
+    val newY = Random.nextInt(PREFERRED_PANEL_HEIGHT) + PANEL_SKY_ZONE
+
+    BunnyViewImpl(new ImageView {
+      image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
+      x = newX
+      y = newY
+      fitWidth = PREFERRED_BUNNY_SIZE
+      fitHeight = PREFERRED_BUNNY_SIZE
+      preserveRatio = true
+      scaleX = Direction.scaleXValue(Right)
+    }, bunny, Right, newX, newY)
+  }
+
+  private case class BunnyViewImpl(imageView: ImageView,
+                                   bunny: Bunny,
+                                   var direction: Direction,
+                                   var positionX: Double,
+                                   var positionY: Double) extends BunnyView {
+
+    private val normalImage: Image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
+    private val jumpingImage: Image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Jumping)
+    private val jumpingValue = if(bunny.genotype.phenotype.visibleTraits.values.exists(kind => kind == Alleles.HIGH_JUMP)) BUNNY_HIGH_JUMP else BUNNY_NORMAL_JUMP
+
+    override def jump(): Seq[KeyFrame] = {
+      checkDirection()
+      Seq(
+        at(0 s){
+          Set(imageView.image -> jumpingImage)
+        },
+        at(0.5 s) {
+          if (direction == Right) positionX += jumpingValue else positionX -= jumpingValue
+          positionY -= jumpingValue
+  
+          Set(imageView.x -> positionX, imageView.y -> positionY)
+        },
+        at(1 s) {
+          if (direction == Right) positionX += jumpingValue else positionX -= jumpingValue
+          positionY += jumpingValue
+
+          Set(imageView.x -> positionX, imageView.y -> positionY)
+        },
+        at(1.1 s) {
+          Set(imageView.image -> normalImage)
+        }
+      )
+    }
+
+    /** Method that checks the actual direction of the bunny and update the orientation of its image */
+    private def checkDirection(): Unit = {
+      if ((positionX + 100) >= PREFERRED_PANEL_WIDTH) {
+        direction = Left
+      } else if (positionX - 100 < 0) {
+        direction = Right
+      }
+      imageView.setScaleX(scaleXValue(direction))
+    }
+  }
+}
