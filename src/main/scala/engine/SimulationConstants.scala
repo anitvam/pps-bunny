@@ -27,5 +27,4 @@ object SimulationConstants {
 
   /**Maximum number of generation which each bunny can live*/
   val MAX_BUNNY_AGE = 4
-
 }
