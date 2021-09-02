@@ -5,6 +5,7 @@ import scalafx.animation.KeyFrame
 import scalafx.scene.image.{Image, ImageView}
 import view.scalaFX.utilities.Direction._
 
+import scala.language.postfixOps
 import scala.util.Random
 
 object BunnyTypesDeprecated {
@@ -38,7 +39,7 @@ object BunnyView {
     val newY = Random.nextInt(300) + 50
 
     BunnyViewImpl(new ImageView {
-      image = BunnyTypes.NORMAL_BUNNY
+      image = BunnyTypesDeprecated.NORMAL_BUNNY
       x = newX
       y = newY
       fitWidth = 100
