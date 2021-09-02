@@ -17,7 +17,7 @@ object SimulationConstants {
   val GEN_END: FiniteDuration = 12000 millis
 
   /**Maximum number of alive bunnies in the world*/
-  val MAX_BUNNIES_NUMBER = 50
+  val MAX_BUNNIES_NUMBER = 500
 
   /**Maximum number of generations in a simulation*/
   val MAX_GENERATIONS_NUMBER = 1000

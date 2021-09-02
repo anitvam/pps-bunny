@@ -7,7 +7,9 @@ trait Generation{
   def environment: Environment
   def population: Population
   def population_=(bunnies:Population):Unit
-  def ended: Unit
+  def ended(): Unit
+
+  def getBunniesNumber:Int = population.count(_.alive)
 }
 
 object Generation{
@@ -21,7 +23,7 @@ object Generation{
   private class GenerationImpl( override val environment: Environment,
                                 override var population: Population,
                                 var isEnded:Boolean = false) extends Generation{
-    override def ended: Unit = isEnded = true
+    override def ended(): Unit = isEnded = true
   }
 }
 
