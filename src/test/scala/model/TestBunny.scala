@@ -16,7 +16,7 @@ class TestBunny extends FlatSpec with Matchers {
   }
 
   it should "have a Phenotype with only base attributes" in {
-    generateBaseFirstBunny.genotype.getPhenotype.visibleTraits.foreach(entry =>
+    generateBaseFirstBunny.genotype.phenotype.visibleTraits.foreach(entry =>
       assert(entry._2 == entry._1.base))
   }
 
@@ -58,11 +58,11 @@ class TestBunny extends FlatSpec with Matchers {
 
   it should "be one for each cell of the Punnett square, for each Gene" in {
     Genes.values.foreach(gk => {
-      val grandmaMomAllele= mom.genotype.genes(gk).momAllele.kind
-      val grandpaMomAllele = mom.genotype.genes(gk).dadAllele.kind
-      val grandmaDadAllele= dad.genotype.genes(gk).momAllele.kind
-      val grandpaDadAllele= dad.genotype.genes(gk).dadAllele.kind
-      val childrenGenesOfType = children.map(b => b.genotype.genes(gk))
+      val grandmaMomAllele= mom.genotype(gk).momAllele.kind
+      val grandpaMomAllele = mom.genotype(gk).dadAllele.kind
+      val grandmaDadAllele= dad.genotype(gk).momAllele.kind
+      val grandpaDadAllele= dad.genotype(gk).dadAllele.kind
+      val childrenGenesOfType = children.map(b => b.genotype(gk))
 
       assert(childrenGenesOfType.contains(Gene(gk, StandardAllele(grandmaMomAllele), StandardAllele(grandmaDadAllele))))
       assert(childrenGenesOfType.contains(Gene(gk, StandardAllele(grandmaMomAllele), StandardAllele(grandpaDadAllele))))
@@ -96,7 +96,7 @@ class TestBunny extends FlatSpec with Matchers {
   }
 
   it should "contain the right number of bunnies after many generations " in {
-    val generations = 10
+    val generations = 8
     var genBunnies: Seq[Bunny] = List.fill(bunniesNum)(generateRandomFirstBunny)
     var num = genBunnies.size
     var oldBunnies = 0
@@ -111,8 +111,8 @@ class TestBunny extends FlatSpec with Matchers {
   "Bunnies " should "be splittable by gene" in {
     val bunnies: List[Bunny] = List.fill(10)(generateRandomFirstBunny)
     Genes.values.foreach(gk => {
-      val baseCount = bunnies.count(_.genotype.getPhenotype.visibleTraits(gk) == gk.base)
-      val mutatedCount = bunnies.count(_.genotype.getPhenotype.visibleTraits(gk) == gk.mutated)
+      val baseCount = bunnies.count(_.genotype.phenotype(gk) == gk.base)
+      val mutatedCount = bunnies.count(_.genotype.phenotype(gk) == gk.mutated)
       val split = splitBunniesByGene(gk, bunnies)
       assert(split._1.size == baseCount)
       assert(split._2.size == mutatedCount)

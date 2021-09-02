@@ -54,7 +54,7 @@ object Bunny {
       CompletedGenotype(
         Genes.values.unsorted.map(gk => {
           (gk, Gene(gk, StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2))),
-            StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2)))))
+                        StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2)))))
         }).toMap
       )
     )
@@ -68,7 +68,7 @@ object Bunny {
    *                 and the sequence of bunnies with the mutated Allele
    */
   def splitBunniesByGene(geneKind: GeneKind, bunnies: Seq[Bunny]): (Seq[Bunny], Seq[Bunny]) =
-    bunnies.partition(_.genotype.getPhenotype.visibleTraits(geneKind) == geneKind.base)
+    bunnies.partition(_.genotype.phenotype(geneKind) == geneKind.base)
 
   /**
    *

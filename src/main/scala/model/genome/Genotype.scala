@@ -9,6 +9,7 @@ import model.{IllegalGenotypeBuildException, InconsistentGenotypeException}
  */
 sealed trait Phenotype {
   val visibleTraits: Map[GeneKind, AlleleKind]
+  def apply(gk: GeneKind): AlleleKind = visibleTraits(gk)
 }
 
 object Phenotype {
@@ -21,7 +22,8 @@ object Phenotype {
  */
 sealed trait Genotype {
   val genes: Map[GeneKind, Gene]
-  def getPhenotype: Phenotype = Phenotype(genes.map(entry => (entry._1, entry._2.getVisibleTrait)))
+  val phenotype: Phenotype = Phenotype(genes.map(entry => (entry._1, entry._2.getVisibleTrait)))
+  def apply(gk: GeneKind): Gene = genes(gk)
   if (genes.count(g => g._1 != g._2.kind) > 0)
     throw new InconsistentGenotypeException(genes)
 }
