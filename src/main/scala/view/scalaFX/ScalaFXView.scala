@@ -12,8 +12,10 @@ import model.Bunny
 import java.io.IOException
 import view._
 
-class ScalaFXView extends View{
-  def start(bunnies: Set[Bunny]): Unit = {
+class ScalaFXView() extends View {
+  var baseAppController: Option[BaseAppControllerInterface] = None
+
+  def start(): Unit = {
     val baseAppView = getClass.getResource("/fxml/baseApp.fxml")
     if (baseAppView == null) {
       throw new IOException("Cannot load resource: baseApp.fxml")
@@ -22,13 +24,16 @@ class ScalaFXView extends View{
     val loader = new FXMLLoader(baseAppView, NoDependencyResolver)
     loader.load()
     val root = loader.getRoot[jfxs.Parent]
-    val rootController = loader.getController[BaseAppControllerInterface]
-    rootController.initialize(bunnies)
+    baseAppController = Some(loader.getController[BaseAppControllerInterface])
 
     stage = new PrimaryStage() {
       title = "Bunnies"
       scene = new Scene(root)
     }
     stage.setResizable(false)
+  }
+
+  def showPopulation(bunnies: Seq[Bunny]): Unit = {
+    baseAppController.get.initialize(bunnies)
   }
 }

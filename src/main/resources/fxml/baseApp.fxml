@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #FFD07B;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scalaFX.FXControllers.BaseAppController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #FFD07B;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scalaFX.FXControllers.BaseAppController">
    <children>
       <GridPane layoutX="222.0" layoutY="99.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="456.0" minWidth="10.0" percentWidth="75.0" prefWidth="445.0" />
+          <ColumnConstraints hgrow="NEVER" percentWidth="75.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.0" minWidth="10.0" prefWidth="155.0" />
         </columnConstraints>
         <rowConstraints>
@@ -22,11 +22,11 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" percentHeight="55.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints percentHeight="55.0" vgrow="NEVER" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <AnchorPane fx:id="simulationPane" prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane fx:id="simulationPane" maxHeight="375.0" maxWidth="815.0" minHeight="375.0" minWidth="815.0" prefHeight="375.0" prefWidth="815.0">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
