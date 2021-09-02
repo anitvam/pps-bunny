@@ -52,16 +52,12 @@ object BunnyImage {
   val JUMPING_WHITE_LONG_EARS_NORMAL_TEETH_THICK_FUR = "/bunnies/white/long_ears/normal_teeth/thick_fur/jumping.png"
 
 
-  /** Retrieve the normal image associated to a Bunny
+  /** Retrieve the image associated to a Bunny
    * @param bunny the bunny on which the image will be computed
    * @return      the scalafx.scene.image.Image of the bunny on normal state
    * */
-  def getNormalImageFromBunny(): Image = ???
+  implicit def getImageFromBunny(): ImageWrapper = ???
 
-  /** Retrieve the jumping image associated to a Bunny
-   * @param bunny the bunny on which the image will be computed
-   * @return      the scalafx.scene.image.Image of the bunny on jumping state
-   * */
-  def getJumpingImageFromBunny(): Image = ???
-
+  case class ImageWrapper(normalImage: Image, jumpingImage: Image)
 }
+
