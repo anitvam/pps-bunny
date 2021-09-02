@@ -11,7 +11,8 @@ import model.{InconsistentAlleleException, InconsistentMutatedAlleleException}
 sealed trait Allele {
   val kind: AlleleKind
   val isMutated: Boolean
-  def isDominant = kind.isDominant.getOrElse(false)
+
+  def isDominant: Boolean = kind.isDominant.getOrElse(false)
   def getCaseSensitiveLetter(letter: String): String = {
     if (kind.isDominant.isDefined) {
       if (kind.isDominant.get) letter.toUpperCase else letter.toLowerCase
@@ -47,18 +48,27 @@ trait Gene {
   def isHomozygous: Boolean = momAllele.kind == dadAllele.kind
   def getVisibleTrait: AlleleKind = if (isHomozygous || momAllele.isDominant) momAllele.kind else dadAllele.kind
   def getLetters: String = momAllele.getCaseSensitiveLetter(kind.letter) + dadAllele.getCaseSensitiveLetter(kind.letter)
-  private def checkKind(allele: Allele) = allele.kind == kind.base || allele.kind == kind.mutated
-
-  if (!(checkKind(momAllele) && checkKind(dadAllele)))
-    throw new InconsistentAlleleException
+  override def equals(otherGene: Any): Boolean = {
+    val g = otherGene.asInstanceOf[Gene]
+    g.kind == kind && g.momAllele == momAllele && g.dadAllele == dadAllele
+  }
 }
 
-/**
- *  Represents a Standard Gene of a specific Bunny.
- * @param kind      the kind of Gene
- * @param momAllele the allele from the mom
- * @param dadAllele the allele from the dad
- */
-case class StandardGene(kind: GeneKind,
-                        momAllele: Allele,
-                        dadAllele: Allele) extends Gene
+object Gene {
+  def apply(kind: GeneKind, momAllele: Allele, dadAllele: Allele): Gene = {
+    val checkKind = (allele: Allele) => allele.kind == kind.base || allele.kind == kind.mutated
+    if (!(checkKind(momAllele) && checkKind(dadAllele))) throw new InconsistentAlleleException
+    new GeneImpl(kind, momAllele, dadAllele)
+  }
+
+  /**
+   *  Represents a Standard Gene of a specific Bunny.
+   * @param kind      the kind of Gene
+   * @param momAllele the allele from the mom
+   * @param dadAllele the allele from the dad
+   */
+  private class GeneImpl(override val kind: GeneKind,
+                         override val momAllele: Allele,
+                         override val dadAllele: Allele) extends Gene
+}
+

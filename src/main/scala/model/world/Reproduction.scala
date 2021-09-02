@@ -32,10 +32,10 @@ object Reproduction {
       val grandpaDadAllele = dad.genotype.genes(gk).dadAllele
 
       val anotherGene = Random.shuffle(
-        List(StandardGene(gk, grandmaMomAllele, grandmaDadAllele),
-          StandardGene(gk, grandpaMomAllele, grandmaDadAllele),
-          StandardGene(gk, grandmaMomAllele, grandpaDadAllele),
-          StandardGene(gk, grandpaMomAllele, grandpaDadAllele)))
+        List(Gene(gk, grandmaMomAllele, grandmaDadAllele),
+          Gene(gk, grandpaMomAllele, grandmaDadAllele),
+          Gene(gk, grandmaMomAllele, grandpaDadAllele),
+          Gene(gk, grandpaMomAllele, grandpaDadAllele)))
       childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE) yield childrenGenotypes(i) + anotherGene(i)).toList
     })
     childrenGenotypes.map(cg => new ChildBunny(CompletedGenotype(cg.genes), Option(mom), Option(dad)))

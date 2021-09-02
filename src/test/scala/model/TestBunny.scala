@@ -1,7 +1,7 @@
 package model
 import model.BunnyUtils.{generateBaseFirstBunny, generateRandomFirstBunny}
 import model.world.Reproduction.{MAX_BUNNY_AGE, combineCouples, generateAllChildren, generateChildren, nextGenerationBunnies}
-import model.genome.{Genes, StandardAllele, StandardGene}
+import model.genome.{Genes, StandardAllele, Gene}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestBunny extends FlatSpec with Matchers {
@@ -58,10 +58,10 @@ class TestBunny extends FlatSpec with Matchers {
       val grandpaDadAllele= dad.genotype.genes(gk).dadAllele.kind
       val childrenGenesOfType = children.map(b => b.genotype.genes(gk))
 
-      assert(childrenGenesOfType.contains(StandardGene(gk, StandardAllele(grandmaMomAllele), StandardAllele(grandmaDadAllele))))
-      assert(childrenGenesOfType.contains(StandardGene(gk, StandardAllele(grandmaMomAllele), StandardAllele(grandpaDadAllele))))
-      assert(childrenGenesOfType.contains(StandardGene(gk, StandardAllele(grandpaMomAllele), StandardAllele(grandmaDadAllele))))
-      assert(childrenGenesOfType.contains(StandardGene(gk, StandardAllele(grandpaMomAllele), StandardAllele(grandpaDadAllele))))
+      assert(childrenGenesOfType.contains(Gene(gk, StandardAllele(grandmaMomAllele), StandardAllele(grandmaDadAllele))))
+      assert(childrenGenesOfType.contains(Gene(gk, StandardAllele(grandmaMomAllele), StandardAllele(grandpaDadAllele))))
+      assert(childrenGenesOfType.contains(Gene(gk, StandardAllele(grandpaMomAllele), StandardAllele(grandmaDadAllele))))
+      assert(childrenGenesOfType.contains(Gene(gk, StandardAllele(grandpaMomAllele), StandardAllele(grandpaDadAllele))))
     })
   }
 

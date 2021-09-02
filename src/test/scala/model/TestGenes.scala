@@ -3,7 +3,7 @@ package model
 import model.BunnyUtils.generateBaseFirstBunny
 import model.genome.Genes.{FUR_COLOR, FUR_LENGTH, GeneKind}
 import model.genome.GenesUtils.{assignRandomDominance, getGeneKind}
-import model.genome.{Alleles, CompletedGenotype, Gene, Genes, JustMutatedAllele, PartialGenotype, StandardAllele, StandardGene}
+import model.genome._
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestGenes extends FlatSpec with Matchers {
@@ -41,12 +41,12 @@ class TestGenes extends FlatSpec with Matchers {
 
   "Any Gene" should "throw an Exception if initialized with Alleles of the wrong kind" in {
     assertThrows[InconsistentAlleleException] {
-      StandardGene(Genes.FUR_COLOR, StandardAllele(Alleles.LONG_FUR), StandardAllele(Alleles.BROWN_FUR))
+      Gene(Genes.FUR_COLOR, StandardAllele(Alleles.LONG_FUR), StandardAllele(Alleles.BROWN_FUR))
     }
   }
 
   it should " be initialized with Alleles of the right kind" in {
-    noException should be thrownBy StandardGene(Genes.FUR_COLOR, StandardAllele(Alleles.WHITE_FUR), StandardAllele(Alleles.WHITE_FUR))
+    noException should be thrownBy Gene(Genes.FUR_COLOR, StandardAllele(Alleles.WHITE_FUR), StandardAllele(Alleles.WHITE_FUR))
   }
 
   it should " be inferable from any of its Alleles" in {
@@ -59,8 +59,8 @@ class TestGenes extends FlatSpec with Matchers {
   "Any Genotype" should "throw an Exception if the GeneType in the key is not coherent with the kind in the corresponding Gene" in {
     assertThrows[InconsistentGenotypeException] {
       val genes: Map[GeneKind, Gene] = Map(
-        FUR_COLOR -> StandardGene(Genes.EARS, StandardAllele(Alleles.HIGH_EARS), StandardAllele(Alleles.HIGH_EARS)),
-        FUR_LENGTH -> StandardGene(Genes.FUR_LENGTH, StandardAllele(Alleles.SHORT_FUR), StandardAllele(Alleles.SHORT_FUR)))
+        FUR_COLOR -> Gene(Genes.EARS, StandardAllele(Alleles.HIGH_EARS), StandardAllele(Alleles.HIGH_EARS)),
+        FUR_LENGTH -> Gene(Genes.FUR_LENGTH, StandardAllele(Alleles.SHORT_FUR), StandardAllele(Alleles.SHORT_FUR)))
       PartialGenotype(genes)
     }
   }
@@ -68,18 +68,20 @@ class TestGenes extends FlatSpec with Matchers {
   "Any completed Genotype" should "throw an Exception if does not contain kind of Genes" in {
     assertThrows[IllegalGenotypeBuildException] {
       CompletedGenotype(Map(
-        FUR_COLOR ->  StandardGene(Genes.FUR_COLOR, StandardAllele(Alleles.WHITE_FUR), StandardAllele(Alleles.BROWN_FUR)),
-        FUR_LENGTH -> StandardGene(Genes.FUR_LENGTH, StandardAllele(Alleles.SHORT_FUR), StandardAllele(Alleles.SHORT_FUR))))
+        FUR_COLOR ->  Gene(Genes.FUR_COLOR, StandardAllele(Alleles.WHITE_FUR), StandardAllele(Alleles.BROWN_FUR)),
+        FUR_LENGTH -> Gene(Genes.FUR_LENGTH, StandardAllele(Alleles.SHORT_FUR), StandardAllele(Alleles.SHORT_FUR))))
     }
   }
 
   it should "be editable adding any Gene, which will replace the previous one with the same GeneType" in {
     val geneKind = Genes.FUR_COLOR
-    val standardGene =  StandardGene(geneKind, StandardAllele(geneKind.base),  StandardAllele(geneKind.base))
-    val updatedGene =  StandardGene(geneKind, StandardAllele(geneKind.base),  StandardAllele(geneKind.mutated))
+    val standardGene =  Gene(geneKind, StandardAllele(geneKind.base),  StandardAllele(geneKind.base))
+    val updatedGene =  Gene(geneKind, StandardAllele(geneKind.base),  StandardAllele(geneKind.mutated))
     val standardBunny = generateBaseFirstBunny
     val updatedBunny = new FirstBunny(standardBunny.genotype + updatedGene)
 
+    println(standardBunny.genotype.genes(geneKind))
+    println(standardGene)
     assert(standardBunny.genotype.genes(geneKind) == standardGene)
     assert(updatedBunny.genotype.genes(geneKind) == updatedGene)
   }

@@ -1,6 +1,6 @@
 package model
 import model.genome.Alleles.AlleleKind
-import model.genome.{CompletedGenotype, Genes, StandardAllele, StandardGene}
+import model.genome.{CompletedGenotype, Gene, Genes, StandardAllele}
 
 import scala.util.Random
 
@@ -41,7 +41,7 @@ object BunnyUtils {
    */
   def generateBaseFirstBunny: FirstBunny =
     new FirstBunny(CompletedGenotype(Genes.values.unsorted.map(gk =>
-      (gk, StandardGene(gk, StandardAllele(gk.base), StandardAllele(gk.base)))).toMap))
+      (gk, Gene(gk, StandardAllele(gk.base), StandardAllele(gk.base)))).toMap))
 
   /**
    * @return a FirstBunny with a random allele for each gene
@@ -50,7 +50,7 @@ object BunnyUtils {
     new FirstBunny(
       CompletedGenotype(
         Genes.values.unsorted.map(gk => {
-          (gk, StandardGene(gk, StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2))),
+          (gk, Gene(gk, StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2))),
             StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2)))))
         }).toMap
       )
