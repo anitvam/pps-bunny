@@ -1,20 +1,21 @@
 package view.scalaFX.components
 
+import model.Bunny
 import scalafx.Includes.{at, double2DurationHelper}
 import scalafx.animation.KeyFrame
 import scalafx.scene.image.{Image, ImageView}
 import view.scalaFX.utilities.Direction._
+import view.utilities.ImageType.{Jumping, Normal}
+import view.utilities.{BunnyImageUtils, ImageType}
 
 import scala.language.postfixOps
 import scala.util.Random
 
-object BunnyTypesDeprecated {
-  val NORMAL_BUNNY = new Image("/bunnies/brown/long_ears/normal_teeth/thick_fur/normal.png")
-  val JUMPING_BUNNY = new Image("/bunnies/brown/long_ears/normal_teeth/thick_fur/jumping.png")
-}
-
 /** Bunny wrapper in order to manage its movement */
 trait BunnyView {
+  /** Reference to the model bunny entity */
+  val bunny: Bunny
+
   /** The image of the bunny displayed on the GUI */
   val imageView: ImageView
 
@@ -34,22 +35,23 @@ trait BunnyView {
 }
 
 object BunnyView {
-  def apply(): BunnyView = {
+  def apply(bunny: Bunny): BunnyView = {
     val newX = Random.nextInt(800)
     val newY = Random.nextInt(300) + 50
 
     BunnyViewImpl(new ImageView {
-      image = BunnyTypesDeprecated.NORMAL_BUNNY
+      image = BunnyImageUtils.bunnyToImage((bunny, ImageType.Normal))
       x = newX
       y = newY
       fitWidth = 100
       fitHeight = 100
       preserveRatio = true
       scaleX = -1
-    }, Right, newX, newY)
+    }, bunny, Right, newX, newY)
   }
 
   private case class BunnyViewImpl(imageView: ImageView,
+                                   val bunny: Bunny,
                                    var direction: Direction,
                                    var positionX: Double,
                                    var positionY: Double) extends BunnyView {
@@ -58,7 +60,7 @@ object BunnyView {
       checkDirection()
       Seq(
         at(0 s){
-          Set(imageView.image -> BunnyTypesDeprecated.JUMPING_BUNNY)
+          Set(imageView.image -> BunnyImageUtils.bunnyToImage(bunny, ImageType.Jumping))
         },
         at(0.5 s) {
           if (direction == Right) positionX += 50 else positionX -= 50
@@ -73,7 +75,7 @@ object BunnyView {
           Set(imageView.x -> positionX, imageView.y -> positionY)
         },
         at(1.1 s) {
-          Set(imageView.image -> BunnyTypesDeprecated.NORMAL_BUNNY)
+          Set(imageView.image -> BunnyImageUtils.bunnyToImage((bunny, ImageType.Normal)))
         }
       )
     }

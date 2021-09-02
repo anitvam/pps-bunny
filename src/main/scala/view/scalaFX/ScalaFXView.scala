@@ -7,11 +7,13 @@ import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import view.scalaFX.FXControllers.BaseAppControllerInterface
 import scalafx.Includes._
 import javafx.{scene => jfxs}
+import model.Bunny
+
 import java.io.IOException
 import view._
 
 class ScalaFXView extends View{
-  def start(): Unit = {
+  def start(bunnies: Set[Bunny]): Unit = {
     val baseAppView = getClass.getResource("/fxml/baseApp.fxml")
     if (baseAppView == null) {
       throw new IOException("Cannot load resource: baseApp.fxml")
@@ -21,7 +23,7 @@ class ScalaFXView extends View{
     loader.load()
     val root = loader.getRoot[jfxs.Parent]
     val rootController = loader.getController[BaseAppControllerInterface]
-    rootController.initialize()
+    rootController.initialize(bunnies)
 
     stage = new PrimaryStage() {
       title = "Bunnies"
