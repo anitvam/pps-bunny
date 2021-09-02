@@ -30,7 +30,6 @@ object Reproduction {
       val grandpaMomAllele = mom.genotype.genes(gk).dadAllele
       val grandmaDadAllele = dad.genotype.genes(gk).momAllele
       val grandpaDadAllele = dad.genotype.genes(gk).dadAllele
-
       val anotherGene = Random.shuffle(
         List( Gene(gk, grandmaMomAllele, grandmaDadAllele),
               Gene(gk, grandpaMomAllele, grandmaDadAllele),

@@ -20,7 +20,7 @@ class TestBunny extends FlatSpec with Matchers {
       assert(entry._2 == entry._1.base))
   }
 
-  "Couples of bunnies " should "be generated from any group of Bunnies" in {
+  "Couples of bunnies " should "be generable from any group of Bunnies" in {
     val someBunnies = Seq.fill(9)(generateRandomFirstBunny)
     val someCouples = combineCouples(someBunnies)
     assert(someCouples.size == someBunnies.size/2)
@@ -44,6 +44,10 @@ class TestBunny extends FlatSpec with Matchers {
   val children: Seq[Bunny] = generateChildren(mom, dad)
   "Children of a couple" should "be 4" in {
     assert(children.size == 4)
+  }
+
+  it should "all have age 0" in {
+    assert(children.count(_.age != 0) == 0)
   }
 
   it should "have the original bunnies as mom and dad " in {
@@ -73,7 +77,7 @@ class TestBunny extends FlatSpec with Matchers {
   }
 
   val nextGenBunnies = nextGenerationBunnies(bunnies)
-  "Next generation bunnies" should "4 children for each couple and the previous bunnies" in {
+  "Next generation bunnies" should "contain 4 children for each couple and the previous bunnies" in {
     assert(nextGenBunnies.size == (bunniesNum/2)*4 + bunniesNum)
   }
 
@@ -87,5 +91,18 @@ class TestBunny extends FlatSpec with Matchers {
       nextGen = nextGenerationBunnies(nextGen)
     }
     bunnies.foreach(b => assert(!nextGen.contains(b)))
+  }
+
+  it should "contain the right number of bunnies after many generations " in {
+    val generations = 10
+    var genBunnies: Seq[Bunny] = List.fill(bunniesNum)(generateRandomFirstBunny)
+    var num = genBunnies.size
+    var oldBunnies = 0
+    for (_ <- 0 to generations){
+      oldBunnies = genBunnies.count(_.age == MAX_BUNNY_AGE-1)
+      genBunnies = nextGenerationBunnies(genBunnies)
+      assert(genBunnies.size == (num/2)*4 + num - oldBunnies)
+      num = genBunnies.size
+    }
   }
 }
