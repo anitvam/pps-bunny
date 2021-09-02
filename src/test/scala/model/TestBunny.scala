@@ -1,6 +1,7 @@
 package model
-import model.Bunny.{generateBaseFirstBunny, generateRandomFirstBunny, splitBunniesByGene}
-import model.world.Reproduction.{MAX_BUNNY_AGE, combineCouples, generateAllChildren, generateChildren, nextGenerationBunnies}
+import model.Bunny.{Leaf, Node, generateBaseFirstBunny, generateRandomFirstBunny, generateTree, splitBunniesByGene}
+import model.BunnyConstants.{GENEALOGICAL_TREE_GENERATIONS, MAX_BUNNY_AGE}
+import model.world.Reproduction.{combineCouples, generateAllChildren, generateChildren, nextGenerationBunnies}
 import model.genome.{Gene, Genes, StandardAllele}
 import org.scalatest.{FlatSpec, Matchers}
 
@@ -95,9 +96,9 @@ class TestBunny extends FlatSpec with Matchers {
     bunnies.foreach(b => assert(!nextGen.contains(b)))
   }
 
+  var genBunnies: Seq[Bunny] = List.fill(bunniesNum)(generateRandomFirstBunny)
   it should "contain the right number of bunnies after many generations " in {
     val generations = 8
-    var genBunnies: Seq[Bunny] = List.fill(bunniesNum)(generateRandomFirstBunny)
     var num = genBunnies.size
     var oldBunnies = 0
     for (_ <- 0 to generations){
@@ -118,4 +119,27 @@ class TestBunny extends FlatSpec with Matchers {
       assert(split._2.size == mutatedCount)
     })
   }
+
+  it should "be possible to create a lot of them " in {
+  val totBunnies = 100000
+    noException should be thrownBy List.fill(totBunnies)(generateRandomFirstBunny)
+  }
+
+
+  "A genealogical tree of a bunny" should "contain just him as a Leaf, if he has no parents" in {
+    val bunny = generateRandomFirstBunny
+    val tree = generateTree(GENEALOGICAL_TREE_GENERATIONS, bunny)
+    assert(tree.isInstanceOf[Leaf[Bunny]])
+    assert(tree.elem == bunny)
+  }
+
+  val bunnyWithParents = nextGenerationBunnies(List.fill(5)(generateRandomFirstBunny)).filter(_.mom.isDefined).head
+  val tree = generateTree(GENEALOGICAL_TREE_GENERATIONS, bunnyWithParents)
+  it should "contain his parents, if he has them" in {
+    assert(tree.asInstanceOf[Node[Bunny]].momTree.elem == bunnyWithParents.mom.get)
+    assert(tree.asInstanceOf[Node[Bunny]].dadTree.elem == bunnyWithParents.dad.get)
+  }
+
+   it should "contain all the required generations" in {
+   }
 }
