@@ -17,17 +17,11 @@ object Phenotype {
 }
 
 /**
- * Represents a standard Phenotype.
- * @param visibleTraits traits that need to be shown
- */
-case class StandardPhenotype(visibleTraits: Map[GeneKind, AlleleKind]) extends Phenotype
-
-/**
  * Represents the genetic heritage of the Bunny, with visible and invisible traits.
  */
 sealed trait Genotype {
   val genes: Map[GeneKind, Gene]
-  def getPhenotype: Phenotype = StandardPhenotype(genes.map(entry => (entry._1, entry._2.getVisibleTrait)))
+  def getPhenotype: Phenotype = Phenotype(genes.map(entry => (entry._1, entry._2.getVisibleTrait)))
   if (genes.count(g => g._1 != g._2.kind) > 0)
     throw new InconsistentGenotypeException(genes)
 }
