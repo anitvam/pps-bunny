@@ -1,10 +1,9 @@
 package engine
 
 import cats.effect.IO
-import model.Bunny.generateBaseFirstBunny
 import model.world.Generation
 import model.world.Generation.{Environment, Population}
-import model.world.Reproduction.nextGenerationBunnies
+import model.world.Reproduction.{generateInitialCouple, nextGenerationBunnies}
 
 object Simulation{
   type History = List[Generation]
@@ -23,7 +22,7 @@ object Simulation{
 
   def getPopulationForNextGeneration : Population = history match {
     case g :: _ => nextGenerationBunnies(g.population)
-    case _ => Seq(generateBaseFirstBunny, generateBaseFirstBunny)
+    case _ => generateInitialCouple
   }
 
   def getEnvironmentForNextGeneration : Environment = history match {

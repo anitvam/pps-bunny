@@ -1,6 +1,7 @@
 package model.world
 
 import engine.SimulationConstants.{CHILDREN_EACH_COUPLE, MAX_BUNNY_AGE}
+import model.Bunny.generateBaseFirstBunny
 import model._
 import model.genome._
 import model.world.Generation.Population
@@ -48,6 +49,11 @@ object Reproduction {
    */
   def generateAllChildren(bunnies: Population): Population =
     combineCouples(bunnies).flatMap(couple => generateChildren(couple._1, couple._2))
+
+  /**
+   * @return the first two bunnies of the simulation
+   * */
+  def generateInitialCouple:Population = Seq(generateBaseFirstBunny, generateBaseFirstBunny)
 
   /**
    * @param bunnies bunnies from the last generation
