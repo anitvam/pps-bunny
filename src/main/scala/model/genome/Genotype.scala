@@ -11,6 +11,10 @@ sealed trait Phenotype {
   val visibleTraits: Map[GeneKind, AlleleKind]
 }
 
+object Phenotype {
+  def apply(visibleTraits: Map[GeneKind, AlleleKind]): Phenotype = PhenotypeImpl(visibleTraits)
+  private case class PhenotypeImpl(override val visibleTraits: Map[GeneKind, AlleleKind]) extends Phenotype
+}
 
 /**
  * Represents a standard Phenotype.

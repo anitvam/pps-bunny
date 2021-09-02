@@ -57,7 +57,7 @@ object BunnyUtils {
     )
   }
 
-  /** *
+  /**
    *
    * @param generations the number of older generations to retrieve
    * @param bunny       the subject bunny

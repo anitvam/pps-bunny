@@ -48,17 +48,13 @@ trait Gene {
   def isHomozygous: Boolean = momAllele.kind == dadAllele.kind
   def getVisibleTrait: AlleleKind = if (isHomozygous || momAllele.isDominant) momAllele.kind else dadAllele.kind
   def getLetters: String = momAllele.getCaseSensitiveLetter(kind.letter) + dadAllele.getCaseSensitiveLetter(kind.letter)
-  override def equals(otherGene: Any): Boolean = {
-    val g = otherGene.asInstanceOf[Gene]
-    g.kind == kind && g.momAllele == momAllele && g.dadAllele == dadAllele
-  }
 }
 
 object Gene {
   def apply(kind: GeneKind, momAllele: Allele, dadAllele: Allele): Gene = {
     val checkKind = (allele: Allele) => allele.kind == kind.base || allele.kind == kind.mutated
     if (!(checkKind(momAllele) && checkKind(dadAllele))) throw new InconsistentAlleleException
-    new GeneImpl(kind, momAllele, dadAllele)
+    GeneImpl(kind, momAllele, dadAllele)
   }
 
   /**
@@ -67,8 +63,8 @@ object Gene {
    * @param momAllele the allele from the mom
    * @param dadAllele the allele from the dad
    */
-  private class GeneImpl(override val kind: GeneKind,
-                         override val momAllele: Allele,
-                         override val dadAllele: Allele) extends Gene
+  private case class GeneImpl(override val kind: GeneKind,
+                              override val momAllele: Allele,
+                              override val dadAllele: Allele) extends Gene
 }
 
