@@ -26,15 +26,19 @@ object Reproduction {
   def generateChildren(mom: Bunny, dad: Bunny): Seq[Bunny] = {
     var childrenGenotypes = List.fill(CHILDREN_EACH_COUPLE)(PartialGenotype(Map()))
     Genes.values.foreach(gk => {
+
+      ("miao", "bau").productIterator.foreach()
+
       val grandmaMomAllele = mom.genotype(gk).momAllele
       val grandpaMomAllele = mom.genotype(gk).dadAllele
       val grandmaDadAllele = dad.genotype(gk).momAllele
       val grandpaDadAllele = dad.genotype(gk).dadAllele
+      /*
       val anotherGene = Random.shuffle(
         List( Gene(gk, grandmaMomAllele, grandmaDadAllele),
               Gene(gk, grandpaMomAllele, grandmaDadAllele),
               Gene(gk, grandmaMomAllele, grandpaDadAllele),
-              Gene(gk, grandpaMomAllele, grandpaDadAllele)))
+              Gene(gk, grandpaMomAllele, grandpaDadAllele)))*/
       childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE) yield childrenGenotypes(i) + anotherGene(i)).toList
     })
     childrenGenotypes.map(cg => new ChildBunny(CompletedGenotype(cg.genes), Option(mom), Option(dad)))
