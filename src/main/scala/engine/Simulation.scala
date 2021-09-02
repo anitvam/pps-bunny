@@ -1,7 +1,8 @@
 package engine
 
 import cats.effect.IO
-import engine.Generation.{Environment, Population}
+import model.world.Generation
+import model.world.Generation.Population
 
 object Simulation{
   type History = List[Generation]
@@ -18,21 +19,21 @@ object Simulation{
 
   def getBunniesNumber:IO[Int] = IO{getActualGeneration.map(g => g.population.size).getOrElse(0)}
 
-  def getPopulationForNextGeneration : Population = history match {
-    case g :: _ => g.population.filter(b => b > 1 && b < 20) //will take only alive bunny
-    case _ => Set(1, 2) //will create initial population (the first couple of bunnies)
-  }
-
-  def getEnvironmentForNextGeneration : Environment = history match {
-    case g :: _ => g.environment
-    case _ => "env" //will create initial environment characteristic
-  }
+//  def getPopulationForNextGeneration : Population = history match {
+//    case g :: _ => g.population.filter(b => b > 1 && b < 20) //will take only alive bunny
+//    case _ => Seq(1, 2) //will create initial population (the first couple of bunnies)
+//  }
+//
+//  def getEnvironmentForNextGeneration : Environment = history match {
+//    case g :: _ => g.environment
+//    case _ => "env" //will create initial environment characteristic
+//  }
 
   def reproduction: IO[Unit] = {
-    println("REPRODUCTION")
-    val initialBunniesNumber:Int = getActualGeneration.map(_.population.size).get
-    val nextGenBunniesNumber:Int = (initialBunniesNumber / 2)*4 + initialBunniesNumber
-    IO {getActualGeneration.get.population = (1 to nextGenBunniesNumber) toSet }
+    IO{println("REPRODUCTION")}
+//    val initialBunniesNumber:Int = getActualGeneration.map(_.population.size).get
+//    val nextGenBunniesNumber:Int = (initialBunniesNumber / 2)*4 + initialBunniesNumber
+//    IO {getActualGeneration.get.population = (1 to nextGenBunniesNumber) toSet }
   }
 
   def wolfsEat: IO[Unit] = {
@@ -54,8 +55,8 @@ object Simulation{
   //Controller will notify Simulation when Environment Change
 
   def startNewGeneration: IO[Unit] = {
-    println("NEW GEN")
-    IO {history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history}
+    IO {println("NEW GEN")}
+//    IO {history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history}
   }
 
 

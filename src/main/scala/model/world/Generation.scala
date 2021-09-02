@@ -1,19 +1,19 @@
-package engine
+package model.world
 
-import engine.Generation.{Environment, Population}
+import model.Bunny
+import model.world.Generation.{Environment, Population}
 
 trait Generation{
   def environment: Environment
   def population: Population
-  def population_=(bunnies:Population)
+  def population_=(bunnies:Population):Unit
   def ended: Unit
 }
 
 object Generation{
 
   type Environment = String
-  type Bunny = Int
-  type Population = Set[Bunny]
+  type Population = Seq[Bunny]
 
   def apply(actualEnvironment:Environment, bunniesAlive:Population): Generation =
     new GenerationImpl(actualEnvironment, bunniesAlive)

@@ -19,7 +19,13 @@ object SimulationConstants {
   /**Maximum number of alive bunnies in the world*/
   val MAX_BUNNIES_NUMBER = 50
 
-  /**Maximum number of generations*/
+  /**Maximum number of generations in a simulation*/
   val MAX_GENERATIONS_NUMBER = 1000
+
+  /**Number of children for each couple of bunnies*/
+  val CHILDREN_EACH_COUPLE = 4
+
+  /**Maximum number of generation which each bunny can live*/
+  val MAX_BUNNY_AGE = 4
 
 }
