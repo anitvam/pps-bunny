@@ -1,7 +1,7 @@
 package model
-import model.BunnyUtils.{generateBaseFirstBunny, generateRandomFirstBunny}
+import model.Bunny.{generateBaseFirstBunny, generateRandomFirstBunny, splitBunniesByGene}
 import model.world.Reproduction.{MAX_BUNNY_AGE, combineCouples, generateAllChildren, generateChildren, nextGenerationBunnies}
-import model.genome.{Genes, StandardAllele, Gene}
+import model.genome.{Gene, Genes, StandardAllele}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestBunny extends FlatSpec with Matchers {
@@ -19,6 +19,8 @@ class TestBunny extends FlatSpec with Matchers {
     generateBaseFirstBunny.genotype.getPhenotype.visibleTraits.foreach(entry =>
       assert(entry._2 == entry._1.base))
   }
+
+  it should "show"
 
   "Couples of bunnies " should "be generable from any group of Bunnies" in {
     val someBunnies = Seq.fill(9)(generateRandomFirstBunny)
@@ -76,7 +78,7 @@ class TestBunny extends FlatSpec with Matchers {
     assert(children.size == (bunniesNum/2)*4)
   }
 
-  val nextGenBunnies = nextGenerationBunnies(bunnies)
+  val nextGenBunnies: Seq[Bunny] = nextGenerationBunnies(bunnies)
   "Next generation bunnies" should "contain 4 children for each couple and the previous bunnies" in {
     assert(nextGenBunnies.size == (bunniesNum/2)*4 + bunniesNum)
   }
@@ -99,10 +101,21 @@ class TestBunny extends FlatSpec with Matchers {
     var num = genBunnies.size
     var oldBunnies = 0
     for (_ <- 0 to generations){
-      oldBunnies = genBunnies.count(_.age == MAX_BUNNY_AGE-1)
+      oldBunnies = genBunnies.count(_.age == MAX_BUNNY_AGE - 1)
       genBunnies = nextGenerationBunnies(genBunnies)
       assert(genBunnies.size == (num/2)*4 + num - oldBunnies)
       num = genBunnies.size
     }
+  }
+
+  "Bunnies " should "be splittable by gene" in {
+    val bunnies: List[Bunny] = List.fill(10)(generateRandomFirstBunny)
+    Genes.values.foreach(gk => {
+      val baseCount = bunnies.count(_.genotype.getPhenotype.visibleTraits(gk) == gk.base)
+      val mutatedCount = bunnies.count(_.genotype.getPhenotype.visibleTraits(gk) == gk.mutated)
+      val split = splitBunniesByGene(gk, bunnies)
+      assert(split._1.size == baseCount)
+      assert(split._2.size == mutatedCount)
+    })
   }
 }

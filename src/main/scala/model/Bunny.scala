@@ -1,5 +1,5 @@
 package model
-import model.genome.Alleles.AlleleKind
+import model.genome.Genes.GeneKind
 import model.genome.{CompletedGenotype, Gene, Genes, StandardAllele}
 
 import scala.util.Random
@@ -35,7 +35,10 @@ class ChildBunny(override val genotype: CompletedGenotype, override val mom:Opti
  */
 class FirstBunny(genotype: CompletedGenotype) extends ChildBunny(genotype,Option.empty, Option.empty)
 
-object BunnyUtils {
+sealed trait GenealogicalTree
+
+
+object Bunny {
   /**
    * @return a FirstBunny with the "base" allele for each gene
    */
@@ -59,15 +62,19 @@ object BunnyUtils {
 
   /**
    *
+   * @param geneKind the kind of Gene we want to split the bunnies by
+   * @param bunnies  all the bunnies
+   * @return         a tuple with the sequence of bunnies with the base Allele
+   *                 and the sequence of bunnies with the mutated Allele
+   */
+  def splitBunniesByGene(geneKind: GeneKind, bunnies: Seq[Bunny]): (Seq[Bunny], Seq[Bunny]) =
+    bunnies.partition(_.genotype.getPhenotype.visibleTraits(geneKind) == geneKind.base)
+
+  /**
+   *
    * @param generations the number of older generations to retrieve
    * @param bunny       the subject bunny
    * @return the genealogical tree of the bunny for the specified generations
    */
   def generateTree(generations: Int, bunny: Bunny) = ???
-
-  /**
-   * @param alleleKind the kind of Allele required
-   * @return           all the bunnies with that kind of Allele
-   */
-  def getBunniesWithAllele(alleleKind: AlleleKind): Set[Bunny] = ???
 }
