@@ -1,6 +1,7 @@
 package engine
 
 import scala.concurrent.duration.{DurationInt, FiniteDuration}
+import scala.language.postfixOps
 
 object SimulationConstants {
   /**After how many milliseconds from the start of generation the wolves can eat */
@@ -17,9 +18,14 @@ object SimulationConstants {
   val GEN_END: FiniteDuration = 12000 millis
 
   /**Maximum number of alive bunnies in the world*/
-  val MAX_BUNNIES_NUMBER = 50
+  val MAX_BUNNIES_NUMBER = 500
 
-  /**Maximum number of generations*/
+  /**Maximum number of generations in a simulation*/
   val MAX_GENERATIONS_NUMBER = 1000
 
+  /**Number of children for each couple of bunnies*/
+  val CHILDREN_EACH_COUPLE = 4
+
+  /**Maximum number of generation which each bunny can live*/
+  val MAX_BUNNY_AGE = 4
 }

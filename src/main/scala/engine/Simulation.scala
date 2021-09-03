@@ -1,26 +1,32 @@
 package engine
 
 import cats.effect.IO
-import engine.Generation.{Environment, Population}
+import model.world.Generation
+import model.world.Generation.{Environment, Population}
+import model.world.Reproduction.{generateInitialCouple, nextGenerationBunnies}
+import view.scalaFX.ScalaFXView
+
+import scala.language.implicitConversions
 
 object Simulation{
+
   type History = List[Generation]
   var history:History = List()
 
-  def getActualGeneration:Option[Generation] = history match {
+  def getActualGeneration: Option[Generation] = history match {
     case g :: _ => Some(g)
     case _ => Option.empty
   }
 
-  def endedActualGeneration():Unit = if (getActualGeneration.isDefined) getActualGeneration.get.ended
+  def endedActualGeneration():Unit = if (getActualGeneration.isDefined) getActualGeneration.get.ended()
 
-  def getGenerationNumber:IO[Int] = IO{history.length}
+  def getGenerationNumber: Int = history.length
 
-  def getBunniesNumber:IO[Int] = IO{getActualGeneration.map(g => g.population.size).getOrElse(0)}
+  def getBunniesNumber: Int = getActualGeneration.get.getBunniesNumber
 
   def getPopulationForNextGeneration : Population = history match {
-    case g :: _ => g.population.filter(b => b > 1 && b < 20) //will take only alive bunny
-    case _ => Set(1, 2) //will create initial population (the first couple of bunnies)
+    case g :: _ => nextGenerationBunnies(g.population)
+    case _ => generateInitialCouple
   }
 
   def getEnvironmentForNextGeneration : Environment = history match {
@@ -28,35 +34,32 @@ object Simulation{
     case _ => "env" //will create initial environment characteristic
   }
 
-  def reproduction: IO[Unit] = {
-    println("REPRODUCTION")
-    val initialBunniesNumber:Int = getActualGeneration.map(_.population.size).get
-    val nextGenBunniesNumber:Int = (initialBunniesNumber / 2)*4 + initialBunniesNumber
-    IO {getActualGeneration.get.population = (1 to nextGenBunniesNumber) toSet }
-  }
-
-  def wolfsEat: IO[Unit] = {
-    IO {println("WOLFS ARE EATING")}
+  def wolvesEat: IO[Unit] = {
+   println("WOLVES ARE EATING")
   }
 
   def bunniesEat: IO[Unit] = {
-    IO {println("BUNNIES ARE EATING")}
+   println("BUNNIES ARE EATING")
   }
 
   def applyTemperatureDamage : IO[Unit] = {
-    IO {println("SOME BUNNIES DIED BECAUSE OF TEMPERATURE")}
+   println("SOME BUNNIES DIED BECAUSE OF TEMPERATURE")
   }
 
-  def showBunnies: IO[Unit] = {
-    IO{getActualGeneration.get.population.foreach(println(_))}
+  def showNewPopulation(bunnies:Population) : IO[Unit] = {
+    ScalaFXView.showPopulation(bunnies)
+    println(bunnies.size)
   }
 
-  //Controller will notify Simulation when Environment Change
-
-  def startNewGeneration: IO[Unit] = {
-    println("NEW GEN")
-    IO {history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history}
+  def showEnd():IO[Unit] = {
+    println("END")
   }
 
 
+  def startNewGeneration: IO[Population] = {
+    history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history
+    IO{getActualGeneration.map(_.population).getOrElse(Seq())}
+  }
+
+  implicit def unitToIO(exp: => Unit) : IO[Unit] = IO{exp}
 }
