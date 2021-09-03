@@ -18,8 +18,8 @@ object SimulationHistory{
   /**Initiliaze the [[History]] of this simulation
    * @param environment the initial environment of the first [[Generation]]
    * @param initialPopulation the initial population*/
-  def initialize(environment: Environment, initialPopulation: Population) =
-    history = Generation(environment, initialPopulation) :: history
+  def initialize(environment: Environment) =
+    history = Generation(environment, generateInitialCouple) :: history
 
   /**@return the actual [[Generation]]*/
   def getActualGeneration: Generation = history.head

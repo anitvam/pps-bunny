@@ -58,9 +58,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
 
   def handleStartSimulation(): Unit = {
     startButton.setVisible(false)
-    val population = generateInitialCouple
-    showBunnies(population)
-    Controller.startSimulation("env", population)
+    Controller.startSimulation()
   }
 
   def showBunnies(bunnies:Population): Unit ={

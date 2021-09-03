@@ -11,6 +11,7 @@ object SimulationEngine {
   def simulationLoop(): IO[Unit] = {
     for {
       _ <- resetTimer
+      _ <- showNewPopulation
       _ <- waitFor(WOLF_INSTANT)
       _ <- wolvesEat
       _ <- waitFor(FOOD_INSTANT)
@@ -19,7 +20,6 @@ object SimulationEngine {
       _ <- applyTemperatureDamage
       _ <- waitFor(GENERATION_END)
       _ <- startNewGeneration
-      _ <- showNewPopulation
       _ <- if(getGenerationNumber < MAX_GENERATIONS_NUMBER &&
         getBunniesNumber < MAX_BUNNIES_NUMBER) simulationLoop() else showEnd()
     } yield()

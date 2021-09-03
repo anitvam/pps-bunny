@@ -7,8 +7,8 @@ import model.world.Generation.{Environment, Population}
 
 object Controller {
 
-  def startSimulation(environment: Environment, population: Population): Unit = {
-    initialize(environment, population)
+  def startSimulation(): Unit = {
+    initialize("env")
     simulationLoop().unsafeRunAsyncAndForget()
   }
 
