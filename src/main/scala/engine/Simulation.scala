@@ -31,27 +31,29 @@ object Simulation{
   }
 
   def wolvesEat: IO[Unit] = {
-    IO {println("WOLVES ARE EATING")}
+   println("WOLVES ARE EATING")
   }
 
   def bunniesEat: IO[Unit] = {
-    IO {println("BUNNIES ARE EATING")}
+   println("BUNNIES ARE EATING")
   }
 
   def applyTemperatureDamage : IO[Unit] = {
-    IO {println("SOME BUNNIES DIED BECAUSE OF TEMPERATURE")}
+   println("SOME BUNNIES DIED BECAUSE OF TEMPERATURE")
   }
 
   def showBunnies: IO[Unit] = {
-    IO { println("GENERATION " + history.length + " NUM BUNNIES " +
-      getActualGeneration.map(_.getBunniesNumber).getOrElse(0))}
+    println("GENERATION " + history.length + " NUM BUNNIES " +
+      getActualGeneration.map(_.getBunniesNumber).getOrElse(0))
 //    IO{getActualGeneration.get.population.foreach(print(_))}
   }
 
 
   def startNewGeneration: IO[Unit] = {
-    IO {history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history}
+     history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history
   }
+
+  implicit def unitToIO(exp: => Unit) : IO[Unit] = IO{exp}
 
 
 }

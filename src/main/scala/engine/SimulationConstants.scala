@@ -1,6 +1,7 @@
 package engine
 
 import scala.concurrent.duration.{DurationInt, FiniteDuration}
+import scala.language.postfixOps
 
 object SimulationConstants {
   /**After how many milliseconds from the start of generation the wolves can eat */

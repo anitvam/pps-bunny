@@ -5,6 +5,7 @@ import cats.effect.{IO, Timer}
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration.{DurationLong, FiniteDuration}
+import scala.language.postfixOps
 
 object GenerationTimer {
   implicit val timer: Timer[IO] = IO.timer(ExecutionContext.global)
