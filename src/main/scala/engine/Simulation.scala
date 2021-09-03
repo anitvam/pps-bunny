@@ -4,8 +4,12 @@ import cats.effect.IO
 import model.world.Generation
 import model.world.Generation.{Environment, Population}
 import model.world.Reproduction.{generateInitialCouple, nextGenerationBunnies}
+import view.scalaFX.ScalaFXView
+
+import scala.language.implicitConversions
 
 object Simulation{
+
   type History = List[Generation]
   var history:History = List()
 
@@ -42,15 +46,18 @@ object Simulation{
    println("SOME BUNNIES DIED BECAUSE OF TEMPERATURE")
   }
 
-  def showBunnies: IO[Unit] = {
-    println("GENERATION " + history.length + " NUM BUNNIES " +
-      getActualGeneration.map(_.getBunniesNumber).getOrElse(0))
-//    IO{getActualGeneration.get.population.foreach(print(_))}
+  def showNewPopulation(bunnies:Population) : IO[Unit] = {
+    ScalaFXView.showPopulation(bunnies)
+  }
+
+  def showEnd():IO[Unit] = {
+    println("END")
   }
 
 
-  def startNewGeneration: IO[Unit] = {
+  def startNewGeneration: IO[Population] = {
      history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history
+    IO{getActualGeneration.map(_.population).getOrElse(Seq())}
   }
 
   implicit def unitToIO(exp: => Unit) : IO[Unit] = IO{exp}

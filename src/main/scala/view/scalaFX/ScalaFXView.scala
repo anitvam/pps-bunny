@@ -7,13 +7,14 @@ import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import view.scalaFX.FXControllers.BaseAppControllerInterface
 import scalafx.Includes._
 import javafx.{scene => jfxs}
-import model.Bunny
+import model.world.Generation.Population
+import scalafx.application.Platform
 
 import java.io.IOException
 import view._
 
-class ScalaFXView() extends View {
-  var baseAppController: Option[BaseAppControllerInterface] = None
+object ScalaFXView extends View {
+  var baseAppController: Option[BaseAppControllerInterface] = Option.empty
 
   def start(): Unit = {
     val baseAppView = getClass.getResource("/fxml/baseApp.fxml")
@@ -31,9 +32,11 @@ class ScalaFXView() extends View {
       scene = new Scene(root)
     }
     stage.setResizable(false)
+
+    baseAppController.get.initialize()
   }
 
-  def showPopulation(bunnies: Seq[Bunny]): Unit = {
-    baseAppController.get.initialize(bunnies)
+  def showPopulation(bunnies: Population): Unit = {
+    Platform.runLater(baseAppController.get.showBunnies(bunnies))
   }
 }
