@@ -1,6 +1,6 @@
 package model
 
-import model.Bunny.{Leaf, Node, Tree, generateRandomFirstBunny, generateTree}
+import model.Bunny.{generateRandomFirstBunny, generateTree}
 import model.BunnyConstants.GENEALOGICAL_TREE_GENERATIONS
 import model.world.Reproduction.nextGenerationBunnies
 import org.scalatest.{FlatSpec, Matchers}
@@ -16,7 +16,7 @@ class TestTree extends FlatSpec with Matchers {
   }
 
   val bunnyWithParents: Bunny = nextGenerationBunnies(List.fill(5)(generateRandomFirstBunny)).filter(_.mom.isDefined).head
-  val tree: Tree[Bunny] = generateTree(GENEALOGICAL_TREE_GENERATIONS, bunnyWithParents)
+  val tree: BinaryTree[Bunny] = generateTree(GENEALOGICAL_TREE_GENERATIONS, bunnyWithParents)
   it should "contain his parents, if he has them" in {
     assert(tree.asInstanceOf[Node[Bunny]].momTree.elem == bunnyWithParents.mom.get)
     assert(tree.asInstanceOf[Node[Bunny]].dadTree.elem == bunnyWithParents.dad.get)
@@ -27,7 +27,7 @@ class TestTree extends FlatSpec with Matchers {
   for (_ <- 0 to GENEALOGICAL_TREE_GENERATIONS) {
     bunny = nextGenerationBunnies(List.fill(5)(bunny)).filter(_.mom.isDefined).head
   }
-  val fullTree: Tree[Bunny] = generateTree(GENEALOGICAL_TREE_GENERATIONS, bunny)
+  val fullTree: BinaryTree[Bunny] = generateTree(GENEALOGICAL_TREE_GENERATIONS, bunny)
   "A full genealogical tree "should "contain all the required generations" in {
     assert(fullTree.generations == GENEALOGICAL_TREE_GENERATIONS)
   }
@@ -40,7 +40,7 @@ class TestTree extends FlatSpec with Matchers {
   }
 
   it should "contain the right bunnies in all the generations" in {
-    var bunniesToCheck: Seq[(Bunny, Tree[Bunny])] = Seq((bunny, fullTree))
+    var bunniesToCheck: Seq[(Bunny, BinaryTree[Bunny])] = Seq((bunny, fullTree))
     bunniesToCheck.foreach(bt => {
       val momTree = bt._2.asInstanceOf[Node[Bunny]].momTree
       val dadTree = bt._2.asInstanceOf[Node[Bunny]].dadTree
