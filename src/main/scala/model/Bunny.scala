@@ -2,6 +2,7 @@ package model
 import model.genome.Genes.GeneKind
 import model.genome.{CompletedGenotype, Gene, Genes, StandardAllele}
 
+import scala.annotation.tailrec
 import scala.util.Random
 
 /**
@@ -51,7 +52,7 @@ object Bunny {
       CompletedGenotype(
         Genes.values.unsorted.map(gk => {
           (gk, Gene(gk, StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2))),
-                        StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2)))))
+            StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2)))))
         }).toMap
       )
     )
@@ -61,11 +62,12 @@ object Bunny {
    *
    * @param geneKind the kind of Gene we want to split the bunnies by
    * @param bunnies  all the bunnies
-   * @return         a tuple with the sequence of bunnies with the base Allele
-   *                 and the sequence of bunnies with the mutated Allele
+   * @return a tuple with the sequence of bunnies with the base Allele
+   *         and the sequence of bunnies with the mutated Allele
    */
   type baseBunnies = Seq[Bunny]
   type mutatedBunnies = Seq[Bunny]
+
   def splitBunniesByGene(geneKind: GeneKind, bunnies: Seq[Bunny]): (baseBunnies, mutatedBunnies) =
     bunnies.partition(_.genotype.phenotype(geneKind) == geneKind.base)
 
@@ -75,35 +77,45 @@ object Bunny {
    * @param bunny       the subject bunny
    * @return the genealogical tree of the bunny for the specified generations
    */
-  def generateTree(generations: Int, bunny: Bunny): BinaryTree[Bunny] =
-    if (generations == 1 || bunny.mom.isEmpty) Leaf(bunny)
-    else Node(bunny, generateTree(generations - 1, bunny.mom.get), generateTree(generations - 1, bunny.dad.get))
+
+  def generateTree(totGenerations: Int, bunny: Bunny): BinaryTree[Bunny] = {
+    @tailrec
+    def generateTreeWithAccumulator(acc: BinaryTree[Bunny], generations: Int): BinaryTree[Bunny] =
+      if (generations == 1 || acc.elem.mom.isEmpty) acc
+      else generateTreeWithAccumulator(
+        Node(acc.elem, Leaf(acc.elem.mom.get), Leaf(acc.elem.dad.get)),
+        generations - 1)
+    generateTreeWithAccumulator(Leaf(bunny), totGenerations)
+
+    /*if (generations == 1 || bunny.mom.isEmpty) Leaf(bunny)
+      else generateTree(Node(bunny, generateTree(generations - 1, bunny.mom.get), generateTree(generations - 1, bunny.dad.get)))*/
+  }
 }
 
 /**
- *  Represents a Tree.
- */
+*  Represents a Tree.
+*/
 sealed trait BinaryTree[A]{
-  val elem: A
-  val generations: Int
+val elem: A
+val generations: Int
 }
 
 /**
- * Represents a Leaf of the Tree, with just an element.
- * @param elem  the element in the leaf
- * @tparam A    the type of the element
- */
+* Represents a Leaf of the Tree, with just an element.
+* @param elem  the element in the leaf
+* @tparam A    the type of the element
+*/
 case class Leaf[A](elem: A) extends BinaryTree[A] {
-  override val generations: Int = 1
+override val generations: Int = 1
 }
 
 /**
- * Represents a Node of the Tree, with an element and two branches
- * @param elem      the element in the node
- * @param momTree   one of the branches
- * @param dadTree   the other branch
- * @tparam A        the type of the element
- */
+* Represents a Node of the Tree, with an element and two branches
+* @param elem      the element in the node
+* @param momTree   one of the branches
+* @param dadTree   the other branch
+* @tparam A        the type of the element
+*/
 case class Node[A](override val elem: A, momTree: BinaryTree[A], dadTree: BinaryTree[A]) extends BinaryTree[A] {
-  override val generations: Int = Math.max(momTree.generations, dadTree.generations) + 1
+override val generations: Int = Math.max(momTree.generations, dadTree.generations) + 1
 }
