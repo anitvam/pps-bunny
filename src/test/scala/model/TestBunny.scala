@@ -1,8 +1,8 @@
 package model
-import model.Bunny.{Leaf, Node, generateBaseFirstBunny, generateRandomFirstBunny, generateTree, splitBunniesByGene}
-import model.BunnyConstants.{GENEALOGICAL_TREE_GENERATIONS, MAX_BUNNY_AGE}
-import model.world.Reproduction.{combineCouples, generateAllChildren, generateChildren, nextGenerationBunnies}
+import model.Bunny.{generateBaseFirstBunny, generateRandomFirstBunny, splitBunniesByGene}
+import model.BunnyConstants.MAX_BUNNY_AGE
 import model.genome.{Gene, Genes, StandardAllele}
+import model.world.Reproduction.{combineCouples, generateAllChildren, generateChildren, nextGenerationBunnies}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestBunny extends FlatSpec with Matchers {
@@ -21,21 +21,19 @@ class TestBunny extends FlatSpec with Matchers {
       assert(entry._2 == entry._1.base))
   }
 
-  it should "show"
-
   "Couples of bunnies " should "be generable from any group of Bunnies" in {
     val someBunnies = Seq.fill(9)(generateRandomFirstBunny)
     val someCouples = combineCouples(someBunnies)
     assert(someCouples.size == someBunnies.size/2)
   }
 
-  it should "contain every Bunny in the original group, if they are even" in {
+  they should "contain every Bunny in the original group, if they are even" in {
     val someBunnies = Seq.fill(6)(generateRandomFirstBunny)
     val bunniesInCouples = combineCouples(someBunnies).flatMap(couple => List(couple._1, couple._2))
     someBunnies.foreach(b => assert(bunniesInCouples.contains(b)))
   }
 
-  it should "contain every Bunny in the original group except from one, if they are odd" in {
+  they should "contain every Bunny in the original group except from one, if they are odd" in {
     val someBunnies = Seq.fill(11)(generateRandomFirstBunny)
     val bunniesInCouples = combineCouples(someBunnies).flatMap(couple => List(couple._1, couple._2))
     assert(someBunnies.count(b => !bunniesInCouples.contains(b)) == 1)
@@ -49,15 +47,15 @@ class TestBunny extends FlatSpec with Matchers {
     assert(children.size == 4)
   }
 
-  it should "all have age 0" in {
+  they should "all have age 0" in {
     assert(children.count(_.age != 0) == 0)
   }
 
-  it should "have the original bunnies as mom and dad " in {
+  they should "have the original bunnies as mom and dad " in {
     children.foreach(child => assert(child.mom.get == mom && child.dad.get == dad))
   }
 
-  it should "be one for each cell of the Punnett square, for each Gene" in {
+  they should "be one for each cell of the Punnett square, for each Gene" in {
     Genes.values.foreach(gk => {
       val grandmaMomAllele= mom.genotype(gk).momAllele.kind
       val grandpaMomAllele = mom.genotype(gk).dadAllele.kind
@@ -80,7 +78,7 @@ class TestBunny extends FlatSpec with Matchers {
   }
 
   val nextGenBunnies: Seq[Bunny] = nextGenerationBunnies(bunnies)
-  "Next generation bunnies" should "contain 4 children for each couple and the previous bunnies" in {
+  "Next generation " should "contain 4 children for each couple and the previous bunnies" in {
     assert(nextGenBunnies.size == (bunniesNum/2)*4 + bunniesNum)
   }
 
@@ -102,7 +100,7 @@ class TestBunny extends FlatSpec with Matchers {
     var num = genBunnies.size
     var oldBunnies = 0
     for (_ <- 0 to generations){
-      oldBunnies = genBunnies.count(_.age == MAX_BUNNY_AGE - 1)
+      oldBunnies = genBunnies.count(_.age == MAX_BUNNY_AGE)
       genBunnies = nextGenerationBunnies(genBunnies)
       assert(genBunnies.size == (num/2)*4 + num - oldBunnies)
       num = genBunnies.size
@@ -121,25 +119,7 @@ class TestBunny extends FlatSpec with Matchers {
   }
 
   it should "be possible to create a lot of them " in {
-  val totBunnies = 100000
+    val totBunnies = 100000
     noException should be thrownBy List.fill(totBunnies)(generateRandomFirstBunny)
   }
-
-
-  "A genealogical tree of a bunny" should "contain just him as a Leaf, if he has no parents" in {
-    val bunny = generateRandomFirstBunny
-    val tree = generateTree(GENEALOGICAL_TREE_GENERATIONS, bunny)
-    assert(tree.isInstanceOf[Leaf[Bunny]])
-    assert(tree.elem == bunny)
-  }
-
-  val bunnyWithParents = nextGenerationBunnies(List.fill(5)(generateRandomFirstBunny)).filter(_.mom.isDefined).head
-  val tree = generateTree(GENEALOGICAL_TREE_GENERATIONS, bunnyWithParents)
-  it should "contain his parents, if he has them" in {
-    assert(tree.asInstanceOf[Node[Bunny]].momTree.elem == bunnyWithParents.mom.get)
-    assert(tree.asInstanceOf[Node[Bunny]].dadTree.elem == bunnyWithParents.dad.get)
-  }
-
-   it should "contain all the required generations" in {
-   }
 }

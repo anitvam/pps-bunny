@@ -52,8 +52,8 @@ object Reproduction {
    */
   def nextGenerationBunnies(previousBunnies: Seq[Bunny]): Seq[Bunny] = {
     val children = generateAllChildren(previousBunnies)
-    previousBunnies.foreach(_.age+=1)
-    previousBunnies.foreach(b => if (b.age >= MAX_BUNNY_AGE) b.alive = false)
+    previousBunnies.foreach(b => if (b.age == MAX_BUNNY_AGE) b.alive = false)
+    previousBunnies.foreach(b => if (b.alive) b.age+=1)
     val stillAlive = previousBunnies.filter(_.alive)
     children ++ stillAlive
   }

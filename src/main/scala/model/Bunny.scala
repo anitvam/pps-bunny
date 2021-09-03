@@ -78,8 +78,32 @@ object Bunny {
   def generateTree(generations: Int, bunny: Bunny): Tree[Bunny] =
     if (generations == 1 || bunny.mom.isEmpty) Leaf(bunny)
     else Node(bunny, generateTree(generations-1, bunny.mom.get), generateTree(generations-1, bunny.dad.get))
+}
 
-  sealed trait Tree[A]{val elem: A}
-  case class Leaf[A](elem: A) extends Tree[A]
-  case class Node[A](override val elem: A, momTree: Tree[A], dadTree: Tree[A]) extends Tree[A]
+/**
+ *  Represents a Tree.
+ */
+sealed trait Tree[A]{
+  val elem: A
+  val generations: Int
+}
+
+/**
+ * Represents a Leaf of the Tree, with just an element.
+ * @param elem  the element in the leaf
+ * @tparam A    the type of the element
+ */
+case class Leaf[A](elem: A) extends Tree[A] {
+  override val generations: Int = 1
+}
+
+/**
+ * Represents a Node of the Tree, with an element and two branches
+ * @param elem      the element in the node
+ * @param momTree   one of the branches
+ * @param dadTree   the other branch
+ * @tparam A        the type of the element
+ */
+case class Node[A](override val elem: A, momTree: Tree[A], dadTree: Tree[A]) extends Tree[A] {
+  override val generations: Int = Math.max(momTree.generations, dadTree.generations) + 1
 }
