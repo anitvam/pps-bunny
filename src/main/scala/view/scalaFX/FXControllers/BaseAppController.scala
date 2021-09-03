@@ -27,7 +27,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
   private var bunnyTimelines: Seq[Timeline] = Seq.empty
 
   def initialize(bunnies: Seq[Bunny]): Unit = {
-    if (bunnyTimelines.nonEmpty) bunnyTimelines.foreach(bunny => bunny.stop())
+    if (bunnyTimelines.nonEmpty) bunnyTimelines.foreach(_.stop())
 
     // Environment background configuration
     val hotBackground = new Image( "/environment/climate_hot.png")
@@ -36,18 +36,24 @@ class BaseAppController(private val simulationPane: AnchorPane,
       Platform.exit()
     }
     simulationPane.background = new Background(Array(new BackgroundImage(
-      hotBackground,
-      BackgroundRepeat.NoRepeat,
-      BackgroundRepeat.NoRepeat,
-      BackgroundPosition.Default,
-      new BackgroundSize(1.0, 1.0, true, true, false, false)
+      image = hotBackground,
+      repeatX = BackgroundRepeat.NoRepeat,
+      repeatY = BackgroundRepeat.NoRepeat,
+      position = BackgroundPosition.Default,
+      size = new BackgroundSize(
+        width = 1.0,
+        height = 1.0,
+        widthAsPercentage = true,
+        heightAsPercentage = true,
+        contain = false,
+        cover = false)
     )))
 
 
     // Bunny visualization inside simulationPane
-    bunnyViews = bunnies.map(bunny => BunnyView(bunny))
+    bunnyViews = bunnies.map(BunnyView(_))
     simulationPane.children = ObservableBuffer.empty
-    simulationPane.children = bunnyViews.map(bunny => bunny.imageView)
+    simulationPane.children = bunnyViews.map(_.imageView)
 
     // Timeline definition for each bunny of the Population
     bunnyViews.zipWithIndex.foreach(bunny => {

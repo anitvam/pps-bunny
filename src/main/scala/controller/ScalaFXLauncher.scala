@@ -7,7 +7,7 @@ import view.scalaFX.ScalaFXView
 
 object ScalaFXLauncher extends JFXApp{
   private val view = new ScalaFXView()
-  private val someBunnies = Seq.fill(5)(generateRandomFirstBunny)
+  private val someBunnies = Seq.fill(2)(generateRandomFirstBunny)
 
   view.start()
   view.showPopulation(someBunnies)

@@ -30,10 +30,13 @@ trait BunnyView {
   /** The Y-Axis position of the bunny */
   var positionY: Double
 
+  /** Type annotation for a Seq of KeyFrames */
+  type AnimationFrames = Seq[KeyFrame]
+
   /** Method that returns the steps to perform a bunny jump
    * @return      a Seq[KeyFrame] containing the representation of a bunny jump
    * */
-  def jump(): Seq[KeyFrame]
+  def jump(): AnimationFrames
 }
 
 object BunnyView {
@@ -41,8 +44,8 @@ object BunnyView {
   val PREFERRED_PANEL_HEIGHT = 200
   val PANEL_SKY_ZONE = 80
   val PREFERRED_BUNNY_SIZE = 80
-  val BUNNY_NORMAL_JUMP = 40
-  val BUNNY_HIGH_JUMP = 80
+  val NORMAL_JUMP_HEIGHT = 40
+  val HIGH_JUMP_HEIGHT = 80
 
   def apply(bunny: Bunny): BunnyView = {
     val newX = Random.nextInt(PREFERRED_PANEL_WIDTH)
@@ -67,22 +70,22 @@ object BunnyView {
 
     private val normalImage: Image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
     private val jumpingImage: Image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Jumping)
-    private val jumpingValue = if(bunny.genotype.phenotype.visibleTraits.values.exists(kind => kind == Alleles.HIGH_JUMP)) BUNNY_HIGH_JUMP else BUNNY_NORMAL_JUMP
+    private val jumpingValue = if(bunny.genotype.phenotype.visibleTraits.values.exists(_ == Alleles.HIGH_JUMP)) HIGH_JUMP_HEIGHT else NORMAL_JUMP_HEIGHT
 
-    override def jump(): Seq[KeyFrame] = {
+    override def jump(): AnimationFrames = {
       checkDirection()
       Seq(
         at(0 s){
           Set(imageView.image -> jumpingImage)
         },
         at(0.5 s) {
-          if (direction == Right) positionX += jumpingValue else positionX -= jumpingValue
+          moveHorizontally()
           positionY -= jumpingValue
   
           Set(imageView.x -> positionX, imageView.y -> positionY)
         },
         at(1 s) {
-          if (direction == Right) positionX += jumpingValue else positionX -= jumpingValue
+          moveHorizontally()
           positionY += jumpingValue
 
           Set(imageView.x -> positionX, imageView.y -> positionY)
@@ -102,5 +105,12 @@ object BunnyView {
       }
       imageView.setScaleX(scaleXValue(direction))
     }
+
+    /** Method that moves that update the bunny position according to bunny actual Direction */
+    private def moveHorizontally(): Unit = direction match {
+      case Right => positionX += jumpingValue
+      case Left => positionX -= jumpingValue
+    }
+
   }
 }
