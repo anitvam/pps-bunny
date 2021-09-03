@@ -10,11 +10,7 @@ object ScalaFXLauncher extends JFXApp3{
 
 
   override def start(): Unit = {
-//    val someBunnies = Seq.fill(50)(generateRandomFirstBunny)
-
     ScalaFXView.start()
-    //simulationLoop().unsafeRunAsyncAndForget()
-//    view.showPopulation(someBunnies)
-
+//    simulationLoop().unsafeRunAsyncAndForget()
   }
 }

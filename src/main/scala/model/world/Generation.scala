@@ -3,12 +3,22 @@ package model.world
 import model.Bunny
 import model.world.Generation.{Environment, Population}
 
+/**The unit of time of the simulation and wraps its properties*/
 trait Generation{
+  /**@return the current [[Environment]]*/
   def environment: Environment
+
+  /**@return the current [[Population]]*/
   def population: Population
+
+  /**Updates the current population
+   * @param bunnies the new set of bunnies*/
   def population_=(bunnies:Population):Unit
+
+  /**Sets this Generation as ended*/
   def ended(): Unit
 
+  /**@return the current number of alive bunnies*/
   def getBunniesNumber:Int = population.count(_.alive)
 }
 

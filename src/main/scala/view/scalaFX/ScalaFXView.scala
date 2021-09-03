@@ -32,11 +32,10 @@ object ScalaFXView extends View {
       scene = new Scene(root)
     }
     stage.setResizable(false)
-
     baseAppController.get.initialize()
   }
 
   def showPopulation(bunnies: Population): Unit = {
-    Platform.runLater(baseAppController.get.showBunnies(bunnies))
+    Platform.runLater{baseAppController.get.showBunnies(bunnies)}
   }
 }

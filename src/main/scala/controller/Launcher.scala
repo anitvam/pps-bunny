@@ -1,6 +1,6 @@
-package engine
+package controller
 
-import scala.language.postfixOps
+import engine.SimulationEngine
 
 object Launcher extends App {
   SimulationEngine.simulationLoop() unsafeRunSync

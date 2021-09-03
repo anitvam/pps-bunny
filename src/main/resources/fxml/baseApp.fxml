@@ -33,7 +33,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                      <children>
-                        <Button fx:id="startButton" layoutX="400.0" layoutY="160.0" mnemonicParsing="false" onAction="#startSimulation" style="-fx-background-color: #DDAA4E;" text="START" textAlignment="CENTER" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="160.0">
+                        <Button fx:id="startButton" layoutX="400.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleStartSimulation" style="-fx-background-color: #DDAA4E;" text="START" textAlignment="CENTER" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="160.0">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
