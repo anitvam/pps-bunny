@@ -2,7 +2,6 @@ package view.scalaFX.FXControllers
 
 import controller.Controller
 import model.world.Generation.Population
-import model.world.Reproduction
 import model.world.Reproduction.generateInitialCouple
 import scalafx.animation.Timeline
 import scalafx.application.Platform
@@ -13,6 +12,7 @@ import scalafx.scene.layout.{AnchorPane, Background, BackgroundImage, Background
 import scalafx.util.Duration
 import scalafxml.core.macros.sfxml
 import view.scalaFX.components.BunnyView
+import view.utilities.BunnyImage
 
 import scala.language.postfixOps
 
@@ -53,6 +53,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
         contain = false,
         cover = false)
     )))
+    BunnyImage
   }
 
   def handleStartSimulation(): Unit = {
