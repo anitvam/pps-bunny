@@ -1,14 +1,19 @@
 package controller
 
 import model.Bunny.generateRandomFirstBunny
-import scalafx.application.JFXApp
+import scalafx.application.{JFXApp, JFXApp3}
 import view._
 import view.scalaFX.ScalaFXView
 
-object ScalaFXLauncher extends JFXApp{
-  private val view = new ScalaFXView()
-  private val someBunnies = Seq.fill(2)(generateRandomFirstBunny)
+object ScalaFXLauncher extends JFXApp3{
 
-  view.start()
-  view.showPopulation(someBunnies)
+
+  override def start(): Unit = {
+    val view = new ScalaFXView()
+    val someBunnies = Seq.fill(50)(generateRandomFirstBunny)
+
+    view.start()
+    view.showPopulation(someBunnies)
+
+  }
 }

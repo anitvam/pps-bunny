@@ -98,9 +98,9 @@ object BunnyView {
 
     /** Method that checks the actual direction of the bunny and update the orientation of its image */
     private def checkDirection(): Unit = {
-      if ((positionX + 100) >= PREFERRED_PANEL_WIDTH) {
+      if ((positionX + (2*jumpingValue)) >= PREFERRED_PANEL_WIDTH) {
         direction = Left
-      } else if (positionX - 100 < 0) {
+      } else if (positionX - (2*jumpingValue) < 0) {
         direction = Right
       }
       imageView.setScaleX(scaleXValue(direction))

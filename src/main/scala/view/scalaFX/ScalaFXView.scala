@@ -1,7 +1,7 @@
 package view.scalaFX
 
 import controller.ScalaFXLauncher.stage
-import scalafx.application.JFXApp.PrimaryStage
+import scalafx.application.JFXApp3.PrimaryStage
 import scalafx.scene.Scene
 import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import view.scalaFX.FXControllers.BaseAppControllerInterface
