@@ -13,7 +13,7 @@ object ScalaFXLauncher extends JFXApp3{
 //    val someBunnies = Seq.fill(50)(generateRandomFirstBunny)
 
     ScalaFXView.start()
-    simulationLoop().unsafeRunAsyncAndForget()
+    //simulationLoop().unsafeRunAsyncAndForget()
 //    view.showPopulation(someBunnies)
 
   }
