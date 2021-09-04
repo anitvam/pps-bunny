@@ -1,11 +1,8 @@
 package engine
 
-import cats.effect.IO
-import engine.SimulationHistory.{endedActualGeneration, getActualPopulation, getEnvironmentForNextGeneration, getPopulationForNextGeneration, history}
 import model.world.Generation
 import model.world.Generation.{Environment, Population}
 import model.world.Reproduction.{generateInitialCouple, nextGenerationBunnies}
-import view.scalaFX.ScalaFXView
 
 import scala.language.implicitConversions
 
@@ -16,16 +13,15 @@ object SimulationHistory{
   var history:History = List()
 
   /**Initiliaze the [[History]] of this simulation
-   * @param environment the initial environment of the first [[Generation]]
-   * @param initialPopulation the initial population*/
-  def initialize(environment: Environment) =
+   * @param environment the initial environment of the first [[Generation]] */
+  def initialize(environment: Environment): Unit =
     history = Generation(environment, generateInitialCouple) :: history
 
   /**@return the actual [[Generation]]*/
   def getActualGeneration: Generation = history.head
 
   /**Terminate the actual [[Generation]]*/
-  def endedActualGeneration():Unit =getActualGeneration.ended()
+  def endActualGeneration(): Unit = getActualGeneration.isEnded = true
 
   /**@return how many generation have been lived*/
   def getGenerationNumber: Int = history.length
@@ -44,7 +40,7 @@ object SimulationHistory{
 
   /**Terminate the actual [[Generation]] and start the next one*/
   def startNextGeneration() : Unit = {
-    endedActualGeneration()
+    endActualGeneration()
     history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history
   }
 }

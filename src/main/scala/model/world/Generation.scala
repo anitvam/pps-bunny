@@ -13,10 +13,12 @@ trait Generation{
 
   /**Updates the current population
    * @param bunnies the new set of bunnies*/
-  def population_=(bunnies:Population):Unit
+  def population_=(bunnies:Population): Unit
+
+  def isEnded: Boolean
 
   /**Sets this Generation as ended*/
-  def ended(): Unit
+  def isEnded_=(isEnded:Boolean): Unit
 
   /**@return the current number of alive bunnies*/
   def getBunniesNumber:Int = population.count(_.alive)
@@ -32,9 +34,7 @@ object Generation{
 
   private class GenerationImpl( override val environment: Environment,
                                 override var population: Population,
-                                var isEnded:Boolean = false) extends Generation{
-    override def ended(): Unit = isEnded = true
-  }
+                                override var isEnded:Boolean = false) extends Generation
 }
 
 
