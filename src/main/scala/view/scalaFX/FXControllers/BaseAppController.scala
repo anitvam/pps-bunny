@@ -1,17 +1,24 @@
 package view.scalaFX.FXControllers
 
-import model.Bunny
+import controller.Controller
+import model.world.Generation.Population
+import model.world.Reproduction.generateInitialCouple
 import scalafx.animation.Timeline
 import scalafx.application.Platform
 import scalafx.collections.ObservableBuffer
+import scalafx.scene.control.Button
 import scalafx.scene.image.Image
 import scalafx.scene.layout.{AnchorPane, Background, BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
 import scalafx.util.Duration
 import scalafxml.core.macros.sfxml
 import view.scalaFX.components.BunnyView
+import view.utilities.BunnyImage
+
+import scala.language.postfixOps
 
 trait BaseAppControllerInterface {
-  def initialize(bunnies: Seq[Bunny]): Unit
+  def initialize(): Unit
+  def showBunnies(bunnies:Population): Unit
 }
 
 @sfxml
@@ -20,15 +27,13 @@ class BaseAppController(private val simulationPane: AnchorPane,
                         private val mutationChoicePane: AnchorPane,
                         private val factorChoicePane: AnchorPane,
                         private val graphChoicePane: AnchorPane,
-                        private var bunnyTimeline: Timeline) extends BaseAppControllerInterface {
+                        private val startButton: Button) extends BaseAppControllerInterface {
 
 
   private var bunnyViews: Seq[BunnyView] = Seq.empty
   private var bunnyTimelines: Seq[Timeline] = Seq.empty
 
-  def initialize(bunnies: Seq[Bunny]): Unit = {
-    if (bunnyTimelines.nonEmpty) bunnyTimelines.foreach(_.stop())
-
+  def initialize(): Unit = {
     // Environment background configuration
     val hotBackground = new Image( "/environment/climate_hot.png")
     if (hotBackground == null) {
@@ -48,27 +53,35 @@ class BaseAppController(private val simulationPane: AnchorPane,
         contain = false,
         cover = false)
     )))
+    BunnyImage
+  }
 
+  def handleStartSimulation(): Unit = {
+    startButton.setVisible(false)
+    Controller.startSimulation()
+  }
 
+  def showBunnies(bunnies:Population): Unit ={
     // Bunny visualization inside simulationPane
-    bunnyViews = bunnies.map(BunnyView(_))
-    simulationPane.children = ObservableBuffer.empty
-    simulationPane.children = bunnyViews.map(_.imageView)
+      val newBunnyViews = bunnies.filter(_.age == 0).map(BunnyView(_))
+      bunnyViews = bunnyViews.filter(_.bunny.alive) ++ newBunnyViews
+      simulationPane.children = ObservableBuffer.empty
+      simulationPane.children = bunnyViews.map(_.imageView)
 
-    // Timeline definition for each bunny of the Population
-    bunnyViews.zipWithIndex.foreach(bunny => {
-      val bunnyTimeline = new Timeline {
-        onFinished = _ => {
+      // Timeline definition for each bunny of the Population
+      newBunnyViews.zipWithIndex.foreach(bunny => {
+        val bunnyTimeline = new Timeline {
+          onFinished = _ => {
+            keyFrames = bunny._1.jump()
+            this.play()
+          }
+          delay = Duration(1500 + bunny._2)
+          autoReverse = true
+          cycleCount = 1
           keyFrames = bunny._1.jump()
-          this.play()
         }
-        delay = Duration(3500 + bunny._2)
-        autoReverse = true
-        cycleCount = 1
-        keyFrames = bunny._1.jump()
-      }
-      bunnyTimelines = bunnyTimeline +: bunnyTimelines
-      bunnyTimeline.play()
-    })
+        bunnyTimelines = bunnyTimeline +: bunnyTimelines
+        bunnyTimeline.play()
+      })
   }
 }

@@ -1,6 +1,6 @@
 package view
 
-import model.Bunny
+import model.world.Generation.Population
 
 /** Methods required to be implemented inside each implementation of the View */
 trait View {
@@ -9,5 +9,5 @@ trait View {
 
   /** Method that displays a list of bunnies
    * @param bunnies the list of bunnies */
-  def showPopulation(bunnies: Seq[Bunny]): Unit
+  def showPopulation(bunnies: Population): Unit
 }
