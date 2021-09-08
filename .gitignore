@@ -2,7 +2,7 @@
 target/
 project/project/+
 .bsp
-project/META-INF/+
+project/META-INF/
 
 # intellij files
 .idea
