@@ -5,9 +5,9 @@ import model.genome.Alleles
 import scalafx.Includes.{at, double2DurationHelper}
 import scalafx.animation.KeyFrame
 import scalafx.scene.image.{Image, ImageView}
+import view.scalaFX.ScalaFXView.{PREFERRED_BUNNY_PANEL_HEIGHT, PREFERRED_BUNNY_PANEL_WIDTH}
 import view.scalaFX.utilities.Direction
 import view.scalaFX.utilities.Direction._
-import view.utilities.ImageType.{Jumping, Normal}
 import view.utilities.{BunnyImageUtils, ImageType}
 
 import scala.language.postfixOps
@@ -40,16 +40,14 @@ trait BunnyView {
 }
 
 object BunnyView {
-  val PREFERRED_PANEL_WIDTH = 700
-  val PREFERRED_PANEL_HEIGHT = 200
   val PANEL_SKY_ZONE = 80
   val PREFERRED_BUNNY_SIZE = 80
   val NORMAL_JUMP_HEIGHT = 40
   val HIGH_JUMP_HEIGHT = 80
 
   def apply(bunny: Bunny): BunnyView = {
-    val newX = Random.nextInt(PREFERRED_PANEL_WIDTH)
-    val newY = Random.nextInt(PREFERRED_PANEL_HEIGHT) + PANEL_SKY_ZONE
+    val newX = Random.nextInt(PREFERRED_BUNNY_PANEL_WIDTH)
+    val newY = Random.nextInt(PREFERRED_BUNNY_PANEL_HEIGHT) + PANEL_SKY_ZONE
 
     BunnyViewImpl(new ImageView {
       image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
@@ -98,7 +96,7 @@ object BunnyView {
 
     /** Method that checks the actual direction of the bunny and update the orientation of its image */
     private def checkDirection(): Unit = {
-      if ((positionX + (2*jumpingValue)) >= PREFERRED_PANEL_WIDTH) {
+      if ((positionX + (2*jumpingValue)) >= PREFERRED_BUNNY_PANEL_WIDTH) {
         direction = Left
       } else if (positionX - (2*jumpingValue) < 0) {
         direction = Right

@@ -7,7 +7,8 @@ trait View {
   /** Method that starts the GUI and shows it to the user */
   def start(): Unit
 
-  /** Method that displays a list of bunnies
-   * @param bunnies the list of bunnies */
-  def showPopulation(bunnies: Population): Unit
+  /** Method that displays a list of bunnies and the generation number
+   * @param bunnies the list of bunnies
+   * @param generationNumber the generation number*/
+  def showPopulation(bunnies: Population, generationNumber: Int): Unit
 }
