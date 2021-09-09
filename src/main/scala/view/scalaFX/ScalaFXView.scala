@@ -31,13 +31,15 @@ object ScalaFXView extends View {
     baseAppController = Some(loader.getController[BaseAppControllerInterface])
 
     val bounds = Screen.getPrimary.getVisualBounds
-    PREFERRED_BUNNY_PANEL_WIDTH = (bounds.getWidth * 0.6).toInt
-    PREFERRED_BUNNY_PANEL_HEIGHT = (bounds.getHeight * 0.25).toInt
+    val sceneWidth = if (bounds.getWidth > 1500) 1500 else bounds.getWidth - 500
+    val sceneHeigth = if (bounds.getHeight > 900) 900 else bounds.getHeight - 200
+    PREFERRED_BUNNY_PANEL_WIDTH = (sceneWidth * 0.6).toInt
+    PREFERRED_BUNNY_PANEL_HEIGHT = (sceneHeigth * 0.25).toInt
     stage = new PrimaryStage() {
       title = "Bunnies"
       scene = new Scene(root)
-      width = if (bounds.getWidth > 1800) 1800 else bounds.getWidth - 200
-      height = if (bounds.getHeight > 900) 900 else bounds.getHeight - 200
+      width = sceneWidth
+      height = sceneHeigth
     }
     stage.setResizable(false)
     baseAppController.get.initialize()
