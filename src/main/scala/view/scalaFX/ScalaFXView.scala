@@ -6,6 +6,7 @@ import scalafx.scene.Scene
 import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import view.scalaFX.FXControllers.BaseAppControllerInterface
 import scalafx.Includes._
+import javafx.stage.Screen
 import javafx.{scene => jfxs}
 import model.world.Generation.Population
 import scalafx.application.Platform
@@ -15,6 +16,8 @@ import view._
 
 object ScalaFXView extends View {
   var baseAppController: Option[BaseAppControllerInterface] = Option.empty
+  var PREFERRED_BUNNY_PANEL_WIDTH = 0
+  var PREFERRED_BUNNY_PANEL_HEIGHT = 0
 
   def start(): Unit = {
     val baseAppView = getClass.getResource("/fxml/baseApp.fxml")
@@ -27,15 +30,20 @@ object ScalaFXView extends View {
     val root = loader.getRoot[jfxs.Parent]
     baseAppController = Some(loader.getController[BaseAppControllerInterface])
 
+    val bounds = Screen.getPrimary.getVisualBounds
+    PREFERRED_BUNNY_PANEL_WIDTH = (bounds.getWidth * 0.6).toInt
+    PREFERRED_BUNNY_PANEL_HEIGHT = (bounds.getHeight * 0.25).toInt
     stage = new PrimaryStage() {
       title = "Bunnies"
       scene = new Scene(root)
+      width = if (bounds.getWidth > 1800) 1800 else bounds.getWidth - 200
+      height = if (bounds.getHeight > 900) 900 else bounds.getHeight - 200
     }
     stage.setResizable(false)
     baseAppController.get.initialize()
   }
 
-  def showPopulation(bunnies: Population): Unit = {
-    Platform.runLater{baseAppController.get.showBunnies(bunnies)}
+  def showPopulation(bunnies: Population, generationNumber: Int): Unit = {
+    Platform.runLater{baseAppController.get.showBunnies(bunnies, generationNumber)}
   }
 }
