@@ -1,0 +1,32 @@
+.button {
+    -fx-background-color: #dca77b;
+    -fx-background-radius: 1em;
+}
+
+.button:hover {
+    -fx-background-color: #e6be9b;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.01;
+}
+
+.button:disabled, .button:disabled > * {
+    -fx-opacity: 1.0;
+}
+
+.chosen-button {
+    -fx-border-color: #8093f1;
+    -fx-border-width: 5;
+    -fx-border-radius: 1em;
+}
+
+.dashed-button {
+    -fx-border-color: #8093f1;
+    -fx-border-width: 5;
+    -fx-border-radius: 1em;
+    -fx-border-style: segments(10, 15, 15, 15)  line-cap round;
+}
+
+.panel {
+    -fx-background-color: #fce8d2;
+    -fx-background-radius: 2px;
+}
