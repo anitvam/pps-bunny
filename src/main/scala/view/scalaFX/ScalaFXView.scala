@@ -15,6 +15,7 @@ import scalafx.application.Platform
 import java.io.IOException
 import view._
 import view.scalaFX.ScalaFxViewConstants.{SCENE_HEIGHT, SCENE_WIDTH}
+import view.scalaFX.components.PopulationChart
 
 object ScalaFXView extends View {
   var baseAppController: Option[BaseAppControllerInterface] = Option.empty
@@ -40,9 +41,11 @@ object ScalaFXView extends View {
     baseAppController.get.initialize()
   }
 
-  def showPopulation(bunnies: Population, generationNumber: Int): Unit = {
-    Platform.runLater { baseAppController.get.showBunnies(bunnies, generationNumber) }
-  }
+  def updateView(generationPhase:Double, bunnies:Population): Unit =
+    Platform.runLater{
+      baseAppController.get.showBunnies(bunnies, generationPhase.toInt)
+      PopulationChart.updateChart(generationPhase, bunnies)
+    }
 }
 
 object ScalaFxViewConstants {

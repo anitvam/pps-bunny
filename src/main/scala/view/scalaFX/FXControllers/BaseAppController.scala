@@ -1,5 +1,6 @@
 package view.scalaFX.FXControllers
 
+
 import controller.Controller
 import model.world.Generation.Population
 import scalafx.animation.Timeline
@@ -7,17 +8,14 @@ import javafx.scene.{layout => jfxs}
 import scalafx.Includes._
 import view.scalaFX.utilities.EnvironmentImageUtils._
 import scalafx.scene.control.{Button, Label}
-import scalafx.scene.layout.{AnchorPane, Background}
-import scalafx.util.Duration
+import scalafx.scene.layout.AnchorPane
 import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import scalafxml.core.macros.sfxml
-import view.scalaFX.components.BunnyView
 import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
-import view.scalaFX.ScalaFxViewConstants._
+import view.scalaFX.components.{BunnyView, PopulationChart}
 
 import java.io.IOException
 import scala.language.postfixOps
-import scala.util.Random
 
 sealed trait BaseAppControllerInterface {
   /** Method that initialize the application interface */
@@ -28,12 +26,12 @@ sealed trait BaseAppControllerInterface {
 
 @sfxml
 class BaseAppController(private val simulationPane: AnchorPane,
-                        private val graphPane: AnchorPane,
+                        private val chartsPane: AnchorPane,
                         private val mutationChoicePane: AnchorPane,
                         private val factorChoicePane: AnchorPane,
-                        private val graphChoicePane: AnchorPane,
                         private val startButton: Button,
-                        private val generationLabel: Label) extends BaseAppControllerInterface {
+                        private val generationLabel: Label,
+                        private val chartChoicePane: AnchorPane) extends BaseAppControllerInterface {
 
 
   private var bunnyViews: Seq[BunnyView] = Seq.empty
@@ -45,7 +43,6 @@ class BaseAppController(private val simulationPane: AnchorPane,
     simulationPane.background = SummerImage()
 
     BunnyImage
-
     // Load mutationPane fxml controller
     val mutationPaneView = getClass.getResource("/fxml/mutationsPanel.fxml")
     if (mutationPaneView == null) {
@@ -63,6 +60,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
     AnchorPane.setRightAnchor(mutationsPane, 0.0)
 
     mutationChoicePane.children = mutationsPane
+    chartsPane.children =  PopulationChart.chart
   }
 
   def startSimulationClick(): Unit = {

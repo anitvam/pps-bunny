@@ -10,5 +10,5 @@ trait View {
   /** Method that displays a list of bunnies and the generation number
    * @param bunnies the list of bunnies
    * @param generationNumber the generation number*/
-  def showPopulation(bunnies: Population, generationNumber: Int): Unit
+  def updateView( generationNumber: Double, bunnies: Population): Unit
 }

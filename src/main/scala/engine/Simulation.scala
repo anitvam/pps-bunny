@@ -20,8 +20,8 @@ object Simulation {
     println("SOME BUNNIES DIED BECAUSE OF TEMPERATURE")
   }
 
-  def showNewPopulation : IO[Unit] = {
-    ScalaFXView.showPopulation(getActualPopulation, getGenerationNumber)
+  def updateView(generationPhase:Double) : IO[Unit] = {
+    ScalaFXView.updateView(getGenerationNumber+generationPhase, getActualPopulation)
   }
 
   def showEnd():IO[Unit] = {

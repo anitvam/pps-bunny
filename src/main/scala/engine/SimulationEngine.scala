@@ -11,13 +11,16 @@ object SimulationEngine {
   def simulationLoop(): IO[Unit] = {
     for {
       _ <- resetTimer
-      _ <- showNewPopulation
+      _ <- updateView(0)
       _ <- waitFor(WOLF_INSTANT)
       _ <- wolvesEat
+      _ <- updateView(0.25)
       _ <- waitFor(FOOD_INSTANT)
       _ <- bunniesEat
+      _ <- updateView(0.5)
       _ <- waitFor(TEMP_INSTANT)
       _ <- applyTemperatureDamage
+      _ <- updateView(0.75)
       _ <- waitFor(GENERATION_END)
       _ <- startNewGeneration
       _ <- if(getGenerationNumber < MAX_GENERATIONS_NUMBER &&
