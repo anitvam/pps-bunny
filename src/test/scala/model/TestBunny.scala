@@ -1,6 +1,7 @@
 package model
+import engine.SimulationConstants.MAX_BUNNY_AGE
 import model.Bunny.{generateBaseFirstBunny, generateRandomFirstBunny, splitBunniesByGene}
-import model.BunnyConstants.MAX_BUNNY_AGE
+import model.world.Reproduction.{combineCouples, generateAllChildren, generateChildren, nextGenerationBunnies}
 import model.genome.{Gene, Genes, StandardAllele}
 import model.world.Reproduction.{combineCouples, generateAllChildren, generateChildren, nextGenerationBunnies}
 import org.scalatest.{FlatSpec, Matchers}
