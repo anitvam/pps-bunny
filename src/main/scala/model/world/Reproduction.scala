@@ -1,6 +1,6 @@
 package model.world
 
-import engine.SimulationConstants.{CHILDREN_EACH_COUPLE, MAX_BUNNY_AGE}
+import engine.SimulationConstants.{CHILDREN_FOR_EACH_COUPLE, MAX_BUNNY_AGE}
 import model.Bunny.generateBaseFirstBunny
 import model._
 import model.genome._
@@ -27,7 +27,7 @@ object Reproduction {
    * @return the 4 children of the couple, one for each cell of the Punnett's square
    */
   def generateChildren(mom: Bunny, dad: Bunny): Population = {
-    var childrenGenotypes = List.fill(CHILDREN_EACH_COUPLE)(PartialGenotype(Map()))
+    var childrenGenotypes = List.fill(CHILDREN_FOR_EACH_COUPLE)(PartialGenotype(Map()))
     Genes.values.foreach(gk => {
       val grandmaMomAllele = mom.genotype(gk).momAllele
       val grandpaMomAllele = mom.genotype(gk).dadAllele
@@ -63,7 +63,6 @@ object Reproduction {
     val children = generateAllChildren(bunnies)
     bunnies.foreach(_.age+=1)
     bunnies.foreach(b => if (b.age >= MAX_BUNNY_AGE) b.alive = false)
-    val stillAlive = bunnies.filter(_.alive)
-    children ++ stillAlive
+    children ++ bunnies.filter(_.alive)
   }
 }

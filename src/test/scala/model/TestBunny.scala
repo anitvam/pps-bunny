@@ -1,7 +1,6 @@
 package model
 import engine.SimulationConstants.MAX_BUNNY_AGE
 import model.Bunny.{generateBaseFirstBunny, generateRandomFirstBunny, splitBunniesByGene}
-import model.world.Reproduction.{combineCouples, generateAllChildren, generateChildren, nextGenerationBunnies}
 import model.genome.{Gene, Genes, StandardAllele}
 import model.world.Reproduction.{combineCouples, generateAllChildren, generateChildren, nextGenerationBunnies}
 import org.scalatest.{FlatSpec, Matchers}
@@ -101,7 +100,7 @@ class TestBunny extends FlatSpec with Matchers {
     var num = genBunnies.size
     var oldBunnies = 0
     for (_ <- 0 to generations){
-      oldBunnies = genBunnies.count(_.age == MAX_BUNNY_AGE)
+      oldBunnies = genBunnies.count(b => b.age == MAX_BUNNY_AGE-1)
       genBunnies = nextGenerationBunnies(genBunnies)
       assert(genBunnies.size == (num/2)*4 + num - oldBunnies)
       num = genBunnies.size
