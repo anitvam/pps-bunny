@@ -121,7 +121,7 @@ object LineChartComponentFactory{
     }
     chart ++= seriesData
 
-    seriesData.filterAndForeach(_.getName == "Total", _.enabled(false))
+    seriesData.filterAndForeach(_.getName != "Total", _.enabled(false))
 
     chart.legend.getItems.foreach(li => {
       seriesData.filterAndForeach(_.getName == li.getText, s =>
