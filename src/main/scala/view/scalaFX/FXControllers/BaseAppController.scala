@@ -12,8 +12,9 @@ import scalafx.scene.layout.AnchorPane
 import scalafx.util.Duration
 import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import scalafxml.core.macros.sfxml
-import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
-import view.scalaFX.components.{BunnyView, PopulationChart}
+import view.scalaFX.components.BunnyView
+import view.scalaFX.components.charts.PopulationChart
+import view.scalaFX.utilities._
 
 import java.io.IOException
 import scala.language.postfixOps

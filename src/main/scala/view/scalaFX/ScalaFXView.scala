@@ -15,7 +15,7 @@ import scalafx.application.Platform
 import java.io.IOException
 import view._
 import view.scalaFX.ScalaFxViewConstants.{SCENE_HEIGHT, SCENE_WIDTH}
-import view.scalaFX.components.PopulationChart
+import view.scalaFX.components.charts.PopulationChart
 
 object ScalaFXView extends View {
   var baseAppController: Option[BaseAppControllerInterface] = Option.empty
