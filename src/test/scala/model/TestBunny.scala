@@ -95,7 +95,7 @@ class TestBunny extends FlatSpec with Matchers {
   }
 
   var genBunnies: Seq[Bunny] = List.fill(bunniesNum)(generateRandomFirstBunny)
-  it should "contain the right number of bunnies after many generations " in {
+  it should "contain the right number of bunnies after many generations and they should all be alive " in {
     val generations = 8
     var num = genBunnies.size
     var oldBunnies = 0
@@ -103,6 +103,7 @@ class TestBunny extends FlatSpec with Matchers {
       oldBunnies = genBunnies.count(b => b.age == MAX_BUNNY_AGE-1)
       genBunnies = nextGenerationBunnies(genBunnies)
       assert(genBunnies.size == (num/2)*4 + num - oldBunnies)
+      assert(genBunnies.count(_.alive) == (num/2)*4 + num - oldBunnies)
       num = genBunnies.size
     }
   }

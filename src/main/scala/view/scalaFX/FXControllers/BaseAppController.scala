@@ -2,13 +2,12 @@ package view.scalaFX.FXControllers
 
 import controller.Controller
 import model.world.Generation.Population
-import model.world.Reproduction.generateInitialCouple
 import scalafx.animation.Timeline
 import scalafx.application.Platform
 import scalafx.collections.ObservableBuffer
 import scalafx.scene.control.Button
 import scalafx.scene.image.Image
-import scalafx.scene.layout.{AnchorPane, Background, BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
+import scalafx.scene.layout._
 import scalafx.util.Duration
 import scalafxml.core.macros.sfxml
 import view.scalaFX.components.BunnyView
@@ -35,7 +34,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
 
   def initialize(): Unit = {
     // Environment background configuration
-    val hotBackground = new Image( "/environment/climate_hot.png")
+    val hotBackground = new Image("/img/environment/climate_hot.png")
     if (hotBackground == null) {
       println("An error occurred while loading resource: climate_hot.png")
       Platform.exit()

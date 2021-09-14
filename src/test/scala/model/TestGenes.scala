@@ -11,7 +11,7 @@ class TestGenes extends FlatSpec with Matchers {
     Alleles.values.foreach(ak => {
       val geneKind = getGeneKind(ak)
       val dominantAllele = StandardAllele(geneKind.base)
-      assert(dominantAllele.getCaseSensitiveLetter(geneKind.letter) == "")
+      assert(dominantAllele.letter == "")
     })
   }
 
@@ -21,13 +21,13 @@ class TestGenes extends FlatSpec with Matchers {
 
   it should "produce an uppercase letter if dominant" in {
     Alleles.values.filter(_.isDominant.get).foreach(ak => {
-      assert(StandardAllele(ak).getCaseSensitiveLetter(getGeneKind(ak).letter).toCharArray()(0).isUpper)
+      assert(StandardAllele(ak).letter.toCharArray()(0).isUpper)
     })
   }
 
   it should "produce a lowercase letter if recessive" in {
     Alleles.values.filter(!_.isDominant.get).foreach(ak => {
-      assert(StandardAllele(ak).getCaseSensitiveLetter(getGeneKind(ak).letter).toCharArray()(0).isLower)
+      assert(StandardAllele(ak).letter.toCharArray()(0).isLower)
     })
   }
 
