@@ -9,7 +9,7 @@ import scalafx.application.Platform
 import scalafx.collections.ObservableBuffer
 import scalafx.geometry.Side
 import scalafx.scene.chart.{LineChart, NumberAxis, XYChart}
-import view.scalaFX.components.PopulationChart.{ChartData, SeriesData, totalSeries}
+import view.scalaFX.components.PopulationChart.{ChartData, SeriesData, mutationsSeries, totalSeries}
 
 import scala.language.implicitConversions
 
@@ -86,22 +86,14 @@ object LineChartComponentFactory{
   }
 
   def createDataXYChart(dataChart: ChartData, seriesVisibility:Boolean): XYChart.Data[Number, Number] = dataChart match {
-    case ((x, y), true)  =>
-      val truePoint = XYChart.Data[Number, Number](x, y)
-      truePoint.nodeProperty().addListener(_ => {
-        truePoint.getNode.setStyle("-fx-scale-x: 0.7; -fx-scale-y: 0.7;")
-        truePoint.setExtraValue(true)
-        truePoint.getNode.visible = seriesVisibility
+    case ((x, y), v)  =>
+      val point = XYChart.Data[Number, Number](x, y)
+      point.nodeProperty().addListener(_ => {
+        point.getNode.setStyle("-fx-scale-x: 0.7; -fx-scale-y: 0.7;")
+        point.setExtraValue(v)
+        point.getNode.visible = if(v) seriesVisibility else false
       })
-      truePoint
-
-    case ((x, y), false) =>
-      val fakePoint = XYChart.Data[Number, Number](x, y)
-      fakePoint.nodeProperty().addListener(_ => {
-        fakePoint.getNode.setVisible(false)
-        fakePoint.setExtraValue(false)
-      })
-      fakePoint
+      point
   }
 
   def createLineChart(xAxis:NumberAxis, yAxis:NumberAxis,
@@ -121,26 +113,28 @@ object LineChartComponentFactory{
         s.getData.foreach(_.getNode.visible = false)
       }
     })
-    chart.getChildrenUnmodifiable.find(_.isInstanceOf[Legend])
-      .map(l => l.asInstanceOf[Legend]).get.getItems.foreach(li => {
+    chart.legend.getItems.foreach(li => {
       seriesData.find(_.getName == li.getText).foreach(s =>
         li.getSymbol.onMouseClicked = _ => {
-          s.getNode.visible = !s.getNode.isVisible
-          s.getData.filter(_.getExtraValue.asInstanceOf[Boolean]) foreach {_.getNode.visible = s.getNode.isVisible}
-          if(s.getNode.isVisible)
-            seriesData.filterNot(_.getName == s.getName) foreach { s=> {
-              s.getNode.visible = false
-              s.getData.foreach(_.getNode.visible = false)
-            }}
-          else {
-            totalSeries.getNode.visible = true
-            totalSeries.getData.filter(_.getExtraValue.asInstanceOf[Boolean]) foreach { _.getNode.visible = true }
-          }
+          s.enabled(!s.getNode.isVisible)
+          if(s.getNode.isVisible) mutationsSeries.values filterNot { _.getName == s.getName } foreach {_.enabled(false)}
+          else  totalSeries.enabled(true)
         }
       )
     })
     chart
   }
 
+  implicit class RichXYChartSeries[A,B](series:XYChart.Series[A,B]) {
+    def enabled(isVisible:Boolean): Unit = {
+      series.getNode.visible = isVisible
+      series.getData.filter(_.getExtraValue.asInstanceOf[Boolean]) foreach {_.getNode.visible = isVisible}
+    }
+  }
 
+  implicit class RichLineChart[A,B](chart:LineChart[A,B]){
+    def legend :Legend = chart.getChildrenUnmodifiable
+      .find(_.isInstanceOf[Legend])
+      .map(l => l.asInstanceOf[Legend]).get
+  }
 }
