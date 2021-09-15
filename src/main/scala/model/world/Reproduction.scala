@@ -25,9 +25,9 @@ object Reproduction {
   /**
    * @param mom a bunny
    * @param dad another bunny
-   * @return the 4 children of the couple, one for each cell of the Punnet's square
+   * @return the 4 children of the couple, one for each cell of the Punnett's square
    */
-  def generateChildren(mom: Bunny, dad: Bunny)(mutations: Option[List[Mutation]]): Population = {
+  def generateChildren(mom: Bunny, dad: Bunny, mutations: Option[List[Mutation]] = None): Population = {
     var childrenGenotypes = List.fill(CHILDREN_EACH_COUPLE)(PartialGenotype(Map()))
 
     Genes.values.foreach(gk => {
@@ -41,15 +41,12 @@ object Reproduction {
                                                   Gene(gk, grandpaMomAllele, grandpaDadAllele) )
       val anotherGene = Random.shuffle(genesOfReproduction)
 
-      if(mutations.isDefined){
-        mutations.get.foreach(m => {
-          if(m.geneKind.base == gk.base){
-            childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE - 1) yield childrenGenotypes(i) + anotherGene(i)).toList
-            childrenGenotypes.::(Gene(gk, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)))
-          }
-        })
-      } else {
-        childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE) yield childrenGenotypes(i) + anotherGene(i)).toList
+      mutations match {
+        case None => childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE) yield childrenGenotypes(i) + anotherGene(i)).toList
+        case Some(ms) => ms filter(_.geneKind == gk) foreach {
+          _ => childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE - 1) yield childrenGenotypes(i) + anotherGene(i)).toList
+          Gene(gk, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenotypes
+        }
       }
 
       childrenGenotypes
@@ -63,9 +60,9 @@ object Reproduction {
    */
   def generateAllChildren(bunnies: Population)(mutations: Option[List[Mutation]]): Population = {
     val couples = combineCouples(bunnies)
-    val (coupleWithMutations, coupleWithoutMutations) = Random.shuffle(couples).splitAt(couples.length / 2)
-    Seq.concat( coupleWithoutMutations.flatMap(couple => generateChildren(couple._1, couple._2)(None)),
-                coupleWithMutations.flatMap(couple => generateChildren(couple._1, couple._2)(mutations)) )
+    val (coupleWithMutations, coupleWithoutMutations) = Random.shuffle(couples).splitAt((couples.length / 2) + 1)
+    coupleWithoutMutations.flatMap(couple => generateChildren(couple._1, couple._2)) ++
+      coupleWithMutations.flatMap(couple => generateChildren(couple._1, couple._2, mutations))
   }
 
   /**
