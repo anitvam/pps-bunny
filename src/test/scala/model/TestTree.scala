@@ -19,8 +19,8 @@ class TestTree extends FlatSpec with Matchers {
   val bunnyWithParents: Bunny = nextGenerationBunnies(List.fill(5)(generateRandomFirstBunny)).filter(_.mom.isDefined).head
   val tree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunnyWithParents)
   it should "contain his parents, if he has them" in {
-    assert(tree.asInstanceOf[Node[Bunny]].momTree.elem == bunnyWithParents.mom.get)
-    assert(tree.asInstanceOf[Node[Bunny]].dadTree.elem == bunnyWithParents.dad.get)
+    assert(tree.asInstanceOf[TreeNode[Bunny]].momTree.elem == bunnyWithParents.mom.get)
+    assert(tree.asInstanceOf[TreeNode[Bunny]].dadTree.elem == bunnyWithParents.dad.get)
     assert(tree.generations == 2)
   }
 
@@ -34,15 +34,15 @@ class TestTree extends FlatSpec with Matchers {
   }
 
   it should "contain the right bunnies as parents of the first bunny " in {
-    assert(fullTree.asInstanceOf[Node[Bunny]].momTree.elem == bunny.mom.get)
-    assert(fullTree.asInstanceOf[Node[Bunny]].dadTree.elem == bunny.dad.get)
+    assert(fullTree.asInstanceOf[TreeNode[Bunny]].momTree.elem == bunny.mom.get)
+    assert(fullTree.asInstanceOf[TreeNode[Bunny]].dadTree.elem == bunny.dad.get)
   }
 
   it should "contain the right bunnies in all the generations" in {
     var bunniesToCheck: Seq[(Bunny, BinaryTree[Bunny])] = Seq((bunny, fullTree))
     bunniesToCheck.foreach(bt => {
-      val momTree = bt._2.asInstanceOf[Node[Bunny]].momTree
-      val dadTree = bt._2.asInstanceOf[Node[Bunny]].dadTree
+      val momTree = bt._2.asInstanceOf[TreeNode[Bunny]].momTree
+      val dadTree = bt._2.asInstanceOf[TreeNode[Bunny]].dadTree
       val mom = bt._1.mom.get
       val dad = bt._1.dad.get
       assert(momTree.elem == mom)
