@@ -1,11 +1,11 @@
-package view.utilities
+package view.scalaFX.utilities
 
 import model.Bunny
-import model.genome.{Alleles, Genes, Phenotype}
 import model.genome.Alleles._
 import model.genome.Genes._
+import model.genome.{Genes, Phenotype}
 import scalafx.scene.image.Image
-import view.utilities.ImageType.{ImageType, Jumping, Normal}
+import view.scalaFX.utilities.ImageType.{ImageType, Jumping, Normal}
 
 object BunnyImage extends Enumeration {
 

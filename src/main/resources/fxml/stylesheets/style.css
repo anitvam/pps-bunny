@@ -30,3 +30,17 @@
     -fx-background-color: #fce8d2;
     -fx-background-radius: 2px;
 }
+
+.summer-button {
+    -fx-background-image: url("/environment/hot_icon.png");
+    -fx-background-size: 50px 50px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.winter-button {
+    -fx-background-image: url("/environment/cold_icon.png");
+    -fx-background-size: 50px 50px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
