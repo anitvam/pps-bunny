@@ -17,7 +17,8 @@ object Alleles extends Enumeration{
    * The information each AlleleKind must have
    * @param dominant specifies if it's dominant or not, it could be empty if not chosen yet
    */
-  protected case class AllelesVal(private var dominant: Option[Boolean] = Option.empty) extends super.Val {
+
+  protected case class AllelesVal(prettyName: String, private var dominant: Option[Boolean] = Option.empty) extends super.Val {
     def resetDominance: Unit = dominant = Option.empty
     def setDominance(cond: Boolean): Unit =
       if(dominant.isDefined) throw new MultipleDominanceAssignmentException else dominant = Option(cond)
@@ -25,16 +26,16 @@ object Alleles extends Enumeration{
   }
   implicit def valueToAllelesVal(x: Value): AllelesVal = x.asInstanceOf[AllelesVal]
 
-  val WHITE_FUR: AllelesVal = AllelesVal()
-  val BROWN_FUR: AllelesVal = AllelesVal()
-  val LONG_FUR: AllelesVal = AllelesVal()
-  val SHORT_FUR: AllelesVal = AllelesVal()
-  val LONG_TEETH: AllelesVal = AllelesVal()
-  val SHORT_TEETH: AllelesVal = AllelesVal()
-  val HIGH_EARS: AllelesVal = AllelesVal()
-  val LOW_EARS: AllelesVal = AllelesVal()
-  val HIGH_JUMP: AllelesVal = AllelesVal()
-  val LOW_JUMP: AllelesVal = AllelesVal()
+  val WHITE_FUR: AllelesVal = AllelesVal("Pelo Bianco")
+  val BROWN_FUR: AllelesVal = AllelesVal("Pelo Marrone")
+  val LONG_FUR: AllelesVal = AllelesVal("Pelo Lungo")
+  val SHORT_FUR: AllelesVal = AllelesVal("Pelo Corto")
+  val LONG_TEETH: AllelesVal = AllelesVal("Denti Lunghi")
+  val SHORT_TEETH: AllelesVal = AllelesVal("Denti Corti")
+  val HIGH_EARS: AllelesVal = AllelesVal("Orecchie Alte")
+  val LOW_EARS: AllelesVal = AllelesVal("Orecchie Basse")
+  val HIGH_JUMP: AllelesVal = AllelesVal("Salto Alto")
+  val LOW_JUMP: AllelesVal = AllelesVal("Salto Basso")
 }
 
 /**

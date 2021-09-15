@@ -35,11 +35,11 @@ object PopulationChartDataType{
   case class ChartSeries (seriesData: SeriesData, xySeries:XYSeries){
     def + (p:Point): Unit ={
       seriesData ^ p
-      seriesData.data takeRight 2 foreach {xySeries += createXYChartData(_, xySeries.getNode.isVisible)}
+      seriesData.data takeRight 2 foreach {xySeries += createXYChartData(_, xySeries)}
     }
   }
   case class MutationsChartSeries(var mutationMap: Map[AlleleKind, ChartSeries] = Map()){
-    Alleles.values.foreach{ak => mutationMap = mutationMap + (ak -> ChartSeries(SeriesData(), createEmptySeries(ak.toString)))}
+    Alleles.values.foreach{ak => mutationMap = mutationMap + (ak -> ChartSeries(SeriesData(), createEmptySeries(ak.prettyName)))}
     def seriesData : Seq[SeriesData] = mutationMap.values.map(_.seriesData).toSeq
     def xySeries:List[XYSeries] = mutationMap.values.map(_.xySeries).toList
     def + (ak:AlleleKind, p:Point): Unit = {
@@ -56,7 +56,7 @@ object PopulationChart {
 
   val xAxis: NumberAxis = createNumberAxis("Generation Axis", 0, 6, 1)
   val yAxis: NumberAxis =  createNumberAxis("Population Axis", 0, 30, 5)
-  val chart: LineChart[Number, Number] = createLineChart(xAxis, yAxis, 325, 500, total.xySeries :: mutations.xySeries)
+  val chart: (Double, Double) => LineChart[Number, Number] = createLineChart(xAxis, yAxis, _, _, total.xySeries :: mutations.xySeries)
 
   def updateChart(generationPhase:Double, population:Population): Unit = {
     import ChartConverters._
@@ -97,27 +97,25 @@ object LineChartComponentFactory{
   def createEmptySeries(name:String): XYSeries = createSeries(name, SeriesData())
 
   def createSeries(name:String, s: SeriesData): XYSeries = {
-    val series = XYChart.Series(
+    XYChart.Series(
       name = name,
       ObservableBuffer.from(s.data.map({d => XYChart.Data[Number, Number](d.point.x,d.point.y)}))
     )
-    series
   }
 
-  def createXYChartData(dataChart: ChartPoint, seriesVisibility:Boolean): XYData = dataChart match {
+  def createXYChartData(dataChart: ChartPoint, series: XYSeries): XYData = dataChart match {
     case ChartPoint((x, y), v)  =>
       val point = XYChart.Data[Number, Number](x, y)
       point.nodeProperty().addListener(_ => {
-//        point.getNode.setStyle("-fx-scale-x: 0.7; -fx-scale-y: 0.7;")
-        point.getNode.styleClass += "chart-line-mySymbol"
+        point.getNode.styleClass ++= Seq("chart-line-mySymbol", series.getName.replace(" ", "_"))
         point.setExtraValue(v)
-        point.getNode.visible = if(v) seriesVisibility else false
+        point.getNode.visible = if(v) series.enabled else false
       })
       point
   }
 
   def createLineChart(xAxis:NumberAxis, yAxis:NumberAxis,
-                      chartHeight:Int, chartWidth:Double,
+                      chartHeight:Double, chartWidth:Double,
                       seriesData:Seq[XYSeries]): LineChart[Number,Number] = {
 
     val chart = new LineChart(xAxis, yAxis) {
@@ -126,10 +124,8 @@ object LineChartComponentFactory{
       legendSide = Side.Right
     }
     chart ++= seriesData
-//    seriesData.foreach(s => {
-//      s.getNode.styleClass += s.getName
-//      println(s.getNode.styleClass)
-//    })
+    seriesData.foreach(s => s.addStyle(s.getName.replace(" ", "_")))
+    chart.legend.getItems.foreach(i => i.getSymbol.styleClass += i.getText.replace(" ", "_"))
     //At the beginning only the series "Total" is shown
     chart.legend.setLabelAsClicked("Total")
     seriesData.filterAndForeach(_.getName != "Total", _.enabled(false))
@@ -138,6 +134,7 @@ object LineChartComponentFactory{
       seriesData.getSeries(li.text.value) --> { s =>
         li.onMouseClicked = _ => s.getName match {
           case "Total" =>
+            s.enabled(true)
             seriesData filterAndForeach(_.getName != "Total", _.enabled(false))
             chart.legend.setLabelAsClicked("Total")
           case _ =>
@@ -145,7 +142,7 @@ object LineChartComponentFactory{
             s.enabled(!s.getNode.isVisible)
             if (s.getNode.isVisible) {
               chart.legend.setLabelAsClicked(s.getName)
-              seriesData filterAndForeach(ms => ms.getName != "Total" && ms.getName != s.getName, _.enabled(false))
+              seriesData filterAndForeach(_.getName != s.getName, _.enabled(false))
             }
             else {
               seriesData.getSeries("Total") --> {

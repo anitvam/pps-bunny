@@ -13,6 +13,9 @@ object PimpScalaFXChartLibrary {
       series.getNode.visible = isVisible
       series.getData.filter(_.getExtraValue.asInstanceOf[Boolean]) foreach {_.getNode.visible = isVisible}
     }
+    def enabled : Boolean = series.getNode.isVisible
+
+    def addStyle(style:String): Unit = series.getNode.styleClass += style
 
     def += (data:XYChart.Data[A,B]): Boolean = series.dataProperty().value.add(data)
   }
