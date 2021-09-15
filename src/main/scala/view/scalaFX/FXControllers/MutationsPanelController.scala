@@ -25,7 +25,7 @@ class MutationsPanelController( val jumpRecessiveChoiceButton: Button,
   def furColorDominantChoiceClick(): Unit = {
     // Send information to controller: BROWN_FUR DOMINANT
 
-    furColorRecessiveChoiceButton.text = "Pelo bianco"
+    furColorRecessiveChoiceButton.text = "Bianco"
     updateButtonStyle(furColorDominantChoiceButton, furColorRecessiveChoiceButton)
     showMutationIncoming()
     disableFurColorChoice()
@@ -34,7 +34,7 @@ class MutationsPanelController( val jumpRecessiveChoiceButton: Button,
   def furColorRecessiveChoiceClick(): Unit = {
     // Send information to controller: BROWN_FUR RECESSIVE
 
-    furColorDominantChoiceButton.text = "Pelo bianco"
+    furColorDominantChoiceButton.text = "Bianco"
     updateButtonStyle(furColorRecessiveChoiceButton, furColorDominantChoiceButton)
     showMutationIncoming()
     disableFurColorChoice()
@@ -43,7 +43,7 @@ class MutationsPanelController( val jumpRecessiveChoiceButton: Button,
   def furLengthDominantChoiceClick(): Unit = {
     // Send information to controller: THICK_FUR DOMINANT
 
-    furLengthRecessiveChoiceButton.text = "Pelo corto"
+    furLengthRecessiveChoiceButton.text = "Corto"
     updateButtonStyle(furLengthDominantChoiceButton, furLengthRecessiveChoiceButton)
     showMutationIncoming()
     disableLengthChoice()
@@ -52,7 +52,7 @@ class MutationsPanelController( val jumpRecessiveChoiceButton: Button,
   def furLengthRecessiveChoiceClick(): Unit = {
     // Send information to controller: THICK_FUR RECESSIVE
 
-    furLengthDominantChoiceButton.text = "Pelo corto"
+    furLengthDominantChoiceButton.text = "Corto"
     updateButtonStyle(furLengthRecessiveChoiceButton, furLengthDominantChoiceButton)
     showMutationIncoming()
     disableLengthChoice()
@@ -61,7 +61,7 @@ class MutationsPanelController( val jumpRecessiveChoiceButton: Button,
   def earsDominantChoiceClick(): Unit = {
     // Send information to controller: LOW_EARS DOMINANT
 
-    earsRecessiveChoiceButton.text = "Orecchie alte"
+    earsRecessiveChoiceButton.text = "Alte"
     updateButtonStyle(earsDominantChoiceButton, earsRecessiveChoiceButton)
     showMutationIncoming()
     disableEarsChoice()
@@ -70,7 +70,7 @@ class MutationsPanelController( val jumpRecessiveChoiceButton: Button,
   def earsRecessiveChoiceClick(): Unit = {
     // Send information to controller: LOW_EARS RECESSIVE
 
-    earsDominantChoiceButton.text = "Orecchie alte"
+    earsDominantChoiceButton.text = "Alte"
     updateButtonStyle(earsRecessiveChoiceButton, earsDominantChoiceButton)
     showMutationIncoming()
     disableEarsChoice()
@@ -79,7 +79,7 @@ class MutationsPanelController( val jumpRecessiveChoiceButton: Button,
   def teethDominantChoiceClick(): Unit = {
     // Send information to controller: LONG_TEETH DOMINANT
 
-    teethRecessiveChoiceButton.text = "Denti corti"
+    teethRecessiveChoiceButton.text = "Corti"
     updateButtonStyle(teethDominantChoiceButton, teethRecessiveChoiceButton)
     showMutationIncoming()
     disableTeethChoice()
@@ -88,7 +88,7 @@ class MutationsPanelController( val jumpRecessiveChoiceButton: Button,
   def teethRecessiveChoiceClick(): Unit = {
     // Send information to controller: LONG_TEETH RECESSIVE
 
-    teethDominantChoiceButton.text = "Denti corti"
+    teethDominantChoiceButton.text = "Corti"
     updateButtonStyle(teethRecessiveChoiceButton, teethDominantChoiceButton)
     showMutationIncoming()
     disableTeethChoice()
@@ -97,7 +97,7 @@ class MutationsPanelController( val jumpRecessiveChoiceButton: Button,
   def jumpDominantChoiceClick(): Unit = {
     // Send information to controller: HIGH_JUMP DOMINANT
 
-    jumpRecessiveChoiceButton.text = "Salto basso"
+    jumpRecessiveChoiceButton.text = "Basso"
     updateButtonStyle(jumpDominantChoiceButton, jumpRecessiveChoiceButton)
     showMutationIncoming()
     disableJumpChoice()
@@ -106,7 +106,7 @@ class MutationsPanelController( val jumpRecessiveChoiceButton: Button,
   def jumpRecessiveChoiceClick(): Unit = {
     // Send information to controller: HIGH_JUMP RECESSIVE
 
-    jumpDominantChoiceButton.text = "Salto basso"
+    jumpDominantChoiceButton.text = "Basso"
     updateButtonStyle(jumpRecessiveChoiceButton, jumpDominantChoiceButton)
     showMutationIncoming()
     disableJumpChoice()
@@ -138,8 +138,8 @@ class MutationsPanelController( val jumpRecessiveChoiceButton: Button,
   }
 
   private def updateButtonStyle(chosen: Button, other: Button): Unit = {
-    chosen.getStyleClass.add("chosen-button")
-    other.getStyleClass.add("dashed-button")
+    chosen.styleClass += "chosen-button"
+    other.styleClass += "dashed-button"
   }
 
   private def showMutationIncoming(): Unit = {

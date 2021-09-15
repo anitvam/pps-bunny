@@ -3,13 +3,11 @@ package view.scalaFX.FXControllers
 import controller.Controller
 import model.world.Generation.Population
 import scalafx.animation.Timeline
-import scalafx.application.Platform
 import javafx.scene.{layout => jfxs}
 import scalafx.Includes._
 import view.scalaFX.utilities.EnvironmentImageUtils._
 import scalafx.scene.control.{Button, Label}
-import scalafx.scene.image.Image
-import scalafx.scene.layout.{AnchorPane, Background, BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
+import scalafx.scene.layout.{AnchorPane}
 import scalafx.util.Duration
 import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import scalafxml.core.macros.sfxml
