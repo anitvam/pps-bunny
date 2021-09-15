@@ -58,7 +58,7 @@ object Reproduction {
    * @param bunnies a seq of bunnies
    * @return a seq with the children of the bunnies
    */
-  def generateAllChildren(bunnies: Population)(mutations: Option[List[Mutation]]): Population = {
+  def generateAllChildren(bunnies: Population, mutations: Option[List[Mutation]] = None): Population = {
     val couples = combineCouples(bunnies)
     val (coupleWithMutations, coupleWithoutMutations) = Random.shuffle(couples).splitAt((couples.length / 2) + 1)
     coupleWithoutMutations.flatMap(couple => generateChildren(couple._1, couple._2)) ++
@@ -74,8 +74,8 @@ object Reproduction {
    * @param bunnies bunnies from the last generation
    * @return        the new bunnies, adding the children and removing the ones who are dead
    */
-  def nextGenerationBunnies(bunnies: Population)(mutations: Option[List[Mutation]]): Population = {
-    val children = generateAllChildren(bunnies)(mutations)
+  def nextGenerationBunnies(bunnies: Population, mutations: Option[List[Mutation]] = None): Population = {
+    val children = generateAllChildren(bunnies, mutations)
     bunnies.foreach(_.age+=1)
     bunnies.foreach(b => if (b.age >= MAX_BUNNY_AGE) b.alive = false)
     val stillAlive = bunnies.filter(_.alive)

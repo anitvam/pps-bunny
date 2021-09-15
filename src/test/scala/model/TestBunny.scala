@@ -1,9 +1,8 @@
 package model
 import engine.SimulationConstants.MAX_BUNNY_AGE
 import model.Bunny.{generateBaseFirstBunny, generateRandomFirstBunny, splitBunniesByGene}
-import model.world.Reproduction.{combineCouples, generateAllChildren, generateChildren, nextGenerationBunnies}
 import model.genome.{Gene, Genes, StandardAllele}
-import model.mutation.Mutation
+import model.world.Reproduction.{combineCouples, generateAllChildren, generateChildren, nextGenerationBunnies}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestBunny extends FlatSpec with Matchers {
@@ -45,8 +44,7 @@ class TestBunny extends FlatSpec with Matchers {
 
   val mom: FirstBunny = generateRandomFirstBunny
   val dad: FirstBunny = generateRandomFirstBunny
-  val mutations: Option[List[Mutation]] = None
-  val children: Seq[Bunny] = generateChildren(mom, dad)(mutations)
+  val children: Seq[Bunny] = generateChildren(mom, dad)
   "Children of a couple" should "be 4" in {
     assert(children.size == 4)
   }
@@ -59,7 +57,7 @@ class TestBunny extends FlatSpec with Matchers {
     children.foreach(child => assert(child.mom.get == mom && child.dad.get == dad))
   }
 
-  it should "be one for each cell of the Punnet square, for each Gene" in {
+  it should "be one for each cell of the Punnett square, for each Gene" in {
     Genes.values.foreach(gk => {
       val grandmaMomAllele= mom.genotype(gk).momAllele.kind
       val grandpaMomAllele = mom.genotype(gk).dadAllele.kind
@@ -77,11 +75,11 @@ class TestBunny extends FlatSpec with Matchers {
   val bunniesNum = 7
   val bunnies: Seq[Bunny] = List.fill(bunniesNum)(generateRandomFirstBunny)
   "Children of all bunnies" should "be 4 for each couple" in {
-    val children = generateAllChildren(bunnies)(mutations)
+    val children = generateAllChildren(bunnies)
     assert(children.size == (bunniesNum/2)*4)
   }
 
-  val nextGenBunnies: Seq[Bunny] = nextGenerationBunnies(bunnies)(mutations)
+  val nextGenBunnies: Seq[Bunny] = nextGenerationBunnies(bunnies)
   "Next generation bunnies" should "contain 4 children for each couple and the previous bunnies" in {
     assert(nextGenBunnies.size == (bunniesNum/2)*4 + bunniesNum)
   }
@@ -93,7 +91,7 @@ class TestBunny extends FlatSpec with Matchers {
   it should "not contain any of the original bunnies after MAX_AGE generations" in {
     var nextGen = bunnies
     for (_ <- 0 to MAX_BUNNY_AGE) {
-      nextGen = nextGenerationBunnies(nextGen)(mutations)
+      nextGen = nextGenerationBunnies(nextGen)
     }
     bunnies.foreach(b => assert(!nextGen.contains(b)))
   }
@@ -105,7 +103,7 @@ class TestBunny extends FlatSpec with Matchers {
     var oldBunnies = 0
     for (_ <- 0 to generations){
       oldBunnies = genBunnies.count(_.age == MAX_BUNNY_AGE - 1)
-      genBunnies = nextGenerationBunnies(genBunnies)(mutations)
+      genBunnies = nextGenerationBunnies(genBunnies)
       assert(genBunnies.size == (num/2)*4 + num - oldBunnies)
       num = genBunnies.size
     }
