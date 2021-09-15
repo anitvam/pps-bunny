@@ -4,7 +4,7 @@ import engine.SimulationConstants.{CHILDREN_EACH_COUPLE, MAX_BUNNY_AGE}
 import model.Bunny.generateBaseFirstBunny
 import model._
 import model.genome._
-import model.mutation.{Mutation, Mutations}
+import model.mutation.{Mutation}
 import model.world.Generation.Population
 
 import scala.util.Random
@@ -23,75 +23,36 @@ object Reproduction {
   }
 
   /**
-   * First implementation of the introducing mutation selected by user (for now introduced randomly in the creation of
-   * the children
-   * @param mutations the list of all the mutations introduced, if present
-   * @return the list of Gene derived from the application of each mutation, an empty list if there is no mutation introduced
-   */
-  def introducingMutation(mutations: List[Mutation]): List[Gene] = {
-    val genesWithMutations: List[Gene] = List()
-    mutations.foreach(m => m match {
-      case Mutations.FUR_COLOR_MUTATION_DOMINANT => genesWithMutations :+ Gene( Mutations.FUR_COLOR_MUTATION_DOMINANT.geneKind,
-                                                                                JustMutatedAllele(Alleles.BROWN_FUR),
-                                                                                JustMutatedAllele(Alleles.BROWN_FUR))
-      case Mutations.FUR_COLOR_MUTATION_RECESSIVE => genesWithMutations :+ Gene( Mutations.FUR_COLOR_MUTATION_RECESSIVE.geneKind,
-                                                                                 JustMutatedAllele(Alleles.BROWN_FUR),
-                                                                                 StandardAllele(Alleles.WHITE_FUR))
-      case Mutations.FUR_LENGTH_MUTATION_DOMINANT => genesWithMutations :+ Gene( Mutations.FUR_LENGTH_MUTATION_DOMINANT.geneKind,
-                                                                                 JustMutatedAllele(Alleles.LONG_FUR),
-                                                                                 JustMutatedAllele(Alleles.LONG_FUR))
-      case Mutations.FUR_LENGTH_MUTATION_RECESSIVE => genesWithMutations :+ Gene( Mutations.FUR_LENGTH_MUTATION_RECESSIVE.geneKind,
-                                                                                  JustMutatedAllele(Alleles.LONG_FUR),
-                                                                                  StandardAllele(Alleles.SHORT_FUR))
-      case Mutations.TEETH_MUTATION_DOMINANT => genesWithMutations :+ Gene( Mutations.TEETH_MUTATION_DOMINANT.geneKind,
-                                                                            JustMutatedAllele(Alleles.LONG_TEETH),
-                                                                            JustMutatedAllele(Alleles.LONG_TEETH))
-      case Mutations.TEETH_MUTATION_RECESSIVE => genesWithMutations :+ Gene( Mutations.TEETH_MUTATION_RECESSIVE.geneKind,
-                                                                             JustMutatedAllele(Alleles.LONG_TEETH),
-                                                                             StandardAllele(Alleles.SHORT_TEETH))
-      case Mutations.EARS_MUTATION_DOMINANT => genesWithMutations :+ Gene( Mutations.EARS_MUTATION_DOMINANT.geneKind,
-                                                                           JustMutatedAllele(Alleles.HIGH_EARS),
-                                                                           JustMutatedAllele(Alleles.HIGH_EARS))
-      case Mutations.EARS_MUTATION_RECESSIVE => genesWithMutations :+ Gene( Mutations.EARS_MUTATION_RECESSIVE.geneKind,
-                                                                            JustMutatedAllele(Alleles.HIGH_EARS),
-                                                                            StandardAllele(Alleles.LOW_EARS))
-      case Mutations.JUMP_MUTATION_DOMINANT => genesWithMutations :+ Gene( Mutations.JUMP_MUTATION_DOMINANT.geneKind,
-                                                                           JustMutatedAllele(Alleles.HIGH_JUMP),
-                                                                           JustMutatedAllele(Alleles.HIGH_JUMP))
-      case Mutations.JUMP_MUTATION_RECESSIVE => genesWithMutations :+ Gene( Mutations.JUMP_MUTATION_RECESSIVE.geneKind,
-                                                                            JustMutatedAllele(Alleles.HIGH_JUMP),
-                                                                            StandardAllele(Alleles.LOW_JUMP))
-    })
-
-    genesWithMutations
-  }
-
-  /**
    * @param mom a bunny
    * @param dad another bunny
    * @return the 4 children of the couple, one for each cell of the Punnett's square
    */
   def generateChildren(mom: Bunny, dad: Bunny)(mutations: Option[List[Mutation]]): Population = {
     var childrenGenotypes = List.fill(CHILDREN_EACH_COUPLE)(PartialGenotype(Map()))
-    var genesWithMutations: List[Gene] = List()
-    if( mutations.isDefined ) {
-       genesWithMutations = introducingMutation(mutations.get)
-    }
 
     Genes.values.foreach(gk => {
       val grandmaMomAllele = mom.genotype(gk).momAllele
       val grandpaMomAllele = mom.genotype(gk).dadAllele
       val grandmaDadAllele = dad.genotype(gk).momAllele
       val grandpaDadAllele = dad.genotype(gk).dadAllele
-      val genesOfReproduction : List[Gene]= List.concat(
-        List( Gene(gk, grandmaMomAllele, grandmaDadAllele),
-              Gene(gk, grandpaMomAllele, grandmaDadAllele),
-              Gene(gk, grandmaMomAllele, grandpaDadAllele),
-              Gene(gk, grandpaMomAllele, grandpaDadAllele)
-        ),
-        genesWithMutations)
+      val genesOfReproduction : List[Gene]= List( Gene(gk, grandmaMomAllele, grandmaDadAllele),
+                                                  Gene(gk, grandpaMomAllele, grandmaDadAllele),
+                                                  Gene(gk, grandmaMomAllele, grandpaDadAllele),
+                                                  Gene(gk, grandpaMomAllele, grandpaDadAllele) )
       val anotherGene = Random.shuffle(genesOfReproduction)
-      childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE) yield childrenGenotypes(i) + anotherGene(i)).toList
+
+      if(mutations.isDefined){
+        mutations.get.foreach(m => {
+          if(m.geneKind.base == gk.base){
+            childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE - 1) yield childrenGenotypes(i) + anotherGene(i)).toList
+            childrenGenotypes.::(Gene(gk, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)))
+          }
+        })
+      } else {
+        childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE) yield childrenGenotypes(i) + anotherGene(i)).toList
+      }
+
+      childrenGenotypes
     })
     childrenGenotypes.map(cg => new ChildBunny(CompletedGenotype(cg.genes), Option(mom), Option(dad)))
   }
