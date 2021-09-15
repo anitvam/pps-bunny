@@ -4,7 +4,7 @@ import engine.SimulationConstants.{CHILDREN_EACH_COUPLE, MAX_BUNNY_AGE}
 import model.Bunny.generateBaseFirstBunny
 import model._
 import model.genome._
-import model.mutation.{Mutation}
+import model.mutation.Mutation
 import model.world.Generation.Population
 
 import scala.util.Random
@@ -25,7 +25,7 @@ object Reproduction {
   /**
    * @param mom a bunny
    * @param dad another bunny
-   * @return the 4 children of the couple, one for each cell of the Punnett's square
+   * @return the 4 children of the couple, one for each cell of the Punnet's square
    */
   def generateChildren(mom: Bunny, dad: Bunny)(mutations: Option[List[Mutation]]): Population = {
     var childrenGenotypes = List.fill(CHILDREN_EACH_COUPLE)(PartialGenotype(Map()))
