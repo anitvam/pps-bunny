@@ -61,8 +61,12 @@ object Reproduction {
    * @param bunnies a seq of bunnies
    * @return a seq with the children of the bunnies
    */
-  def generateAllChildren(bunnies: Population)(mutations: Option[List[Mutation]]): Population =
-    combineCouples(bunnies).flatMap(couple => generateChildren(couple._1, couple._2)(mutations))
+  def generateAllChildren(bunnies: Population)(mutations: Option[List[Mutation]]): Population = {
+    val couples = combineCouples(bunnies)
+    val (coupleWithMutations, coupleWithoutMutations) = Random.shuffle(couples).splitAt(couples.length / 2)
+    Seq.concat( coupleWithoutMutations.flatMap(couple => generateChildren(couple._1, couple._2)(None)),
+                coupleWithMutations.flatMap(couple => generateChildren(couple._1, couple._2)(mutations)) )
+  }
 
   /**
    * @return the first two bunnies of the simulation
