@@ -5,7 +5,7 @@ import model.genome.Alleles
 import scalafx.Includes.{at, double2DurationHelper}
 import scalafx.animation.KeyFrame
 import scalafx.scene.image.{Image, ImageView}
-import view.scalaFX.ScalaFXView.{PREFERRED_BUNNY_PANEL_HEIGHT, PREFERRED_BUNNY_PANEL_WIDTH}
+import view.scalaFX.ScalaFXView.{PANEL_SKY_ZONE, PREFERRED_BUNNY_PANEL_HEIGHT, PREFERRED_BUNNY_PANEL_WIDTH}
 import view.scalaFX.utilities.Direction
 import view.scalaFX.utilities.Direction._
 import view.utilities.{BunnyImageUtils, ImageType}
@@ -40,7 +40,6 @@ trait BunnyView {
 }
 
 object BunnyView {
-  val PANEL_SKY_ZONE = 80
   val PREFERRED_BUNNY_SIZE = 80
   val NORMAL_JUMP_HEIGHT = 40
   val HIGH_JUMP_HEIGHT = 80
