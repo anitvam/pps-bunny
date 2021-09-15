@@ -8,6 +8,7 @@ import model.world.Reproduction.nextGenerationBunnies
 import model.{BinaryTree, Bunny, Node}
 import scalafx.application.JFXApp3
 import scalafx.application.JFXApp3.PrimaryStage
+import scalafx.geometry.Pos
 import scalafx.scene.Scene
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout._
@@ -86,6 +87,13 @@ object TestTreeVisualization extends JFXApp3 {
     txt
   }
 
+  private def plusView(): Text = {
+    val txt = new Text("+")
+    txt.setStyle("-fx-font-weight: bold; " +
+      "-fx-font-size: 25pt")
+    txt
+  }
+
   private def treeBunnyView(bunny: Bunny): Pane =
     new VBox( bunnyView(bunny),
               new HBox( spacingRegion, allelesView(bunny), spacingRegion),
@@ -96,6 +104,7 @@ object TestTreeVisualization extends JFXApp3 {
     var index = 0
     val row = new HBox()
     row.children.add(spacingRegion)
+    row.setAlignment(Pos.Center)
 
     trees.foreach(tree => {
       if (tree.isDefined) row.children.add(treeBunnyView(tree.get.elem))
@@ -104,7 +113,7 @@ object TestTreeVisualization extends JFXApp3 {
       index += 1
       if (index < trees.size) {
         row.children.add(spacingRegion)
-        if (index % 2 == 1)row.children.add(new Text("+"))
+        if (index % 2 == 1 && tree.isDefined) row.children.add(plusView())
       }
       row.children.add(spacingRegion)
 
