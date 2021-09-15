@@ -23,7 +23,7 @@ object SimulationHistory{
   /** Introduce a new mutation */
   def introduceMutation(mutation: Mutation): Unit = mutations match {
     case None => mutations = Some(List(mutation))
-    case _ => mutations = Some(mutations.get.::(mutation))
+    case _ => mutations = Some(mutation :: mutations.get)
   }
 
   /**@return the actual [[Generation]]*/
