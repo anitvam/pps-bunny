@@ -8,12 +8,10 @@ import model.world.Reproduction.nextGenerationBunnies
 import model.{BinaryTree, Bunny, Node}
 import scalafx.application.JFXApp3
 import scalafx.application.JFXApp3.PrimaryStage
-import scalafx.geometry.{Insets, Pos}
+import scalafx.scene.Scene
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout._
-import scalafx.scene.shape.Line
 import scalafx.scene.text.Text
-import scalafx.scene.{Group, Scene}
 import view.scalaFX.utilities.Direction
 import view.scalaFX.utilities.Direction.Right
 import view.utilities.{BunnyImageUtils, ImageType}
@@ -44,7 +42,7 @@ object TestTreeVisualization extends JFXApp3 {
     region
   }
 
-  private def bunnyImageView(bunny: Bunny): ImageView = new ImageView {
+  private def bunnyView(bunny: Bunny): ImageView = new ImageView {
     image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
     fitWidth = BUNNY_SIZE
     fitHeight = BUNNY_SIZE
@@ -68,7 +66,17 @@ object TestTreeVisualization extends JFXApp3 {
     fitHeight = INFO_SIZE
   }
 
-  private def bunnyAllelesView(bunny: Bunny): Text = {
+  private def infoView(bunny: Bunny): HBox =
+    new HBox( spacingRegion,
+              bunny.alive match {
+                case false => deadImageView()
+                case _ => emptyRegion},
+              bunny.genotype.isJustMutated match {
+                case true => mutationImageView()
+                case _ => emptyRegion},
+              spacingRegion)
+
+  private def allelesView(bunny: Bunny): Text = {
     val txt = new Text(bunny.genotype.genes.values
       .map(g => g.momAllele.letter + g.dadAllele.letter + " ")
       .reduce(_+_))
@@ -79,49 +87,24 @@ object TestTreeVisualization extends JFXApp3 {
   }
 
   private def treeBunnyView(bunny: Bunny): Pane =
-    new VBox( bunnyImageView(bunny),
-              new HBox(spacingRegion, bunnyAllelesView(bunny), spacingRegion),
-              new HBox( spacingRegion,
-                        bunny.alive match {
-                          case false => deadImageView()
-                          case _ => emptyRegion},
-                        bunny.genotype.isJustMutated match {
-                          case true => mutationImageView()
-                          case _ => emptyRegion},
-                        spacingRegion))
+    new VBox( bunnyView(bunny),
+              new HBox( spacingRegion, allelesView(bunny), spacingRegion),
+              infoView(bunny))
 
-  def createRow(trees: Seq[Option[BinaryTree[Bunny]]]) : (HBox, Seq[Option[BinaryTree[Bunny]]], Seq[Line]) = {
+  def createRow(trees: Seq[Option[BinaryTree[Bunny]]]) : (HBox, Seq[Option[BinaryTree[Bunny]]]) = {
     var nextTrees: Seq[Option[BinaryTree[Bunny]]] = Seq()
-    val lines: Seq[Line] = Seq()
     var index = 0
     val row = new HBox()
-    row.padding = Insets(10)
-    row.setAlignment(Pos.Center)
-
     row.children.add(spacingRegion)
 
     trees.foreach(tree => {
-      if (tree.isDefined) {
-        val child: Pane = treeBunnyView(tree.get.elem)
-        /*val innerChild: VBox = child.asInstanceOf[VBox]
-        if (index % 2 == 0) {
-          prevChild = innerChild
-        } else {
-          val line = new Line()
-          line.startXProperty().bind(prevChild.layoutXProperty())
-          line.startYProperty().bind(prevChild.layoutYProperty())
-          line.endXProperty().bind(innerChild.layoutXProperty())
-          line.endYProperty().bind(innerChild.layoutYProperty())
-          lines ++= Seq(line)
-        }*/
-        row.children.add(child)
-      } else {
-        row.children.add(emptyImageView())
-      }
+      if (tree.isDefined) row.children.add(treeBunnyView(tree.get.elem))
+      else row.children.add(emptyImageView())
 
       index += 1
       if (index < trees.size) {
         row.children.add(spacingRegion)
+        if (index % 2 == 1)row.children.add(new Text("+"))
       }
       row.children.add(spacingRegion)
 
@@ -132,19 +115,18 @@ object TestTreeVisualization extends JFXApp3 {
       }
     })
 
-    (row, nextTrees, lines)
+    (row, nextTrees)
   }
 
    override def start(): Unit = {
      val tree: Option[BinaryTree[Bunny]] = Option(generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny))
-     val lineGroup: Group = new Group()
      var rows: Seq[HBox] = Seq()
-     var row: (HBox, Seq[Option[BinaryTree[Bunny]]], Seq[Line]) = (new HBox(), Seq(tree), Seq())
+     var row: (HBox, Seq[Option[BinaryTree[Bunny]]]) = (new HBox(), Seq(tree))
      for (_ <- 1 to tree.get.generations){
        row = createRow(row._2)
+       row._1.maxHeight = BUNNY_SIZE
        rows ++= Seq(row._1)
        println(row._1.children)
-       row._3.foreach(lineGroup.children.add(_))
      }
 
      val root = new VBox()
@@ -153,7 +135,7 @@ object TestTreeVisualization extends JFXApp3 {
 
      stage = new PrimaryStage() {
       title = "Bunnies"
-      scene = new Scene(new Group(root, lineGroup))
+      scene = new Scene(root)
      }
      stage.setResizable(true)
    }
