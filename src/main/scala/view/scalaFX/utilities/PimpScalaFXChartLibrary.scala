@@ -2,8 +2,9 @@ package view.scalaFX.utilities
 
 import scalafx.Includes._
 import com.sun.javafx.charts.Legend
+import javafx.scene.control.Label
 import scalafx.scene.chart.{LineChart, XYChart}
-
+import view.scalaFX.utilities.PimpScala._
 import java.util.function.Consumer
 
 object PimpScalaFXChartLibrary {
@@ -28,7 +29,25 @@ object PimpScalaFXChartLibrary {
 
   implicit class RichSeqChartSeries[A,B](series:Seq[XYChart.Series[A,B]]) {
     def filterAndForeach(pred:XYChart.Series[A,B] => Boolean, consumer: XYChart.Series[A,B] => Unit): Unit ={
-      series filter pred foreach {consumer}
+      series filter pred foreach consumer
     }
+
+    def getSeries(name:String):Option[XYChart.Series[A,B]] = series find{_.getName == name}
   }
+
+  implicit class RichChartLegend(legend:Legend){
+    def label(value:String):Option[Label] = legend.getChildrenUnmodifiable
+      .find(_.asInstanceOf[Label].text.value == value).map(_.asInstanceOf[Label])
+
+    def getLabels:Seq[Label] = legend.getChildrenUnmodifiable.collect{
+      case l if l.isInstanceOf[Label] => l.asInstanceOf[Label]
+    }.toSeq
+
+    def setLabelAsClicked(value:String): Unit = {
+      getLabels.foreach(_.styleClass -= "chart-legend-item-clicked")
+      label(value) --> {_.styleClass += "chart-legend-item-clicked"}
+    }
+
+  }
+
 }

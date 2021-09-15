@@ -7,13 +7,18 @@ import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
 import scalafx.geometry.Side
 import scalafx.scene.chart.{LineChart, NumberAxis, XYChart}
-import view.scalaFX.components.charts.LineChartComponentFactory.{createDataXYChart, createEmptySeries}
+import javafx.scene.control.Label
+import view.scalaFX.components.charts.LineChartComponentFactory.{createEmptySeries, createXYChartData}
 import view.scalaFX.components.charts.PopulationChartDataType._
+import view.scalaFX.utilities.PimpScala.RichOption
 import view.scalaFX.utilities.PimpScalaFXChartLibrary._
 
 import scala.language.implicitConversions
 
 object PopulationChartDataType{
+  type XYSeries = XYChart.Series[Number,Number]
+  type XYData =  XYChart.Data[Number,Number]
+
   case class Point(x:Double, y:Int)
   case class ChartPoint (point:Point, isTruePoint:Boolean)
   object ChartPoint{
@@ -27,17 +32,16 @@ object PopulationChartDataType{
       case _ => println(data)
     }
   }
-  case class ChartSeries (seriesData: SeriesData, xySeries:XYChart.Series[Number,Number]){
+  case class ChartSeries (seriesData: SeriesData, xySeries:XYSeries){
     def + (p:Point): Unit ={
       seriesData ^ p
-      seriesData.data takeRight 2 foreach {xySeries += createDataXYChart(_, xySeries.getNode.isVisible)}
+      seriesData.data takeRight 2 foreach {xySeries += createXYChartData(_, xySeries.getNode.isVisible)}
     }
   }
-
   case class MutationsChartSeries(var mutationMap: Map[AlleleKind, ChartSeries] = Map()){
     Alleles.values.foreach{ak => mutationMap = mutationMap + (ak -> ChartSeries(SeriesData(), createEmptySeries(ak.toString)))}
     def seriesData : Seq[SeriesData] = mutationMap.values.map(_.seriesData).toSeq
-    def xySeries:List[XYChart.Series[Number, Number]] = mutationMap.values.map(_.xySeries).toList
+    def xySeries:List[XYSeries] = mutationMap.values.map(_.xySeries).toList
     def + (ak:AlleleKind, p:Point): Unit = {
       mutationMap(ak) + p
     }
@@ -80,7 +84,7 @@ object ChartConverters {
 
 object LineChartComponentFactory{
 
-  def createNumberAxis(name:String, lowerBound:Int, upperBound:Int, tickUnit:Int): NumberAxis ={
+  def createNumberAxis(name:String, lowerBound:Int, upperBound:Int, tickUnit:Int): NumberAxis = {
     val axis = NumberAxis(name)
     axis.lowerBound = lowerBound
     axis.upperBound = upperBound
@@ -90,20 +94,22 @@ object LineChartComponentFactory{
     axis
   }
 
-  def createEmptySeries(name:String): XYChart.Series[Number, Number] = createSeries(name, SeriesData())
+  def createEmptySeries(name:String): XYSeries = createSeries(name, SeriesData())
 
-  def createSeries(name:String, s: SeriesData): XYChart.Series[Number, Number] = {
-    XYChart.Series[Number, Number](
+  def createSeries(name:String, s: SeriesData): XYSeries = {
+    val series = XYChart.Series(
       name = name,
       ObservableBuffer.from(s.data.map({d => XYChart.Data[Number, Number](d.point.x,d.point.y)}))
     )
+    series
   }
 
-  def createDataXYChart(dataChart: ChartPoint, seriesVisibility:Boolean): XYChart.Data[Number, Number] = dataChart match {
+  def createXYChartData(dataChart: ChartPoint, seriesVisibility:Boolean): XYData = dataChart match {
     case ChartPoint((x, y), v)  =>
       val point = XYChart.Data[Number, Number](x, y)
       point.nodeProperty().addListener(_ => {
-        point.getNode.setStyle("-fx-scale-x: 0.7; -fx-scale-y: 0.7;")
+//        point.getNode.setStyle("-fx-scale-x: 0.7; -fx-scale-y: 0.7;")
+        point.getNode.styleClass += "chart-line-mySymbol"
         point.setExtraValue(v)
         point.getNode.visible = if(v) seriesVisibility else false
       })
@@ -112,7 +118,7 @@ object LineChartComponentFactory{
 
   def createLineChart(xAxis:NumberAxis, yAxis:NumberAxis,
                       chartHeight:Int, chartWidth:Double,
-                      seriesData:Seq[XYChart.Series[Number,Number]]): LineChart[Number,Number] = {
+                      seriesData:Seq[XYSeries]): LineChart[Number,Number] = {
 
     val chart = new LineChart(xAxis, yAxis) {
       maxHeight = chartHeight
@@ -120,23 +126,35 @@ object LineChartComponentFactory{
       legendSide = Side.Right
     }
     chart ++= seriesData
-
+//    seriesData.foreach(s => {
+//      s.getNode.styleClass += s.getName
+//      println(s.getNode.styleClass)
+//    })
+    //At the beginning only the series "Total" is shown
+    chart.legend.setLabelAsClicked("Total")
     seriesData.filterAndForeach(_.getName != "Total", _.enabled(false))
 
-    chart.legend.getItems.foreach(li => {
-      seriesData.filterAndForeach(_.getName == li.getText, s =>
-        li.getSymbol.onMouseClicked = _ => {
-          if(s.getName != "Total"){
-            s.enabled(!s.getNode.isVisible)
-            if(s.getNode.isVisible)
-              seriesData filterAndForeach(ms => ms.getName != "Total" &&  ms.getName != s.getName, _.enabled(false))
-            else
-              seriesData filterAndForeach (_.getName == "Total", _.enabled(true))
-          } else {
+    chart.legend.getLabels.foreach(li => {
+      seriesData.getSeries(li.text.value) --> { s =>
+        li.onMouseClicked = _ => s.getName match {
+          case "Total" =>
             seriesData filterAndForeach(_.getName != "Total", _.enabled(false))
-          }
+            chart.legend.setLabelAsClicked("Total")
+          case _ =>
+            //toggle series visibility
+            s.enabled(!s.getNode.isVisible)
+            if (s.getNode.isVisible) {
+              chart.legend.setLabelAsClicked(s.getName)
+              seriesData filterAndForeach(ms => ms.getName != "Total" && ms.getName != s.getName, _.enabled(false))
+            }
+            else {
+              seriesData.getSeries("Total") --> {
+                _.enabled(true)
+              }
+              chart.legend.setLabelAsClicked("Total")
+            }
         }
-      )
+      }
     })
     chart
   }
