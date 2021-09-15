@@ -5,8 +5,10 @@ import model.genome.Alleles._
 import model.genome.Genes._
 import model.genome.{Genes, Phenotype}
 import scalafx.scene.image.Image
+import scalafx.scene.layout.{Background, BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
 import view.scalaFX.utilities.ImageType.{ImageType, Jumping, Normal}
 
+/** Enumeration for all the bunny images */
 object BunnyImage extends Enumeration {
 
    case class BunnyImage(normalImage: Image,
@@ -103,7 +105,6 @@ object ImageType extends Enumeration {
 }
 
 object BunnyImageUtils {
-
   /** Method that retrieves the image associated to a Bunny
    * @param bunny     the bunny on which the image will be computed
    * @param imageType the type of the image needed
@@ -117,5 +118,28 @@ object BunnyImageUtils {
       case Normal => bunnyImage.get.normalImage
     }
   }
+}
+
+/** Representation of the Environment Type */
+trait EnvironmentType {
+  val image: Image
+}
+case class Winter(image: Image = new Image("/environment/climate_cold.png")) extends EnvironmentType
+case class Summer(image: Image = new Image("/environment/climate_hot.png")) extends EnvironmentType
+
+object EnvironmentImageUtils {
+  implicit def getBackgroundConfiguration(environment: EnvironmentType): Background = new Background(Array(new BackgroundImage(
+    image = environment.image,
+    repeatX = BackgroundRepeat.NoRepeat,
+    repeatY = BackgroundRepeat.NoRepeat,
+    position = BackgroundPosition.Default,
+    size = new BackgroundSize(
+      width = 1.0,
+      height = 1.0,
+      widthAsPercentage = true,
+      heightAsPercentage = true,
+      contain = false,
+      cover = false)
+  )))
 }
 

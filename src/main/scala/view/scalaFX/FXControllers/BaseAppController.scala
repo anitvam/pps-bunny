@@ -6,6 +6,7 @@ import scalafx.animation.Timeline
 import scalafx.application.Platform
 import javafx.scene.{layout => jfxs}
 import scalafx.Includes._
+import view.scalaFX.utilities.EnvironmentImageUtils._
 import scalafx.scene.control.{Button, Label}
 import scalafx.scene.image.Image
 import scalafx.scene.layout.{AnchorPane, Background, BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
@@ -13,7 +14,7 @@ import scalafx.util.Duration
 import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import scalafxml.core.macros.sfxml
 import view.scalaFX.components.BunnyView
-import view.utilities.BunnyImage
+import view.scalaFX.utilities.{BunnyImage, EnvironmentImageUtils, Summer, Winter}
 
 import java.io.IOException
 import scala.language.postfixOps
@@ -41,25 +42,9 @@ class BaseAppController(private val simulationPane: AnchorPane,
   private var mutationsPanelController: Option[MutationsPanelControllerInterface] = Option.empty
 
   def initialize(): Unit = {
-    // Environment background configuration for Simulation Pane
-    val hotBackground = new Image( "/environment/climate_hot.png")
-    if (hotBackground == null) {
-      println("An error occurred while loading resource: climate_hot.png")
-      Platform.exit()
-    }
-    simulationPane.background = new Background(Array(new BackgroundImage(
-      image = hotBackground,
-      repeatX = BackgroundRepeat.NoRepeat,
-      repeatY = BackgroundRepeat.NoRepeat,
-      position = BackgroundPosition.Default,
-      size = new BackgroundSize(
-        width = 1.0,
-        height = 1.0,
-        widthAsPercentage = true,
-        heightAsPercentage = true,
-        contain = false,
-        cover = false)
-    )))
+    // Load the default environment background
+    setEnvironmentSummer()
+
     BunnyImage
 
     // Load mutationPane fxml controller
@@ -81,9 +66,17 @@ class BaseAppController(private val simulationPane: AnchorPane,
     mutationChoicePane.children = mutationsPane
   }
 
-  def handleStartSimulation(): Unit = {
+  def startSimulationClick(): Unit = {
     startButton.setVisible(false)
     Controller.startSimulation()
+  }
+
+  def setEnvironmentSummer(): Unit = {
+    simulationPane.background = Summer()
+  }
+
+  def setEnvironmentWinter(): Unit = {
+    simulationPane.background = Winter()
   }
 
   def showBunnies(bunnies:Population, generationNumber: Int): Unit ={

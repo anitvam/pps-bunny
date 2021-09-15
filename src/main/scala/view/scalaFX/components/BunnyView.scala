@@ -6,9 +6,9 @@ import scalafx.Includes.{at, double2DurationHelper}
 import scalafx.animation.KeyFrame
 import scalafx.scene.image.{Image, ImageView}
 import view.scalaFX.ScalaFXView.{PANEL_SKY_ZONE, PREFERRED_BUNNY_PANEL_HEIGHT, PREFERRED_BUNNY_PANEL_WIDTH}
-import view.scalaFX.utilities.Direction
+import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
 import view.scalaFX.utilities.Direction._
-import view.utilities.{BunnyImageUtils, ImageType}
+import view.scalaFX.utilities.BunnyImageUtils
 
 import scala.language.postfixOps
 import scala.util.Random
