@@ -103,6 +103,15 @@ object GenesUtils {
    */
   def assignRandomDominance(): Unit =
     Genes.values.foreach(gk => setAlleleDominance(List(gk.base, gk.mutated)(Random.nextInt(2))))
+
+  /**
+   * @param gene  the Gene of which the dominant Allele is needed
+   * @return      the dominant Allele associated to the Gene specified
+   */
+  def getDominantAllele(gene: Gene): Allele = {
+    if( gene.dadAllele.isDominant ) gene.dadAllele
+    else gene.momAllele
+  }
 }
 
 
