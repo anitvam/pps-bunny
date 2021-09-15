@@ -22,11 +22,11 @@ import scala.util.Random
 
 object TestTreeVisualization extends JFXApp3 {
   assignRandomDominance()
-  var bunnies = Seq.fill(5)(generateRandomFirstBunny.asInstanceOf[Bunny])
+  var bunnies: Seq[Bunny] = Seq.fill(5)(generateRandomFirstBunny.asInstanceOf[Bunny])
   for (_ <- 0 to MAX_GENEALOGICAL_TREE_GENERATIONS) {
     bunnies = nextGenerationBunnies(bunnies)
   }
-  val bunny = Random.shuffle(bunnies).head
+  val bunny: Bunny = Random.shuffle(bunnies).head
   val BUNNY_SIZE = 125
   val REGION_MIN_WIDTH = 5
 
@@ -39,7 +39,7 @@ object TestTreeVisualization extends JFXApp3 {
   }
 
   private def emptyImageView(): ImageView = new ImageView {
-    fitWidth = BUNNY_SIZE*0.99
+    fitWidth = BUNNY_SIZE
   }
 
   private def bunnyAllelesView(bunny: Bunny): Text = {
@@ -54,11 +54,9 @@ object TestTreeVisualization extends JFXApp3 {
 
   private def treeBunnyView(bunny: Bunny): Pane =
       new VBox( bunnyImageView(bunny),
-                new HBox(getRegion(), bunnyAllelesView(bunny), getRegion()))
+                new HBox(getRegion, bunnyAllelesView(bunny), getRegion))
 
-
-
-  def getRegion():Region = {
+  def getRegion:Region = {
     val region = new Region()
     region.minWidth = REGION_MIN_WIDTH
     region.hgrow = Priority.Always
@@ -73,7 +71,7 @@ object TestTreeVisualization extends JFXApp3 {
     row.padding = Insets(10)
     row.setAlignment(Pos.Center)
 
-    row.children.add(getRegion())
+    row.children.add(getRegion)
 
     trees.foreach(tree => {
       if (tree.isDefined) {
@@ -96,9 +94,9 @@ object TestTreeVisualization extends JFXApp3 {
 
       index += 1
       if (index < trees.size) {
-        row.children.add(getRegion())
+        row.children.add(getRegion)
       }
-      row.children.add(getRegion())
+      row.children.add(getRegion)
 
       if (tree.isDefined && tree.get.isInstanceOf[Node[Bunny]]) {
         nextTrees ++= Seq(Option(tree.get.asInstanceOf[Node[Bunny]].momTree), Option(tree.get.asInstanceOf[Node[Bunny]].dadTree))
