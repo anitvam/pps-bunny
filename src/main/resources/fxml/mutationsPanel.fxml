@@ -145,7 +145,7 @@
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <children>
-                  <Button fx:id="furLengthRecessiveChoiceButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#furLengthRecessiveChoiceClick" text="Pelo folto" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                  <Button fx:id="furLengthRecessiveChoiceButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#furLengthRecessiveChoiceClick" text="Folto" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">

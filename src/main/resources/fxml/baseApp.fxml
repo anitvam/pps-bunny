@@ -76,12 +76,12 @@
                         </AnchorPane>
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
                            <children>
-                              <Button maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" onAction="#setEnvironmentSummer" prefHeight="60.0" prefWidth="60.0" styleClass="summer-button">
+                              <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#setEnvironmentSummer" prefHeight="60.0" prefWidth="60.0" styleClass="summer-button">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="30.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" onAction="#setEnvironmentWinter" prefHeight="60.0" prefWidth="60.0" styleClass="winter-button">
+                              <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#setEnvironmentWinter" prefHeight="60.0" prefWidth="60.0" styleClass="winter-button">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="30.0" />
                                  </HBox.margin>
