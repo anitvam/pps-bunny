@@ -15,7 +15,7 @@ class TestGenes extends FlatSpec with Matchers {
     })
   }
 
-  it should "be settable as dominant" in{
+  it should "be settable as dominant" in {
     noException should be thrownBy assignRandomDominance()
   }
 
@@ -45,11 +45,11 @@ class TestGenes extends FlatSpec with Matchers {
     }
   }
 
-  it should " be initialized with Alleles of the right kind" in {
+  it should "be initialized with Alleles of the right kind" in {
     noException should be thrownBy Gene(Genes.FUR_COLOR, StandardAllele(Alleles.WHITE_FUR), StandardAllele(Alleles.WHITE_FUR))
   }
 
-  it should " be inferable from any of its Alleles" in {
+  it should "be inferable from any of its Alleles" in {
     Genes.values.foreach(gk => {
       assert(getGeneKind(gk.base) == gk)
       assert(getGeneKind(gk.mutated) == gk)
@@ -64,6 +64,8 @@ class TestGenes extends FlatSpec with Matchers {
       PartialGenotype(genes)
     }
   }
+
+  it should ""
 
   "Any completed Genotype" should "throw an Exception if does not contain kind of Genes" in {
     assertThrows[IllegalGenotypeBuildException] {

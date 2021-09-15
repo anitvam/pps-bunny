@@ -51,7 +51,7 @@ object Bunny {
       CompletedGenotype(
         Genes.values.unsorted.map(gk => {
           (gk, Gene(gk, StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2))),
-            StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2)))))
+                        StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2)))))
         }).toMap
       )
     )
