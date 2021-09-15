@@ -25,7 +25,7 @@ case class Leaf[A](elem: A) extends BinaryTree[A] {
  * @param dadTree   the other branch
  * @tparam A        the type of the element
  */
-case class TreeNode[A](override val elem: A, momTree: BinaryTree[A], dadTree: BinaryTree[A]) extends BinaryTree[A] {
+case class Node[A](override val elem: A, momTree: BinaryTree[A], dadTree: BinaryTree[A]) extends BinaryTree[A] {
   override val generations: Int = Math.max(momTree.generations, dadTree.generations) + 1
 }
 
@@ -38,6 +38,6 @@ object Tree{
    */
   def generateTree(generations: Int, bunny: Bunny): BinaryTree[Bunny] = {
     if (generations == 1 || bunny.mom.isEmpty) Leaf(bunny)
-    else TreeNode(bunny, generateTree(generations - 1, bunny.mom.get), generateTree(generations - 1, bunny.dad.get))
+    else Node(bunny, generateTree(generations - 1, bunny.mom.get), generateTree(generations - 1, bunny.dad.get))
   }
 }
