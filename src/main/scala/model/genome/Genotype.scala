@@ -24,6 +24,7 @@ sealed trait Genotype {
   val genes: Map[GeneKind, Gene]
   val phenotype: Phenotype = Phenotype(genes.map(entry => (entry._1, entry._2.getVisibleTrait)))
   def apply(gk: GeneKind): Gene = genes(gk)
+  def isJustMutated: Boolean = genes.values.count(g => g.dadAllele.isInstanceOf[JustMutatedAllele] || g.momAllele.isInstanceOf[JustMutatedAllele]) > 0
   if (genes.count(g => g._1 != g._2.kind) > 0)
     throw new InconsistentGenotypeException(genes)
 }

@@ -9,7 +9,7 @@ import model.{BinaryTree, Bunny, Node}
 import scalafx.application.JFXApp3
 import scalafx.application.JFXApp3.PrimaryStage
 import scalafx.geometry.{Insets, Pos}
-import scalafx.scene.image.ImageView
+import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout._
 import scalafx.scene.shape.Line
 import scalafx.scene.text.Text
@@ -28,6 +28,7 @@ object TestTreeVisualization extends JFXApp3 {
   }
   val bunny: Bunny = Random.shuffle(bunnies).head
   val BUNNY_SIZE = 125
+  val INFO_SIZE = BUNNY_SIZE/5
   val REGION_MIN_WIDTH = 5
 
   private def bunnyImageView(bunny: Bunny): ImageView = new ImageView {
@@ -42,6 +43,18 @@ object TestTreeVisualization extends JFXApp3 {
     fitWidth = BUNNY_SIZE
   }
 
+  private def deadImageView(): ImageView = new ImageView {
+    image = new Image("/img/death.png")
+    fitWidth = INFO_SIZE
+    fitHeight = INFO_SIZE
+  }
+
+  private def mutationImageView(): ImageView = new ImageView {
+    image = new Image("/img/mutation.png")
+    fitWidth = INFO_SIZE
+    fitHeight = INFO_SIZE
+  }
+
   private def bunnyAllelesView(bunny: Bunny): Text = {
     val txt = new Text(bunny.genotype.genes.values
       .map(g => g.momAllele.letter + g.dadAllele.letter + " ")
@@ -53,8 +66,16 @@ object TestTreeVisualization extends JFXApp3 {
   }
 
   private def treeBunnyView(bunny: Bunny): Pane =
-      new VBox( bunnyImageView(bunny),
-                new HBox(getRegion, bunnyAllelesView(bunny), getRegion))
+    new VBox( bunnyImageView(bunny),
+              new HBox(getRegion, bunnyAllelesView(bunny), getRegion),
+              new HBox(getRegion,
+                bunny.alive match {
+                case false => deadImageView()
+                case _ => getRegion},
+                bunny.genotype.isJustMutated match {
+                  case false => mutationImageView()
+                  case _ => getRegion},
+                getRegion))
 
   def getRegion:Region = {
     val region = new Region()
