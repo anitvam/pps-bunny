@@ -46,7 +46,7 @@ object SimulationHistory{
   def getActualPopulation: Population = getActualGeneration.population
 
   /**@return the [[Population]]  for the next [[Generation]]*/
-  def getPopulationForNextGeneration : Population = nextGenerationBunnies(getActualPopulation)(mutations)
+  def getPopulationForNextGeneration : Population = nextGenerationBunnies(getActualPopulation, mutations)
 
   /**@return the [[Environment]]  for the next [[Generation]]*/
   def getEnvironmentForNextGeneration : Environment = getActualGeneration.environment
