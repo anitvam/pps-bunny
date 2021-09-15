@@ -1,7 +1,7 @@
 package model
 
 import model.Bunny.generateBaseFirstBunny
-import model.genome.Genes.{FUR_COLOR, FUR_LENGTH, GeneKind}
+import model.genome.Genes.{EARS, FUR_COLOR, FUR_LENGTH, GeneKind}
 import model.genome.GenesUtils.{assignRandomDominance, getGeneKind}
 import model.genome._
 import org.scalatest.{FlatSpec, Matchers}
@@ -58,14 +58,24 @@ class TestGenes extends FlatSpec with Matchers {
 
   "Any Genotype" should "throw an Exception if the GeneType in the key is not coherent with the kind in the corresponding Gene" in {
     assertThrows[InconsistentGenotypeException] {
-      val genes: Map[GeneKind, Gene] = Map(
+      val inconsistentGenes: Map[GeneKind, Gene] = Map(
         FUR_COLOR -> Gene(Genes.EARS, StandardAllele(Alleles.HIGH_EARS), StandardAllele(Alleles.HIGH_EARS)),
         FUR_LENGTH -> Gene(Genes.FUR_LENGTH, StandardAllele(Alleles.SHORT_FUR), StandardAllele(Alleles.SHORT_FUR)))
-      PartialGenotype(genes)
+      PartialGenotype(inconsistentGenes)
     }
   }
 
-  it should ""
+  it should "know if it contains any mutated allele" in {
+    val standardGenes: Map[GeneKind, Gene] = Map(
+      EARS -> Gene(Genes.EARS, StandardAllele(Alleles.HIGH_EARS), StandardAllele(Alleles.HIGH_EARS)),
+      FUR_LENGTH -> Gene(Genes.FUR_LENGTH, StandardAllele(Alleles.SHORT_FUR), StandardAllele(Alleles.LONG_FUR)))
+    assert(!PartialGenotype(standardGenes).isJustMutated)
+
+    val mutatedGenes: Map[GeneKind, Gene] = Map(
+      EARS -> Gene(Genes.EARS, StandardAllele(Alleles.HIGH_EARS), StandardAllele(Alleles.HIGH_EARS)),
+      FUR_LENGTH -> Gene(Genes.FUR_LENGTH, JustMutatedAllele(Alleles.LONG_FUR), StandardAllele(Alleles.SHORT_FUR)))
+    assert(PartialGenotype(mutatedGenes).isJustMutated)
+  }
 
   "Any completed Genotype" should "throw an Exception if does not contain kind of Genes" in {
     assertThrows[IllegalGenotypeBuildException] {

@@ -31,6 +31,19 @@ object TestTreeVisualization extends JFXApp3 {
   val INFO_SIZE = BUNNY_SIZE/5
   val REGION_MIN_WIDTH = 5
 
+  def spacingRegion: Region = {
+    val region = new Region()
+    region.minWidth = REGION_MIN_WIDTH
+    region.hgrow = Priority.Always
+    region
+  }
+
+  def emptyRegion: Region = {
+    val region = new Region()
+    region.maxWidth = 0
+    region
+  }
+
   private def bunnyImageView(bunny: Bunny): ImageView = new ImageView {
     image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
     fitWidth = BUNNY_SIZE
@@ -67,22 +80,15 @@ object TestTreeVisualization extends JFXApp3 {
 
   private def treeBunnyView(bunny: Bunny): Pane =
     new VBox( bunnyImageView(bunny),
-              new HBox(getRegion, bunnyAllelesView(bunny), getRegion),
-              new HBox(getRegion,
-                bunny.alive match {
-                case false => deadImageView()
-                case _ => getRegion},
-                bunny.genotype.isJustMutated match {
-                  case false => mutationImageView()
-                  case _ => getRegion},
-                getRegion))
-
-  def getRegion:Region = {
-    val region = new Region()
-    region.minWidth = REGION_MIN_WIDTH
-    region.hgrow = Priority.Always
-    region
-  }
+              new HBox(spacingRegion, bunnyAllelesView(bunny), spacingRegion),
+              new HBox( spacingRegion,
+                        bunny.alive match {
+                          case false => deadImageView()
+                          case _ => emptyRegion},
+                        bunny.genotype.isJustMutated match {
+                          case true => mutationImageView()
+                          case _ => emptyRegion},
+                        spacingRegion))
 
   def createRow(trees: Seq[Option[BinaryTree[Bunny]]]) : (HBox, Seq[Option[BinaryTree[Bunny]]], Seq[Line]) = {
     var nextTrees: Seq[Option[BinaryTree[Bunny]]] = Seq()
@@ -92,7 +98,7 @@ object TestTreeVisualization extends JFXApp3 {
     row.padding = Insets(10)
     row.setAlignment(Pos.Center)
 
-    row.children.add(getRegion)
+    row.children.add(spacingRegion)
 
     trees.foreach(tree => {
       if (tree.isDefined) {
@@ -115,9 +121,9 @@ object TestTreeVisualization extends JFXApp3 {
 
       index += 1
       if (index < trees.size) {
-        row.children.add(getRegion)
+        row.children.add(spacingRegion)
       }
-      row.children.add(getRegion)
+      row.children.add(spacingRegion)
 
       if (tree.isDefined && tree.get.isInstanceOf[Node[Bunny]]) {
         nextTrees ++= Seq(Option(tree.get.asInstanceOf[Node[Bunny]].momTree), Option(tree.get.asInstanceOf[Node[Bunny]].dadTree))
