@@ -109,8 +109,7 @@ object GenesUtils {
    * @return      the dominant Allele associated to the Gene specified
    */
   def getDominantAllele(gene: Gene): Allele = {
-    if( gene.dadAllele.isDominant ) gene.dadAllele
-    else gene.momAllele
+    if( gene.dadAllele.isDominant ) gene.dadAllele else gene.momAllele
   }
 }
 

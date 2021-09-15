@@ -1,5 +1,6 @@
 package engine
 
+import model.genome.GenesUtils
 import model.mutation.Mutation
 import model.world.Generation
 import model.world.Generation.{Environment, Population}
@@ -21,9 +22,12 @@ object SimulationHistory{
     history = Generation(environment, generateInitialCouple) :: history
 
   /** Introduce a new mutation */
-  def introduceMutation(mutation: Mutation): Unit = mutations match {
-    case None => mutations = Some(List(mutation))
-    case _ => mutations = Some(mutation :: mutations.get)
+  def introduceMutation(mutation: Mutation): Unit = {
+    mutations match {
+      case None => mutations = Some(List(mutation))
+      case _ => mutations = Some(mutation :: mutations.get)
+    }
+    GenesUtils.setAlleleDominance(mutation.geneKind.mutated)
   }
 
   /**@return the actual [[Generation]]*/

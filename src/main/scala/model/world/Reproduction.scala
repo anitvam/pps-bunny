@@ -31,10 +31,10 @@ object Reproduction {
     var childrenGenotypes = List.fill(CHILDREN_EACH_COUPLE)(PartialGenotype(Map()))
 
     Genes.values.foreach(gk => {
-      val grandmaMomAllele = mom.genotype(gk).momAllele
-      val grandpaMomAllele = mom.genotype(gk).dadAllele
-      val grandmaDadAllele = dad.genotype(gk).momAllele
-      val grandpaDadAllele = dad.genotype(gk).dadAllele
+      val grandmaMomAllele = StandardAllele(mom.genotype(gk).momAllele.kind)
+      val grandpaMomAllele = StandardAllele(mom.genotype(gk).dadAllele.kind)
+      val grandmaDadAllele = StandardAllele(dad.genotype(gk).momAllele.kind)
+      val grandpaDadAllele = StandardAllele(dad.genotype(gk).dadAllele.kind)
       val genesOfReproduction : List[Gene]= List( Gene(gk, grandmaMomAllele, grandmaDadAllele),
                                                   Gene(gk, grandpaMomAllele, grandmaDadAllele),
                                                   Gene(gk, grandmaMomAllele, grandpaDadAllele),
