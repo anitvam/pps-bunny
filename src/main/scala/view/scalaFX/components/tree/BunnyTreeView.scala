@@ -10,8 +10,14 @@ import view.scalaFX.utilities.Direction
 import view.scalaFX.utilities.Direction.Right
 import view.utilities.{BunnyImageUtils, ImageType}
 
+/**
+ * Represents the view on the Bunny in a tree.
+ */
 trait BunnyTreeView {
+  /** Reference to the model bunny entity */
   val bunny: Bunny
+
+  /** Pane with actual view of the bunny */
   val pane: Pane
 }
 
@@ -20,7 +26,7 @@ object BunnyTreeView {
     BunnyTreeViewImpl(bunny)
   }
 
-  private case class BunnyTreeViewImpl(bunny: Bunny) extends BunnyTreeView{
+  private case class BunnyTreeViewImpl(override val bunny: Bunny) extends BunnyTreeView{
       override val pane = treeBunnyView(bunny)
   }
 
@@ -46,8 +52,8 @@ object BunnyTreeView {
 
   private def infoView(bunny: Bunny): HBox =
     new HBox( spacingRegion,
-              if (bunny.alive) emptyRegion else deadImageView,
-              if (bunny.genotype.isJustMutated) mutationImageView else emptyRegion,
+              if (bunny.alive) new Region() else deadImageView,
+              if (bunny.genotype.isJustMutated) mutationImageView else new Region(),
               spacingRegion)
 
   private def allelesView(bunny: Bunny): Text = {

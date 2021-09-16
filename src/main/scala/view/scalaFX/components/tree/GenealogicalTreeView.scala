@@ -9,6 +9,7 @@ import scalafx.scene.layout._
 import scalafx.scene.text.Text
 import view.scalaFX.components.tree.GenealogicalTreeViewConstants.{BUNNY_PLUS_PROPORTION, BUNNY_REGION_PROPORTION, STANDARD_BUNNY_SIZE}
 
+/** Proportion constants to resize the view depending on the bunny size*/
 object GenealogicalTreeViewConstants {
   val STANDARD_BUNNY_SIZE = 60
   val BUNNY_INFO_PROPORTION: Int = 5
@@ -41,7 +42,7 @@ object GenealogicalTreeView {
     this(bunny)
   }
 
-  private case class TreeViewImpl(bunny: Bunny, tree: BinaryTree[Bunny]) extends GenealogicalTreeView{
+  private case class TreeViewImpl(override val bunny: Bunny, override val tree: BinaryTree[Bunny]) extends GenealogicalTreeView{
     var rows: Seq[HBox] = Seq()
     var row: (HBox, Seq[Option[BinaryTree[Bunny]]]) = (new HBox(), Seq(Option(tree)))
     for (_ <- 1 to tree.generations){
@@ -69,6 +70,7 @@ object GenealogicalTreeView {
     region
   }
 
+  /** Creates an empty ImageView with the same size of the bunny, for the bunnies with no ancient relatives */
   def emptyImageView: ImageView = new ImageView {
     fitWidth = bunnySize
   }
@@ -82,6 +84,10 @@ object GenealogicalTreeView {
     txt
   }
 
+  /**
+   * @param trees The tree with the elems that need to be in this row
+   * @return The view of a row and the trees which needs to be inserted in the next one
+   */
   private def createRow(trees: Seq[Option[BinaryTree[Bunny]]]) : (HBox, Seq[Option[BinaryTree[Bunny]]]) = {
     var nextTrees: Seq[Option[BinaryTree[Bunny]]] = Seq()
     var index = 0
