@@ -22,11 +22,9 @@ trait BunnyTreeView {
 }
 
 object BunnyTreeView {
-  def apply(bunny: Bunny): BunnyTreeView = {
-    BunnyTreeViewImpl(bunny)
-  }
+  def apply(bunny: Bunny): BunnyTreeView = BunnyTreeViewImpl(bunny)
 
-  private case class BunnyTreeViewImpl(override val bunny: Bunny) extends BunnyTreeView{
+  private case class BunnyTreeViewImpl(override val bunny: Bunny) extends BunnyTreeView {
       override val pane = treeBunnyView(bunny)
   }
 
