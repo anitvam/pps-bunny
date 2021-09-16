@@ -1,6 +1,6 @@
 package model.world
 
-import engine.SimulationConstants.{CHILDREN_EACH_COUPLE, MAX_BUNNY_AGE}
+import engine.SimulationConstants.{CHILDREN_FOR_EACH_COUPLE, MAX_BUNNY_AGE}
 import model.Bunny.generateBaseFirstBunny
 import model._
 import model.genome._
@@ -28,7 +28,7 @@ object Reproduction {
    * @return the 4 children of the couple, one for each cell of the Punnett's square
    */
   def generateChildren(mom: Bunny, dad: Bunny, mutations: Option[List[Mutation]] = None): Population = {
-    var childrenGenotypes = List.fill(CHILDREN_EACH_COUPLE)(PartialGenotype(Map()))
+    var childrenGenotypes = List.fill(CHILDREN_FOR_EACH_COUPLE)(PartialGenotype(Map()))
 
     Genes.values.foreach(gk => {
       val grandmaMomAllele = StandardAllele(mom.genotype(gk).momAllele.kind)
@@ -40,12 +40,12 @@ object Reproduction {
         Gene(gk, grandmaMomAllele, grandpaDadAllele),
         Gene(gk, grandpaMomAllele, grandpaDadAllele) )
       val shuffledGenes = Random.shuffle(genesOfReproduction)
-      childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE) yield childrenGenotypes(i) + shuffledGenes(i)).toList
+      childrenGenotypes = (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE) yield childrenGenotypes(i) + shuffledGenes(i)).toList
 
       mutations match {
         case None =>
-        case Some(ms) => ms filter(_.geneKind == gk) foreach { m => childrenGenotypes = childrenGenotypes(CHILDREN_EACH_COUPLE - 1) +
-          Gene(m.geneKind, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenotypes.take(CHILDREN_EACH_COUPLE - 1)}
+        case Some(ms) => ms filter(_.geneKind == gk) foreach { m => childrenGenotypes = childrenGenotypes(CHILDREN_FOR_EACH_COUPLE - 1) +
+          Gene(m.geneKind, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenotypes.take(CHILDREN_FOR_EACH_COUPLE - 1)}
       }
     })
     childrenGenotypes.map(cg => new ChildBunny(CompletedGenotype(cg.genes), Option(mom), Option(dad)))
