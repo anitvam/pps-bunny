@@ -69,12 +69,19 @@ object GenealogicalTreeView {
     fitWidth = bunnySize
   }
 
-  def plusView(): Text = {
+  def plusView: Text = {
     val txt = new Text("+")
     txt.setStyle("-fx-font-weight: bold; " +
       "-fx-font-size: "+ bunnySize/BUNNY_PLUS_PROPORTION + "pt")
     txt.minWidth(bunnySize/BUNNY_REGION_PROPORTION)
     txt.hgrow = Priority.Always
+    txt
+  }
+
+  /** Creates an empty Text with the same size of the plus, for the bunnies with no ancient relatives */
+  def emptyPlusView: Text = {
+   val txt = plusView
+    txt.setVisible(false)
     txt
   }
 
@@ -97,7 +104,9 @@ object GenealogicalTreeView {
       index += 1
       if (index < trees.size) {
         row.children.add(spacingRegion)
-        if (index % 2 == 1 && tree.isDefined) row.children.add(plusView())
+        if (index % 2 == 1) {
+          if (tree.isDefined) row.children.add(plusView) else row.children.add(emptyPlusView)
+        }
       }
       row.children.add(spacingRegion)
 
