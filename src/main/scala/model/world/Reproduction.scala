@@ -39,12 +39,12 @@ object Reproduction {
                                                   Gene(gk, grandpaMomAllele, grandmaDadAllele),
                                                   Gene(gk, grandmaMomAllele, grandpaDadAllele),
                                                   Gene(gk, grandpaMomAllele, grandpaDadAllele) )
-      val anotherGenes = Random.shuffle(genesOfReproduction)
+      val shuffledGenes = Random.shuffle(genesOfReproduction)
+      childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE) yield childrenGenotypes(i) + shuffledGenes(i)).toList
 
       mutations match {
-        case None => childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE) yield childrenGenotypes(i) + anotherGenes(i)).toList
+        case None =>
         case Some(ms) =>
-          childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE) yield childrenGenotypes(i) + anotherGenes(i)).toList
           ms filter(_.geneKind == gk) foreach { m =>
             childrenGenotypes = childrenGenotypes(CHILDREN_EACH_COUPLE - 1) + Gene(m.geneKind, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenotypes.take(CHILDREN_EACH_COUPLE - 1)
           }

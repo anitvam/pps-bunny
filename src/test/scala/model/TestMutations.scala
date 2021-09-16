@@ -25,7 +25,7 @@ class TestMutations extends FlatSpec with Matchers {
   "When introducing more than one Mutations" should "compare only a Mutation for Bunny" in {
     val mutations = List(mutationFurColor, mutationFurLength, mutationTeeth)
     try {
-      mutations.foreach(_ => introduceMutation(_))
+      mutations.foreach(introduceMutation)
     } catch {
       case _: MultipleDominanceAssignmentException  => println("Allele corresponding to the Mutation set before. Ignoring this method")
     }
