@@ -7,15 +7,15 @@ import scalafx.geometry.Pos
 import scalafx.scene.image.ImageView
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
-import view.scalaFX.components.tree.TreeViewConstants.{BUNNY_SIZE, REGION_MIN_WIDTH}
+import view.scalaFX.components.tree.GenealogicalTreeViewConstants.{BUNNY_SIZE, REGION_MIN_SIZE}
 
-object TreeViewConstants {
-  val REGION_MIN_WIDTH: Int = 5
+object GenealogicalTreeViewConstants {
+  val REGION_MIN_SIZE: Int = 5
   val BUNNY_SIZE: Int = 125
   val INFO_SIZE: Int = BUNNY_SIZE/5
 }
 
-trait TreeView {
+trait GenealogicalTreeView{
   /** Reference to the model bunny entity */
   val bunny: Bunny
 
@@ -23,16 +23,15 @@ trait TreeView {
   val tree: BinaryTree[Bunny]
 
   /** The pane with the view of the tree */
-  val treePane: Pane
+  val pane: Pane
 }
 
-object TreeView {
-
-  def apply(bunny: Bunny): TreeView = {
+object GenealogicalTreeView {
+  def apply(bunny: Bunny): GenealogicalTreeView = {
     TreeViewImpl(bunny, generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny))
   }
 
-  private case class TreeViewImpl(bunny: Bunny, tree: BinaryTree[Bunny]) extends TreeView{
+  private case class TreeViewImpl(bunny: Bunny, tree: BinaryTree[Bunny]) extends GenealogicalTreeView{
     var rows: Seq[HBox] = Seq()
     var row: (HBox, Seq[Option[BinaryTree[Bunny]]]) = (new HBox(), Seq(Option(tree)))
     for (_ <- 1 to tree.generations){
@@ -40,13 +39,15 @@ object TreeView {
       rows ++= Seq(row._1)
     }
 
-    override val treePane: VBox = new VBox()
-    rows.reverse.foreach(treePane.children.add(_))
+    override val pane: VBox = new VBox()
+    rows.reverse.foreach(pane.children.add(_))
+    pane.children.add(spacingRegion)
   }
 
   def spacingRegion: Region = {
     val region = new Region()
-    region.minWidth = REGION_MIN_WIDTH
+    region.minWidth = REGION_MIN_SIZE
+    region.minHeight = REGION_MIN_SIZE
     region.hgrow = Priority.Always
     region
   }
@@ -64,7 +65,7 @@ object TreeView {
   def plusView(): Text = {
     val txt = new Text("+")
     txt.setStyle("-fx-font-weight: bold; -fx-font-size: 25pt")
-    txt.minWidth(REGION_MIN_WIDTH)
+    txt.minWidth(REGION_MIN_SIZE)
     txt.hgrow = Priority.Always
     txt
   }
@@ -78,7 +79,7 @@ object TreeView {
     row.children.add(spacingRegion)
 
     trees.foreach(tree => {
-      if (tree.isDefined) row.children.add(BunnyTreeView(tree.get.elem).bunnyPane)
+      if (tree.isDefined) row.children.add(BunnyTreeView(tree.get.elem).pane)
       else row.children.add(emptyImageView)
 
       index += 1

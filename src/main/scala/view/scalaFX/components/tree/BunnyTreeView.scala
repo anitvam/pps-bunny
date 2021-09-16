@@ -4,15 +4,15 @@ import model.Bunny
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
-import view.scalaFX.components.tree.TreeView.{emptyRegion, spacingRegion}
-import view.scalaFX.components.tree.TreeViewConstants.{BUNNY_SIZE, INFO_SIZE}
+import view.scalaFX.components.tree.GenealogicalTreeView.{emptyRegion, spacingRegion}
+import view.scalaFX.components.tree.GenealogicalTreeViewConstants.{BUNNY_SIZE, INFO_SIZE}
 import view.scalaFX.utilities.Direction
 import view.scalaFX.utilities.Direction.Right
 import view.utilities.{BunnyImageUtils, ImageType}
 
 trait BunnyTreeView {
   val bunny: Bunny
-  val bunnyPane: Pane
+  val pane: Pane
 }
 
 object BunnyTreeView {
@@ -21,7 +21,7 @@ object BunnyTreeView {
   }
 
   private case class BunnyTreeViewImpl(bunny: Bunny) extends BunnyTreeView{
-      override val bunnyPane = treeBunnyView(bunny)
+      override val pane = treeBunnyView(bunny)
   }
 
   private def bunnyView(bunny: Bunny): ImageView = new ImageView {
