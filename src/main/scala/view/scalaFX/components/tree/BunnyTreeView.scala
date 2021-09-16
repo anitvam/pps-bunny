@@ -4,7 +4,7 @@ import model.Bunny
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
-import view.scalaFX.components.tree.GenealogicalTreeView.{bunnySize, emptyRegion, spacingRegion}
+import view.scalaFX.components.tree.GenealogicalTreeView.{bunnyIconSize, spacingRegion}
 import view.scalaFX.components.tree.GenealogicalTreeViewConstants.{BUNNY_FONT_PROPORTION, BUNNY_INFO_PROPORTION}
 import view.scalaFX.utilities.Direction
 import view.scalaFX.utilities.Direction.Right
@@ -30,22 +30,22 @@ object BunnyTreeView {
 
   private def bunnyView(bunny: Bunny): ImageView = new ImageView {
     image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
-    fitWidth = bunnySize
-    fitHeight = bunnySize
+    fitWidth = bunnyIconSize
+    fitHeight = bunnyIconSize
     preserveRatio = true
     scaleX = Direction.scaleXValue(Right)
   }
 
   private def deadImageView: ImageView = new ImageView {
     image = new Image("/img/death.png")
-    fitWidth = bunnySize/BUNNY_INFO_PROPORTION
-    fitHeight = bunnySize/BUNNY_INFO_PROPORTION
+    fitWidth = bunnyIconSize/BUNNY_INFO_PROPORTION
+    fitHeight = bunnyIconSize/BUNNY_INFO_PROPORTION
   }
 
   private def mutationImageView: ImageView = new ImageView {
     image = new Image("/img/mutation.png")
-    fitWidth = bunnySize/BUNNY_INFO_PROPORTION
-    fitHeight = bunnySize/BUNNY_INFO_PROPORTION
+    fitWidth = bunnyIconSize/BUNNY_INFO_PROPORTION
+    fitHeight = bunnyIconSize/BUNNY_INFO_PROPORTION
   }
 
   private def infoView(bunny: Bunny): HBox =
@@ -60,7 +60,7 @@ object BunnyTreeView {
       .reduce(_+_))
     txt.setStyle( "-fx-font-family: \"Helvetica\"; " +
                   "-fx-font-weight: bold; " +
-                  "-fx-font-size: "+ bunnySize/BUNNY_FONT_PROPORTION+"pt")
+                  "-fx-font-size: "+ bunnyIconSize/BUNNY_FONT_PROPORTION+"pt")
     txt
   }
 

@@ -36,7 +36,7 @@ object GenealogicalTreeView {
   def apply(bunny: Bunny): GenealogicalTreeView = TreeViewImpl(bunny, generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny))
 
   def apply(bunny: Bunny, bunnySize: Int): GenealogicalTreeView = {
-    this.bunnySize = bunnySize
+    this.bunnyIconSize = bunnySize
     this(bunny)
   }
 
@@ -56,22 +56,22 @@ object GenealogicalTreeView {
 
   def spacingRegion: Region = {
     val region = new Region()
-    region.minWidth = bunnySize/BUNNY_REGION_PROPORTION
-    region.minHeight = bunnySize/BUNNY_REGION_PROPORTION
+    region.minWidth = bunnyIconSize/BUNNY_REGION_PROPORTION
+    region.minHeight = bunnyIconSize/BUNNY_REGION_PROPORTION
     region.hgrow = Priority.Always
     region
   }
 
   /** Creates an empty ImageView with the same size of the bunny, for the bunnies with no ancient relatives */
   def emptyImageView: ImageView = new ImageView {
-    fitWidth = bunnySize
+    fitWidth = bunnyIconSize
   }
 
   def plusView: Text = {
     val txt = new Text("+")
     txt.setStyle("-fx-font-weight: bold; " +
-      "-fx-font-size: "+ bunnySize/BUNNY_PLUS_PROPORTION + "pt")
-    txt.minWidth(bunnySize/BUNNY_REGION_PROPORTION)
+      "-fx-font-size: "+ bunnyIconSize/BUNNY_PLUS_PROPORTION + "pt")
+    txt.minWidth(bunnyIconSize/BUNNY_REGION_PROPORTION)
     txt.hgrow = Priority.Always
     txt
   }
@@ -92,7 +92,7 @@ object GenealogicalTreeView {
     var index = 0
     val row = new HBox()
     row.setAlignment(Pos.Center)
-    row.maxHeight = bunnySize
+    row.maxHeight = bunnyIconSize
     row.children.add(spacingRegion)
 
     trees.foreach(tree => {
