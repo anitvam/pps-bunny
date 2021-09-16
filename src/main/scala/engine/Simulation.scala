@@ -30,6 +30,7 @@ object Simulation {
 
   def startNewGeneration: IO[Unit] = {
     SimulationHistory.startNextGeneration()
+    println(getActualGeneration.environment.climate)
   }
 
   implicit def unitToIO(exp: => Unit) : IO[Unit] = IO{exp}

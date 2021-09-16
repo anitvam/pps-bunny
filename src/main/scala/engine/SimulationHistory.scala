@@ -1,9 +1,7 @@
 package engine
 
-import model.genome.KindsUtils
-import model.mutation.Mutation
-import model.world.Generation
-import model.world.Generation.{Environment, Population}
+import model.world.{Climate, Environment, Generation, Summer}
+import model.world.Generation.Population
 import model.world.Reproduction.{generateInitialCouple, nextGenerationBunnies}
 
 import scala.language.implicitConversions
@@ -12,7 +10,7 @@ object SimulationHistory{
 
   type History = List[Generation]
 
-  var history:History = List()
+  var history: History = List(Generation(Environment(Summer(), List.empty), generateInitialCouple))
 
   var mutations: Option[List[Mutation]] = None
 
@@ -56,13 +54,17 @@ object SimulationHistory{
   def getPopulationForNextGeneration : Population = nextGenerationBunnies(getActualPopulation, mutations)
 
   /**@return the [[Environment]]  for the next [[Generation]]*/
-  def getEnvironmentForNextGeneration : Environment = getActualGeneration.environment
+  def getEnvironmentForNextGeneration : Environment = Environment.fromPreviousOne(getActualGeneration.environment)
 
   /**Terminate the actual [[Generation]] and start the next one*/
   def startNextGeneration() : Unit = {
     endActualGeneration()
     history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history
   }
+
+  /** Change the Environment of the actual generation
+   * @param climate the climate to set into the Environment */
+  def changeEnvironmentClimate(climate: Climate): Unit = getActualGeneration.environment.climate = climate
 }
 
 
