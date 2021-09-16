@@ -32,6 +32,9 @@ object Environment {
   type Factors = List[Factor]
 
   def apply(climate: Climate, factors: Factors): Environment = EnvironmentImpl(climate, factors)
+
+  /** Generate an Environment from the previous one
+   * @param environment the previous Environment */
   def fromPreviousOne(environment: Environment): Environment = apply(environment.climate, environment.factors)
 
   private case class EnvironmentImpl(override var climate: Climate,

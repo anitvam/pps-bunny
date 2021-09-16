@@ -13,6 +13,7 @@ import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import scalafxml.core.macros.sfxml
 import view.scalaFX.components.BunnyView
 import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
+import view.scalaFX.ScalaFxViewConstants._
 
 import java.io.IOException
 import scala.language.postfixOps
@@ -97,7 +98,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
             keyFrames = bunny.jump()
             this.play()
           }
-          delay = Duration(1000 + Random.nextInt(5000))
+          delay = Duration(STANDARD_BUNNY_JUMP_DURATION + Random.nextInt(RANDOM_BUNNY_JUMP_DELAY))
           autoReverse = true
           cycleCount = 1
           keyFrames = bunny.jump()
