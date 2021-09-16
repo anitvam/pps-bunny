@@ -36,5 +36,16 @@ object Generation{
                                 override var isEnded:Boolean = false) extends Generation
 }
 
+object GenerationsUtils{
+  trait GenerationPhase{
+    def generationNumber:Int
+    def phase:Double
+  }
+  case class StartPhase(override val generationNumber: Int, override val phase: Double = 0.0) extends GenerationPhase
+  case class WolvesPhase(override val generationNumber: Int, override val phase: Double = 0.25) extends GenerationPhase
+  case class FoodPhase(override val generationNumber: Int, override val phase: Double = 0.50) extends GenerationPhase
+  case class HighTemperaturePhase(override val generationNumber: Int, override val phase: Double = 0.75) extends GenerationPhase
+}
+
 
 

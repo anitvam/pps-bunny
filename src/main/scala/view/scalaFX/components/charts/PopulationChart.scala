@@ -8,6 +8,7 @@ import scalafx.collections.ObservableBuffer
 import scalafx.geometry.Side
 import scalafx.scene.chart.{LineChart, NumberAxis, XYChart}
 import javafx.scene.control.Label
+import model.world.GenerationsUtils.GenerationPhase
 import view.scalaFX.components.charts.LineChartComponentFactory.{createEmptySeries, createXYChartData}
 import view.scalaFX.components.charts.PopulationChartDataType._
 import view.scalaFX.utilities.PimpScala.RichOption
@@ -58,7 +59,7 @@ object PopulationChart {
   val yAxis: NumberAxis =  createNumberAxis("Population Axis", 0, 30, 5)
   val chart: (Double, Double) => LineChart[Number, Number] = createLineChart(xAxis, yAxis, _, _, total.xySeries :: mutations.xySeries)
 
-  def updateChart(generationPhase:Double, population:Population): Unit = {
+  def updateChart(generationPhase:GenerationPhase, population:Population): Unit = {
     import ChartConverters._
     total + (generationPhase, population.size)
     Alleles.values.foreach(ak => {
@@ -74,6 +75,7 @@ object PopulationChart {
 }
 
 object ChartConverters {
+  implicit def fromGenerationPhaseToX(g:GenerationPhase) : Double = g.generationNumber + g.phase
   implicit def fromTupleToPoint(t:(Double, Int)): Point = Point(t._1, t._2)
   implicit def fromTupleToChartPoint(t:(Point,Boolean)):ChartPoint = ChartPoint(t._1, t._2)
   implicit def fromTupleToChartPoint(t:(Double,Int,Boolean)):ChartPoint = ChartPoint(Point(t._1,t._2), t._3)
