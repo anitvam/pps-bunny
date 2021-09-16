@@ -1,13 +1,21 @@
 package model
-
-import model.genome.{Alleles, Genes}
-import model.mutation.Mutations
+import engine.SimulationHistory.{getPopulationForNextGeneration, introduceMutation, startNextGeneration}
+import model.Bunny.generateRandomFirstBunny
+import model.genome.Genes
+import model.mutation.Mutation
+import model.world.Reproduction.{generateAllChildren, generateChildren, nextGenerationBunnies}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestMutations extends FlatSpec with Matchers {
-  "Each Mutation" should "have the counterpart DOMINANT and RECESSIVE for every GeneKind" in {
-    Mutations.values.foreach(ak => {
-      assert(Mutations.values.size == 2 * Genes.values.size)
-    })
+  val children: Seq[Bunny] = generateChildren(generateRandomFirstBunny, generateRandomFirstBunny)
+
+  "When introducing a Mutation" should "compare in only half population" in {
+    introduceMutation(Mutation(Genes.FUR_COLOR, true))
+    val nextGeneration = nextGenerationBunnies(children, Some(List(Mutation(Genes.FUR_COLOR, true))))
+    var nBunnyWithMutation = 0
+    nextGeneration filter(_.genotype.genes(Genes.FUR_COLOR).kind == Genes.FUR_COLOR) foreach {
+      nBunnyWithMutation = nBunnyWithMutation + 1
+    }
+    assert(nBunnyWithMutation == (12/2 + 1))
   }
 }
