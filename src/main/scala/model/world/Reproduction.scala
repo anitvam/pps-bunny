@@ -62,7 +62,7 @@ object Reproduction {
       coupleWithMutations.flatMap(couple => generateChildren(couple._1, couple._2, mutations))
   }
 
-  /**
+  /**    
    * @return the first two bunnies of the simulation
    * */
   def generateInitialCouple:Population = Seq(generateBaseFirstBunny, generateBaseFirstBunny)
