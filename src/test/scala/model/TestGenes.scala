@@ -2,7 +2,7 @@ package model
 
 import model.Bunny.generateBaseFirstBunny
 import model.genome.Genes.{EARS, FUR_COLOR, FUR_LENGTH, GeneKind}
-import model.genome.GenesUtils.{assignRandomDominance, getGeneKind}
+import model.genome.KindsUtils.{assignRandomDominance, getGeneKind, resetDominance}
 import model.genome._
 import org.scalatest.{FlatSpec, Matchers}
 
