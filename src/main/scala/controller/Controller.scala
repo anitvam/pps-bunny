@@ -10,7 +10,7 @@ object Controller {
 
   def startSimulation(climate: Climate, factors: Factors): Unit = {
     SimulationHistory changeEnvironmentClimate climate
-    simulationLoop unsafeRunAsyncAndForget()
+    simulationLoop().unsafeRunAsyncAndForget()
   }
 
   def setSummerClimate(): Unit = SimulationHistory changeEnvironmentClimate Summer()
