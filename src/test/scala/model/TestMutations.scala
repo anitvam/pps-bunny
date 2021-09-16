@@ -17,7 +17,7 @@ class TestMutations extends FlatSpec with Matchers {
   "When introducing a Mutation" should "compare to the utmost only half population" in {
     introduceMutation(mutationFurColor)
 
-    val nextGeneration = nextGenerationBunnies(children, Some(List(mutationFurColor)))
+    val nextGeneration = nextGenerationBunnies(children, List(mutationFurColor))
     val bunnyWithMutation = nextGeneration filter (_.genotype.phenotype.visibleTraits(Genes.FUR_COLOR) == Genes.FUR_COLOR.mutated)
 
     assert( nextGeneration.length == children.length / 2 * 4 + children.length )
@@ -32,7 +32,7 @@ class TestMutations extends FlatSpec with Matchers {
       case _: MultipleDominanceAssignmentException  => println("Allele corresponding to the Mutation set before. Ignoring this method")
     }
 
-    val nextGeneration = nextGenerationBunnies(children, Some(mutations))
+    val nextGeneration = nextGenerationBunnies(children, mutations)
     val bunnyWithMutation = nextGeneration filter (b =>
       b.genotype.phenotype.visibleTraits(Genes.FUR_COLOR) == Genes.FUR_COLOR.mutated ||
       b.genotype.phenotype.visibleTraits(Genes.FUR_COLOR) == Genes.FUR_COLOR.mutated ||

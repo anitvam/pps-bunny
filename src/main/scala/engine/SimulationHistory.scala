@@ -1,5 +1,7 @@
 package engine
 
+import model.genome.KindsUtils
+import model.mutation.Mutation
 import model.world.{Climate, Environment, Generation, Summer}
 import model.world.Generation.Population
 import model.world.Reproduction.{generateInitialCouple, nextGenerationBunnies}
@@ -12,8 +14,6 @@ object SimulationHistory{
 
   var history: History = List(Generation(Environment(Summer(), List.empty), generateInitialCouple))
 
-  var mutations: Option[List[Mutation]] = None
-
   /** Initialize the [[History]] of this simulation
    * @param environment the initial environment of the first [[Generation]] */
   def initialize(environment: Environment): Unit =
@@ -21,18 +21,15 @@ object SimulationHistory{
 
   /** Introduce a new mutation */
   def introduceMutation(mutation: Mutation): Unit = {
-    mutations match {
-      case None => mutations = Some(List(mutation))
-      case _ => mutations = Some(mutation :: mutations.get)
-    }
-    if(mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
-    else KindsUtils.setAlleleDominance(mutation.geneKind.base)
+    getActualGeneration.environment.mutations = mutation :: getActualGeneration.environment.mutations
 
+    if (mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
+    else KindsUtils.setAlleleDominance(mutation.geneKind.base)
   }
 
   /** Reset all the mutations added */
   def resetMutations(): Unit = {
-    mutations = None
+    getActualGeneration.environment.mutations = List()
   }
 
   /**@return the actual [[Generation]]*/
@@ -51,7 +48,7 @@ object SimulationHistory{
   def getActualPopulation: Population = getActualGeneration.population
 
   /**@return the [[Population]]  for the next [[Generation]]*/
-  def getPopulationForNextGeneration : Population = nextGenerationBunnies(getActualPopulation, mutations)
+  def getPopulationForNextGeneration : Population = nextGenerationBunnies(getActualPopulation, getActualGeneration.environment.mutations)
 
   /**@return the [[Environment]]  for the next [[Generation]]*/
   def getEnvironmentForNextGeneration : Environment = Environment.fromPreviousOne(getActualGeneration.environment)

@@ -1,6 +1,7 @@
 package model.world
 
-import model.world.Environment.{Factor, Factors, Mutation, Mutations}
+import model.mutation.Mutation
+import model.world.Environment.{Factor, Factors, Mutations}
 
 /** Environment of a Generation */
 trait Environment {
@@ -15,13 +16,16 @@ trait Environment {
   /** @return the Environment Mutations */
   def mutations: Mutations
 
+  /** Set a list of mutation inside the Environment
+   * @param mutations a List[Mutation]*/
+  def mutations_=(mutations: Mutations): Unit
+
   /** @return the Environment Factors */
   def factors: Factors
 }
 
 object Environment {
 
-  type Mutation = String
   type Factor = String
 
   type Mutations = List[Mutation]
@@ -32,7 +36,7 @@ object Environment {
 
   private case class EnvironmentImpl(override var climate: Climate,
                                      override val factors: Factors,
-                                     override val mutations: Mutations = List()) extends Environment {
+                                     override var mutations: Mutations = List()) extends Environment {
   }
 }
 

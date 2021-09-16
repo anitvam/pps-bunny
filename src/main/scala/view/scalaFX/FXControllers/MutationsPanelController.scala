@@ -1,5 +1,10 @@
 package view.scalaFX.FXControllers
 
+import controller.Controller
+import model.genome.Alleles.BROWN_FUR
+import model.genome.Genes
+import model.genome.Genes._
+import model.mutation.Mutation
 import scalafx.scene.control.{Button, Label}
 import scalafx.scene.image.ImageView
 import scalafxml.core.macros.sfxml
@@ -22,123 +27,41 @@ class MutationsPanelController( val jumpRecessiveChoiceButton: Button,
                                 val furColorDominantChoiceButton: Button,
                                 val mutationIncomingLabel: Label) extends MutationsPanelControllerInterface {
 
-  def furColorDominantChoiceClick(): Unit = {
-    // Send information to controller: BROWN_FUR DOMINANT
+  def furColorDominantChoiceClick(): Unit = manageChoiceClick(FUR_COLOR, isDominant = true, "Bianco", buttonClicked = furColorDominantChoiceButton, otherButton = furColorRecessiveChoiceButton)
 
-    furColorRecessiveChoiceButton.text = "Bianco"
-    updateButtonStyle(furColorDominantChoiceButton, furColorRecessiveChoiceButton)
+  def furColorRecessiveChoiceClick(): Unit = manageChoiceClick(FUR_COLOR, isDominant = false, "Bianco", buttonClicked = furColorRecessiveChoiceButton, otherButton = furColorDominantChoiceButton)
+
+  def furLengthDominantChoiceClick(): Unit = manageChoiceClick(FUR_LENGTH, isDominant = true, "Corto", buttonClicked = furLengthDominantChoiceButton, otherButton = furLengthRecessiveChoiceButton)
+
+  def furLengthRecessiveChoiceClick(): Unit = manageChoiceClick(FUR_LENGTH, isDominant = false, "Corto", buttonClicked = furLengthRecessiveChoiceButton, otherButton = furLengthDominantChoiceButton)
+
+  def earsDominantChoiceClick(): Unit = manageChoiceClick(EARS, isDominant = true, "Alte", buttonClicked = earsDominantChoiceButton, otherButton = earsRecessiveChoiceButton)
+
+  def earsRecessiveChoiceClick(): Unit = manageChoiceClick(EARS, isDominant = false, "Alte", buttonClicked = earsRecessiveChoiceButton, otherButton = earsDominantChoiceButton)
+
+  def teethDominantChoiceClick(): Unit = manageChoiceClick(TEETH, isDominant = true, "Corti", buttonClicked = teethDominantChoiceButton, otherButton = teethRecessiveChoiceButton)
+
+  def teethRecessiveChoiceClick(): Unit = manageChoiceClick(TEETH, isDominant = false, "Corti", buttonClicked = teethRecessiveChoiceButton, otherButton = teethDominantChoiceButton)
+
+  def jumpDominantChoiceClick(): Unit = manageChoiceClick(JUMP, isDominant = true, "Basso", buttonClicked = jumpDominantChoiceButton, otherButton = jumpRecessiveChoiceButton)
+
+  def jumpRecessiveChoiceClick(): Unit = manageChoiceClick(JUMP, isDominant = false, "Basso", buttonClicked = jumpRecessiveChoiceButton, otherButton = jumpDominantChoiceButton)
+
+  private def manageChoiceClick(geneKind: GeneKind, isDominant: Boolean, newText: String, buttonClicked: Button, otherButton: Button): Unit = {
+    Controller.insertMutation(Mutation(geneKind, isDominant))
+    otherButton.text = newText
+    updateButtonStyle(buttonClicked, otherButton)
     showMutationIncoming()
-    disableFurColorChoice()
+    disableButtons(buttonClicked, otherButton)
   }
 
-  def furColorRecessiveChoiceClick(): Unit = {
-    // Send information to controller: BROWN_FUR RECESSIVE
-
-    furColorDominantChoiceButton.text = "Bianco"
-    updateButtonStyle(furColorRecessiveChoiceButton, furColorDominantChoiceButton)
-    showMutationIncoming()
-    disableFurColorChoice()
+  private def disableButtons(firstButton: Button, secondButton: Button): Unit = {
+    firstButton.disable = true
+    secondButton.disable = true
   }
 
-  def furLengthDominantChoiceClick(): Unit = {
-    // Send information to controller: THICK_FUR DOMINANT
-
-    furLengthRecessiveChoiceButton.text = "Corto"
-    updateButtonStyle(furLengthDominantChoiceButton, furLengthRecessiveChoiceButton)
-    showMutationIncoming()
-    disableLengthChoice()
-  }
-
-  def furLengthRecessiveChoiceClick(): Unit = {
-    // Send information to controller: THICK_FUR RECESSIVE
-
-    furLengthDominantChoiceButton.text = "Corto"
-    updateButtonStyle(furLengthRecessiveChoiceButton, furLengthDominantChoiceButton)
-    showMutationIncoming()
-    disableLengthChoice()
-  }
-
-  def earsDominantChoiceClick(): Unit = {
-    // Send information to controller: LOW_EARS DOMINANT
-
-    earsRecessiveChoiceButton.text = "Alte"
-    updateButtonStyle(earsDominantChoiceButton, earsRecessiveChoiceButton)
-    showMutationIncoming()
-    disableEarsChoice()
-  }
-
-  def earsRecessiveChoiceClick(): Unit = {
-    // Send information to controller: LOW_EARS RECESSIVE
-
-    earsDominantChoiceButton.text = "Alte"
-    updateButtonStyle(earsRecessiveChoiceButton, earsDominantChoiceButton)
-    showMutationIncoming()
-    disableEarsChoice()
-  }
-
-  def teethDominantChoiceClick(): Unit = {
-    // Send information to controller: LONG_TEETH DOMINANT
-
-    teethRecessiveChoiceButton.text = "Corti"
-    updateButtonStyle(teethDominantChoiceButton, teethRecessiveChoiceButton)
-    showMutationIncoming()
-    disableTeethChoice()
-  }
-
-  def teethRecessiveChoiceClick(): Unit = {
-    // Send information to controller: LONG_TEETH RECESSIVE
-
-    teethDominantChoiceButton.text = "Corti"
-    updateButtonStyle(teethRecessiveChoiceButton, teethDominantChoiceButton)
-    showMutationIncoming()
-    disableTeethChoice()
-  }
-
-  def jumpDominantChoiceClick(): Unit = {
-    // Send information to controller: HIGH_JUMP DOMINANT
-
-    jumpRecessiveChoiceButton.text = "Basso"
-    updateButtonStyle(jumpDominantChoiceButton, jumpRecessiveChoiceButton)
-    showMutationIncoming()
-    disableJumpChoice()
-  }
-
-  def jumpRecessiveChoiceClick(): Unit = {
-    // Send information to controller: HIGH_JUMP RECESSIVE
-
-    jumpDominantChoiceButton.text = "Basso"
-    updateButtonStyle(jumpRecessiveChoiceButton, jumpDominantChoiceButton)
-    showMutationIncoming()
-    disableJumpChoice()
-  }
-
-  private def disableFurColorChoice(): Unit = {
-    furColorDominantChoiceButton.disable = true
-    furColorRecessiveChoiceButton.disable = true
-  }
-
-  private def disableLengthChoice(): Unit = {
-    furLengthDominantChoiceButton.disable = true
-    furLengthRecessiveChoiceButton.disable = true
-  }
-
-  private def disableEarsChoice(): Unit = {
-    earsRecessiveChoiceButton.disable = true
-    earsDominantChoiceButton.disable = true
-  }
-
-  private def disableTeethChoice(): Unit = {
-    teethDominantChoiceButton.disable = true
-    teethRecessiveChoiceButton.disable = true
-  }
-
-  private def disableJumpChoice(): Unit = {
-    jumpDominantChoiceButton.disable = true
-    jumpRecessiveChoiceButton.disable = true
-  }
-
-  private def updateButtonStyle(chosen: Button, other: Button): Unit = {
-    chosen.styleClass += "chosen-button"
+  private def updateButtonStyle(clicked: Button, other: Button): Unit = {
+    clicked.styleClass += "chosen-button"
     other.styleClass += "dashed-button"
   }
 
