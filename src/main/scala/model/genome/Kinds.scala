@@ -18,6 +18,7 @@ object Alleles extends Enumeration{
    * @param dominant specifies if it's dominant or not, it could be empty if not chosen yet
    */
   protected case class AllelesVal(private var dominant: Option[Boolean] = Option.empty) extends super.Val {
+    def resetDominance: Unit = dominant = Option.empty
     def setDominance(cond: Boolean): Unit =
       if(dominant.isDefined) throw new MultipleDominanceAssignmentException else dominant = Option(cond)
     def isDominant: Option[Boolean] = dominant
@@ -72,7 +73,7 @@ object Genes extends Enumeration {
                                 letter = "j")
 }
 
-object GenesUtils {
+object KindsUtils {
   /**
    * @param alleleKind  the AlleleKind of which the GeneKind is needed
    * @return            the GeneKind uniquely associated with this AlleleKind
@@ -103,6 +104,11 @@ object GenesUtils {
    */
   def assignRandomDominance(): Unit =
     Genes.values.foreach(gk => setAlleleDominance(List(gk.base, gk.mutated)(Random.nextInt(2))))
+
+  /**
+   * Reset dominance of all Alleles.
+   */
+  def resetDominance(): Unit = Alleles.values.foreach(_.resetDominance)
 
 }
 

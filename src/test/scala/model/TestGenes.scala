@@ -2,11 +2,12 @@ package model
 
 import model.Bunny.generateBaseFirstBunny
 import model.genome.Genes.{FUR_COLOR, FUR_LENGTH, GeneKind}
-import model.genome.GenesUtils.{assignRandomDominance, getGeneKind}
+import model.genome.KindsUtils.{assignRandomDominance, getGeneKind, resetDominance}
 import model.genome._
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestGenes extends FlatSpec with Matchers {
+  resetDominance()
   "Any Allele" should "not produce letters if the dominance is not defined yet" in {
     Alleles.values.foreach(ak => {
       val geneKind = getGeneKind(ak)

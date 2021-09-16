@@ -2,11 +2,13 @@ package model
 import engine.SimulationHistory.introduceMutation
 import model.Bunny.generateBaseFirstBunny
 import model.genome.Genes
+import model.genome.KindsUtils.resetDominance
 import model.mutation.Mutation
 import model.world.Reproduction.{generateChildren, nextGenerationBunnies}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestMutations extends FlatSpec with Matchers {
+  resetDominance()
   val children: Seq[Bunny] = generateChildren(generateBaseFirstBunny, generateBaseFirstBunny)
   val mutationFurColor: Mutation = Mutation(Genes.FUR_COLOR, isDominant = true)
   val mutationFurLength: Mutation = Mutation(Genes.FUR_LENGTH, isDominant = false)

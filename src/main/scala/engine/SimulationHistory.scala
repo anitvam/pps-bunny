@@ -1,6 +1,6 @@
 package engine
 
-import model.genome.GenesUtils
+import model.genome.KindsUtils
 import model.mutation.Mutation
 import model.world.Generation
 import model.world.Generation.{Environment, Population}
@@ -27,8 +27,8 @@ object SimulationHistory{
       case None => mutations = Some(List(mutation))
       case _ => mutations = Some(mutation :: mutations.get)
     }
-    if(mutation.isDominant) GenesUtils.setAlleleDominance(mutation.geneKind.mutated)
-    else GenesUtils.setAlleleDominance(mutation.geneKind.base)
+    if(mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
+    else KindsUtils.setAlleleDominance(mutation.geneKind.base)
 
   }
 
