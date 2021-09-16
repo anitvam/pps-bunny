@@ -3,8 +3,9 @@ package view.scalaFX.components
 import model.Bunny
 import model.genome.Alleles
 import scalafx.Includes.{at, double2DurationHelper}
-import scalafx.animation.KeyFrame
+import scalafx.animation.{KeyFrame, Timeline}
 import scalafx.scene.image.{Image, ImageView}
+import scalafx.util.Duration
 import view.scalaFX.ScalaFxViewConstants._
 import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
 import view.scalaFX.utilities.Direction._
@@ -33,10 +34,8 @@ trait BunnyView {
   /** Type annotation for a Seq of KeyFrames */
   type AnimationFrames = Seq[KeyFrame]
 
-  /** Method that returns the steps to perform a bunny jump
-   * @return      a Seq[KeyFrame] containing the representation of a bunny jump
-   * */
-  def jump(): AnimationFrames
+  /** Starts the bunny animation */
+  def play(): Unit
 }
 
 object BunnyView {
@@ -65,8 +64,18 @@ object BunnyView {
     private val normalImage: Image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
     private val jumpingImage: Image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Jumping)
     private val jumpingValue = if(bunny.genotype.phenotype.visibleTraits.values.exists(_ == Alleles.HIGH_JUMP)) HIGH_JUMP_HEIGHT else NORMAL_JUMP_HEIGHT
+    private val timeline: Timeline = new Timeline {
+        onFinished = _ => {
+          keyFrames = jump()
+          this.play()
+        }
+        delay = Duration(STANDARD_BUNNY_JUMP_DURATION + Random.nextInt(RANDOM_BUNNY_JUMP_DELAY))
+        autoReverse = true
+        cycleCount = 1
+        keyFrames = jump()
+      }
 
-    override def jump(): AnimationFrames = {
+    private def jump(): AnimationFrames = {
       checkDirection()
       Seq(
         at(0 s){
@@ -89,6 +98,8 @@ object BunnyView {
         }
       )
     }
+
+    override def play(): Unit = timeline play
 
     /** Method that checks the actual direction of the bunny and update the orientation of its image */
     private def checkDirection(): Unit = {
