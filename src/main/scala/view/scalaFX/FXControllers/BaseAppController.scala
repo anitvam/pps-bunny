@@ -7,12 +7,12 @@ import javafx.scene.{layout => jfxs}
 import scalafx.Includes._
 import view.scalaFX.utilities.EnvironmentImageUtils._
 import scalafx.scene.control.{Button, Label}
-import scalafx.scene.layout.{AnchorPane}
+import scalafx.scene.layout.{AnchorPane, Background}
 import scalafx.util.Duration
 import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import scalafxml.core.macros.sfxml
 import view.scalaFX.components.BunnyView
-import view.scalaFX.utilities.{BunnyImage, EnvironmentImageUtils, Summer, Winter}
+import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
 
 import java.io.IOException
 import scala.language.postfixOps
@@ -41,7 +41,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
 
   def initialize(): Unit = {
     // Load the default environment background
-    setEnvironmentSummer()
+    simulationPane.background = SummerImage()
 
     BunnyImage
 
@@ -66,15 +66,17 @@ class BaseAppController(private val simulationPane: AnchorPane,
 
   def startSimulationClick(): Unit = {
     startButton.setVisible(false)
-    Controller.startSimulation()
+    Controller.startSimulation(simulationPane.background, List.empty)
   }
 
   def setEnvironmentSummer(): Unit = {
-    simulationPane.background = Summer()
+    Controller.setSummerClimate()
+    simulationPane.background = SummerImage()
   }
 
   def setEnvironmentWinter(): Unit = {
-    simulationPane.background = Winter()
+    Controller.setWinterClimate()
+    simulationPane.background = WinterImage()
   }
 
   def showBunnies(bunnies:Population, generationNumber: Int): Unit ={

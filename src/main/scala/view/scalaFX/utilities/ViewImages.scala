@@ -4,6 +4,8 @@ import model.Bunny
 import model.genome.Alleles._
 import model.genome.Genes._
 import model.genome.{Genes, Phenotype}
+import model.world.{Climate, Summer, Winter}
+import scalafx.beans.property.ObjectProperty
 import scalafx.scene.image.Image
 import scalafx.scene.layout.{Background, BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
 import view.scalaFX.utilities.ImageType.{ImageType, Jumping, Normal}
@@ -121,14 +123,24 @@ object BunnyImageUtils {
 }
 
 /** Representation of the Environment Type */
-trait EnvironmentType {
+trait ClimateImage {
   val image: Image
 }
-case class Winter(image: Image = new Image("/environment/climate_cold.png")) extends EnvironmentType
-case class Summer(image: Image = new Image("/environment/climate_hot.png")) extends EnvironmentType
+case class WinterImage(image: Image = EnvironmentImageUtils.WINTER_IMAGE) extends ClimateImage
+case class SummerImage(image: Image = EnvironmentImageUtils.SUMMER_IMAGE) extends ClimateImage
 
 object EnvironmentImageUtils {
-  implicit def getBackgroundConfiguration(environment: EnvironmentType): Background = new Background(Array(new BackgroundImage(
+  type JavaBackground = javafx.scene.layout.Background
+
+  val WINTER_IMAGE = new Image("/environment/climate_cold.png")
+  val SUMMER_IMAGE = new Image("/environment/climate_hot.png")
+
+  implicit def actualClimate(background: ObjectProperty[JavaBackground]): Climate = background.value.getImages.get(0).getImage match {
+    case WINTER_IMAGE => Winter()
+    case SUMMER_IMAGE => Summer()
+  }
+
+  implicit def getBackgroundConfiguration(environment: ClimateImage): Background = new Background(Array(new BackgroundImage(
     image = environment.image,
     repeatX = BackgroundRepeat.NoRepeat,
     repeatY = BackgroundRepeat.NoRepeat,
@@ -141,5 +153,7 @@ object EnvironmentImageUtils {
       contain = false,
       cover = false)
   )))
+
 }
+
 
