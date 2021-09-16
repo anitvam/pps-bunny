@@ -22,6 +22,7 @@ object TestTreeVisualization extends JFXApp3 {
   var bunny: Bunny = Random.shuffle(bunnies).head
   val mutatedGene = Gene(Genes.FUR_COLOR, JustMutatedAllele(Genes.FUR_COLOR.mutated), JustMutatedAllele(Genes.FUR_COLOR.mutated))
   bunny = new ChildBunny(bunny.genotype + mutatedGene, bunny.mom, bunny.dad)
+  bunny.alive = false
 
    override def start(): Unit = {
      val root = GenealogicalTreeView(bunny, 125).treePane

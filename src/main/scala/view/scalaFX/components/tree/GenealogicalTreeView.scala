@@ -13,7 +13,7 @@ import view.scalaFX.components.tree.GenealogicalTreeViewConstants.{BUNNY_PLUS_PR
 object GenealogicalTreeViewConstants {
   val STANDARD_BUNNY_SIZE = 60
   val BUNNY_INFO_PROPORTION: Int = 5
-  val BUNNY_REGION_PROPORTION: Int = 25
+  val BUNNY_REGION_PROPORTION: Int = 20
   val BUNNY_FONT_PROPORTION: Int = 8
   val BUNNY_PLUS_PROPORTION: Int = 3
 }
@@ -61,12 +61,6 @@ object GenealogicalTreeView {
     region.minWidth = bunnySize/BUNNY_REGION_PROPORTION
     region.minHeight = bunnySize/BUNNY_REGION_PROPORTION
     region.hgrow = Priority.Always
-    region
-  }
-
-  def emptyRegion: Region = {
-    val region = new Region()
-    region.maxWidth = 0
     region
   }
 
