@@ -27,7 +27,14 @@ object SimulationHistory{
       case None => mutations = Some(List(mutation))
       case _ => mutations = Some(mutation :: mutations.get)
     }
-    GenesUtils.setAlleleDominance(mutation.geneKind.mutated)
+    if(mutation.isDominant) GenesUtils.setAlleleDominance(mutation.geneKind.mutated)
+    else GenesUtils.setAlleleDominance(mutation.geneKind.base)
+
+  }
+
+  /** Reset all the mutations added */
+  def resetMutations(): Unit = {
+    mutations = None
   }
 
   /**@return the actual [[Generation]]*/
