@@ -1,12 +1,9 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-import model.genome.Alleles.BROWN_FUR
-import model.genome.Genes
 import model.genome.Genes._
 import model.mutation.Mutation
 import scalafx.scene.control.{Button, Label}
-import scalafx.scene.image.ImageView
 import scalafxml.core.macros.sfxml
 
 sealed trait MutationsPanelControllerInterface {
@@ -65,11 +62,7 @@ class MutationsPanelController( val jumpRecessiveChoiceButton: Button,
     other.styleClass += "dashed-button"
   }
 
-  private def showMutationIncoming(): Unit = {
-    mutationIncomingLabel.visible = true
-  }
+  private def showMutationIncoming(): Unit = mutationIncomingLabel.visible = true
 
-  def hideMutationIncoming(): Unit = {
-    mutationIncomingLabel.visible = false
-  }
+  def hideMutationIncoming(): Unit = mutationIncomingLabel.visible = false
 }

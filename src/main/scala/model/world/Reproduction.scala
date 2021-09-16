@@ -43,7 +43,8 @@ object Reproduction {
       val shuffledGenes = Random.shuffle(genesOfReproduction)
       childrenGenotypes = (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE) yield childrenGenotypes(i) + shuffledGenes(i)).toList
 
-      mutations.filter(_.geneKind == gk) foreach { m => childrenGenotypes = childrenGenotypes(CHILDREN_FOR_EACH_COUPLE - 1) +
+      mutations filter { _.geneKind == gk } foreach { m =>
+          childrenGenotypes = childrenGenotypes(CHILDREN_FOR_EACH_COUPLE - 1) +
           Gene(m.geneKind, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenotypes.take(CHILDREN_FOR_EACH_COUPLE - 1)}
 
     })
