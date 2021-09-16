@@ -7,7 +7,6 @@ import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
 import scalafx.geometry.Side
 import scalafx.scene.chart.{LineChart, NumberAxis, XYChart}
-import javafx.scene.control.Label
 import model.world.GenerationsUtils.GenerationPhase
 import view.scalaFX.components.charts.LineChartComponentFactory.{createEmptySeries, createXYChartData}
 import view.scalaFX.components.charts.PopulationChartDataType._
@@ -19,12 +18,15 @@ import scala.language.implicitConversions
 object PopulationChartDataType{
   type XYSeries = XYChart.Series[Number,Number]
   type XYData =  XYChart.Data[Number,Number]
-
+  /**A simple Point with two coordinates*/
   case class Point(x:Double, y:Int)
+  /**A point with two coordinates and a flag to know if this point has to be shown*/
   case class ChartPoint (point:Point, isTruePoint:Boolean)
+  /**Ad hoc ChartPoint extractor*/
   object ChartPoint{
     def unapply(arg: ChartPoint): Option[((Double, Int), Boolean)] = Some(((arg.point.x,arg.point.y),arg.isTruePoint))
   }
+  /**A sequence of points that must be graphed  */
   case class SeriesData (var data: Seq[ChartPoint] = Seq()){
     import ChartConverters._
     def ^ (p:Point) :Unit = data match {
@@ -33,12 +35,14 @@ object PopulationChartDataType{
       case _ => println(data)
     }
   }
+  /**A wrapper for a sequence of points and the graphic element that displays them */
   case class ChartSeries (seriesData: SeriesData, xySeries:XYSeries){
     def + (p:Point): Unit ={
       seriesData ^ p
       seriesData.data takeRight 2 foreach {xySeries += createXYChartData(_, xySeries)}
     }
   }
+  /**A map to manged the [[ChartSeries]] for each [[model.genome.Alleles.AlleleKind]]*/
   case class MutationsChartSeries(var mutationMap: Map[AlleleKind, ChartSeries] = Map()){
     Alleles.values.foreach{ak => mutationMap = mutationMap + (ak -> ChartSeries(SeriesData(), createEmptySeries(ak.prettyName)))}
     def seriesData : Seq[SeriesData] = mutationMap.values.map(_.seriesData).toSeq
@@ -49,6 +53,7 @@ object PopulationChartDataType{
   }
 }
 
+/**A singleton to managed the chart*/
 object PopulationChart {
   import LineChartComponentFactory._
 
@@ -68,24 +73,33 @@ object PopulationChart {
     updateChartBound(generationPhase, population.size)
   }
 
-  def updateChartBound(generationPhase: Double, size: Int): Unit = {
-    if (generationPhase > xAxis.upperBound.toDouble) xAxis.upperBound = generationPhase + 2
+  def updateChartBound(x: Double, size: Int): Unit = {
+    if (x > xAxis.upperBound.toDouble) xAxis.upperBound = x + 2
     if (size > yAxis.upperBound.toInt) yAxis.upperBound = size + 10
   }
 }
 
+/**Some implicit method for conversions*/
 object ChartConverters {
   implicit def fromGenerationPhaseToX(g:GenerationPhase) : Double = g.generationNumber + g.phase
   implicit def fromTupleToPoint(t:(Double, Int)): Point = Point(t._1, t._2)
+  implicit def fromTupleGenToPoint(t:(GenerationPhase, Int)): Point = Point(t._1, t._2)
   implicit def fromTupleToChartPoint(t:(Point,Boolean)):ChartPoint = ChartPoint(t._1, t._2)
   implicit def fromTupleToChartPoint(t:(Double,Int,Boolean)):ChartPoint = ChartPoint(Point(t._1,t._2), t._3)
+  /**An extractor to get last population value from a sequence of [[ChartPoint]]*/
   object lastPopulationValue{
     def unapply(s:Seq[ChartPoint]):Option[Int] = Some(s.last.point.y)
   }
 }
 
+/**A factory for all the components of a LineChart*/
 object LineChartComponentFactory{
 
+  /**Creates a [[NumberAxis]]
+   * @param name of the axis
+   * @param lowerBound the minimum value for the axis
+   * @param upperBound the maximum value for the axis
+   * @param tickUnit the [[NumberAxis.tickUnit]] */
   def createNumberAxis(name:String, lowerBound:Int, upperBound:Int, tickUnit:Int): NumberAxis = {
     val axis = NumberAxis(name)
     axis.lowerBound = lowerBound
@@ -96,8 +110,13 @@ object LineChartComponentFactory{
     axis
   }
 
+  /**Create Series with no data
+   * @param name the name of the series that is shown in legend*/
   def createEmptySeries(name:String): XYSeries = createSeries(name, SeriesData())
 
+  /**Create Series with some data
+   * @param name the name of the series that is shown in legend
+   * @param s the [[SeriesData]] shown by the series*/
   def createSeries(name:String, s: SeriesData): XYSeries = {
     XYChart.Series(
       name = name,
@@ -105,6 +124,9 @@ object LineChartComponentFactory{
     )
   }
 
+  /**Create a single [[XYData]]
+   * @param dataChart the point that must to be shown
+   * @param series the [[XYSeries]] to which it belongs*/
   def createXYChartData(dataChart: ChartPoint, series: XYSeries): XYData = dataChart match {
     case ChartPoint((x, y), v)  =>
       val point = XYChart.Data[Number, Number](x, y)
@@ -116,6 +138,8 @@ object LineChartComponentFactory{
       point
   }
 
+  /**Create a [[LineChart]]
+   * @param seriesData all the series that the chart shows*/
   def createLineChart(xAxis:NumberAxis, yAxis:NumberAxis,
                       chartHeight:Double, chartWidth:Double,
                       seriesData:Seq[XYSeries]): LineChart[Number,Number] = {
@@ -130,25 +154,25 @@ object LineChartComponentFactory{
     chart.legend.getItems.foreach(i => i.getSymbol.styleClass += i.getText.replace(" ", "_"))
     //At the beginning only the series "Total" is shown
     chart.legend.setLabelAsClicked("Total")
-    seriesData.filterAndForeach(_.getName != "Total", _.enabled(false))
+    seriesData.filterAndForeach(_.getName != "Total", _.enabled = false)
 
     chart.legend.getLabels.foreach(li => {
       seriesData.getSeries(li.text.value) --> { s =>
         li.onMouseClicked = _ => s.getName match {
           case "Total" =>
-            s.enabled(true)
-            seriesData filterAndForeach(_.getName != "Total", _.enabled(false))
+            s.enabled = true
+            seriesData filterAndForeach(_.getName != "Total", _.enabled = false)
             chart.legend.setLabelAsClicked("Total")
           case _ =>
             //toggle series visibility
-            s.enabled(!s.getNode.isVisible)
+            s.enabled = !s.getNode.isVisible
             if (s.getNode.isVisible) {
               chart.legend.setLabelAsClicked(s.getName)
-              seriesData filterAndForeach(_.getName != s.getName, _.enabled(false))
+              seriesData filterAndForeach(_.getName != s.getName, _.enabled = false)
             }
             else {
               seriesData.getSeries("Total") --> {
-                _.enabled(true)
+                _.enabled = true
               }
               chart.legend.setLabelAsClicked("Total")
             }

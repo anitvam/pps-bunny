@@ -60,7 +60,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
     AnchorPane.setBottomAnchor(mutationsPane, 0.0)
     AnchorPane.setLeftAnchor(mutationsPane, 0.0)
     AnchorPane.setRightAnchor(mutationsPane, 0.0)
-    
+
     mutationChoicePane.children = mutationsPane
     chartsPane.children =  PopulationChart.chart(325, 500)
   }

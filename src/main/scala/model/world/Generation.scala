@@ -37,8 +37,11 @@ object Generation{
 }
 
 object GenerationsUtils{
+  /**The phase of a Generation that is identified by its number*/
   trait GenerationPhase{
+    /**@return the generation number to which the phase refers */
     def generationNumber:Int
+    /**@return the phase of the generation */
     def phase:Double
   }
   case class StartPhase(override val generationNumber: Int, override val phase: Double = 0.0) extends GenerationPhase
