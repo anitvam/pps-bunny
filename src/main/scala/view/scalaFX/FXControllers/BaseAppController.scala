@@ -22,7 +22,7 @@ trait BaseAppControllerInterface {
 
 @sfxml
 class BaseAppController(private val simulationPane: AnchorPane,
-                        private val graphPane: AnchorPane,
+                        private val chartPane: AnchorPane,
                         private val mutationChoicePane: AnchorPane,
                         private val factorChoicePane: AnchorPane,
                         private val graphChoicePane: AnchorPane,

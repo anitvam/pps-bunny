@@ -26,9 +26,9 @@ object TestTreeVisualization extends JFXApp3 {
     bunnies = nextGenerationBunnies(bunnies)
   }
   val bunny: Bunny = Random.shuffle(bunnies).head
-  val BUNNY_SIZE = 125
-  val INFO_SIZE = BUNNY_SIZE/5
-  val REGION_MIN_WIDTH = 5
+  val BUNNY_SIZE: Int = 125
+  val INFO_SIZE: Int = BUNNY_SIZE/5
+  val REGION_MIN_WIDTH: Int = 5
 
   def spacingRegion: Region = {
     val region = new Region()
@@ -51,17 +51,17 @@ object TestTreeVisualization extends JFXApp3 {
     scaleX = Direction.scaleXValue(Right)
   }
 
-  private def emptyImageView(): ImageView = new ImageView {
+  private def emptyImageView: ImageView = new ImageView {
     fitWidth = BUNNY_SIZE
   }
 
-  private def deadImageView(): ImageView = new ImageView {
+  private def deadImageView: ImageView = new ImageView {
     image = new Image("/img/death.png")
     fitWidth = INFO_SIZE
     fitHeight = INFO_SIZE
   }
 
-  private def mutationImageView(): ImageView = new ImageView {
+  private def mutationImageView: ImageView = new ImageView {
     image = new Image("/img/mutation.png")
     fitWidth = INFO_SIZE
     fitHeight = INFO_SIZE
@@ -69,12 +69,8 @@ object TestTreeVisualization extends JFXApp3 {
 
   private def infoView(bunny: Bunny): HBox =
     new HBox( spacingRegion,
-              bunny.alive match {
-                case false => deadImageView()
-                case _ => emptyRegion},
-              bunny.genotype.isJustMutated match {
-                case true => mutationImageView()
-                case _ => emptyRegion},
+              if (bunny.alive) emptyRegion else deadImageView,
+              if (bunny.genotype.isJustMutated) mutationImageView else emptyRegion,
               spacingRegion)
 
   private def allelesView(bunny: Bunny): Text = {
@@ -89,8 +85,9 @@ object TestTreeVisualization extends JFXApp3 {
 
   private def plusView(): Text = {
     val txt = new Text("+")
-    txt.setStyle("-fx-font-weight: bold; " +
-      "-fx-font-size: 25pt")
+    txt.setStyle("-fx-font-weight: bold; -fx-font-size: 25pt")
+    txt.minWidth(REGION_MIN_WIDTH)
+    txt.hgrow = Priority.Always
     txt
   }
 
@@ -108,7 +105,7 @@ object TestTreeVisualization extends JFXApp3 {
 
     trees.foreach(tree => {
       if (tree.isDefined) row.children.add(treeBunnyView(tree.get.elem))
-      else row.children.add(emptyImageView())
+      else row.children.add(emptyImageView)
 
       index += 1
       if (index < trees.size) {
@@ -127,21 +124,24 @@ object TestTreeVisualization extends JFXApp3 {
     (row, nextTrees)
   }
 
+  def getRoot: VBox = {
+    val tree: Option[BinaryTree[Bunny]] = Option(generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny))
+    var rows: Seq[HBox] = Seq()
+    var row: (HBox, Seq[Option[BinaryTree[Bunny]]]) = (new HBox(), Seq(tree))
+    for (_ <- 1 to tree.get.generations){
+      row = createRow(row._2)
+      row._1.maxHeight = BUNNY_SIZE
+      rows ++= Seq(row._1)
+      println(row._1.children)
+    }
+
+    val root = new VBox()
+    rows.reverse.foreach(root.children.add(_))
+    root
+  }
+
    override def start(): Unit = {
-     val tree: Option[BinaryTree[Bunny]] = Option(generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny))
-     var rows: Seq[HBox] = Seq()
-     var row: (HBox, Seq[Option[BinaryTree[Bunny]]]) = (new HBox(), Seq(tree))
-     for (_ <- 1 to tree.get.generations){
-       row = createRow(row._2)
-       row._1.maxHeight = BUNNY_SIZE
-       rows ++= Seq(row._1)
-       println(row._1.children)
-     }
-
-     val root = new VBox()
-     rows.reverse.foreach(root.children.add(_))
-     root.setMaxWidth(100)
-
+     val root = getRoot
      stage = new PrimaryStage() {
       title = "Bunnies"
       scene = new Scene(root)
