@@ -5,7 +5,7 @@ import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
 import view.scalaFX.components.tree.GenealogicalTreeView.{bunnySize, emptyRegion, spacingRegion}
-import view.scalaFX.components.tree.GenealogicalTreeViewConstants.BUNNY_INFO_PROPORTION
+import view.scalaFX.components.tree.GenealogicalTreeViewConstants.{BUNNY_FONT_PROPORTION, BUNNY_INFO_PROPORTION}
 import view.scalaFX.utilities.Direction
 import view.scalaFX.utilities.Direction.Right
 import view.utilities.{BunnyImageUtils, ImageType}
@@ -56,7 +56,7 @@ object BunnyTreeView {
       .reduce(_+_))
     txt.setStyle( "-fx-font-family: \"Helvetica\"; " +
                   "-fx-font-weight: bold; " +
-                  "-fx-font-size: 10pt")
+                  "-fx-font-size: "+ bunnySize/BUNNY_FONT_PROPORTION+"pt")
     txt
   }
 

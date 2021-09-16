@@ -7,12 +7,14 @@ import scalafx.geometry.Pos
 import scalafx.scene.image.ImageView
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
-import view.scalaFX.components.tree.GenealogicalTreeViewConstants.{BUNNY_REGION_PROPORTION, STANDARD_BUNNY_SIZE}
+import view.scalaFX.components.tree.GenealogicalTreeViewConstants.{BUNNY_PLUS_PROPORTION, BUNNY_REGION_PROPORTION, STANDARD_BUNNY_SIZE}
 
 object GenealogicalTreeViewConstants {
-  val STANDARD_BUNNY_SIZE = 80
+  val STANDARD_BUNNY_SIZE = 60
   val BUNNY_INFO_PROPORTION: Int = 5
   val BUNNY_REGION_PROPORTION: Int = 25
+  val BUNNY_FONT_PROPORTION: Int = 8
+  val BUNNY_PLUS_PROPORTION: Int = 3
 }
 
 trait GenealogicalTreeView{
@@ -23,7 +25,7 @@ trait GenealogicalTreeView{
   val tree: BinaryTree[Bunny]
 
   /** The pane with the view of the tree */
-  val chartPane: Pane
+  val treePane: Pane
 }
 
 object GenealogicalTreeView {
@@ -47,9 +49,10 @@ object GenealogicalTreeView {
       rows ++= Seq(row._1)
     }
 
-    override val chartPane = new VBox()
-    rows.reverse.foreach(chartPane.children.add(_))
-    chartPane.children.add(spacingRegion)
+    override val treePane = new VBox()
+    rows.reverse.foreach(treePane.children.add(_))
+    treePane.children.add(spacingRegion)
+    treePane.setStyle("-fx-background-color: yellow;")
   }
 
   def spacingRegion: Region = {
@@ -72,7 +75,8 @@ object GenealogicalTreeView {
 
   def plusView(): Text = {
     val txt = new Text("+")
-    txt.setStyle("-fx-font-weight: bold; -fx-font-size: 25pt")
+    txt.setStyle("-fx-font-weight: bold; " +
+      "-fx-font-size: "+ bunnySize/BUNNY_PLUS_PROPORTION + "pt")
     txt.minWidth(bunnySize/BUNNY_REGION_PROPORTION)
     txt.hgrow = Priority.Always
     txt
