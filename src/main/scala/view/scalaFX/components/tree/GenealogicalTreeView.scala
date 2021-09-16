@@ -7,12 +7,12 @@ import scalafx.geometry.Pos
 import scalafx.scene.image.ImageView
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
-import view.scalaFX.components.tree.GenealogicalTreeViewConstants.{BUNNY_SIZE, REGION_MIN_SIZE}
+import view.scalaFX.components.tree.GenealogicalTreeViewConstants.{BUNNY_REGION_PROPORTION, STANDARD_BUNNY_SIZE}
 
 object GenealogicalTreeViewConstants {
-  val REGION_MIN_SIZE: Int = 5
-  val BUNNY_SIZE: Int = 125
-  val INFO_SIZE: Int = BUNNY_SIZE/5
+  val STANDARD_BUNNY_SIZE = 80
+  val BUNNY_INFO_PROPORTION: Int = 5
+  val BUNNY_REGION_PROPORTION: Int = 25
 }
 
 trait GenealogicalTreeView{
@@ -23,12 +23,20 @@ trait GenealogicalTreeView{
   val tree: BinaryTree[Bunny]
 
   /** The pane with the view of the tree */
-  val pane: Pane
+  val chartPane: Pane
 }
 
 object GenealogicalTreeView {
+  /** The size required for the bunny icons*/
+  var bunnySize: Int = STANDARD_BUNNY_SIZE
+
   def apply(bunny: Bunny): GenealogicalTreeView = {
     TreeViewImpl(bunny, generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny))
+  }
+
+  def apply(bunny: Bunny, bunnySize: Int): GenealogicalTreeView = {
+    this.bunnySize = bunnySize
+    this(bunny)
   }
 
   private case class TreeViewImpl(bunny: Bunny, tree: BinaryTree[Bunny]) extends GenealogicalTreeView{
@@ -39,15 +47,15 @@ object GenealogicalTreeView {
       rows ++= Seq(row._1)
     }
 
-    override val pane: VBox = new VBox()
-    rows.reverse.foreach(pane.children.add(_))
-    pane.children.add(spacingRegion)
+    override val chartPane = new VBox()
+    rows.reverse.foreach(chartPane.children.add(_))
+    chartPane.children.add(spacingRegion)
   }
 
   def spacingRegion: Region = {
     val region = new Region()
-    region.minWidth = REGION_MIN_SIZE
-    region.minHeight = REGION_MIN_SIZE
+    region.minWidth = bunnySize/BUNNY_REGION_PROPORTION
+    region.minHeight = bunnySize/BUNNY_REGION_PROPORTION
     region.hgrow = Priority.Always
     region
   }
@@ -59,13 +67,13 @@ object GenealogicalTreeView {
   }
 
   def emptyImageView: ImageView = new ImageView {
-    fitWidth = BUNNY_SIZE
+    fitWidth = bunnySize
   }
 
   def plusView(): Text = {
     val txt = new Text("+")
     txt.setStyle("-fx-font-weight: bold; -fx-font-size: 25pt")
-    txt.minWidth(REGION_MIN_SIZE)
+    txt.minWidth(bunnySize/BUNNY_REGION_PROPORTION)
     txt.hgrow = Priority.Always
     txt
   }
@@ -75,7 +83,7 @@ object GenealogicalTreeView {
     var index = 0
     val row = new HBox()
     row.setAlignment(Pos.Center)
-    row.maxHeight = BUNNY_SIZE
+    row.maxHeight = bunnySize
     row.children.add(spacingRegion)
 
     trees.foreach(tree => {

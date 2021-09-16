@@ -24,7 +24,7 @@ object TestTreeVisualization extends JFXApp3 {
   bunny = new ChildBunny(bunny.genotype + mutatedGene, bunny.mom, bunny.dad)
 
    override def start(): Unit = {
-     val root = GenealogicalTreeView(bunny).pane
+     val root = GenealogicalTreeView(bunny, 125).chartPane
      stage = new PrimaryStage() {
       title = "Bunnies"
       scene = new Scene(root)
