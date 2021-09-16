@@ -36,18 +36,16 @@ object Reproduction {
       val grandmaDadAllele = StandardAllele(dad.genotype(gk).momAllele.kind)
       val grandpaDadAllele = StandardAllele(dad.genotype(gk).dadAllele.kind)
       val genesOfReproduction : List[Gene]= List( Gene(gk, grandmaMomAllele, grandmaDadAllele),
-                                                  Gene(gk, grandpaMomAllele, grandmaDadAllele),
-                                                  Gene(gk, grandmaMomAllele, grandpaDadAllele),
-                                                  Gene(gk, grandpaMomAllele, grandpaDadAllele) )
+        Gene(gk, grandpaMomAllele, grandmaDadAllele),
+        Gene(gk, grandmaMomAllele, grandpaDadAllele),
+        Gene(gk, grandpaMomAllele, grandpaDadAllele) )
       val shuffledGenes = Random.shuffle(genesOfReproduction)
       childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE) yield childrenGenotypes(i) + shuffledGenes(i)).toList
 
       mutations match {
         case None =>
-        case Some(ms) =>
-          ms filter(_.geneKind == gk) foreach { m =>
-            childrenGenotypes = childrenGenotypes(CHILDREN_EACH_COUPLE - 1) + Gene(m.geneKind, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenotypes.take(CHILDREN_EACH_COUPLE - 1)
-          }
+        case Some(ms) => ms filter(_.geneKind == gk) foreach { m => childrenGenotypes = childrenGenotypes(CHILDREN_EACH_COUPLE - 1) +
+          Gene(m.geneKind, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenotypes.take(CHILDREN_EACH_COUPLE - 1)}
       }
     })
     childrenGenotypes.map(cg => new ChildBunny(CompletedGenotype(cg.genes), Option(mom), Option(dad)))
@@ -77,7 +75,6 @@ object Reproduction {
     val children = generateAllChildren(bunnies, mutations)
     bunnies.foreach(_.age+=1)
     bunnies.foreach(b => if (b.age >= MAX_BUNNY_AGE) b.alive = false)
-    val stillAlive = bunnies.filter(_.alive)
-    children ++ stillAlive
+    children ++ bunnies.filter(_.alive)
   }
 }
