@@ -31,7 +31,7 @@ trait GenealogicalTreeView{
 
 object GenealogicalTreeView {
   /** The size required for the bunny icons*/
-  var bunnySize: Int = STANDARD_BUNNY_SIZE
+  var bunnyIconSize: Int = STANDARD_BUNNY_SIZE
 
   def apply(bunny: Bunny): GenealogicalTreeView = {
     TreeViewImpl(bunny, generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny))
