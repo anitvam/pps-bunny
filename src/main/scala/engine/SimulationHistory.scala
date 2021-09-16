@@ -1,5 +1,7 @@
 package engine
 
+import model.genome.KindsUtils
+import model.mutation.Mutation
 import model.world.Generation
 import model.world.Generation.{Environment, Population}
 import model.world.Reproduction.{generateInitialCouple, nextGenerationBunnies}
@@ -12,10 +14,28 @@ object SimulationHistory{
 
   var history:History = List()
 
-  /**Initiliaze the [[History]] of this simulation
+  var mutations: Option[List[Mutation]] = None
+
+  /** Initialize the [[History]] of this simulation
    * @param environment the initial environment of the first [[Generation]] */
   def initialize(environment: Environment): Unit =
     history = Generation(environment, generateInitialCouple) :: history
+
+  /** Introduce a new mutation */
+  def introduceMutation(mutation: Mutation): Unit = {
+    mutations match {
+      case None => mutations = Some(List(mutation))
+      case _ => mutations = Some(mutation :: mutations.get)
+    }
+    if(mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
+    else KindsUtils.setAlleleDominance(mutation.geneKind.base)
+
+  }
+
+  /** Reset all the mutations added */
+  def resetMutations(): Unit = {
+    mutations = None
+  }
 
   /**@return the actual [[Generation]]*/
   def getActualGeneration: Generation = history.head
@@ -33,7 +53,7 @@ object SimulationHistory{
   def getActualPopulation: Population = getActualGeneration.population
 
   /**@return the [[Population]]  for the next [[Generation]]*/
-  def getPopulationForNextGeneration : Population = nextGenerationBunnies(getActualPopulation)
+  def getPopulationForNextGeneration : Population = nextGenerationBunnies(getActualPopulation, mutations)
 
   /**@return the [[Environment]]  for the next [[Generation]]*/
   def getEnvironmentForNextGeneration : Environment = getActualGeneration.environment

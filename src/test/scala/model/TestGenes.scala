@@ -7,6 +7,7 @@ import model.genome._
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestGenes extends FlatSpec with Matchers {
+  resetDominance()
   "Any Allele" should "not produce letters if the dominance is not defined yet" in {
     Alleles.values.foreach(ak => {
       val geneKind = getGeneKind(ak)
