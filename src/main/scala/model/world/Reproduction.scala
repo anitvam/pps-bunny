@@ -43,13 +43,12 @@ object Reproduction {
 
       mutations match {
         case None => childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE) yield childrenGenotypes(i) + anotherGene(i)).toList
-        case Some(ms) => ms filter(_.geneKind == gk) foreach {
-          _ => childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE - 1) yield childrenGenotypes(i) + anotherGene(i)).toList
-          Gene(gk, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenotypes
-        }
+        case Some(ms) =>
+          childrenGenotypes = (for (i <- 0 until CHILDREN_EACH_COUPLE) yield childrenGenotypes(i) + anotherGene(i)).toList
+          ms filter(_.geneKind == gk) foreach { m =>
+            childrenGenotypes = childrenGenotypes(CHILDREN_EACH_COUPLE - 1) + Gene(m.geneKind, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenotypes.take(CHILDREN_EACH_COUPLE - 1)
+          }
       }
-
-      childrenGenotypes
     })
     childrenGenotypes.map(cg => new ChildBunny(CompletedGenotype(cg.genes), Option(mom), Option(dad)))
   }
