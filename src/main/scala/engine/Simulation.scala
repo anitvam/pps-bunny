@@ -2,6 +2,7 @@ package engine
 
 import cats.effect.IO
 import engine.SimulationHistory._
+import model.world.GenerationsUtils.GenerationPhase
 import view.scalaFX.ScalaFXView
 
 import scala.language.implicitConversions
@@ -20,8 +21,8 @@ object Simulation {
     println("SOME BUNNIES DIED BECAUSE OF TEMPERATURE")
   }
 
-  def showNewPopulation : IO[Unit] = {
-    ScalaFXView.showPopulation(getActualPopulation, getGenerationNumber)
+  def updateView(generationPhase:GenerationPhase) : IO[Unit] = {
+    ScalaFXView.updateView(generationPhase, getActualPopulation)
   }
 
   def showEnd():IO[Unit] = {

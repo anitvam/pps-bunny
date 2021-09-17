@@ -9,12 +9,12 @@ import scalafx.Includes._
 import view.scalaFX.utilities.EnvironmentImageUtils._
 import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout.AnchorPane
+import view.scalaFX.components.tree.GenealogicalTreeView
+import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
 import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import scalafxml.core.macros.sfxml
 import view.scalaFX.components.BunnyView
-import view.scalaFX.components.tree.GenealogicalTreeView
-import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
-
+import view.scalaFX.components.charts.PopulationChart
 import java.io.IOException
 import scala.language.postfixOps
 
@@ -27,12 +27,12 @@ sealed trait BaseAppControllerInterface {
 
 @sfxml
 class BaseAppController(private val simulationPane: AnchorPane,
-                        private val chartPane: AnchorPane,
+                        private val chartsPane: AnchorPane,
                         private val mutationChoicePane: AnchorPane,
                         private val factorChoicePane: AnchorPane,
-                        private val graphChoicePane: AnchorPane,
                         private val startButton: Button,
-                        private val generationLabel: Label) extends BaseAppControllerInterface {
+                        private val generationLabel: Label,
+                        private val chartChoicePane: AnchorPane) extends BaseAppControllerInterface {
 
 
   private var bunnyViews: Seq[BunnyView] = Seq.empty
@@ -44,7 +44,6 @@ class BaseAppController(private val simulationPane: AnchorPane,
     simulationPane.background = SummerImage()
 
     BunnyImage
-
     // Load mutationPane fxml controller
     val mutationPaneView = getClass.getResource("/fxml/mutationsPanel.fxml")
     if (mutationPaneView == null) {
@@ -62,6 +61,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
     AnchorPane.setRightAnchor(mutationsPane, 0.0)
 
     mutationChoicePane.children = mutationsPane
+    chartsPane.children =  PopulationChart.chart(325, 500)
   }
 
   def startSimulationClick(): Unit = {
@@ -74,17 +74,18 @@ class BaseAppController(private val simulationPane: AnchorPane,
     simulationPane.background = SummerImage()
   }
 
-  def showGenealogicalTree(bunny: Bunny): Unit = {
-    chartPane.children.add(GenealogicalTreeView(bunny).treePane)
-  }
-
   def setEnvironmentWinter(): Unit = {
     Controller.setWinterClimate()
     simulationPane.background = WinterImage()
   }
 
+  def showGenealogicalTree(bunny: Bunny): Unit = {
+    chartsPane.children.add(GenealogicalTreeView(bunny).treePane)
+  }
+
   def showBunnies(bunnies:Population, generationNumber: Int): Unit ={
       // Bunny visualization inside simulationPane
+    if (bunnyViews.size != bunnies.size) {
       val newBunnyViews = bunnies.filter(_.age == 0).map(BunnyView(_))
       bunnyViews = bunnyViews.filter(_.bunny.alive) ++ newBunnyViews
       simulationPane.children = bunnyViews.map(_.imageView)
@@ -93,8 +94,8 @@ class BaseAppController(private val simulationPane: AnchorPane,
       if (generationNumber > 1) {
         mutationsPanelController.get.hideMutationIncoming()
       }
-
       // Start movement of the new bunnies
       newBunnyViews.foreach { _.play() }
+    }
   }
 }
