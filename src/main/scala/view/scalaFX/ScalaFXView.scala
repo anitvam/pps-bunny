@@ -91,7 +91,7 @@ object ScalaFxViewConstants {
   /** Constants for the tree visualizaiton */
   object GenealogicalTree{
     /** Size of the bunny picture in the tree */
-    val TREE_BUNNY_SIZE: Int = 60
+    val TREE_BUNNY_SIZE: Int = 65
 
     /** Proportion constants to resize the view of the info size in the tree depending on the bunny size*/
     val TREE_INFO_PROPORTION: Int = 5

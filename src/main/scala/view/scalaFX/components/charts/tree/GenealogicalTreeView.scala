@@ -41,7 +41,6 @@ object GenealogicalTreeView {
 
     override val treePane = new VBox {
       children = rows.reverse :+ spacingRegion
-      style = "-fx-background-color: yellow;"
     }
   }
 
