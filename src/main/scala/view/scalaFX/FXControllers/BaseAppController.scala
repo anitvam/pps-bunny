@@ -1,22 +1,29 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-import model.Bunny
+import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
+import model.{Bunny, ChildBunny}
 import model.world.Generation.Population
 import scalafx.animation.Timeline
 import javafx.scene.{layout => jfxs}
+import model.Bunny.generateRandomFirstBunny
+import model.genome.KindsUtils.assignRandomDominance
+import model.genome.{Gene, Genes, JustMutatedAllele}
+import model.world.Reproduction.nextGenerationBunnies
 import scalafx.Includes._
 import view.scalaFX.utilities.EnvironmentImageUtils._
 import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout.AnchorPane
-import view.scalaFX.components.tree.GenealogicalTreeView
+import view.scalaFX.components.charts.tree.GenealogicalTreeView
 import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
 import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import scalafxml.core.macros.sfxml
 import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
+
 import java.io.IOException
 import scala.language.postfixOps
+import scala.util.Random
 
 sealed trait BaseAppControllerInterface {
   /** Method that initialize the application interface */
@@ -62,6 +69,18 @@ class BaseAppController(private val simulationPane: AnchorPane,
 
     mutationChoicePane.children = mutationsPane
     chartsPane.children =  PopulationChart.chart(325, 500)
+
+    //TEST
+    assignRandomDominance()
+    var bunnies: Seq[Bunny] = Seq.fill(5)(generateRandomFirstBunny.asInstanceOf[Bunny])
+    for (_ <- 0 to MAX_GENEALOGICAL_TREE_GENERATIONS) {
+      bunnies = nextGenerationBunnies(bunnies)
+    }
+    var bunny: Bunny = Random.shuffle(bunnies).head
+    val mutatedGene = Gene(Genes.FUR_COLOR, JustMutatedAllele(Genes.FUR_COLOR.mutated), JustMutatedAllele(Genes.FUR_COLOR.mutated))
+    bunny = new ChildBunny(bunny.genotype + mutatedGene, bunny.mom, bunny.dad)
+    bunny.alive = false
+    showGenealogicalTree(bunny)
   }
 
   def startSimulationClick(): Unit = {
@@ -80,7 +99,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
   }
 
   def showGenealogicalTree(bunny: Bunny): Unit = {
-    chartsPane.children.add(GenealogicalTreeView(bunny).treePane)
+    chartsPane.children = GenealogicalTreeView(bunny).treePane
   }
 
   def showBunnies(bunnies:Population, generationNumber: Int): Unit ={

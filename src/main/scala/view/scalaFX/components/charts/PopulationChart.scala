@@ -182,5 +182,3 @@ object LineChartComponentFactory{
     chart
   }
 }
-
-

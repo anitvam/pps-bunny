@@ -9,7 +9,7 @@ import model.{Bunny, ChildBunny}
 import scalafx.application.JFXApp3
 import scalafx.application.JFXApp3.PrimaryStage
 import scalafx.scene.Scene
-import view.scalaFX.components.tree.GenealogicalTreeView
+import view.scalaFX.components.charts.tree.GenealogicalTreeView
 
 import scala.util.Random
 

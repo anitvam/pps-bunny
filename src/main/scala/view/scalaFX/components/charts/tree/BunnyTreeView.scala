@@ -1,11 +1,11 @@
-package view.scalaFX.components.tree
+package view.scalaFX.components.charts.tree
 
 import model.Bunny
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
 import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{TREE_FONT_PROPORTION, TREE_INFO_PROPORTION}
-import view.scalaFX.components.tree.GenealogicalTreeView.{bunnyIconSize, spacingRegion}
+import view.scalaFX.components.charts.tree.GenealogicalTreeView.{bunnyIconSize, spacingRegion}
 import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
 import view.scalaFX.utilities.Direction.Right
 

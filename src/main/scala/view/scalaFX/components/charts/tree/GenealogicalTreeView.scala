@@ -1,4 +1,4 @@
-package view.scalaFX.components.tree
+package view.scalaFX.components.charts.tree
 
 import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
 import model.Tree.generateTree
