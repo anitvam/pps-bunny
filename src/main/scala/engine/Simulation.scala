@@ -21,7 +21,7 @@ object Simulation {
   }
 
   def showNewPopulation : IO[Unit] = {
-    ScalaFXView.showPopulation(getActualPopulation)
+    ScalaFXView.showPopulation(getActualPopulation, getGenerationNumber)
   }
 
   def showEnd():IO[Unit] = {

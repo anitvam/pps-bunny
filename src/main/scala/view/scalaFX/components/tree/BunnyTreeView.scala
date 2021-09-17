@@ -6,9 +6,8 @@ import scalafx.scene.layout._
 import scalafx.scene.text.Text
 import view.scalaFX.components.tree.GenealogicalTreeView.{bunnyIconSize, spacingRegion}
 import view.scalaFX.components.tree.GenealogicalTreeViewConstants.{BUNNY_FONT_PROPORTION, BUNNY_INFO_PROPORTION}
-import view.scalaFX.utilities.Direction
+import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
 import view.scalaFX.utilities.Direction.Right
-import view.utilities.{BunnyImageUtils, ImageType}
 
 /**
  * Represents the view on the Bunny in a tree.
@@ -25,7 +24,7 @@ object BunnyTreeView {
   def apply(bunny: Bunny): BunnyTreeView = BunnyTreeViewImpl(bunny)
 
   private case class BunnyTreeViewImpl(override val bunny: Bunny) extends BunnyTreeView {
-      override val pane = treeBunnyView(bunny)
+      override val pane: Pane = treeBunnyView(bunny)
   }
 
   private def bunnyView(bunny: Bunny): ImageView = new ImageView {
