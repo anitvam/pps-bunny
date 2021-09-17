@@ -2,14 +2,15 @@ package view.scalaFX.components
 
 import model.Bunny
 import model.genome.Alleles
+import scalafx.Includes._
 import scalafx.Includes.{at, double2DurationHelper}
 import scalafx.animation.{KeyFrame, Timeline}
 import scalafx.scene.image.{Image, ImageView}
+import scalafx.scene.input.MouseEvent
 import scalafx.util.Duration
 import view.scalaFX.ScalaFxViewConstants._
-import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
 import view.scalaFX.utilities.Direction._
-import view.scalaFX.utilities.BunnyImageUtils
+import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
 
 import scala.language.postfixOps
 import scala.util.Random
@@ -52,6 +53,7 @@ object BunnyView {
       fitHeight = PREFERRED_BUNNY_SIZE
       preserveRatio = true
       scaleX = Direction.scaleXValue(Right)
+      onMouseClicked = (_: MouseEvent) => println("bunny click")
     }, bunny, Right, newX, newY)
   }
 

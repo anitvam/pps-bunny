@@ -1,14 +1,9 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
 import javafx.scene.{layout => jfxs}
-import model.Bunny.generateRandomFirstBunny
-import model.genome.KindsUtils.assignRandomDominance
-import model.genome.{Gene, Genes, JustMutatedAllele}
+import model.Bunny
 import model.world.Generation.Population
-import model.world.Reproduction.nextGenerationBunnies
-import model.{Bunny, ChildBunny}
 import scalafx.Includes._
 import scalafx.animation.Timeline
 import scalafx.scene.control.{Button, Label}
@@ -23,7 +18,6 @@ import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
 
 import java.io.IOException
 import scala.language.postfixOps
-import scala.util.Random
 
 sealed trait BaseAppControllerInterface {
   /** Method that initialize the application interface */
@@ -69,18 +63,6 @@ class BaseAppController(private val simulationPane: AnchorPane,
 
     mutationChoicePane.children = mutationsPane
     chartsPane.children =  PopulationChart.chart(325, 500)
-
-    //TEST
-    assignRandomDominance()
-    var bunnies: Seq[Bunny] = Seq.fill(5)(generateRandomFirstBunny.asInstanceOf[Bunny])
-    for (_ <- 0 to MAX_GENEALOGICAL_TREE_GENERATIONS) {
-      bunnies = nextGenerationBunnies(bunnies)
-    }
-    var bunny: Bunny = Random.shuffle(bunnies).head
-    val mutatedGene = Gene(Genes.FUR_COLOR, JustMutatedAllele(Genes.FUR_COLOR.mutated), JustMutatedAllele(Genes.FUR_COLOR.mutated))
-    bunny = new ChildBunny(bunny.genotype + mutatedGene, bunny.mom, bunny.dad)
-    bunny.alive = false
-    showGenealogicalTree(bunny)
   }
 
   def startSimulationClick(): Unit = {
