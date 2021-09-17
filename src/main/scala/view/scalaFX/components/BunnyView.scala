@@ -75,7 +75,7 @@ object BunnyView {
         keyFrames = jump()
       }
 
-    private def jump(): AnimationFrames = {
+     private def jump(): AnimationFrames = {
       checkDirection()
       Seq(
         at(0 s){

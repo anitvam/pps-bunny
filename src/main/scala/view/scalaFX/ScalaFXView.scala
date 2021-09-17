@@ -10,11 +10,13 @@ import scalafx.Includes._
 import javafx.stage.Screen
 import javafx.{scene => jfxs}
 import model.world.Generation.Population
+import model.world.GenerationsUtils.GenerationPhase
 import scalafx.application.Platform
 
 import java.io.IOException
 import view._
 import view.scalaFX.ScalaFxViewConstants.{SCENE_HEIGHT, SCENE_WIDTH}
+import view.scalaFX.components.charts.PopulationChart
 
 object ScalaFXView extends View {
   var baseAppController: Option[BaseAppControllerInterface] = Option.empty
@@ -40,9 +42,11 @@ object ScalaFXView extends View {
     baseAppController.get.initialize()
   }
 
-  def showPopulation(bunnies: Population, generationNumber: Int): Unit = {
-    Platform.runLater { baseAppController.get.showBunnies(bunnies, generationNumber) }
-  }
+  def updateView(generationPhase:GenerationPhase, bunnies:Population): Unit =
+    Platform.runLater{
+      baseAppController.get.showBunnies(bunnies, generationPhase.generationNumber)
+      PopulationChart.updateChart(generationPhase, bunnies)
+    }
 }
 
 object ScalaFxViewConstants {

@@ -39,7 +39,7 @@ object SimulationHistory{
   def endActualGeneration(): Unit = getActualGeneration.isEnded = true
 
   /**@return how many generation have been lived*/
-  def getGenerationNumber: Int = history.length
+  def getGenerationNumber: Int = history.length-1
 
   /**@return how many bunnies are alive in the actual generation*/
   def getBunniesNumber: Int = getActualGeneration.getBunniesNumber

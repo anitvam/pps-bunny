@@ -17,6 +17,18 @@ object SimulationConstants {
   /**Duration in milliseconds of a generation*/
   val GENERATION_END: FiniteDuration = 12000 millis
 
+  /**Double value associated to generation initial phase*/
+  val START_PHASE: Double = 0.0
+
+  /**Double value associated to generation wolf phase*/
+  val WOLVES_PHASE: Double = 0.25
+
+  /**Double value associated to generation food phase*/
+  val FOOD_PHASE: Double = 0.50
+
+  /**Double value associated to generation temp phase*/
+  val TEMPERATURE_PHASE = 0.75
+
   /**Maximum number of alive bunnies in the world*/
   val MAX_BUNNIES_NUMBER = 1000
 
