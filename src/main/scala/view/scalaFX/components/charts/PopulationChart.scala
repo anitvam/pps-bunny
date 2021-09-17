@@ -68,7 +68,7 @@ object PopulationChart {
     import ChartConverters._
     total + (generationPhase, population.size)
     Alleles.values.foreach(ak => {
-      mutations + (ak, (generationPhase, population.count(_.genotype.phenotype.visibleTraits.values.toSet.contains(ak))))
+      mutations + (ak, (generationPhase, population.count(_.genotype.phenotype.values.toSet.contains(ak))))
     })
     updateChartBound(generationPhase, population.size)
   }
@@ -182,5 +182,3 @@ object LineChartComponentFactory{
     chart
   }
 }
-
-

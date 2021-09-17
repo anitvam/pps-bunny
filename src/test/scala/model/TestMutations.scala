@@ -18,7 +18,7 @@ class TestMutations extends FlatSpec with Matchers {
     introduceMutation(mutationFurColor)
 
     val nextGeneration = nextGenerationBunnies(children, List(mutationFurColor))
-    val bunnyWithMutation = nextGeneration filter (_.genotype.phenotype.visibleTraits(Genes.FUR_COLOR) == Genes.FUR_COLOR.mutated)
+    val bunnyWithMutation = nextGeneration filter (_.genotype.phenotype(Genes.FUR_COLOR) == Genes.FUR_COLOR.mutated)
 
     assert( nextGeneration.length == children.length / 2 * 4 + children.length )
     assert( bunnyWithMutation.length <= (nextGeneration.length - children.length)/2 + 1 )
@@ -34,9 +34,9 @@ class TestMutations extends FlatSpec with Matchers {
 
     val nextGeneration = nextGenerationBunnies(children, mutations)
     val bunnyWithMutation = nextGeneration filter (b =>
-      b.genotype.phenotype.visibleTraits(Genes.FUR_COLOR) == Genes.FUR_COLOR.mutated ||
-      b.genotype.phenotype.visibleTraits(Genes.FUR_COLOR) == Genes.FUR_COLOR.mutated ||
-      b.genotype.phenotype.visibleTraits(Genes.TEETH) == Genes.TEETH.mutated )
+      b.genotype.phenotype(Genes.FUR_COLOR) == Genes.FUR_COLOR.mutated ||
+      b.genotype.phenotype(Genes.FUR_COLOR) == Genes.FUR_COLOR.mutated ||
+      b.genotype.phenotype(Genes.TEETH) == Genes.TEETH.mutated )
 
     assert( nextGeneration.length == children.length / 2 * 4 + children.length )
     assert( bunnyWithMutation.length <= (nextGeneration.length - children.length) / 2 + 1 )

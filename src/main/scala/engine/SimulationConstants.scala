@@ -30,14 +30,17 @@ object SimulationConstants {
   val TEMPERATURE_PHASE = 0.75
 
   /**Maximum number of alive bunnies in the world*/
-  val MAX_BUNNIES_NUMBER = 1000
+ val MAX_ALIVE_BUNNIES: Int = 1000
 
   /**Maximum number of generations in a simulation*/
-  val MAX_GENERATIONS_NUMBER = 1000
+  val MAX_GENERATIONS_NUMBER: Int = 1000
 
   /**Number of children for each couple of bunnies*/
-  val CHILDREN_FOR_EACH_COUPLE = 4
+  val CHILDREN_FOR_EACH_COUPLE: Int = 4
 
   /**Maximum number of generation which each bunny can live*/
-  val MAX_BUNNY_AGE = 4
+  val MAX_BUNNY_AGE: Int = 4
+
+  /**Number of generations in a genealogical tree*/
+  val MAX_GENEALOGICAL_TREE_GENERATIONS: Int = 4
 }

@@ -1,20 +1,20 @@
 package view.scalaFX.FXControllers
 
-
 import controller.Controller
-import model.world.Generation.Population
-import scalafx.animation.Timeline
 import javafx.scene.{layout => jfxs}
+import model.Bunny
+import model.world.Generation.Population
 import scalafx.Includes._
-import view.scalaFX.utilities.EnvironmentImageUtils._
+import scalafx.animation.Timeline
 import scalafx.scene.control.{Button, Label}
-import scalafx.scene.layout.AnchorPane
-import scalafx.util.Duration
-import scalafxml.core.{FXMLLoader, NoDependencyResolver}
+import scalafx.scene.layout.{AnchorPane, StackPane}
 import scalafxml.core.macros.sfxml
+import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
-import view.scalaFX.utilities._
+import view.scalaFX.components.charts.tree.GenealogicalTreeView
+import view.scalaFX.utilities.EnvironmentImageUtils._
+import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
 
 import java.io.IOException
 import scala.language.postfixOps
@@ -28,7 +28,7 @@ sealed trait BaseAppControllerInterface {
 
 @sfxml
 class BaseAppController(private val simulationPane: AnchorPane,
-                        private val chartsPane: AnchorPane,
+                        private val chartsPane: StackPane,
                         private val mutationChoicePane: AnchorPane,
                         private val factorChoicePane: AnchorPane,
                         private val startButton: Button,
@@ -78,6 +78,10 @@ class BaseAppController(private val simulationPane: AnchorPane,
   def setEnvironmentWinter(): Unit = {
     Controller.setWinterClimate()
     simulationPane.background = WinterImage()
+  }
+
+  def showGenealogicalTree(bunny: Bunny): Unit = {
+    chartsPane.children = GenealogicalTreeView(bunny).treePane
   }
 
   def showBunnies(bunnies:Population, generationNumber: Int): Unit ={
