@@ -36,8 +36,6 @@ trait BunnyView {
 
   /** Starts the bunny animation */
   def play(): Unit
-
-  def jump(): AnimationFrames
 }
 
 object BunnyView {
@@ -77,7 +75,7 @@ object BunnyView {
         keyFrames = jump()
       }
 
-     override def jump(): AnimationFrames = {
+     private def jump(): AnimationFrames = {
       checkDirection()
       Seq(
         at(0 s){
