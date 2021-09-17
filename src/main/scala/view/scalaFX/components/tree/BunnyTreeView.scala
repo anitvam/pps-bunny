@@ -36,17 +36,14 @@ object BunnyTreeView {
     scaleX = Direction.scaleXValue(Right)
   }
 
-  private def deadImageView: ImageView = new ImageView {
-    image = new Image("/img/death.png")
+  private def infoImageView(path: String): ImageView = new ImageView {
+    image = new Image("path")
     fitWidth = bunnyIconSize/BUNNY_INFO_PROPORTION
     fitHeight = bunnyIconSize/BUNNY_INFO_PROPORTION
   }
 
-  private def mutationImageView: ImageView = new ImageView {
-    image = new Image("/img/mutation.png")
-    fitWidth = bunnyIconSize/BUNNY_INFO_PROPORTION
-    fitHeight = bunnyIconSize/BUNNY_INFO_PROPORTION
-  }
+  private def deadImageView: ImageView = infoImageView("/img/death.png")
+  private def mutationImageView: ImageView = infoImageView("/img/mutation.png")
 
   private def infoView(bunny: Bunny): HBox =
     new HBox( spacingRegion,
