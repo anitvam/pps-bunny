@@ -2,23 +2,28 @@ package view.scalaFX.FXControllers
 
 import controller.Controller
 import model.world.Generation.Population
-import model.world.Reproduction.generateInitialCouple
 import scalafx.animation.Timeline
-import scalafx.application.Platform
-import scalafx.collections.ObservableBuffer
-import scalafx.scene.control.Button
-import scalafx.scene.image.Image
-import scalafx.scene.layout.{AnchorPane, Background, BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
+import javafx.scene.{layout => jfxs}
+import scalafx.Includes._
+import view.scalaFX.utilities.EnvironmentImageUtils._
+import scalafx.scene.control.{Button, Label}
+import scalafx.scene.layout.{AnchorPane, Background}
 import scalafx.util.Duration
+import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import scalafxml.core.macros.sfxml
 import view.scalaFX.components.BunnyView
-import view.utilities.BunnyImage
+import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
+import view.scalaFX.ScalaFxViewConstants._
 
+import java.io.IOException
 import scala.language.postfixOps
+import scala.util.Random
 
-trait BaseAppControllerInterface {
+sealed trait BaseAppControllerInterface {
+  /** Method that initialize the application interface */
   def initialize(): Unit
-  def showBunnies(bunnies:Population): Unit
+  /** Method that shows new bunnies into the GUI and the actual generation number */
+  def showBunnies(bunnies:Population, generationNumber: Int): Unit
 }
 
 @sfxml
@@ -27,61 +32,66 @@ class BaseAppController(private val simulationPane: AnchorPane,
                         private val mutationChoicePane: AnchorPane,
                         private val factorChoicePane: AnchorPane,
                         private val graphChoicePane: AnchorPane,
-                        private val startButton: Button) extends BaseAppControllerInterface {
+                        private val startButton: Button,
+                        private val generationLabel: Label) extends BaseAppControllerInterface {
 
 
   private var bunnyViews: Seq[BunnyView] = Seq.empty
   private var bunnyTimelines: Seq[Timeline] = Seq.empty
+  private var mutationsPanelController: Option[MutationsPanelControllerInterface] = Option.empty
 
   def initialize(): Unit = {
-    // Environment background configuration
-    val hotBackground = new Image( "/environment/climate_hot.png")
-    if (hotBackground == null) {
-      println("An error occurred while loading resource: climate_hot.png")
-      Platform.exit()
-    }
-    simulationPane.background = new Background(Array(new BackgroundImage(
-      image = hotBackground,
-      repeatX = BackgroundRepeat.NoRepeat,
-      repeatY = BackgroundRepeat.NoRepeat,
-      position = BackgroundPosition.Default,
-      size = new BackgroundSize(
-        width = 1.0,
-        height = 1.0,
-        widthAsPercentage = true,
-        heightAsPercentage = true,
-        contain = false,
-        cover = false)
-    )))
+    // Load the default environment background
+    simulationPane.background = SummerImage()
+
     BunnyImage
+
+    // Load mutationPane fxml controller
+    val mutationPaneView = getClass.getResource("/fxml/mutationsPanel.fxml")
+    if (mutationPaneView == null) {
+      throw new IOException("Cannot load resource: mutationsPanel.fxml")
+    }
+
+    val loader = new FXMLLoader(mutationPaneView, NoDependencyResolver)
+    loader.load()
+    val mutationsPane = loader.getRoot[jfxs.AnchorPane]
+    mutationsPanelController = Some(loader.getController[MutationsPanelControllerInterface])
+
+    AnchorPane.setTopAnchor(mutationsPane, 0.0)
+    AnchorPane.setBottomAnchor(mutationsPane, 0.0)
+    AnchorPane.setLeftAnchor(mutationsPane, 0.0)
+    AnchorPane.setRightAnchor(mutationsPane, 0.0)
+
+    mutationChoicePane.children = mutationsPane
   }
 
-  def handleStartSimulation(): Unit = {
+  def startSimulationClick(): Unit = {
     startButton.setVisible(false)
-    Controller.startSimulation()
+    Controller.startSimulation(simulationPane.background, List.empty)
   }
 
-  def showBunnies(bunnies:Population): Unit ={
-    // Bunny visualization inside simulationPane
+  def setEnvironmentSummer(): Unit = {
+    Controller.setSummerClimate()
+    simulationPane.background = SummerImage()
+  }
+
+  def setEnvironmentWinter(): Unit = {
+    Controller.setWinterClimate()
+    simulationPane.background = WinterImage()
+  }
+
+  def showBunnies(bunnies:Population, generationNumber: Int): Unit ={
+      // Bunny visualization inside simulationPane
       val newBunnyViews = bunnies.filter(_.age == 0).map(BunnyView(_))
       bunnyViews = bunnyViews.filter(_.bunny.alive) ++ newBunnyViews
-      simulationPane.children = ObservableBuffer.empty
       simulationPane.children = bunnyViews.map(_.imageView)
 
-      // Timeline definition for each bunny of the Population
-      newBunnyViews.zipWithIndex.foreach(bunny => {
-        val bunnyTimeline = new Timeline {
-          onFinished = _ => {
-            keyFrames = bunny._1.jump()
-            this.play()
-          }
-          delay = Duration(1500 + bunny._2)
-          autoReverse = true
-          cycleCount = 1
-          keyFrames = bunny._1.jump()
-        }
-        bunnyTimelines = bunnyTimeline +: bunnyTimelines
-        bunnyTimeline.play()
-      })
+      generationLabel.text = "Generazione " + generationNumber
+      if (generationNumber > 1) {
+        mutationsPanelController.get.hideMutationIncoming()
+      }
+
+      // Start movement of the new bunnies
+      newBunnyViews.foreach { _.play() }
   }
 }

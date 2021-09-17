@@ -1,7 +1,7 @@
 package model.world
 
 import model.Bunny
-import model.world.Generation.{Environment, Population}
+import model.world.Generation.Population
 
 /**The unit of time of the simulation and wraps its properties*/
 trait Generation{
@@ -26,7 +26,6 @@ trait Generation{
 
 object Generation{
 
-  type Environment = String
   type Population = Seq[Bunny]
 
   def apply(actualEnvironment:Environment, bunniesAlive:Population): Generation =

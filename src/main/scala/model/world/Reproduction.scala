@@ -5,6 +5,7 @@ import model.Bunny.generateBaseFirstBunny
 import model._
 import model.genome._
 import model.mutation.Mutation
+import model.world.Environment.Mutations
 import model.world.Generation.Population
 
 import scala.util.Random
@@ -27,7 +28,7 @@ object Reproduction {
    * @param dad another bunny
    * @return the 4 children of the couple, one for each cell of the Punnett's square
    */
-  def generateChildren(mom: Bunny, dad: Bunny, mutations: Option[List[Mutation]] = None): Population = {
+  def generateChildren(mom: Bunny, dad: Bunny, mutations: Mutations = List()): Population = {
     var childrenGenotypes = List.fill(CHILDREN_FOR_EACH_COUPLE)(PartialGenotype(Map()))
 
     Genes.values.foreach(gk => {
@@ -42,11 +43,10 @@ object Reproduction {
       val shuffledGenes = Random.shuffle(genesOfReproduction)
       childrenGenotypes = (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE) yield childrenGenotypes(i) + shuffledGenes(i)).toList
 
-      mutations match {
-        case None =>
-        case Some(ms) => ms filter(_.geneKind == gk) foreach { m => childrenGenotypes = childrenGenotypes(CHILDREN_FOR_EACH_COUPLE - 1) +
+      mutations filter { _.geneKind == gk } foreach { m =>
+          childrenGenotypes = childrenGenotypes(CHILDREN_FOR_EACH_COUPLE - 1) +
           Gene(m.geneKind, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenotypes.take(CHILDREN_FOR_EACH_COUPLE - 1)}
-      }
+
     })
     childrenGenotypes.map(cg => new ChildBunny(CompletedGenotype(cg.genes), Option(mom), Option(dad)))
   }
@@ -55,7 +55,7 @@ object Reproduction {
    * @param bunnies a seq of bunnies
    * @return a seq with the children of the bunnies
    */
-  def generateAllChildren(bunnies: Population, mutations: Option[List[Mutation]] = None): Population = {
+  def generateAllChildren(bunnies: Population, mutations: Mutations = List()): Population = {
     val couples = combineCouples(bunnies)
     val (coupleWithMutations, coupleWithoutMutations) = Random.shuffle(couples).splitAt((couples.length / 2) + 1)
     coupleWithoutMutations.flatMap(couple => generateChildren(couple._1, couple._2)) ++
@@ -71,7 +71,7 @@ object Reproduction {
    * @param bunnies bunnies from the last generation
    * @return        the new bunnies, adding the children and removing the ones who are dead
    */
-  def nextGenerationBunnies(bunnies: Population, mutations: Option[List[Mutation]] = None): Population = {
+  def nextGenerationBunnies(bunnies: Population, mutations: Mutations = List()): Population = {
     val children = generateAllChildren(bunnies, mutations)
     bunnies.foreach(_.age+=1)
     bunnies.foreach(b => if (b.age >= MAX_BUNNY_AGE) b.alive = false)
