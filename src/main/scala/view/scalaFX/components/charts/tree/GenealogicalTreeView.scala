@@ -64,7 +64,7 @@ object GenealogicalTreeView {
   /** Creates an empty Text with the same size of the plus, for the bunnies with no ancient relatives */
   def emptyPlusView: Text = {
    val txt = plusView
-    txt.setVisible(false)
+    txt setVisible false
     txt
   }
 

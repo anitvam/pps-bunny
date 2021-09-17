@@ -65,7 +65,7 @@ object BunnyView {
 
     private val normalImage: Image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
     private val jumpingImage: Image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Jumping)
-    private val jumpingValue = if(bunny.genotype.phenotype.visibleTraits.values.exists(_ == Alleles.HIGH_JUMP)) HIGH_JUMP_HEIGHT else NORMAL_JUMP_HEIGHT
+    private val jumpingValue = if(bunny.genotype.phenotype.values.exists(_ == Alleles.HIGH_JUMP)) HIGH_JUMP_HEIGHT else NORMAL_JUMP_HEIGHT
     private val timeline: Timeline = new Timeline {
         onFinished = _ => {
           keyFrames = jump()

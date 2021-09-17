@@ -7,28 +7,28 @@ import model.genome._
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestGenes extends FlatSpec with Matchers {
-  resetDominance()
   "Any Allele" should "not produce letters if the dominance is not defined yet" in {
+    resetDominance()
     Alleles.values.foreach(ak => {
-      val geneKind = getGeneKind(ak)
-      val dominantAllele = StandardAllele(geneKind.base)
-      assert(dominantAllele.letter == "")
+      val allele = StandardAllele(ak)
+      assert(allele.getLetter == "")
     })
   }
 
   it should "be settable as dominant" in {
+    resetDominance()
     noException should be thrownBy assignRandomDominance()
   }
 
   it should "produce an uppercase letter if dominant" in {
     Alleles.values.filter(_.isDominant.get).foreach(ak => {
-      assert(StandardAllele(ak).letter.toCharArray()(0).isUpper)
+      assert(StandardAllele(ak).getLetter.toCharArray()(0).isUpper)
     })
   }
 
   it should "produce a lowercase letter if recessive" in {
     Alleles.values.filter(!_.isDominant.get).foreach(ak => {
-      assert(StandardAllele(ak).letter.toCharArray()(0).isLower)
+      assert(StandardAllele(ak).getLetter.toCharArray()(0).isLower)
     })
   }
 

@@ -18,7 +18,8 @@ object Alleles extends Enumeration{
    * @param dominant specifies if it's dominant or not, it could be empty if not chosen yet
    */
 
-  protected case class AllelesVal(prettyName: String, private var dominant: Option[Boolean] = Option.empty) extends super.Val {
+  protected case class AllelesVal(prettyName: String) extends super.Val {
+    private var dominant: Option[Boolean] = Option.empty
     def resetDominance: Unit = dominant = Option.empty
     def setDominance(cond: Boolean): Unit =
       if(dominant.isDefined) throw new MultipleDominanceAssignmentException else dominant = Option(cond)
@@ -110,7 +111,6 @@ object KindsUtils {
    * Reset dominance of all Alleles.
    */
   def resetDominance(): Unit = Alleles.values.foreach(_.resetDominance)
-
 }
 
 

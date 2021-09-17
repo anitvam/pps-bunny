@@ -39,7 +39,7 @@ object BunnyTreeView {
     spacingRegion,
     new Text {
       text = bunny.genotype.genes.values
-        .map(g => g.momAllele.letter + g.dadAllele.letter + " ")
+        .map(g => g.momAllele.getLetter + g.dadAllele.getLetter + " ")
         .reduce(_+_)
       style = "-fx-font-family: \"Helvetica\"; " +
         "-fx-font-weight: bold; " +
