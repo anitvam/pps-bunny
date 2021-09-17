@@ -75,6 +75,10 @@ object BunnyView {
         keyFrames = jump()
       }
 
+    imageView.onMouseClicked = _ => {
+      println("UEILA");
+    }
+
      private def jump(): AnimationFrames = {
       checkDirection()
       Seq(
