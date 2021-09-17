@@ -11,7 +11,7 @@ import view.scalaFX.components.tree.GenealogicalTreeViewConstants.{BUNNY_PLUS_PR
 
 /** Proportion constants to resize the view depending on the bunny size*/
 object GenealogicalTreeViewConstants {
-  val STANDARD_BUNNY_SIZE = 60
+  val STANDARD_BUNNY_SIZE: Int = 60
   val BUNNY_INFO_PROPORTION: Int = 5
   val BUNNY_REGION_PROPORTION: Int = 20
   val BUNNY_FONT_PROPORTION: Int = 8
@@ -45,21 +45,19 @@ object GenealogicalTreeView {
     var row: (HBox, Seq[Option[BinaryTree[Bunny]]]) = (new HBox(), Seq(Option(tree)))
     for (_ <- 1 to tree.generations){
       row = createRow(row._2)
-      rows ++= Seq(row._1)
+      rows = rows :+ row._1
     }
 
-    override val treePane = new VBox()
-    rows.reverse.foreach(treePane.children.add(_))
-    treePane.children.add(spacingRegion)
-    treePane.setStyle("-fx-background-color: yellow;")
+    override val treePane = new VBox{
+      children = rows.reverse :+ spacingRegion
+      style = "-fx-background-color: yellow;"
+    }
   }
 
-  def spacingRegion: Region = {
-    val region = new Region()
-    region.minWidth = bunnyIconSize/BUNNY_REGION_PROPORTION
-    region.minHeight = bunnyIconSize/BUNNY_REGION_PROPORTION
-    region.hgrow = Priority.Always
-    region
+  def spacingRegion: Region = new Region {
+      minWidth = bunnyIconSize/BUNNY_REGION_PROPORTION
+      minHeight = bunnyIconSize/BUNNY_REGION_PROPORTION
+      hgrow = Priority.Always
   }
 
   /** Creates an empty ImageView with the same size of the bunny, for the bunnies with no ancient relatives */
@@ -67,13 +65,10 @@ object GenealogicalTreeView {
     fitWidth = bunnyIconSize
   }
 
-  def plusView: Text = {
-    val txt = new Text("+")
-    txt.setStyle("-fx-font-weight: bold; " +
-      "-fx-font-size: "+ bunnyIconSize/BUNNY_PLUS_PROPORTION + "pt")
-    txt.minWidth(bunnyIconSize/BUNNY_REGION_PROPORTION)
-    txt.hgrow = Priority.Always
-    txt
+  def plusView: Text = new Text{
+      text = "+"
+      style = "-fx-font-weight: bold; -fx-font-size: "+ bunnyIconSize/BUNNY_PLUS_PROPORTION + "pt"
+      hgrow = Priority.Always
   }
 
   /** Creates an empty Text with the same size of the plus, for the bunnies with no ancient relatives */
@@ -90,23 +85,22 @@ object GenealogicalTreeView {
   private def createRow(trees: Seq[Option[BinaryTree[Bunny]]]) : (HBox, Seq[Option[BinaryTree[Bunny]]]) = {
     var nextTrees: Seq[Option[BinaryTree[Bunny]]] = Seq()
     var index = 0
-    val row = new HBox()
-    row.setAlignment(Pos.Center)
-    row.maxHeight = bunnyIconSize
-    row.children.add(spacingRegion)
+    val row = new HBox{
+      alignment = Pos.Center
+      maxHeight = bunnyIconSize
+      children = spacingRegion
+    }
 
     trees.foreach(tree => {
-      if (tree.isDefined) row.children.add(BunnyTreeView(tree.get.elem).pane)
-      else row.children.add(emptyImageView)
+      if (tree.isDefined) row.children += BunnyTreeView(tree.get.elem).pane
+      else row.children += emptyImageView
 
       index += 1
       if (index < trees.size) {
-        row.children.add(spacingRegion)
-        if (index % 2 == 1) {
-          if (tree.isDefined) row.children.add(plusView) else row.children.add(emptyPlusView)
-        }
+        row.children += spacingRegion
+        if (index % 2 == 1 && tree.isDefined) row.children += plusView else row.children += emptyPlusView
       }
-      row.children.add(spacingRegion)
+      row.children += spacingRegion
 
       if (tree.isDefined && tree.get.isInstanceOf[Node[Bunny]]) {
         nextTrees ++= Seq(Option(tree.get.asInstanceOf[Node[Bunny]].momTree), Option(tree.get.asInstanceOf[Node[Bunny]].dadTree))

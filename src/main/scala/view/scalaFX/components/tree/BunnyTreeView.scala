@@ -36,8 +36,19 @@ object BunnyTreeView {
     scaleX = Direction.scaleXValue(Right)
   }
 
+  private def allelesView(bunny: Bunny): HBox = new HBox(
+    spacingRegion,
+    new Text {
+      text = bunny.genotype.genes.values
+        .map(g => g.momAllele.letter + g.dadAllele.letter + " ")
+        .reduce(_+_)
+      style = "-fx-font-family: \"Helvetica\"; " +
+        "-fx-font-weight: bold; " +
+        "-fx-font-size: "+ bunnyIconSize/BUNNY_FONT_PROPORTION+"pt"},
+    spacingRegion)
+
   private def infoImageView(path: String): ImageView = new ImageView {
-    image = new Image("path")
+    image = new Image(path)
     fitWidth = bunnyIconSize/BUNNY_INFO_PROPORTION
     fitHeight = bunnyIconSize/BUNNY_INFO_PROPORTION
   }
@@ -51,18 +62,8 @@ object BunnyTreeView {
               if (bunny.genotype.isJustMutated) mutationImageView else new Region(),
               spacingRegion)
 
-  private def allelesView(bunny: Bunny): Text = {
-    val txt = new Text(bunny.genotype.genes.values
-      .map(g => g.momAllele.letter + g.dadAllele.letter + " ")
-      .reduce(_+_))
-    txt.setStyle( "-fx-font-family: \"Helvetica\"; " +
-                  "-fx-font-weight: bold; " +
-                  "-fx-font-size: "+ bunnyIconSize/BUNNY_FONT_PROPORTION+"pt")
-    txt
-  }
-
   private def treeBunnyView(bunny: Bunny): Pane =
     new VBox( bunnyView(bunny),
-              new HBox( spacingRegion, allelesView(bunny), spacingRegion),
+              allelesView(bunny),
               infoView(bunny))
 }
