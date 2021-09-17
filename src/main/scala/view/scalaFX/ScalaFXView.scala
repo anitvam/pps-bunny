@@ -84,4 +84,21 @@ object ScalaFxViewConstants {
   /** Bunny panel bound for the sky zone */
   var PANEL_SKY_ZONE: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_SKY_ZONE).toInt
 
+  /** Constants for the tree visualizaiton */
+  object GenealogicalTree{
+    /** Size of the bunny picture in the tree */
+    val TREE_BUNNY_SIZE: Int = 60
+
+    /** Proportion constants to resize the view of the info size in the tree depending on the bunny size*/
+    val TREE_INFO_PROPORTION: Int = 5
+
+    /** Proportion constants to resize the region size in the tree depending on the bunny size*/
+    val TREE_REGION_PROPORTION: Int = 20
+
+    /** Proportion constants to resize the font size in the tree depending on the bunny size*/
+    val TREE_FONT_PROPORTION: Int = 8
+
+    /** Proportion constants to resize the plus size in the tree depending on the bunny size*/
+    val TREE_PLUS_PROPORTION: Int = 3
+  }
 }

@@ -7,16 +7,7 @@ import scalafx.geometry.Pos
 import scalafx.scene.image.ImageView
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
-import view.scalaFX.components.tree.GenealogicalTreeViewConstants.{BUNNY_PLUS_PROPORTION, BUNNY_REGION_PROPORTION, STANDARD_BUNNY_SIZE}
-
-/** Proportion constants to resize the view depending on the bunny size*/
-object GenealogicalTreeViewConstants {
-  val STANDARD_BUNNY_SIZE: Int = 60
-  val BUNNY_INFO_PROPORTION: Int = 5
-  val BUNNY_REGION_PROPORTION: Int = 20
-  val BUNNY_FONT_PROPORTION: Int = 8
-  val BUNNY_PLUS_PROPORTION: Int = 3
-}
+import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{TREE_PLUS_PROPORTION, TREE_REGION_PROPORTION, TREE_BUNNY_SIZE}
 
 trait GenealogicalTreeView{
   /** Reference to the model bunny entity */
@@ -31,7 +22,7 @@ trait GenealogicalTreeView{
 
 object GenealogicalTreeView {
   /** The size required for the bunny icons*/
-  var bunnyIconSize: Int = STANDARD_BUNNY_SIZE
+  var bunnyIconSize: Int = TREE_BUNNY_SIZE
 
   def apply(bunny: Bunny): GenealogicalTreeView = TreeViewImpl(bunny, generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny))
 
@@ -48,15 +39,15 @@ object GenealogicalTreeView {
       rows = rows :+ row._1
     }
 
-    override val treePane = new VBox{
+    override val treePane = new VBox {
       children = rows.reverse :+ spacingRegion
       style = "-fx-background-color: yellow;"
     }
   }
 
   def spacingRegion: Region = new Region {
-      minWidth = bunnyIconSize/BUNNY_REGION_PROPORTION
-      minHeight = bunnyIconSize/BUNNY_REGION_PROPORTION
+      minWidth = bunnyIconSize/TREE_REGION_PROPORTION
+      minHeight = bunnyIconSize/TREE_REGION_PROPORTION
       hgrow = Priority.Always
   }
 
@@ -65,9 +56,9 @@ object GenealogicalTreeView {
     fitWidth = bunnyIconSize
   }
 
-  def plusView: Text = new Text{
+  def plusView: Text = new Text {
       text = "+"
-      style = "-fx-font-weight: bold; -fx-font-size: "+ bunnyIconSize/BUNNY_PLUS_PROPORTION + "pt"
+      style = "-fx-font-weight: bold; -fx-font-size: "+ bunnyIconSize/TREE_PLUS_PROPORTION + "pt"
       hgrow = Priority.Always
   }
 

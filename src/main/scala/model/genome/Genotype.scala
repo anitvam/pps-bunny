@@ -9,6 +9,7 @@ import model.{IllegalGenotypeBuildException, InconsistentGenotypeException}
  */
 sealed trait Phenotype {
   val visibleTraits: Map[GeneKind, AlleleKind]
+  val values: Iterable[AlleleKind] = visibleTraits.values
   def apply(gk: GeneKind): AlleleKind = visibleTraits(gk)
 }
 
@@ -22,6 +23,7 @@ object Phenotype {
  */
 sealed trait Genotype {
   val genes: Map[GeneKind, Gene]
+  val values: Iterable[Gene] = genes.values
   val phenotype: Phenotype = Phenotype(genes.map(entry => (entry._1, entry._2.getVisibleTrait)))
   def apply(gk: GeneKind): Gene = genes(gk)
   def isJustMutated: Boolean = genes.values.count(g => g.dadAllele.isInstanceOf[JustMutatedAllele] || g.momAllele.isInstanceOf[JustMutatedAllele]) > 0
