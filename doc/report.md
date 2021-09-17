@@ -23,30 +23,30 @@ conigli
 
 ### Modalità di revisione dei task
 Durante lo Sprint Planning viene assegnato a ogni membro l'insieme di task che esso ha il compito di portare a termine entro lo sprint successivo.
-A ciascuno dei task che sono stati pianificati viene quindi definita una Issue su GitHub con la persona incaricata e 
-una scheda su Trello nella sezione "To Do".
+Per ciascun task pianificato vengono definite una Issue su GitHub e una scheda Trello nella sezione "To Do" entrambe assegnate alla persona incaricata di implementare il task.
 
-La scheda su trello fornisce la possibilità di aggiungere dei commenti e dei punti elenco, permettendo ad ogni sviluppatore
+La scheda su Trello fornisce la possibilità di aggiungere dei commenti e dei punti elenco, permettendo ad ogni sviluppatore
 di avere tutte le informazioni relative a quel task in un solo punto e visibili da tutti gli altri membri. Trello consente 
 inoltre di trascinare i task in sezioni dedicate per la fase di sviluppo in cui si trovano, per essere aggiornati sul lavoro che 
 gli altri componenti del gruppo stanno effettuando.
 
 Il flusso di lavoro all'interno del repository che si è deciso di adottare si chiama `Git Flow`. Esso prevede che sul branch 
-`main` o `master` vengano fatti i nel momento del rilascio di versione, mentre il branch principale per lo sviluppo
+`main` o `master` vengano fatti i commit nel momento del rilascio di versione, mentre il branch principale per lo sviluppo
 è `develop`. A partire da `develop` gli sviluppatori creano un proprio branch, il cui nome segue un pattern da noi definito
 `feature/<iniziale_nome><iniziale_cognome>-<nome_feature>`, al cui interno viene sviluppato il codice per risolvere ciascuna 
 delle issue. Di seguito è riportata una immagine che rappresenta il flusso di sviluppo:
 
 ![Git-Flow Workflow](./images/git_flow.svg)
 
-Quando un membro ha completato il suo task allora egli effettua una `pull request` che sottometterà alla revisione da parte 
+Quando un membro ha completato il suo task, effettua una `pull request` che sottometterà alla revisione da parte 
 degli altri membri del team. Nel momento in cui viene fatta questa richiesta viene anche associata la `issue` relativa alla 
 risoluzione del task, questa operazione facilita l'individuazione di task che non sono stati svolti.
 
 
 ### Strumenti di test, build e Continuous Integration
-Per avere sicurezza che tutte le integrazioni da parte dei membri del team non vadano a collidere con quelle presenti nel branch `develop` 
-è stata introdotta la `Continuous Integration`. Con il file `.github/workflows/ci.yml` viene definita una sequenza di operazioni
+Il processo di sviluppo adottato richiede che le feature sviluppate dai vari membri del team siano ad ogni pull request 
+integrate con quelle già presenti nel branch develop, dunque per rendere il processo di integrazione più fluido, 
+evitando collisioni, si è deciso di introdurre la `Continuous Integration`. Con il file `.github/workflows/ci.yml` viene definita una sequenza di operazioni
 che vogliamo che siano svolte dalle `GitHub Actions`, le quali sono un insieme di macchine virtuali che `GitHub` mette a disposizione
 per poterle eseguire.
 
