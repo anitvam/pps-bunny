@@ -91,22 +91,6 @@ class BaseAppController(private val simulationPane: AnchorPane,
       if (generationNumber > 1) {
         mutationsPanelController.get.hideMutationIncoming()
       }
-
-      // Timeline definition for each bunny of the Population
-      newBunnyViews.zipWithIndex.foreach(bunny => {
-        val bunnyTimeline = new Timeline {
-          onFinished = _ => {
-            keyFrames = bunny._1.jump()
-            this.play()
-          }
-          delay = Duration(1500 + bunny._2)
-          autoReverse = true
-          cycleCount = 1
-          keyFrames = bunny._1.jump()
-        }
-        bunnyTimelines = bunnyTimeline +: bunnyTimelines
-        bunnyTimeline.play()
-      })
       // Start movement of the new bunnies
       newBunnyViews.foreach { _.play() }
     }
