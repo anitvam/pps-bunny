@@ -2,8 +2,8 @@ package view.scalaFX
 
 import controller.ScalaFXLauncher.stage
 import javafx.geometry.Rectangle2D
-import scalafx.application.JFXApp3.PrimaryStage
-import scalafx.scene.Scene
+import scalafx.application.JFXApp3.{PrimaryStage, Stage}
+import scalafx.scene.{Parent, Scene}
 import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import view.scalaFX.FXControllers.BaseAppControllerInterface
 import scalafx.Includes._
@@ -11,30 +11,28 @@ import javafx.stage.Screen
 import javafx.{scene => jfxs}
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
+import scalafx.Includes
 import scalafx.application.Platform
+import scalafx.scene.image.{Image, ImageView}
+import scalafx.scene.layout.AnchorPane
+import scalafx.stage.{Modality, Stage}
 
 import java.io.IOException
 import view._
 import view.scalaFX.ScalaFxViewConstants.{SCENE_HEIGHT, SCENE_WIDTH}
 import view.scalaFX.components.charts.PopulationChart
+import view.scalaFX.utilities.FxmlUtils
 
 object ScalaFXView extends View {
   var baseAppController: Option[BaseAppControllerInterface] = Option.empty
 
   def start(): Unit = {
-    val baseAppView = getClass.getResource("/fxml/baseApp.fxml")
-    if (baseAppView == null) {
-      throw new IOException("Cannot load resource: baseApp.fxml")
-    }
-
-    val loader = new FXMLLoader(baseAppView, NoDependencyResolver)
-    loader.load()
-    val root = loader.getRoot[jfxs.Parent]
-    baseAppController = Some(loader.getController[BaseAppControllerInterface])
+    val loadedRootPanel = FxmlUtils.loadFXMLResource[jfxs.Parent]("/fxml/baseApp.fxml")
+    baseAppController = Some(loadedRootPanel._2.getController[BaseAppControllerInterface])
 
     stage = new PrimaryStage() {
       title = "Bunnies"
-      scene = new Scene(root)
+      scene = new Scene(loadedRootPanel._1)
       width = SCENE_WIDTH
       height = SCENE_HEIGHT
     }
@@ -47,6 +45,20 @@ object ScalaFXView extends View {
       baseAppController.get.showBunnies(bunnies, generationPhase.generationNumber)
       PopulationChart.updateChart(generationPhase, bunnies)
     }
+
+  override def showEnd(): Unit = {
+
+    val anchorPane = new AnchorPane {
+      children = new ImageView(new Image("/world.png"))
+    }
+    val endStage = new Stage {
+      title = "Fine simulazione"
+      scene = new Scene(anchorPane)
+    }
+
+    endStage.showAndWait()
+
+  }
 }
 
 object ScalaFxViewConstants {
@@ -81,12 +93,16 @@ object ScalaFxViewConstants {
   val SCENE_HEIGHT: Double = if (SCREEN_BOUNDS.getHeight > DEFAULT_SCENE_HEIGHT) DEFAULT_SCENE_HEIGHT else SCREEN_BOUNDS.getHeight - HEIGHT_SCREEN_BOUND
 
   /** Bunny panel inside application window width */
-  var PREFERRED_BUNNY_PANEL_WIDTH: Int = (SCENE_WIDTH * BUNNY_PANEL_PERCENTUAL_WIDTH).toInt
+  val PREFERRED_BUNNY_PANEL_WIDTH: Int = (SCENE_WIDTH * BUNNY_PANEL_PERCENTUAL_WIDTH).toInt
 
   /** Bunny panel inside application window height */
-  var PREFERRED_BUNNY_PANEL_HEIGHT: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_HEIGTH).toInt
+  val PREFERRED_BUNNY_PANEL_HEIGHT: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_HEIGTH).toInt
 
   /** Bunny panel bound for the sky zone */
-  var PANEL_SKY_ZONE: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_SKY_ZONE).toInt
+  val PANEL_SKY_ZONE: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_SKY_ZONE).toInt
+
+  val PREFERRED_CHART_WIDTH: Int = (SCENE_WIDTH * 0.55).toInt
+
+  val PREFERRED_CHART_HEIGHT: Int = (SCENE_HEIGHT * 0.45).toInt
 
 }

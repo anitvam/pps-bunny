@@ -12,8 +12,10 @@ import scalafx.scene.layout.AnchorPane
 import scalafx.util.Duration
 import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import scalafxml.core.macros.sfxml
+import view.scalaFX.ScalaFxViewConstants
 import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
+import view.scalaFX.utilities.FxmlUtils.loadFXMLResource
 import view.scalaFX.utilities._
 
 import java.io.IOException
@@ -37,32 +39,22 @@ class BaseAppController(private val simulationPane: AnchorPane,
 
 
   private var bunnyViews: Seq[BunnyView] = Seq.empty
-  private var bunnyTimelines: Seq[Timeline] = Seq.empty
   private var mutationsPanelController: Option[MutationsPanelControllerInterface] = Option.empty
+  private val chartChoiceController: Option[ChartChoiceControllerInterface] = Option.empty
 
   def initialize(): Unit = {
     // Load the default environment background
     simulationPane.background = SummerImage()
 
     BunnyImage
-    // Load mutationPane fxml controller
-    val mutationPaneView = getClass.getResource("/fxml/mutationsPanel.fxml")
-    if (mutationPaneView == null) {
-      throw new IOException("Cannot load resource: mutationsPanel.fxml")
-    }
+    val loadedMutationChoicePanel = loadFXMLResource[jfxs.AnchorPane]("/fxml/mutationsPanel.fxml")
+    mutationChoicePane.children = loadedMutationChoicePanel._1
+    mutationsPanelController = Some(loadedMutationChoicePanel._2.getController[MutationsPanelControllerInterface])
 
-    val loader = new FXMLLoader(mutationPaneView, NoDependencyResolver)
-    loader.load()
-    val mutationsPane = loader.getRoot[jfxs.AnchorPane]
-    mutationsPanelController = Some(loader.getController[MutationsPanelControllerInterface])
+    chartsPane.children =  PopulationChart.chart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH)
 
-    AnchorPane.setTopAnchor(mutationsPane, 0.0)
-    AnchorPane.setBottomAnchor(mutationsPane, 0.0)
-    AnchorPane.setLeftAnchor(mutationsPane, 0.0)
-    AnchorPane.setRightAnchor(mutationsPane, 0.0)
-
-    mutationChoicePane.children = mutationsPane
-    chartsPane.children =  PopulationChart.chart(325, 500)
+    val loadedChartChoice = loadFXMLResource[jfxs.AnchorPane]("/fxml/chartChoiceSelection.fxml")
+    chartChoicePane.children = loadedChartChoice._1
   }
 
   def startSimulationClick(): Unit = {
@@ -88,7 +80,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
       simulationPane.children = bunnyViews.map(_.imageView)
 
       generationLabel.text = "Generazione " + generationNumber
-      if (generationNumber > 1) {
+      if (generationNumber > 0) {
         mutationsPanelController.get.hideMutationIncoming()
       }
       // Start movement of the new bunnies

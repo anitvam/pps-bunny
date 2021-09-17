@@ -1,0 +1,32 @@
+package view.scalaFX.utilities
+
+import scalafx.scene.layout.AnchorPane
+import scalafxml.core.{FXMLLoader, NoDependencyResolver}
+
+import java.io.IOException
+import javafx.scene.{layout => jfxs}
+import scalafx.Includes._
+import scalafx.scene.layout.AnchorPane
+import scalafx.Includes._
+import scalafx.scene.Scene
+
+
+object FxmlUtils {
+
+  def loadFXMLResource[T](fxmlPath: String): (T, FXMLLoader) = {
+    val fxmlFile = getClass.getResource(fxmlPath)
+    if (fxmlFile == null) {
+      throw new IOException("Cannot load resource: " + fxmlPath)
+    }
+    val loader = new FXMLLoader(fxmlFile, NoDependencyResolver)
+    loader.load()
+    val loadedPane = loader.getRoot[T]
+
+    loadedPane match {
+      case node: jfxs.AnchorPane => AnchorPane.setAnchors(node, 0, 0, 0, 0)
+    }
+
+    (loadedPane, loader)
+  }
+
+}
