@@ -2,20 +2,19 @@ package view.scalaFX.FXControllers
 
 import controller.Controller
 import javafx.scene.{layout => jfxs}
-import scalafx.Includes._
 import model.Bunny
 import model.world.Generation.Population
 import scalafx.collections.ObservableBuffer
-import scalafx.scene.control.{Button, Label, RadioButton, ToggleGroup}
+import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout.{AnchorPane, StackPane}
 import scalafxml.core.macros.sfxml
 import view.scalaFX.ScalaFxViewConstants
-import view.scalaFX.utilities.FxmlUtils.loadFXMLResource
+import view.scalaFX.ScalaFxViewConstants.PREFERRED_CHART_WIDTH
 import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.tree.GenealogicalTreeView
 import view.scalaFX.utilities.EnvironmentImageUtils._
-import view.scalaFX.utilities.PimpScala.RichOption
+import view.scalaFX.utilities.FxmlUtils.loadFXMLResource
 import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
 
 import scala.language.postfixOps
@@ -57,13 +56,13 @@ class BaseAppController(private val simulationPane: AnchorPane,
 
     BunnyImage
     val loadedMutationChoicePanel = loadFXMLResource[jfxs.AnchorPane]("/fxml/mutationsPanel.fxml")
-    mutationChoicePane.children = loadedMutationChoicePanel._1
+    mutationChoicePane.children += loadedMutationChoicePanel._1
     mutationsPanelController = Some(loadedMutationChoicePanel._2.getController[MutationsPanelControllerInterface])
 
     showPopulationChart()
 
     val loadedChartChoice = loadFXMLResource[jfxs.AnchorPane]("/fxml/chartChoiceSelection.fxml")
-    chartChoicePane.children = loadedChartChoice._1
+    chartChoicePane.children += loadedChartChoice._1
     chartSelectionPanelController = Some(loadedChartChoice._2.getController[ChartChoiceControllerInterface])
     chartSelectionPanelController.get.initialize(this)
   }
@@ -86,10 +85,6 @@ class BaseAppController(private val simulationPane: AnchorPane,
     simulationPane.background = WinterImage()
   }
 
-  def showGenealogicalTree(bunny: Bunny): Unit = {
-    chartsPane.children = GenealogicalTreeView(bunny).treePane
-  }
-
   override def showBunnies(bunnies:Population, generationNumber: Int): Unit ={
       // Bunny visualization inside simulationPane
     if (bunnyViews.size != bunnies.size) {
@@ -107,7 +102,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
   }
 
   override def showPedigreeChart(): Unit = if (selectedBunny.isDefined) {
-    chartsPane.children = GenealogicalTreeView(selectedBunny.get, 100).treePane
+    chartsPane.children = GenealogicalTreeView(selectedBunny.get, PREFERRED_CHART_WIDTH).treePane
     println("Metto il grafico")
   } else {
     chartsPane.children = ObservableBuffer.empty

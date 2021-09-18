@@ -7,7 +7,7 @@ import scalafx.geometry.Pos
 import scalafx.scene.image.ImageView
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
-import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{TREE_PLUS_PROPORTION, TREE_REGION_PROPORTION, TREE_BUNNY_SIZE}
+import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{TREE_BUNNY_SIZE, TREE_PLUS_PROPORTION, TREE_REGION_PROPORTION}
 
 trait GenealogicalTreeView{
   /** Reference to the model bunny entity */
@@ -23,15 +23,22 @@ trait GenealogicalTreeView{
 object GenealogicalTreeView {
   /** The size required for the bunny icons*/
   var bunnyIconSize: Int = TREE_BUNNY_SIZE
+  val BUNNY_GENERATIONS_POW = 0.5
+  val PANEL_BUNNY_PROPORTION = 10.5
 
-  def apply(bunny: Bunny): GenealogicalTreeView = TreeViewImpl(bunny, generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny))
-
-  def apply(bunny: Bunny, bunnySize: Int): GenealogicalTreeView = {
-    this.bunnyIconSize = bunnySize
-    this(bunny)
+  def apply (bunny:Bunny): GenealogicalTreeView = {
+    this (bunny, TREE_BUNNY_SIZE)
   }
 
-  private case class TreeViewImpl(override val bunny: Bunny, override val tree: BinaryTree[Bunny]) extends GenealogicalTreeView{
+  def apply(bunny: Bunny, panelWidth: Int): GenealogicalTreeView = {
+    val tree = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
+    val generationsCoefficient = Math.pow(MAX_GENEALOGICAL_TREE_GENERATIONS - tree.generations + 1, BUNNY_GENERATIONS_POW)
+    bunnyIconSize = (panelWidth * generationsCoefficient / PANEL_BUNNY_PROPORTION).toInt
+    TreeViewImpl(bunny, tree)
+  }
+
+  private case class TreeViewImpl(override val bunny: Bunny,
+                                  override val tree: BinaryTree[Bunny]) extends GenealogicalTreeView{
     var rows: Seq[HBox] = Seq()
     var row: (HBox, Seq[Option[BinaryTree[Bunny]]]) = (new HBox(), Seq(Option(tree)))
     for (_ <- 1 to tree.generations){
@@ -40,7 +47,7 @@ object GenealogicalTreeView {
     }
 
     override val treePane = new VBox {
-      children = rows.reverse :+ spacingRegion
+      children = spacingRegion +: rows.reverse :+ spacingRegion
     }
   }
 
