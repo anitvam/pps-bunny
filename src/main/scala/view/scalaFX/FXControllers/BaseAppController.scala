@@ -2,6 +2,7 @@ package view.scalaFX.FXControllers
 
 import controller.Controller
 import javafx.scene.{layout => jfxs}
+import scalafx.Includes._
 import model.Bunny
 import model.world.Generation.Population
 import scalafx.scene.control.{Button, Label}

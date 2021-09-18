@@ -6,6 +6,8 @@ import engine.SimulationHistory.initialize
 import model.mutation.Mutation
 import model.world.{Climate, Environment, Summer, Winter}
 import model.world.Environment.Factors
+import scalafx.application.Platform
+import view.scalaFX.ScalaFXView
 
 object Controller {
 
@@ -26,5 +28,8 @@ object Controller {
   /** Method that insert a mutation inside the simulation
    * @param mutation the Mutation */
   def insertMutation(mutation: Mutation): Unit = SimulationHistory introduceMutation mutation
+
+  def showEnd(): Unit = Platform.runLater(ScalaFXView.showEnd())
+
 
 }

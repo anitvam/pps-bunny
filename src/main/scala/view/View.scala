@@ -12,4 +12,7 @@ trait View {
    * @param bunnies the list of bunnies
    * @param generationNumber the generation number*/
   def updateView(generationNumber: GenerationPhase, bunnies: Population): Unit
+
+  /** Method that shows the end of the simulation to the user */
+  def showEnd(): Unit
 }

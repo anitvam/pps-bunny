@@ -1,14 +1,11 @@
 package view.scalaFX.utilities
 
-import scalafx.scene.layout.AnchorPane
 import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 
 import java.io.IOException
 import javafx.scene.{layout => jfxs}
-import scalafx.Includes._
 import scalafx.scene.layout.AnchorPane
 import scalafx.Includes._
-import scalafx.scene.Scene
 
 
 object FxmlUtils {
