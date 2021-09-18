@@ -1,24 +1,19 @@
 package view.scalaFX
 
 import controller.ScalaFXLauncher.stage
-import javafx.geometry.Rectangle2D
-import scalafx.application.JFXApp3.{PrimaryStage, Stage}
-import scalafx.scene.{Parent, Scene}
-import scalafxml.core.{FXMLLoader, NoDependencyResolver}
-import view.scalaFX.FXControllers.BaseAppControllerInterface
-import scalafx.Includes._
 import javafx.stage.Screen
 import javafx.{scene => jfxs}
 import model.world.Generation.Population
+import scalafx.Includes._
+import scalafx.application.JFXApp3.PrimaryStage
 import model.world.GenerationsUtils.GenerationPhase
-import scalafx.Includes
 import scalafx.application.Platform
+import scalafx.scene.Scene
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.AnchorPane
-import scalafx.stage.{Modality, Stage}
-
-import java.io.IOException
+import scalafx.stage.Stage
 import view._
+import view.scalaFX.FXControllers.BaseAppControllerInterface
 import view.scalaFX.ScalaFxViewConstants.{SCENE_HEIGHT, SCENE_WIDTH}
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.utilities.FxmlUtils
@@ -105,4 +100,21 @@ object ScalaFxViewConstants {
 
   val PREFERRED_CHART_HEIGHT: Int = (SCENE_HEIGHT * 0.45).toInt
 
+  /** Constants for the tree visualizaiton */
+  object GenealogicalTree{
+    /** Size of the bunny picture in the tree */
+    val TREE_BUNNY_SIZE: Int = 65
+
+    /** Proportion constants to resize the view of the info size in the tree depending on the bunny size*/
+    val TREE_INFO_PROPORTION: Int = 5
+
+    /** Proportion constants to resize the region size in the tree depending on the bunny size*/
+    val TREE_REGION_PROPORTION: Int = 20
+
+    /** Proportion constants to resize the font size in the tree depending on the bunny size*/
+    val TREE_FONT_PROPORTION: Int = 8
+
+    /** Proportion constants to resize the plus size in the tree depending on the bunny size*/
+    val TREE_PLUS_PROPORTION: Int = 3
+  }
 }

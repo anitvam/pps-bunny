@@ -1,7 +1,8 @@
 package model
 
-import model.Bunny.{generateRandomFirstBunny, generateTree}
-import model.BunnyConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
+import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
+import model.Bunny.generateRandomFirstBunny
+import model.Tree.generateTree
 import model.world.Reproduction.nextGenerationBunnies
 import org.scalatest.{FlatSpec, Matchers}
 
@@ -29,13 +30,10 @@ class TestTree extends FlatSpec with Matchers {
   }
   val fullTree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
   "A full genealogical tree "should "contain all the required generations" in {
-    println(fullTree.generations)
     assert(fullTree.generations == MAX_GENEALOGICAL_TREE_GENERATIONS)
   }
 
   it should "contain the right bunnies as parents of the first bunny " in {
-    println(fullTree.asInstanceOf[Node[Bunny]].momTree.elem)
-    println(bunny.mom.get)
     assert(fullTree.asInstanceOf[Node[Bunny]].momTree.elem == bunny.mom.get)
     assert(fullTree.asInstanceOf[Node[Bunny]].dadTree.elem == bunny.dad.get)
   }

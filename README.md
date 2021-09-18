@@ -31,3 +31,5 @@ $ sbt test
 - Asia Lucchi ([aslucc](https://github.com/aslucc))
 - Alessia Rocco ([alessiarocco98](https://github.com/alessiarocco98))
 - Marta Spadoni ([martaSpadoni](https://github.com/martaSpadoni))
+
+Some icons made by [Freepik](https://www.freepik.com") from [Flaticon](https://www.flaticon.com/).
