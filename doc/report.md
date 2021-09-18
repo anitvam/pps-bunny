@@ -23,7 +23,7 @@ Di seguito sono riportati gli obiettivi fissati ed i risultati realmente prodott
 | :------------- | :---------- | :----------- |
 | 1 |  Produrre una modellazione corretta e possibilmente completa del sistema.  <br /> Questo è l'unico Sprint che ha avuto una durata inferiore alle due settimane (circa 10 giorni) e il cui obbiettivo non è un prototipo tangibile per un evenutale utente. Si è scelto di dedicare un intero Sprint alla modellazione in modo che tutti i componenti del team avessero tempo di studiare il dominio e per dare centralità al design dell'applicativo. | Obiettivo portato a termine. |
 | 2 | Implementare una prima versione dell'applicazione, in cui è possibile osservare visivamente la riproduzione dei coniglietti. Nella pratica, si tratta di: <ul><li>Realizzare il model di base per la rappresentazione del coniglietto ed il suo patrimonio genetico.</li><li>Creare la struttura MVC dell'applicativo ed il loop che permette di avanzare nelle generazioni.</li><li> Visualizzare il pannello principale con i coniglietti che saltano.</li></ul>  | Obiettivo portato a termine. |
-| 3 | Integrare alcune feature alla prima versione prodotta, in particolare: <ul><li>Estendendere la GUI con tutti i pannelli necessari, in particolare quelli per la scelta delle mutazioni e del grafico.</li><li>Aggiungere  le mutazioni ai conigli.</li><li>Dare la possibilità all'utente di scegliere la dominanza delle mutazioni introdotte.</li><li>Dare la possibilità all'utente di cambiare clima.</li><li>Visualizzare l'albero genealogico di un qualsiasi coniglio.</li><li>Visualizzare il grafico con i cambiamenti nella popolazione.</li><li>Visualizzare il grafico con le proporzioni.</li><li>Iniziare la stesura del report.</li></ul> | ??    |
+| 3 | Integrare alcune feature alla prima versione prodotta, in particolare: <ul><li>Estendendere la GUI con tutti i pannelli necessari, in particolare quelli per la scelta delle mutazioni e del grafico.</li><li>Aggiungere  le mutazioni ai conigli.</li><li>Dare la possibilità di scegliere la dominanza delle mutazioni introdotte.</li><li>Dare la possibilità di cambiare clima.</li><li>Visualizzare l'albero genealogico di un qualsiasi coniglio.</li><li>Visualizzare il grafico con i cambiamenti nella popolazione.</li><li>Visualizzare il grafico con le proporzioni.</li><li>Iniziare la stesura del report.</li></ul> | ??    |
 | 4 | Introdurre i fattori disturbanti. | ?? |
 
 ### Modalità di revisione dei task
@@ -55,6 +55,7 @@ Di seguito sono riportati i requisiti individuati durante lo studio del dominio 
     * La gestione delle risorse alimentari, che possono essere scarse, difficilmente raggiungibili o difficilmente masticabili.
 * L’ambiente può avere un clima caldo o freddo, che andrà ad influenzare l'efficacia dei fattori sopracitati.
 * Ogni fattore disturbante elimina una certa percentuale di coniglietti dall’ambiente, in ogni generazione i fattori agiscono uno alla volta sulla popolazione di coniglietti rimasti rispetto all'azione di un eventuale fattore precedente.
+* Ogni generazione dura 12 secondi, dei quali 3 a cavallo fra le due generazioni sono dedicati alla riproduzione e 9 per l'eliminazione dei coniglieti dovuta alla presenza dei fattori disturbanti, 3 per ognuno di essi, nel seguente ordine: predatori, temperature ostili, risorse alimentari.
 
 * Per quanto riguarda la riproduzione, dalla totalità dei coniglietti si formano causalmente delle coppie, ognuna delle quali genera 4 figli in modo da avere tutte le combinazioni degli alleli rappresentate dal Quadrato di Punnett. </br> Ad esempio, avendo 21 coniglietti si formano 10 coppie, ognuna delle quali fa 4 figli per un totale di 40 figli, quindi al termine della riproduzione avremo 21 + 40 = 61 coniglietti. </br> Di seguito è riportato un esempio di Quadrato di Punnett per il gene riguardante il colore della pelliccia (lettera <tt>f</tt>), con i figli dati dalla coppia d'esempio <tt>ff + fF</tt>.
 
@@ -69,6 +70,8 @@ Di seguito sono riportati i requisiti individuati durante lo studio del dominio 
 | :--: | :--: | :--: |
 | f | ff  | *FF* | 
 | f | ff  | ff | 
+
+* Nel caso in cui siano definite più mutazioni (su vari geni) durante la medesima generazione si cercherà di mantenere un'unica mutazione per coniglio, le mutazioni si andranno ad accumulare sullo stesso figlio solo nel caso in cui non si disponga di abbastanza conigli.
 
 ### Requisiti Utente
 Di seguito sono riportati i requisiti visti nell'ottica di cosa può fare l'utente con l'applicativo.
@@ -87,9 +90,6 @@ Di seguito sono riportati i requisiti visti nell'ottica di cosa può fare l'uten
 ### Requisiti non Funzionali 
 ### Requisiti di Implementazione 
 * La JVM >= v1.11 è richiesta per la nostra implementazione in ScalaFX
-
-
-//Qui da mettere tutte le Regole che abbiamo deciso e le mutazioni/i fattori!
 
 ## Design architetturale
 ## Design di dettaglio
