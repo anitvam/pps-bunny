@@ -29,7 +29,6 @@ object Controller {
    * @param mutation the Mutation */
   def insertMutation(mutation: Mutation): Unit = SimulationHistory introduceMutation mutation
 
-  def showEnd(): Unit = Platform.runLater(ScalaFXView.showEnd())
-
-
+  /** Method that shows the end of the simulation on the Application GUI */
+  def showEnd(): Unit = Platform runLater { ScalaFXView.showEnd() }
 }

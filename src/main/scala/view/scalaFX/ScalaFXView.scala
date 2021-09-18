@@ -18,6 +18,7 @@ import view.scalaFX.FXControllers.BaseAppControllerInterface
 import view.scalaFX.ScalaFxViewConstants.{SCENE_HEIGHT, SCENE_WIDTH}
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.utilities.FxmlUtils
+import view.scalaFX.utilities.PimpScala.RichOption
 
 object ScalaFXView extends View {
   var baseAppController: Option[BaseAppControllerInterface] = Option.empty
@@ -25,43 +26,40 @@ object ScalaFXView extends View {
   def start(): Unit = {
     val loadedRootPanel = FxmlUtils.loadFXMLResource[jfxs.Parent]("/fxml/baseApp.fxml")
     baseAppController = Some(loadedRootPanel._2.getController[BaseAppControllerInterface])
+    baseAppController --> { _.initialize() }
 
-    stage = new PrimaryStage() {
+    stage = new PrimaryStage {
       title = "Bunnies"
       scene = new Scene(loadedRootPanel._1)
       width = SCENE_WIDTH
       height = SCENE_HEIGHT
+      resizable = false
     }
-    stage.setResizable(false)
-    baseAppController.get.initialize()
   }
 
   def updateView(generationPhase:GenerationPhase, bunnies:Population): Unit =
     Platform.runLater{
-      baseAppController.get.showBunnies(bunnies, generationPhase.generationNumber)
+      baseAppController --> { _.showBunnies(bunnies, generationPhase.generationNumber) }
       PopulationChart.updateChart(generationPhase, bunnies)
     }
 
   override def showEnd(): Unit = {
 
-    val anchorPane = new AnchorPane {
-      children = new ImageView {
-        image = new Image("img/world.png")
-        fitHeight = 500
-        preserveRatio = true
-      }
-    }
     val endStage = new Stage {
       title = "Fine simulazione"
-      scene = new Scene(anchorPane)
+      scene = new Scene (new AnchorPane {
+          children = new ImageView {
+            image = new Image ("img/world.png")
+            fitHeight = ScalaFxViewConstants.PREFERRED_CHART_HEIGHT
+            preserveRatio = true
+          }
+        })
       resizable = false
     }
-
     endStage.show()
-
   }
 
-  override def handleBunnyClick(bunny: Bunny): Unit = baseAppController.get.handleBunnyClick(bunny)
+  override def handleBunnyClick(bunny: Bunny): Unit = baseAppController --> { _.handleBunnyClick(bunny) }
 }
 
 object ScalaFxViewConstants {
