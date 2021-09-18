@@ -2,12 +2,13 @@ package controller
 
 import engine.{SimulationEngine, SimulationHistory}
 import engine.SimulationEngine.simulationLoop
-import engine.SimulationHistory.initialize
 import model.mutation.Mutation
 import model.world.{Climate, Environment, Summer, Winter}
 import model.world.Environment.Factors
+import model.world.Generation.Population
 import scalafx.application.Platform
 import view.scalaFX.ScalaFXView
+
 
 object Controller {
 
@@ -31,4 +32,7 @@ object Controller {
 
   /** Method that shows the end of the simulation on the Application GUI */
   def showEnd(): Unit = Platform runLater { ScalaFXView.showEnd() }
+
+  def population: Population = SimulationHistory.getActualPopulation
+
 }

@@ -3,9 +3,10 @@ package view.scalaFX.utilities
 import scalafx.Includes._
 import com.sun.javafx.charts.Legend
 import javafx.scene.control.Label
-import scalafx.scene.chart.{LineChart, XYChart}
+import scalafx.collections.ObservableBuffer
+import javafx.scene.text.Text
+import scalafx.scene.chart.{LineChart, PieChart, XYChart}
 import view.scalaFX.utilities.PimpScala._
-import java.util.function.Consumer
 
 object PimpScalaFXChartLibrary {
   /**A richer version of [[XYChart.Series]]*/
@@ -69,7 +70,31 @@ object PimpScalaFXChartLibrary {
       getLabels.foreach(_.styleClass -= "chart-legend-item-clicked")
       label(value) --> {_.styleClass += "chart-legend-item-clicked"}
     }
+  }
 
+  implicit class RichPieChart(chart:PieChart){
+    def += (data:Seq[(String, Double)]): Unit = {
+      if(!chart.getData.isEmpty){
+        chart.getData.foreach(d =>{
+          data.find(_._1 == d.getName).map(_._2) --> {i => d.pieValue = i}
+
+        })
+      } else {
+      chart.getData ++= ObservableBuffer.from(data.map({ case (x, y) =>
+        PieChart.Data(x, y)
+      }))
+      }
+
+      chart.lookupAll(".chart-pie-label").map(_.asInstanceOf[Text]).foreach(l => {
+        val percentage = chart.getData.find(d => l.getText.contains(d.getName)).get
+        l.text =  percentage.getName + " " + percentage.getPieValue + "%"
+      })
+    }
+
+    def /+=(data:Seq[(String, Double)]): Unit = {
+      chart.getData.clear()
+      chart += data
+    }
   }
 
 }
