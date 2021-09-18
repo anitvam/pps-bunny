@@ -40,11 +40,11 @@
                         <RowConstraints percentHeight="100.0" />
                     </rowConstraints>
                      <children>
-                         <StackPane fx:id="chartsPane" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" styleClass="panel">
+                         <AnchorPane fx:id="chartsPane" prefHeight="200.0" prefWidth="200.0" styleClass="panel" >
                              <GridPane.margin>
                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                              </GridPane.margin>
-                         </StackPane>
+                         </AnchorPane>
                         <AnchorPane fx:id="chartChoicePane" prefHeight="200.0" prefWidth="200.0" styleClass="panel" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

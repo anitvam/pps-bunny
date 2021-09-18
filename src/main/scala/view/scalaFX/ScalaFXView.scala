@@ -34,7 +34,6 @@ object ScalaFXView extends View {
     }
     stage.setResizable(false)
     baseAppController.get.initialize()
-    showEnd()
   }
 
   def updateView(generationPhase:GenerationPhase, bunnies:Population): Unit =
@@ -48,7 +47,7 @@ object ScalaFXView extends View {
     val anchorPane = new AnchorPane {
       children = new ImageView {
         image = new Image("img/world.png")
-        fitWidth = 500
+        fitHeight = 500
         preserveRatio = true
       }
     }

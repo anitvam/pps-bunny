@@ -24,7 +24,7 @@ object GenealogicalTreeView {
   /** The size required for the bunny icons*/
   var bunnyIconSize: Int = TREE_BUNNY_SIZE
   val BUNNY_GENERATIONS_POW = 0.5
-  val PANEL_BUNNY_PROPORTION = 10.5
+  val PANEL_BUNNY_PROPORTION = 11.5
 
   def apply (bunny:Bunny): GenealogicalTreeView = {
     this (bunny, TREE_BUNNY_SIZE)

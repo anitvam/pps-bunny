@@ -37,7 +37,7 @@ sealed trait BaseAppControllerInterface {
 
 @sfxml
 class BaseAppController(private val simulationPane: AnchorPane,
-                        private val chartsPane: StackPane,
+                        private val chartsPane: AnchorPane,
                         private val mutationChoicePane: AnchorPane,
                         private val factorChoicePane: AnchorPane,
                         private val startButton: Button,
@@ -102,12 +102,11 @@ class BaseAppController(private val simulationPane: AnchorPane,
   }
 
   override def showPedigreeChart(): Unit = if (selectedBunny.isDefined) {
-    chartsPane.children = GenealogicalTreeView(selectedBunny.get, PREFERRED_CHART_WIDTH).treePane
-    println("Metto il grafico")
-  } else {
-    chartsPane.children = ObservableBuffer.empty
-    println("non ho conigli")
+    val pedigreeChart = GenealogicalTreeView(selectedBunny.get, ScalaFxViewConstants.PREFERRED_CHART_WIDTH).treePane
+    AnchorPane.setAnchors(pedigreeChart, 0,0,0,0)
+    chartsPane.children = pedigreeChart
   }
+  else chartsPane.children = ObservableBuffer.empty
 
   override def showPopulationChart(): Unit = chartsPane.children =  PopulationChart.chart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH)
 
