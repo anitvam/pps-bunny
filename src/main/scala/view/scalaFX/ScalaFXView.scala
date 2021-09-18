@@ -34,6 +34,7 @@ object ScalaFXView extends View {
     }
     stage.setResizable(false)
     baseAppController.get.initialize()
+    showEnd()
   }
 
   def updateView(generationPhase:GenerationPhase, bunnies:Population): Unit =
@@ -45,14 +46,19 @@ object ScalaFXView extends View {
   override def showEnd(): Unit = {
 
     val anchorPane = new AnchorPane {
-      children = new ImageView(new Image("/world.png"))
+      children = new ImageView {
+        image = new Image("img/world.png")
+        fitWidth = 500
+        preserveRatio = true
+      }
     }
     val endStage = new Stage {
       title = "Fine simulazione"
       scene = new Scene(anchorPane)
+      resizable = false
     }
 
-    endStage.showAndWait()
+    endStage.show()
 
   }
 
