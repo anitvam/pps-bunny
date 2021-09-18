@@ -4,7 +4,6 @@ import engine.SimulationConstants.{CHILDREN_FOR_EACH_COUPLE, MAX_BUNNY_AGE}
 import model.Bunny.generateBaseFirstBunny
 import model._
 import model.genome._
-import model.mutation.Mutation
 import model.world.Environment.Mutations
 import model.world.Generation.Population
 
@@ -20,7 +19,7 @@ object Reproduction {
    */
   def combineCouples(bunnies: Population): Couples = {
     val split = Random.shuffle(bunnies).splitAt(bunnies.size / 2)
-    split._1.zip(split._2)
+    split._1 zip split._2
   }
 
   /**
