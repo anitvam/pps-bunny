@@ -12,17 +12,17 @@ sealed trait MutationsPanelControllerInterface {
 }
 
 @sfxml
-class MutationsPanelController( val jumpRecessiveChoiceButton: Button,
-                                val jumpDominantChoiceButton: Button,
-                                val teethRecessiveChoiceButton: Button,
-                                val teethDominantChoiceButton: Button,
-                                val earsRecessiveChoiceButton: Button,
-                                val earsDominantChoiceButton: Button,
-                                val furLengthRecessiveChoiceButton: Button,
-                                val furLengthDominantChoiceButton: Button,
-                                val furColorRecessiveChoiceButton: Button,
-                                val furColorDominantChoiceButton: Button,
-                                val mutationIncomingLabel: Label) extends MutationsPanelControllerInterface {
+class MutationsPanelController( private val jumpRecessiveChoiceButton: Button,
+                                private val jumpDominantChoiceButton: Button,
+                                private val teethRecessiveChoiceButton: Button,
+                                private val teethDominantChoiceButton: Button,
+                                private val earsRecessiveChoiceButton: Button,
+                                private val earsDominantChoiceButton: Button,
+                                private val furLengthRecessiveChoiceButton: Button,
+                                private val furLengthDominantChoiceButton: Button,
+                                private val furColorRecessiveChoiceButton: Button,
+                                private val furColorDominantChoiceButton: Button,
+                                private val mutationIncomingLabel: Label) extends MutationsPanelControllerInterface {
 
   def furColorDominantChoiceClick(): Unit = manageChoiceClick(FUR_COLOR, isDominant = true, "Bianco", buttonClicked = furColorDominantChoiceButton, otherButton = furColorRecessiveChoiceButton)
 

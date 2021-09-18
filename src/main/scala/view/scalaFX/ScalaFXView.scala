@@ -3,6 +3,7 @@ package view.scalaFX
 import controller.ScalaFXLauncher.stage
 import javafx.stage.Screen
 import javafx.{scene => jfxs}
+import model.Bunny
 import model.world.Generation.Population
 import scalafx.Includes._
 import scalafx.application.JFXApp3.PrimaryStage
@@ -54,6 +55,8 @@ object ScalaFXView extends View {
     endStage.showAndWait()
 
   }
+
+  override def handleBunnyClick(bunny: Bunny): Unit = baseAppController.get.handleBunnyClick(bunny)
 }
 
 object ScalaFxViewConstants {

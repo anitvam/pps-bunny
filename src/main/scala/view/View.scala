@@ -2,6 +2,7 @@ package view
 
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
+import model.Bunny
 
 /** Methods required to be implemented inside each implementation of the View */
 trait View {
@@ -15,4 +16,8 @@ trait View {
 
   /** Method that shows the end of the simulation to the user */
   def showEnd(): Unit
+
+  /** Method that handle the click of a bunny
+   * @param bunny the bunny clicked*/
+  def handleBunnyClick(bunny: Bunny): Unit
 }

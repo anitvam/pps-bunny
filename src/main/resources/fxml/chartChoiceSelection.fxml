@@ -42,7 +42,7 @@
                   <Insets bottom="10.0" left="15.0" right="5.0" top="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" onAction="#showPedigreeChart" text="Albero Genealogico" textOverrun="CENTER_ELLIPSIS" toggleGroup="$chartChoice" wrapText="true">
+            <RadioButton mnemonicParsing="false" fx:id="pedigreeRadioButton" onAction="#showPedigreeChart" text="Albero Genealogico" textOverrun="CENTER_ELLIPSIS" toggleGroup="$chartChoice" wrapText="true">
                <font>
                   <Font size="17.0" />
                </font>
