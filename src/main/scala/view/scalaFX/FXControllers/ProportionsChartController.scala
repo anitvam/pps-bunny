@@ -46,7 +46,7 @@ class ProportionsChartController(val startPiePane:AnchorPane,
 
   override def updateChart(generationPhase: GenerationPhase, population: Population): Unit = {
     if(generationPhase.phase == START_PHASE) fillPieCharts(population, getSelectedGeneKind)
-    else currentPie += (getSelectedGeneKind, population)
+    else currentPie += (getSelectedGeneKind, population.filter(_.alive))
   }
 
 
@@ -57,12 +57,12 @@ class ProportionsChartController(val startPiePane:AnchorPane,
 
   private def resetAndFillPieCharts(population: Population, gkSelected:GeneKind): Unit = {
     startPie /+= (gkSelected, population)
-    currentPie /+= (gkSelected, population)
+    currentPie /+= (gkSelected, population.filter(_.alive))
   }
 
   private def fillPieCharts(population: Population, gkSelected:GeneKind): Unit = {
     startPie += (gkSelected, population)
-    currentPie += (gkSelected, population)
+    currentPie += (gkSelected, population.filter(_.alive))
   }
 
 }

@@ -80,10 +80,14 @@ object PimpScalaFXChartLibrary {
 
         })
       } else {
-      chart.getData ++= ObservableBuffer.from(data.map({ case (x, y) =>
-        PieChart.Data(x, y)
-      }))
+        chart.getData ++= ObservableBuffer.from(data.map({ case (x, y) =>
+          PieChart.Data(x, y)
+        }))
       }
+
+//      chart.getData.foreach(d => {
+//        d.getNode.styleClass += d.getName.replace(" ", "_")
+//      })
 
       chart.lookupAll(".chart-pie-label").map(_.asInstanceOf[Text]).foreach(l => {
         val percentage = chart.getData.find(d => l.getText.contains(d.getName)).get
