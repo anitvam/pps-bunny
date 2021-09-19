@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" stylesheets="/fxml/stylesheets/style.css" fx:controller="view.scalaFX.FXControllers.ProportionsChartController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="/fxml/stylesheets/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scalaFX.FXControllers.ProportionsChartController">
    <children>
       <GridPane alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -29,7 +29,7 @@
             </HBox>
             <VBox prefHeight="400.0" prefWidth="127.0" GridPane.columnIndex="1">
                <children>
-                  <RadioButton mnemonicParsing="false" text="Colore Pelo" onAction="#onRadioButtonClick" selected="true">
+                  <RadioButton mnemonicParsing="false" onAction="#onRadioButtonClick" selected="true" text="Colore Pelo">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -40,22 +40,22 @@
                         <ToggleGroup fx:id="pieChart" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Lunghezza Pelo" toggleGroup="$pieChart" onAction="#onRadioButtonClick">
+                  <RadioButton mnemonicParsing="false" onAction="#onRadioButtonClick" text="Lunghezza Pelo" toggleGroup="$pieChart">
                      <padding>
                         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                      </padding>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Orecchie" toggleGroup="$pieChart" onAction="#onRadioButtonClick">
+                  <RadioButton mnemonicParsing="false" onAction="#onRadioButtonClick" text="Orecchie" toggleGroup="$pieChart">
                      <padding>
                         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                      </padding>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Denti" toggleGroup="$pieChart" onAction="#onRadioButtonClick">
+                  <RadioButton mnemonicParsing="false" onAction="#onRadioButtonClick" text="Denti" toggleGroup="$pieChart">
                      <padding>
                         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                      </padding>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Salto" toggleGroup="$pieChart" onAction="#onRadioButtonClick">
+                  <RadioButton mnemonicParsing="false" onAction="#onRadioButtonClick" text="Salto" toggleGroup="$pieChart">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
                      </padding>

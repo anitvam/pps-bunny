@@ -3,7 +3,7 @@ package view.scalaFX.FXControllers
 import controller.Controller
 import model.world.Generation.Population
 import scalafx.scene.chart.PieChart
-import scalafx.scene.control.{Label, RadioButton, ToggleGroup}
+import scalafx.scene.control.{Button, Label, RadioButton, ToggleGroup, Tooltip}
 import javafx.scene.{control => jfxc}
 import model.Bunny
 import model.genome.{Gene, Genes}
@@ -15,8 +15,6 @@ import view.scalaFX.utilities.PimpScalaFXChartLibrary._
 import PieChartConverters._
 import engine.SimulationConstants.START_PHASE
 import model.world.GenerationsUtils.GenerationPhase
-import scalafx.Includes.jfxNode2sfx
-import scalafx.scene.paint.Color
 
 import scala.language.implicitConversions
 
@@ -26,9 +24,9 @@ trait ChartController {
 }
 
 @sfxml
-class ProportionsChartController(val startPiePane:AnchorPane,
+class ProportionsChartController( val startPiePane:AnchorPane,
                                  val currentPiePane:AnchorPane,
-                                 val pieChart: ToggleGroup) extends ChartController{
+                                 val pieChart: ToggleGroup ) extends ChartController{
 
   var startPie: PieChart = createEmptyPieChart("Inizio Generazione")
   var currentPie: PieChart = createEmptyPieChart("Attualmente")
@@ -38,8 +36,8 @@ class ProportionsChartController(val startPiePane:AnchorPane,
     AnchorPane.setAnchors(startPie, 0, 0, 0,0)
     AnchorPane.setAnchors(currentPie, 0, 0, 0,0)
 
-    startPiePane.children = startPie
-    currentPiePane.children = currentPie
+    startPiePane.children += startPie
+    currentPiePane.children += currentPie
     fillPieCharts(Controller.population, getSelectedGeneKind)
 
   }
@@ -49,22 +47,15 @@ class ProportionsChartController(val startPiePane:AnchorPane,
     else currentPie += (getSelectedGeneKind, population.filter(_.alive))
   }
 
-
   def onRadioButtonClick():Unit =
-    resetAndFillPieCharts(Controller.population, getSelectedGeneKind)
+    fillPieCharts(Controller.population, getSelectedGeneKind)
 
   private def getSelectedGeneKind: GeneKind = pieChart.selectedToggle.value.asInstanceOf[jfxc.RadioButton].getText
-
-  private def resetAndFillPieCharts(population: Population, gkSelected:GeneKind): Unit = {
-    startPie /+= (gkSelected, population)
-    currentPie /+= (gkSelected, population.filter(_.alive))
-  }
 
   private def fillPieCharts(population: Population, gkSelected:GeneKind): Unit = {
     startPie += (gkSelected, population)
     currentPie += (gkSelected, population.filter(_.alive))
   }
-
 }
 
 object PieChartConverters {
@@ -75,7 +66,8 @@ object PieChartConverters {
     case "Denti" => Genes.TEETH
     case "Salto" => Genes.JUMP
   }
-  implicit def proportion(d:(Int, Int)):Double = d._1*100/d._2
+  implicit def percentage(d:(Int, Int)):Double = (d._1.toDouble*100/d._2.toDouble).round
+
 
   private def getBaseAndMutatedBunnies(population: Population, geneKind: GeneKind): (Seq[Bunny], Seq[Bunny]) =
     population.partition(_.genotype.phenotype.visibleTraits(geneKind) == geneKind.base)
@@ -91,10 +83,10 @@ object PieChartFactory {
   def createEmptyPieChart(chartTitle: String): PieChart =
     new PieChart {
       title = chartTitle
-      clockwise = true
+      clockwise = false
       startAngle = 90
       animated = false
-      labelsVisible = true
+      labelsVisible = false
       legendVisible = true
     }
 }

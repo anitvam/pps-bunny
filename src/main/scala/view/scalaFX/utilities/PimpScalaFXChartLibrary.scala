@@ -2,9 +2,9 @@ package view.scalaFX.utilities
 
 import scalafx.Includes._
 import com.sun.javafx.charts.Legend
+
 import javafx.scene.control.Label
 import scalafx.collections.ObservableBuffer
-import javafx.scene.text.Text
 import scalafx.scene.chart.{LineChart, PieChart, XYChart}
 import view.scalaFX.utilities.PimpScala._
 
@@ -31,7 +31,7 @@ object PimpScalaFXChartLibrary {
 
   /**A richer version of [[XYChart]]*/
   implicit class RichLineChart[A,B](chart:LineChart[A,B]){
-    /**A getter for easier access to the graph legend*/
+    /**A getter for easier access to the chart legend*/
     def legend :Legend = chart.getChildrenUnmodifiable
       .find(_.isInstanceOf[Legend])
       .map(l => l.asInstanceOf[Legend]).get
@@ -73,32 +73,26 @@ object PimpScalaFXChartLibrary {
   }
 
   implicit class RichPieChart(chart:PieChart){
+    /**A getter for easier access to the chart legend*/
+    def legend :Legend = chart.getChildrenUnmodifiable
+      .find(_.isInstanceOf[Legend])
+      .map(l => l.asInstanceOf[Legend]).get
+
     def += (data:Seq[(String, Double)]): Unit = {
-      if(!chart.getData.isEmpty){
-        chart.getData.foreach(d =>{
-          data.find(_._1 == d.getName).map(_._2) --> {i => d.pieValue = i}
-
-        })
-      } else {
-        chart.getData ++= ObservableBuffer.from(data.map({ case (x, y) =>
-          PieChart.Data(x, y)
-        }))
-      }
-
-//      chart.getData.foreach(d => {
-//        d.getNode.styleClass += d.getName.replace(" ", "_")
-//      })
-
-      chart.lookupAll(".chart-pie-label").map(_.asInstanceOf[Text]).foreach(l => {
-        val percentage = chart.getData.find(d => l.getText.contains(d.getName)).get
-        l.text =  percentage.getName + " " + percentage.getPieValue + "%"
-      })
-    }
-
-    def /+=(data:Seq[(String, Double)]): Unit = {
       chart.getData.clear()
-      chart += data
+      chart.getData ++= ObservableBuffer.from(data.map({ case (x, y) =>
+        PieChart.Data(x, y)
+      }))
+      chart.getData.foreach{ d => d.getNode.styleClass += d.getName.replace(" ", "_")+"pie" }
+      chart.legend.getItems foreach { i =>
+        chart.getData.find(d => i.getText.contains(d.getName)) -->
+          { d =>{
+            i.getSymbol.styleClass += d.getName.replace(" ", "_")+"pie"
+            i.setText(i.getText + " " + d.getPieValue + "%")
+          } }
+      }
     }
+
   }
 
 }
