@@ -79,15 +79,16 @@ object PimpScalaFXChartLibrary {
       .map(l => l.asInstanceOf[Legend]).get
 
     def += (data:Seq[(String, Double)]): Unit = {
+      val cssClass: PieChart.Data => String = _.getName.replace(" ", "_")+"_Pie"
       chart.getData.clear()
       chart.getData ++= ObservableBuffer.from(data.map({ case (x, y) =>
         PieChart.Data(x, y)
       }))
-      chart.getData.foreach{ d => d.getNode.styleClass += d.getName.replace(" ", "_")+"pie" }
+      chart.getData.foreach{ d => d.getNode.styleClass += cssClass(d) }
       chart.legend.getItems foreach { i =>
         chart.getData.find(d => i.getText.contains(d.getName)) -->
           { d =>{
-            i.getSymbol.styleClass += d.getName.replace(" ", "_")+"pie"
+            i.getSymbol.styleClass += cssClass(d)
             i.setText(i.getText + " " + d.getPieValue + "%")
           } }
       }
