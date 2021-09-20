@@ -135,6 +135,8 @@ object LineChartComponentFactory{
         point.getNode.visible = if(v) series.enabled else false
       })
       point
+    case _ => XYChart.Data[Number, Number](0, 0)
+
   }
 
   /**Create a [[LineChart]]

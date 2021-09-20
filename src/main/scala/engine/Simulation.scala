@@ -4,8 +4,6 @@ import cats.effect.IO
 import engine.SimulationHistory._
 import model.world.GenerationsUtils.GenerationPhase
 import view.scalaFX.ScalaFXView
-
-import java.lang.ModuleLayer.Controller
 import scala.language.implicitConversions
 
 object Simulation {

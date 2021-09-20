@@ -106,7 +106,7 @@ object BunnyView {
       )
     }
 
-    override def play(): Unit = timeline play
+    override def play(): Unit = timeline.play()
 
     /** Method that checks the actual direction of the bunny and update the orientation of its image */
     private def checkDirection(): Unit = {

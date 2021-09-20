@@ -67,7 +67,7 @@ object PieChartConverters {
     case "Denti" => Genes.TEETH
     case "Salto" => Genes.JUMP
   }
-  implicit def percentage(d:(Int, Int)):Double = (d._1.toDouble*100/d._2.toDouble).round
+  implicit def percentage(d:(Int, Int)):Double = (d._1.toDouble*100/d._2.toDouble).round.toDouble
 
 
   private def getBaseAndMutatedBunnies(population: Population, geneKind: GeneKind): (Seq[Bunny], Seq[Bunny]) =
