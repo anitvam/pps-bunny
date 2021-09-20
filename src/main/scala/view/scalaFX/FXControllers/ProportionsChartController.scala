@@ -38,6 +38,7 @@ class ProportionsChartController( val startPiePane:AnchorPane,
 
     startPiePane.children += startPie
     currentPiePane.children += currentPie
+
     fillPieCharts(Controller.population, getSelectedGeneKind)
 
   }

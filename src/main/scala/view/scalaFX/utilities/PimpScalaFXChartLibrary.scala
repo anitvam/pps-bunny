@@ -21,7 +21,10 @@ object PimpScalaFXChartLibrary {
 
     /**Adds a style to the Style list of the series
      * @param style the name of style*/
-    def addStyle(style:String): Unit = series.getNode.styleClass += style
+    def addStyle(style:String): Unit = {
+      series.getNode.styleClass += style
+      series.getData.foreach(_.getNode.styleClass ++= Seq("chart-line-mySymbol", style))
+    }
 
     /**Adds a new [[XYChart.Data]] to the series
      * @param data the new point*/

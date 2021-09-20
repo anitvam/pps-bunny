@@ -59,6 +59,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
   private var selectedBunny: Option[Bunny] = None
   private var mutationsPanelController: Option[MutationsPanelControllerInterface] = Option.empty
   private var proportionsChartController: Option[ChartController] = Option.empty
+  private var proportionsChartPane: Option[AnchorPane] = Option.empty
 
 
   override def initialize(): Unit = {
@@ -70,7 +71,6 @@ class BaseAppController(private val simulationPane: AnchorPane,
     mutationChoicePane.children += loadedMutationChoicePanel._1
     mutationsPanelController = Some(loadedMutationChoicePanel._2.getController[MutationsPanelControllerInterface])
 
-    showPopulationChart()
 
     val loadedChartChoice = loadFXMLResource[jfxs.AnchorPane]("/fxml/chartChoiceSelection.fxml")
     chartChoicePane.children += loadedChartChoice._1
@@ -84,13 +84,13 @@ class BaseAppController(private val simulationPane: AnchorPane,
 
     val loader2 = new FXMLLoader(proportionsChartView, NoDependencyResolver)
     loader2.load()
-    val proportionsChartPane = loader2.getRoot[jfxs.AnchorPane]
+    proportionsChartPane = Some(loader2.getRoot[jfxs.AnchorPane])
     proportionsChartController = Some(loader2.getController[ChartController])
 
-    AnchorPane.setAnchors(proportionsChartPane, 0, 0, 0, 0)
-
-    chartsPane.children = proportionsChartPane
+    AnchorPane.setAnchors(proportionsChartPane.get, 0, 0, 0, 0)
     proportionsChartController --> {_.initialize()}
+
+    showPopulationChart()
 
 //    chartsPane.children =  PopulationChart.chart(325, 500)
   }
@@ -114,7 +114,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
   }
 
   def showGenealogicalTree(bunny: Bunny): Unit = {
-//    chartsPane.children = GenealogicalTreeView(bunny).treePane
+    chartsPane.children = PedigreeChart(bunny).chartPane
   }
 
 
@@ -153,7 +153,9 @@ class BaseAppController(private val simulationPane: AnchorPane,
   override def showPopulationChart(): Unit = chartsPane.children =
     PopulationChart.chart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH)
 
-  override def showProportionsChart(): Unit = chartsPane.children = ObservableBuffer.empty
+  override def showProportionsChart(): Unit = {
+    chartsPane.children = proportionsChartPane.get
+  }
 
   override def handleBunnyClick(bunny: Bunny): Unit = {
     selectedBunny = Some(bunny)
