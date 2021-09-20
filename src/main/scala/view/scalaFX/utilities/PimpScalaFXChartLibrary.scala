@@ -2,7 +2,6 @@ package view.scalaFX.utilities
 
 import scalafx.Includes._
 import com.sun.javafx.charts.Legend
-
 import javafx.scene.control.Label
 import scalafx.collections.ObservableBuffer
 import scalafx.scene.chart.{LineChart, PieChart, XYChart}
