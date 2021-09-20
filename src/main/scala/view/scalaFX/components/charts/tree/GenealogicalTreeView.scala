@@ -7,7 +7,7 @@ import scalafx.geometry.Pos
 import scalafx.scene.image.ImageView
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
-import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{TREE_BUNNY_SIZE, TREE_PLUS_PROPORTION, TREE_REGION_PROPORTION}
+import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{TREE_BUNNY_SIZE, TREE_PLUS_PROPORTION}
 
 trait GenealogicalTreeView{
   /** Reference to the model bunny entity */
@@ -23,8 +23,8 @@ trait GenealogicalTreeView{
 object GenealogicalTreeView {
   /** The size required for the bunny icons*/
   var bunnyIconSize: Int = TREE_BUNNY_SIZE
-  val BUNNY_GENERATIONS_POW = 0.5
-  val PANEL_BUNNY_PROPORTION = 11.5
+  val BUNNY_GENERATIONS_POW: Double = 0.5
+  val PANEL_BUNNY_PROPORTION: Double = 11.5
 
   def apply (bunny:Bunny): GenealogicalTreeView = {
     this (bunny, TREE_BUNNY_SIZE)
@@ -47,15 +47,12 @@ object GenealogicalTreeView {
     }
 
     override val treePane = new VBox {
-      children = spacingRegion +: rows.reverse :+ spacingRegion
+        children = spacingRegion +: rows.reverse :+ spacingRegion
+        alignment = Pos.Center
     }
   }
 
-  def spacingRegion: Region = new Region {
-      minWidth = bunnyIconSize/TREE_REGION_PROPORTION
-      minHeight = bunnyIconSize/TREE_REGION_PROPORTION
-      hgrow = Priority.Always
-  }
+  def spacingRegion: Region = new Region {hgrow = Priority.Always}
 
   /** Creates an empty ImageView with the same size of the bunny, for the bunnies with no ancient relatives */
   def emptyImageView: ImageView = new ImageView {
