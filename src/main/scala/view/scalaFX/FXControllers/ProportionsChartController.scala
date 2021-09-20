@@ -24,12 +24,12 @@ trait ChartController {
 }
 
 @sfxml
-class ProportionsChartController( val startPiePane:AnchorPane,
+class ProportionsChartController(val startPiePane:AnchorPane,
                                  val currentPiePane:AnchorPane,
                                  val pieChart: ToggleGroup ) extends ChartController{
 
-  var startPie: PieChart = createEmptyPieChart("Inizio Generazione")
-  var currentPie: PieChart = createEmptyPieChart("Attualmente")
+  private var startPie: PieChart = createEmptyPieChart("Inizio Generazione")
+  private var currentPie: PieChart = createEmptyPieChart("Attualmente")
 
   override def initialize():Unit = {
 
