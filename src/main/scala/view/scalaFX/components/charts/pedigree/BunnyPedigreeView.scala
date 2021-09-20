@@ -4,7 +4,7 @@ import model.Bunny
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
-import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{TREE_FONT_PROPORTION, TREE_INFO_PROPORTION}
+import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{FONT_INFO_PERCENT, TREE_INFO_PROPORTION}
 import view.scalaFX.components.charts.pedigree.PedigreeChart.{bunnyIconSize, spacingRegion}
 import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
 import view.scalaFX.utilities.Direction.Right
@@ -43,7 +43,7 @@ object BunnyPedigreeView {
         .reduce(_+_)
       style = "-fx-font-family: \"Helvetica\"; " +
         "-fx-font-weight: bold; " +
-        "-fx-font-size: "+ bunnyIconSize/TREE_FONT_PROPORTION+"pt"},
+        "-fx-font-size: "+ bunnyIconSize/TREE_INFO_PROPORTION * FONT_INFO_PERCENT +"px"},
     spacingRegion)
 
   private def infoImageView(path: String): ImageView = new ImageView {

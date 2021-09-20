@@ -9,7 +9,6 @@ import model.{Bunny, ChildBunny}
 import scalafx.application.JFXApp3
 import scalafx.application.JFXApp3.PrimaryStage
 import scalafx.scene.Scene
-import view.scalaFX.ScalaFxViewConstants.PREFERRED_CHART_WIDTH
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 
 import scala.util.Random
