@@ -10,7 +10,7 @@ import scalafx.application.JFXApp3
 import scalafx.application.JFXApp3.PrimaryStage
 import scalafx.scene.Scene
 import view.scalaFX.ScalaFxViewConstants.PREFERRED_CHART_WIDTH
-import view.scalaFX.components.charts.tree.GenealogicalTreeView
+import view.scalaFX.components.charts.pedigree.PedigreeChart
 
 import scala.util.Random
 
@@ -27,7 +27,7 @@ object TestTreeVisualization extends JFXApp3 {
   bunny.alive = false
 
    override def start(): Unit = {
-     val root = GenealogicalTreeView(bunny).treePane
+     val root = PedigreeChart(bunny).chartPane
      stage = new PrimaryStage() {
       title = "Bunnies"
       scene = new Scene(root)

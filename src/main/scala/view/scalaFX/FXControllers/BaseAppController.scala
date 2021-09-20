@@ -11,7 +11,7 @@ import scalafxml.core.macros.sfxml
 import view.scalaFX.ScalaFxViewConstants
 import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
-import view.scalaFX.components.charts.tree.GenealogicalTreeView
+import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.utilities.EnvironmentImageUtils._
 import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
 import view.scalaFX.utilities.PimpScala.RichOption
@@ -105,7 +105,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
   }
 
   override def showPedigreeChart(): Unit = if (selectedBunny.isDefined) {
-    val pedigreeChart = GenealogicalTreeView(selectedBunny.get, ScalaFxViewConstants.PREFERRED_CHART_WIDTH).treePane
+    val pedigreeChart = PedigreeChart(selectedBunny.get, ScalaFxViewConstants.PREFERRED_CHART_WIDTH).chartPane
     setFitParent(pedigreeChart)
     chartsPane.children = pedigreeChart
   } else chartsPane.children = ObservableBuffer.empty
