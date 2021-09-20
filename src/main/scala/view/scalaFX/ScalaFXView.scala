@@ -3,49 +3,63 @@ package view.scalaFX
 import controller.ScalaFXLauncher.stage
 import javafx.stage.Screen
 import javafx.{scene => jfxs}
+import model.Bunny
 import model.world.Generation.Population
 import scalafx.Includes._
 import scalafx.application.JFXApp3.PrimaryStage
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.application.Platform
 import scalafx.scene.Scene
-import scalafxml.core.{FXMLLoader, NoDependencyResolver}
+import scalafx.scene.image.{Image, ImageView}
+import scalafx.scene.layout.AnchorPane
+import scalafx.stage.Stage
 import view._
 import view.scalaFX.FXControllers.BaseAppControllerInterface
 import view.scalaFX.ScalaFxViewConstants.{SCENE_HEIGHT, SCENE_WIDTH}
 import view.scalaFX.components.charts.PopulationChart
-
-import java.io.IOException
+import view.scalaFX.utilities.FxmlUtils
+import view.scalaFX.utilities.PimpScala.RichOption
 
 object ScalaFXView extends View {
   var baseAppController: Option[BaseAppControllerInterface] = Option.empty
 
   def start(): Unit = {
-    val baseAppView = getClass.getResource("/fxml/baseApp.fxml")
-    if (baseAppView == null) {
-      throw new IOException("Cannot load resource: baseApp.fxml")
-    }
+    val loadedRootPanel = FxmlUtils.loadFXMLResource[jfxs.Parent]("/fxml/baseApp.fxml")
+    baseAppController = Some(loadedRootPanel._2.getController[BaseAppControllerInterface])
+    baseAppController --> { _.initialize() }
 
-    val loader = new FXMLLoader(baseAppView, NoDependencyResolver)
-    loader.load()
-    val root = loader.getRoot[jfxs.Parent]
-    baseAppController = Some(loader.getController[BaseAppControllerInterface])
-
-    stage = new PrimaryStage() {
+    stage = new PrimaryStage {
       title = "Bunnies"
-      scene = new Scene(root)
+      scene = new Scene(loadedRootPanel._1)
       width = SCENE_WIDTH
       height = SCENE_HEIGHT
+      resizable = false
     }
-    stage.setResizable(false)
-    baseAppController.get.initialize()
   }
 
   def updateView(generationPhase:GenerationPhase, bunnies:Population): Unit =
     Platform.runLater{
-      baseAppController.get.showBunnies(bunnies, generationPhase.generationNumber)
+      baseAppController --> { _.showBunnies(bunnies, generationPhase.generationNumber) }
       PopulationChart.updateChart(generationPhase, bunnies)
     }
+
+  override def showEnd(): Unit = {
+
+    val endStage = new Stage {
+      title = "Fine simulazione"
+      scene = new Scene (new AnchorPane {
+          children = new ImageView {
+            image = new Image ("img/world.png")
+            fitHeight = ScalaFxViewConstants.PREFERRED_CHART_HEIGHT
+            preserveRatio = true
+          }
+        })
+      resizable = false
+    }
+    endStage.show()
+  }
+
+  override def handleBunnyClick(bunny: Bunny): Unit = baseAppController --> { _.handleBunnyClick(bunny) }
 }
 
 object ScalaFxViewConstants {
@@ -80,24 +94,25 @@ object ScalaFxViewConstants {
   val SCENE_HEIGHT: Double = if (SCREEN_BOUNDS.getHeight > DEFAULT_SCENE_HEIGHT) DEFAULT_SCENE_HEIGHT else SCREEN_BOUNDS.getHeight - HEIGHT_SCREEN_BOUND
 
   /** Bunny panel inside application window width */
-  var PREFERRED_BUNNY_PANEL_WIDTH: Int = (SCENE_WIDTH * BUNNY_PANEL_PERCENTUAL_WIDTH).toInt
+  val PREFERRED_BUNNY_PANEL_WIDTH: Int = (SCENE_WIDTH * BUNNY_PANEL_PERCENTUAL_WIDTH).toInt
 
   /** Bunny panel inside application window height */
-  var PREFERRED_BUNNY_PANEL_HEIGHT: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_HEIGTH).toInt
+  val PREFERRED_BUNNY_PANEL_HEIGHT: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_HEIGTH).toInt
 
   /** Bunny panel bound for the sky zone */
-  var PANEL_SKY_ZONE: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_SKY_ZONE).toInt
+  val PANEL_SKY_ZONE: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_SKY_ZONE).toInt
+
+  val PREFERRED_CHART_WIDTH: Int = (SCENE_WIDTH * 0.55).toInt
+
+  val PREFERRED_CHART_HEIGHT: Int = (SCENE_HEIGHT * 0.45).toInt
 
   /** Constants for the tree visualizaiton */
   object GenealogicalTree{
     /** Size of the bunny picture in the tree */
-    val TREE_BUNNY_SIZE: Int = 65
+    val TREE_BUNNY_SIZE: Int = 100
 
     /** Proportion constants to resize the view of the info size in the tree depending on the bunny size*/
-    val TREE_INFO_PROPORTION: Int = 5
-
-    /** Proportion constants to resize the region size in the tree depending on the bunny size*/
-    val TREE_REGION_PROPORTION: Int = 20
+    val TREE_INFO_PROPORTION: Int = 4
 
     /** Proportion constants to resize the font size in the tree depending on the bunny size*/
     val TREE_FONT_PROPORTION: Int = 8

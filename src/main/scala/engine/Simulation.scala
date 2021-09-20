@@ -5,6 +5,7 @@ import engine.SimulationHistory._
 import model.world.GenerationsUtils.GenerationPhase
 import view.scalaFX.ScalaFXView
 
+import java.lang.ModuleLayer.Controller
 import scala.language.implicitConversions
 
 object Simulation {
@@ -25,8 +26,9 @@ object Simulation {
     ScalaFXView.updateView(generationPhase, getActualPopulation)
   }
 
-  def showEnd():IO[Unit] = {
-    println("END")
+  def showEnd(generationPhase:GenerationPhase):IO[Unit] = {
+    ScalaFXView.updateView(generationPhase, getActualPopulation)
+    controller.Controller.showEnd()
   }
 
   def startNewGeneration: IO[Unit] = {

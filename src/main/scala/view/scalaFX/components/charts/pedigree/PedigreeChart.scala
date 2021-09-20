@@ -1,4 +1,4 @@
-package view.scalaFX.components.charts.tree
+package view.scalaFX.components.charts.pedigree
 
 import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
 import model.Tree.generateTree
@@ -7,9 +7,9 @@ import scalafx.geometry.Pos
 import scalafx.scene.image.ImageView
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
-import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{TREE_PLUS_PROPORTION, TREE_REGION_PROPORTION, TREE_BUNNY_SIZE}
+import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{TREE_BUNNY_SIZE, TREE_PLUS_PROPORTION}
 
-trait GenealogicalTreeView{
+trait PedigreeChart{
   /** Reference to the model bunny entity */
   val bunny: Bunny
 
@@ -17,21 +17,28 @@ trait GenealogicalTreeView{
   val tree: BinaryTree[Bunny]
 
   /** The pane with the view of the tree */
-  val treePane: Pane
+  val chartPane: Pane
 }
 
-object GenealogicalTreeView {
+object PedigreeChart {
   /** The size required for the bunny icons*/
   var bunnyIconSize: Int = TREE_BUNNY_SIZE
+  val BUNNY_GENERATIONS_POW: Double = 0.5
+  val PANEL_BUNNY_PROPORTION: Double = 11.5
 
-  def apply(bunny: Bunny): GenealogicalTreeView = TreeViewImpl(bunny, generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny))
-
-  def apply(bunny: Bunny, bunnySize: Int): GenealogicalTreeView = {
-    this.bunnyIconSize = bunnySize
-    this(bunny)
+  def apply (bunny:Bunny): PedigreeChart = {
+    this (bunny, TREE_BUNNY_SIZE)
   }
 
-  private case class TreeViewImpl(override val bunny: Bunny, override val tree: BinaryTree[Bunny]) extends GenealogicalTreeView{
+  def apply(bunny: Bunny, panelWidth: Int): PedigreeChart = {
+    val tree = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
+    val generationsCoefficient = Math.pow(MAX_GENEALOGICAL_TREE_GENERATIONS - tree.generations + 1, BUNNY_GENERATIONS_POW)
+    bunnyIconSize = (panelWidth * generationsCoefficient / PANEL_BUNNY_PROPORTION).toInt
+    PedigreeChartImpl(bunny, tree)
+  }
+
+  private case class PedigreeChartImpl(override val bunny: Bunny,
+                                  override val tree: BinaryTree[Bunny]) extends PedigreeChart{
     var rows: Seq[HBox] = Seq()
     var row: (HBox, Seq[Option[BinaryTree[Bunny]]]) = (new HBox(), Seq(Option(tree)))
     for (_ <- 1 to tree.generations){
@@ -39,16 +46,13 @@ object GenealogicalTreeView {
       rows = rows :+ row._1
     }
 
-    override val treePane = new VBox {
-      children = rows.reverse :+ spacingRegion
+    override val chartPane = new VBox {
+        children = spacingRegion +: rows.reverse :+ spacingRegion
+        alignment = Pos.Center
     }
   }
 
-  def spacingRegion: Region = new Region {
-      minWidth = bunnyIconSize/TREE_REGION_PROPORTION
-      minHeight = bunnyIconSize/TREE_REGION_PROPORTION
-      hgrow = Priority.Always
-  }
+  def spacingRegion: Region = new Region {hgrow = Priority.Always}
 
   /** Creates an empty ImageView with the same size of the bunny, for the bunnies with no ancient relatives */
   def emptyImageView: ImageView = new ImageView {
@@ -82,7 +86,7 @@ object GenealogicalTreeView {
     }
 
     trees.foreach(tree => {
-      if (tree.isDefined) row.children += BunnyTreeView(tree.get.elem).pane
+      if (tree.isDefined) row.children += BunnyPedigreeView(tree.get.elem).pane
       else row.children += emptyImageView
 
       index += 1

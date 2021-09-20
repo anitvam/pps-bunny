@@ -6,6 +6,8 @@ import engine.SimulationHistory.initialize
 import model.mutation.Mutation
 import model.world.{Climate, Environment, Summer, Winter}
 import model.world.Environment.Factors
+import scalafx.application.Platform
+import view.scalaFX.ScalaFXView
 
 object Controller {
 
@@ -27,4 +29,6 @@ object Controller {
    * @param mutation the Mutation */
   def insertMutation(mutation: Mutation): Unit = SimulationHistory introduceMutation mutation
 
+  /** Method that shows the end of the simulation on the Application GUI */
+  def showEnd(): Unit = Platform runLater { ScalaFXView.showEnd() }
 }

@@ -8,6 +8,7 @@ import scalafx.animation.{KeyFrame, Timeline}
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.input.MouseEvent
 import scalafx.util.Duration
+import view.scalaFX.ScalaFXView
 import view.scalaFX.ScalaFxViewConstants._
 import view.scalaFX.utilities.Direction._
 import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
@@ -76,6 +77,10 @@ object BunnyView {
         cycleCount = 1
         keyFrames = jump()
       }
+
+    imageView.onMouseClicked = _ => {
+      ScalaFXView.handleBunnyClick(bunny)
+    }
 
      private def jump(): AnimationFrames = {
       checkDirection()

@@ -146,7 +146,9 @@ object LineChartComponentFactory{
 
     val chart = new LineChart(xAxis, yAxis) {
       maxHeight = chartHeight
+      minHeight = chartHeight
       maxWidth = chartWidth
+      minWidth = chartWidth
       legendSide = Side.Right
     }
     chart ++= seriesData
