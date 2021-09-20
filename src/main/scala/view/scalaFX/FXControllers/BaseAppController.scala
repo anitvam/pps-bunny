@@ -59,6 +59,7 @@ class BaseAppController(
   private var chartSelectionPanelController: Option[ChartChoiceControllerInterface] = None
   private var selectedBunny: Option[BunnyView] = None
   private var mutationsPanelController: Option[MutationsPanelControllerInterface] = Option.empty
+  private var factorsPanelController: Option[FactorsPanelControllerInterface] = Option.empty
   private var proportionsChartController: Option[ChartController] = Option.empty
   private var proportionsChartPane: Option[AnchorPane] = Option.empty
 
@@ -70,6 +71,10 @@ class BaseAppController(
     val loadedMutationChoicePanel = loadFXMLResource[jfxs.AnchorPane]("/fxml/mutationsPanel.fxml")
     mutationChoicePane.children += loadedMutationChoicePanel._1
     mutationsPanelController = Some(loadedMutationChoicePanel._2.getController[MutationsPanelControllerInterface])
+
+    val loadedFactorsChoicePanel = loadFXMLResource[jfxs.AnchorPane]("/fxml/factorsPanel.fxml")
+    factorChoicePane.children += loadedFactorsChoicePanel._1
+    factorsPanelController = Some(loadedFactorsChoicePanel._2.getController[FactorsPanelControllerInterface])
 
     val loadedChartChoice = loadFXMLResource[jfxs.AnchorPane]("/fxml/chartChoiceSelection.fxml")
     chartChoicePane.children += loadedChartChoice._1
