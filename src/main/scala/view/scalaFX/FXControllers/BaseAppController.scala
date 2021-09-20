@@ -90,7 +90,6 @@ class BaseAppController(private val simulationPane: AnchorPane,
     AnchorPane.setAnchors(proportionsChartPane, 0, 0, 0, 0)
 
     chartsPane.children = proportionsChartPane
-
     proportionsChartController --> {_.initialize()}
 
 //    chartsPane.children =  PopulationChart.chart(325, 500)
