@@ -10,7 +10,7 @@ import scalafx.scene.chart.{LineChart, NumberAxis, XYChart}
 import model.world.GenerationsUtils.GenerationPhase
 import view.scalaFX.components.charts.LineChartComponentFactory.{createEmptySeries, createXYChartData}
 import view.scalaFX.components.charts.PopulationChartDataType._
-import view.scalaFX.utilities.PimpScala.RichOption
+import utilities.PimpScala.RichOption
 import view.scalaFX.utilities.PimpScalaFXChartLibrary._
 
 import scala.language.implicitConversions

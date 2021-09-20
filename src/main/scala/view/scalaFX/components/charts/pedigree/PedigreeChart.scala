@@ -7,6 +7,7 @@ import scalafx.geometry.Pos
 import scalafx.scene.image.ImageView
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
+import utilities.PimpScala._
 import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{TREE_BUNNY_SIZE, TREE_PLUS_PROPORTION}
 
 trait PedigreeChart{
@@ -86,17 +87,17 @@ object PedigreeChart {
     }
 
     trees.foreach(tree => {
-      if (tree.isDefined) row.children += BunnyPedigreeView(tree.get.elem).pane
+      if (tree?) row.children += BunnyPedigreeView(tree.get.elem).pane
       else row.children += emptyImageView
 
       index += 1
       if (index < trees.size) {
         row.children += spacingRegion
-        if (index % 2 == 1 && tree.isDefined) row.children += plusView else row.children += emptyPlusView
+        if (index % 2 == 1 && (tree?)) row.children += plusView else row.children += emptyPlusView
       }
       row.children += spacingRegion
 
-      if (tree.isDefined && tree.get.isInstanceOf[Node[Bunny]]) {
+      if ((tree?) && tree.get.isInstanceOf[Node[Bunny]]) {
         nextTrees ++= Seq(Option(tree.get.asInstanceOf[Node[Bunny]].momTree), Option(tree.get.asInstanceOf[Node[Bunny]].dadTree))
       } else {
         nextTrees ++= Seq(Option.empty, Option.empty)

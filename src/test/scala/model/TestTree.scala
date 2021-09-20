@@ -5,6 +5,7 @@ import model.Bunny.generateRandomFirstBunny
 import model.Tree.generateTree
 import model.world.Reproduction.nextGenerationBunnies
 import org.scalatest.{FlatSpec, Matchers}
+import utilities.PimpScala.RichOption
 
 class TestTree extends FlatSpec with Matchers {
 
@@ -16,7 +17,7 @@ class TestTree extends FlatSpec with Matchers {
     assert(tree.elem == bunny)
   }
 
-  val bunnyWithParents: Bunny = nextGenerationBunnies(List.fill(5)(generateRandomFirstBunny)).filter(_.mom.isDefined).head
+  val bunnyWithParents: Bunny = nextGenerationBunnies(List.fill(5)(generateRandomFirstBunny)).filter(_.mom?).head
   val tree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunnyWithParents)
   it should "contain his parents, if he has them" in {
     assert(tree.asInstanceOf[Node[Bunny]].momTree.elem == bunnyWithParents.mom.get)
@@ -26,7 +27,7 @@ class TestTree extends FlatSpec with Matchers {
 
   var bunny: Bunny = generateRandomFirstBunny
   for (_ <- 0 to MAX_GENEALOGICAL_TREE_GENERATIONS) {
-    bunny = nextGenerationBunnies(List.fill(5)(bunny)).filter(_.mom.isDefined).head
+    bunny = nextGenerationBunnies(List.fill(5)(bunny)).filter(_.mom?).head
   }
   val fullTree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
   "A full genealogical tree "should "contain all the required generations" in {

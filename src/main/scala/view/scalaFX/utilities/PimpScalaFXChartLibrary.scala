@@ -4,7 +4,7 @@ import scalafx.Includes._
 import com.sun.javafx.charts.Legend
 import javafx.scene.control.Label
 import scalafx.scene.chart.{LineChart, XYChart}
-import view.scalaFX.utilities.PimpScala._
+import utilities.PimpScala._
 import java.util.function.Consumer
 
 object PimpScalaFXChartLibrary {

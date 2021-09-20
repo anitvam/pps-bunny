@@ -4,6 +4,7 @@ import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
 import model.genome.KindsUtils.getGeneKind
 import model.{InconsistentAlleleException, InconsistentMutatedAlleleException}
+import utilities.PimpScala.RichOption
 
 /**
  * Represents an Allele of a Gene of a specific Bunny.
@@ -12,7 +13,7 @@ sealed trait Allele {
   val kind: AlleleKind
   val justMutated: Boolean
   def getLetter: String =
-    if (kind.isDominant.isDefined) {
+    if (kind.isDominant?) {
       if (kind.isDominant.get) getGeneKind(kind).letter.toUpperCase else getGeneKind(kind).letter.toLowerCase
     } else ""
   def isDominant: Boolean = kind.isDominant.getOrElse(false)
