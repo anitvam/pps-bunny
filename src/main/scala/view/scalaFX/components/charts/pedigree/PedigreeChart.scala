@@ -1,4 +1,4 @@
-package view.scalaFX.components.charts.tree
+package view.scalaFX.components.charts.pedigree
 
 import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
 import model.Tree.generateTree
@@ -7,9 +7,13 @@ import scalafx.geometry.Pos
 import scalafx.scene.image.ImageView
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
-import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{TREE_PLUS_PROPORTION, TREE_REGION_PROPORTION, TREE_BUNNY_SIZE}
+import util.PimpScala._
+import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{FONT_INFO_PERCENT, TREE_BUNNY_SIZE, TREE_INFO_PROPORTION, TREE_PLUS_PROPORTION}
+import view.scalaFX.ScalaFxViewConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
 
-trait GenealogicalTreeView{
+import scala.language.postfixOps
+
+trait PedigreeChart{
   /** Reference to the model bunny entity */
   val bunny: Bunny
 
@@ -17,21 +21,29 @@ trait GenealogicalTreeView{
   val tree: BinaryTree[Bunny]
 
   /** The pane with the view of the tree */
-  val treePane: Pane
+  val chartPane: Pane
 }
 
-object GenealogicalTreeView {
+object PedigreeChart {
   /** The size required for the bunny icons*/
   var bunnyIconSize: Int = TREE_BUNNY_SIZE
 
-  def apply(bunny: Bunny): GenealogicalTreeView = TreeViewImpl(bunny, generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny))
-
-  def apply(bunny: Bunny, bunnySize: Int): GenealogicalTreeView = {
-    this.bunnyIconSize = bunnySize
-    this(bunny)
+  def apply (bunny:Bunny): PedigreeChart = {
+    this (bunny, PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH)
   }
 
-  private case class TreeViewImpl(override val bunny: Bunny, override val tree: BinaryTree[Bunny]) extends GenealogicalTreeView{
+  def apply(bunny: Bunny, panelWidth: Int, panelHeight:Int): PedigreeChart = {
+    val tree: BinaryTree[Bunny]= generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
+    val maxBunnySizeForWidth: Int = ((panelWidth * TREE_PLUS_PROPORTION) /
+      (Math.pow(TREE_PLUS_PROPORTION + 1, tree.generations - 1) - 1)).toInt
+    val maxBunnySizeForHeight: Int = ((panelHeight * TREE_INFO_PROPORTION * FONT_INFO_PERCENT) /
+      ((TREE_INFO_PROPORTION * FONT_INFO_PERCENT + 1 + FONT_INFO_PERCENT) * tree.generations)).toInt
+    bunnyIconSize = Math.min(maxBunnySizeForHeight, maxBunnySizeForWidth)
+    PedigreeChartImpl(bunny, tree)
+  }
+
+  private case class PedigreeChartImpl(override val bunny: Bunny,
+                                  override val tree: BinaryTree[Bunny]) extends PedigreeChart{
     var rows: Seq[HBox] = Seq()
     var row: (HBox, Seq[Option[BinaryTree[Bunny]]]) = (new HBox(), Seq(Option(tree)))
     for (_ <- 1 to tree.generations){
@@ -39,15 +51,14 @@ object GenealogicalTreeView {
       rows = rows :+ row._1
     }
 
-    override val treePane = new VBox {
-      children = rows.reverse :+ spacingRegion
+    override val chartPane = new VBox {
+        children = spacingRegion +: rows.reverse :+ spacingRegion
+        alignment = Pos.Center
     }
   }
 
   def spacingRegion: Region = new Region {
-      minWidth = bunnyIconSize/TREE_REGION_PROPORTION
-      minHeight = bunnyIconSize/TREE_REGION_PROPORTION
-      hgrow = Priority.Always
+    hgrow = Priority.Always
   }
 
   /** Creates an empty ImageView with the same size of the bunny, for the bunnies with no ancient relatives */
@@ -57,7 +68,8 @@ object GenealogicalTreeView {
 
   def plusView: Text = new Text {
       text = "+"
-      style = "-fx-font-weight: bold; -fx-font-size: "+ bunnyIconSize/TREE_PLUS_PROPORTION + "pt"
+      style = "-fx-font-weight: bold; " +
+        "-fx-font-size: "+ bunnyIconSize/TREE_PLUS_PROPORTION +";"
       hgrow = Priority.Always
   }
 
@@ -82,17 +94,17 @@ object GenealogicalTreeView {
     }
 
     trees.foreach(tree => {
-      if (tree.isDefined) row.children += BunnyTreeView(tree.get.elem).pane
+      if (tree?) row.children += BunnyPedigreeView(tree.get.elem).pane
       else row.children += emptyImageView
 
       index += 1
       if (index < trees.size) {
         row.children += spacingRegion
-        if (index % 2 == 1 && tree.isDefined) row.children += plusView else row.children += emptyPlusView
+        if (index % 2 == 1 && (tree?)) row.children += plusView else row.children += emptyPlusView
       }
       row.children += spacingRegion
 
-      if (tree.isDefined && tree.get.isInstanceOf[Node[Bunny]]) {
+      if ((tree?) && tree.get.isInstanceOf[Node[Bunny]]) {
         nextTrees ++= Seq(Option(tree.get.asInstanceOf[Node[Bunny]].momTree), Option(tree.get.asInstanceOf[Node[Bunny]].dadTree))
       } else {
         nextTrees ++= Seq(Option.empty, Option.empty)

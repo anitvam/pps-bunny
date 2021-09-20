@@ -25,7 +25,7 @@ object SimulationEngine {
       _ <- waitFor(GENERATION_END)
       _ <- startNewGeneration
       _ <- if(getGenerationNumber < MAX_GENERATIONS_NUMBER &&
-        getBunniesNumber < MAX_ALIVE_BUNNIES) simulationLoop() else showEnd()
+        getBunniesNumber < MAX_ALIVE_BUNNIES) simulationLoop() else showEnd(StartPhase(getGenerationNumber))
     } yield()
   }
 }

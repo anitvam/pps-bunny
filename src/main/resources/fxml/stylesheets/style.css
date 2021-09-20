@@ -62,15 +62,15 @@
     -fx-padding: 2px;
 }
 
-
-.Pelo_Bianco, .Pelo_Marrone {
-    -fx-stroke: #ffe082;
-    -fx-background-color : #ffe082;
-}
-
 .Pelo_Marrone, .Pelo_Lungo, .Denti_Lunghi, .Salto_Alto, .Orecchie_Basse {
     -fx-stroke-dash-array: 0.5 5 5 0.5;
 }
+
+.Pelo_Bianco, .Pelo_Marrone {
+    -fx-stroke: #80cbc4;
+    -fx-background-color : #80cbc4;
+}
+
 
 .Pelo_Corto, .Pelo_Lungo {
     -fx-stroke: #ffab91;
@@ -78,16 +78,59 @@
 }
 
 .Denti_Corti, .Denti_Lunghi {
-    -fx-stroke: #4dd0e1;
-    -fx-background-color : #4dd0e1;
+    -fx-stroke: #90caf9;
+    -fx-background-color : #90caf9;
 }
 
 .Orecchie_Basse, .Orecchie_Alte {
-    -fx-stroke: #f06292;
-    -fx-background-color : #f06292;
+    -fx-stroke: #ce93d8;
+    -fx-background-color : #ce93d8;
 }
 
 .Salto_Alto, .Salto_Basso {
-    -fx-stroke: #aed581;
-    -fx-background-color : #aed581;
+    -fx-stroke: #c5e1a5;
+    -fx-background-color : #c5e1a5;
 }
+
+.Pelo_Bianco_Pie {
+    -fx-pie-color: #80cbc4;
+}
+
+.Pelo_Marrone_Pie {
+    -fx-pie-color: #4f9a94;
+}
+
+.Pelo_Corto_Pie {
+    -fx-pie-color: #ffab91;
+}
+
+.Pelo_Lungo_Pie {
+    -fx-pie-color: #c97b63;
+}
+
+.Orecchie_Alte_Pie {
+    -fx-pie-color: #ce93d8;
+}
+
+.Orecchie_Basse_Pie {
+    -fx-pie-color: #9c64a6;
+}
+
+.Salto_Alto_Pie {
+    -fx-pie-color : #94af76;
+}
+
+.Salto_Basso_Pie {
+    -fx-pie-color : #c5e1a5;
+}
+
+.Denti_Corti_Pie {
+    -fx-pie-color : #90caf9;
+}
+
+.Denti_Lunghi_Pie {
+    -fx-pie-color: #5d99c6;
+}
+
+
+

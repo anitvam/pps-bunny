@@ -10,7 +10,7 @@ import scalafx.scene.chart.{LineChart, NumberAxis, XYChart}
 import model.world.GenerationsUtils.GenerationPhase
 import view.scalaFX.components.charts.LineChartComponentFactory.{createEmptySeries, createXYChartData}
 import view.scalaFX.components.charts.PopulationChartDataType._
-import view.scalaFX.utilities.PimpScala.RichOption
+import util.PimpScala.RichOption
 import view.scalaFX.utilities.PimpScalaFXChartLibrary._
 
 import scala.language.implicitConversions
@@ -67,9 +67,8 @@ object PopulationChart {
   def updateChart(generationPhase:GenerationPhase, population:Population): Unit = {
     import ChartConverters._
     total + (generationPhase, population.size)
-    Alleles.values.foreach(ak => {
-      mutations + (ak, (generationPhase, population.count(_.genotype.phenotype.values.toSet.contains(ak))))
-    })
+    Alleles.values.foreach(ak =>
+      mutations + (ak, (generationPhase, population.count(_.genotype.phenotype.values.toSet.contains(ak)))))
     updateChartBound(generationPhase, population.size)
   }
 
@@ -120,7 +119,7 @@ object LineChartComponentFactory{
   def createSeries(name:String, s: SeriesData): XYSeries = {
     XYChart.Series(
       name = name,
-      ObservableBuffer.from(s.data.map({d => XYChart.Data[Number, Number](d.point.x,d.point.y)}))
+      ObservableBuffer.from(s.data.map({d => XYChart.Data[Number,Number](d.point.x, d.point.y)}))
     )
   }
 
@@ -136,6 +135,8 @@ object LineChartComponentFactory{
         point.getNode.visible = if(v) series.enabled else false
       })
       point
+    case _ => XYChart.Data[Number, Number](0, 0)
+
   }
 
   /**Create a [[LineChart]]
@@ -146,7 +147,9 @@ object LineChartComponentFactory{
 
     val chart = new LineChart(xAxis, yAxis) {
       maxHeight = chartHeight
+      minHeight = chartHeight
       maxWidth = chartWidth
+      minWidth = chartWidth
       legendSide = Side.Right
     }
     chart ++= seriesData

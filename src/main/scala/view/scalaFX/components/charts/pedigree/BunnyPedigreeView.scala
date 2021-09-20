@@ -1,18 +1,18 @@
-package view.scalaFX.components.charts.tree
+package view.scalaFX.components.charts.pedigree
 
 import model.Bunny
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
-import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{TREE_FONT_PROPORTION, TREE_INFO_PROPORTION}
-import view.scalaFX.components.charts.tree.GenealogicalTreeView.{bunnyIconSize, spacingRegion}
+import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{FONT_INFO_PERCENT, TREE_INFO_PROPORTION}
+import view.scalaFX.components.charts.pedigree.PedigreeChart.{bunnyIconSize, spacingRegion}
 import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
 import view.scalaFX.utilities.Direction.Right
 
 /**
  * Represents the view on the Bunny in a tree.
  */
-trait BunnyTreeView {
+trait BunnyPedigreeView {
   /** Reference to the model bunny entity */
   val bunny: Bunny
 
@@ -20,11 +20,11 @@ trait BunnyTreeView {
   val pane: Pane
 }
 
-object BunnyTreeView {
-  def apply(bunny: Bunny): BunnyTreeView = BunnyTreeViewImpl(bunny)
+object BunnyPedigreeView {
+  def apply(bunny: Bunny): BunnyPedigreeView = BunnyPedigreeViewImpl(bunny)
 
-  private case class BunnyTreeViewImpl(override val bunny: Bunny) extends BunnyTreeView {
-      override val pane: Pane = treeBunnyView(bunny)
+  private case class BunnyPedigreeViewImpl(override val bunny: Bunny) extends BunnyPedigreeView {
+      override val pane: Pane = new VBox( bunnyView(bunny), allelesView(bunny), infoView(bunny))
   }
 
   private def bunnyView(bunny: Bunny): ImageView = new ImageView {
@@ -43,7 +43,7 @@ object BunnyTreeView {
         .reduce(_+_)
       style = "-fx-font-family: \"Helvetica\"; " +
         "-fx-font-weight: bold; " +
-        "-fx-font-size: "+ bunnyIconSize/TREE_FONT_PROPORTION+"pt"},
+        "-fx-font-size: "+ bunnyIconSize/TREE_INFO_PROPORTION * FONT_INFO_PERCENT +"px"},
     spacingRegion)
 
   private def infoImageView(path: String): ImageView = new ImageView {
@@ -60,9 +60,4 @@ object BunnyTreeView {
               if (bunny.alive) new Region() else deadImageView,
               if (bunny.genotype.isJustMutated) mutationImageView else new Region(),
               spacingRegion)
-
-  private def treeBunnyView(bunny: Bunny): Pane =
-    new VBox( bunnyView(bunny),
-              allelesView(bunny),
-              infoView(bunny))
 }

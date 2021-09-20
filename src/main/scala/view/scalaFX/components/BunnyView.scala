@@ -8,6 +8,7 @@ import scalafx.animation.{KeyFrame, Timeline}
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.input.MouseEvent
 import scalafx.util.Duration
+import view.scalaFX.ScalaFXView
 import view.scalaFX.ScalaFxViewConstants._
 import view.scalaFX.utilities.Direction._
 import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
@@ -77,6 +78,10 @@ object BunnyView {
         keyFrames = jump()
       }
 
+    imageView.onMouseClicked = _ => {
+      ScalaFXView.handleBunnyClick(bunny)
+    }
+
      private def jump(): AnimationFrames = {
       checkDirection()
       Seq(
@@ -101,7 +106,7 @@ object BunnyView {
       )
     }
 
-    override def play(): Unit = timeline play
+    override def play(): Unit = timeline.play()
 
     /** Method that checks the actual direction of the bunny and update the orientation of its image */
     private def checkDirection(): Unit = {
