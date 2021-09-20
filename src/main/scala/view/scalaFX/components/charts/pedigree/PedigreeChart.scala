@@ -9,6 +9,7 @@ import scalafx.scene.layout._
 import scalafx.scene.text.Text
 import util.PimpScala._
 import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{TREE_BUNNY_SIZE, TREE_PLUS_PROPORTION}
+import scala.language.postfixOps
 
 trait PedigreeChart{
   /** Reference to the model bunny entity */

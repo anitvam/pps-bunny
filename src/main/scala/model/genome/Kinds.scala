@@ -1,5 +1,6 @@
 package model.genome
 
+import scala.language.postfixOps
 import model.MultipleDominanceAssignmentException
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind

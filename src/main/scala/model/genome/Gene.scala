@@ -5,6 +5,7 @@ import model.genome.Genes.GeneKind
 import model.genome.KindsUtils.getGeneKind
 import model.{InconsistentAlleleException, InconsistentMutatedAlleleException}
 import util.PimpScala.RichOption
+import scala.language.postfixOps
 
 /**
  * Represents an Allele of a Gene of a specific Bunny.
