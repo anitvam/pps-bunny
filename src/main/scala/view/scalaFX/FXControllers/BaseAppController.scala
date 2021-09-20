@@ -107,11 +107,6 @@ class BaseAppController(private val simulationPane: AnchorPane,
     simulationPane.background = WinterImage()
   }
 
-  def showGenealogicalTree(bunny: Bunny): Unit = {
-    chartsPane.children = PedigreeChart(bunny).chartPane
-  }
-
-
   def showBunnies(bunnies:Population, generationPhase: GenerationPhase): Unit = {
     proportionsChartController.get.updateChart(generationPhase, bunnies)
     // Bunny visualization inside simulationPane
