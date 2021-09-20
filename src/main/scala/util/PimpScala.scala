@@ -1,4 +1,4 @@
-package utilities
+package util
 
 object PimpScala {
 

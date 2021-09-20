@@ -3,7 +3,7 @@ package model.genome
 import model.MultipleDominanceAssignmentException
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
-import utilities.PimpScala.RichOption
+import util.PimpScala.RichOption
 
 import scala.language.implicitConversions
 import scala.util.Random

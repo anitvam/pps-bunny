@@ -14,7 +14,7 @@ import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.utilities.EnvironmentImageUtils._
 import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
-import utilities.PimpScala.RichOption
+import util.PimpScala.RichOption
 import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
 import scala.language.postfixOps
 

@@ -4,7 +4,7 @@ import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
 import model.genome.KindsUtils.getGeneKind
 import model.{InconsistentAlleleException, InconsistentMutatedAlleleException}
-import utilities.PimpScala.RichOption
+import util.PimpScala.RichOption
 
 /**
  * Represents an Allele of a Gene of a specific Bunny.

@@ -5,7 +5,7 @@ import model.Bunny.generateRandomFirstBunny
 import model.Tree.generateTree
 import model.world.Reproduction.nextGenerationBunnies
 import org.scalatest.{FlatSpec, Matchers}
-import utilities.PimpScala.RichOption
+import util.PimpScala.RichOption
 
 class TestTree extends FlatSpec with Matchers {
 
