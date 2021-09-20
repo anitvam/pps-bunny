@@ -105,7 +105,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
   }
 
   override def showPedigreeChart(): Unit = if (selectedBunny?) {
-    val pedigreeChart = PedigreeChart(selectedBunny.get, ScalaFxViewConstants.PREFERRED_CHART_WIDTH).chartPane
+    val pedigreeChart = PedigreeChart(selectedBunny.get, ScalaFxViewConstants.PREFERRED_CHART_WIDTH, ScalaFxViewConstants.PREFERRED_CHART_HEIGHT).chartPane
     setFitParent(pedigreeChart)
     chartsPane.children = pedigreeChart
   } else chartsPane.children = ObservableBuffer.empty

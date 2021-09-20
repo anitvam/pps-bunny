@@ -8,7 +8,9 @@ import scalafx.scene.image.ImageView
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
 import util.PimpScala._
-import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{TREE_BUNNY_SIZE, TREE_PLUS_PROPORTION}
+import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{FONT_INFO_PERCENT, TREE_BUNNY_SIZE, TREE_INFO_PROPORTION, TREE_PLUS_PROPORTION}
+import view.scalaFX.ScalaFxViewConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
+
 import scala.language.postfixOps
 
 trait PedigreeChart{
@@ -25,17 +27,20 @@ trait PedigreeChart{
 object PedigreeChart {
   /** The size required for the bunny icons*/
   var bunnyIconSize: Int = TREE_BUNNY_SIZE
-  val BUNNY_GENERATIONS_POW: Double = 0.5
-  val PANEL_BUNNY_PROPORTION: Double = 11.5
 
   def apply (bunny:Bunny): PedigreeChart = {
-    this (bunny, TREE_BUNNY_SIZE)
+    this (bunny, PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH)
   }
 
-  def apply(bunny: Bunny, panelWidth: Int): PedigreeChart = {
-    val tree = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
-    val generationsCoefficient = Math.pow(MAX_GENEALOGICAL_TREE_GENERATIONS - tree.generations + 1, BUNNY_GENERATIONS_POW)
-    bunnyIconSize = (panelWidth * generationsCoefficient / PANEL_BUNNY_PROPORTION).toInt
+  def apply(bunny: Bunny, panelWidth: Int, panelHeight:Int): PedigreeChart = {
+    val tree: BinaryTree[Bunny]= generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
+    val maxBunnySizeForWidth: Int = ((panelWidth * TREE_PLUS_PROPORTION) /
+      (Math.pow(TREE_PLUS_PROPORTION + 1, tree.generations - 1) - 1)).toInt
+    val maxBunnySizeForHeight: Int = ((panelHeight * TREE_INFO_PROPORTION * FONT_INFO_PERCENT) /
+      ((TREE_INFO_PROPORTION * FONT_INFO_PERCENT + 1 + FONT_INFO_PERCENT) * tree.generations)).toInt
+    bunnyIconSize = Math.min(maxBunnySizeForHeight, maxBunnySizeForWidth)
+    println(maxBunnySizeForWidth)
+    println(maxBunnySizeForHeight)
     PedigreeChartImpl(bunny, tree)
   }
 
@@ -54,7 +59,9 @@ object PedigreeChart {
     }
   }
 
-  def spacingRegion: Region = new Region {hgrow = Priority.Always}
+  def spacingRegion: Region = new Region {
+    hgrow = Priority.Always
+  }
 
   /** Creates an empty ImageView with the same size of the bunny, for the bunnies with no ancient relatives */
   def emptyImageView: ImageView = new ImageView {
@@ -63,7 +70,8 @@ object PedigreeChart {
 
   def plusView: Text = new Text {
       text = "+"
-      style = "-fx-font-weight: bold; -fx-font-size: "+ bunnyIconSize/TREE_PLUS_PROPORTION + "pt"
+      style = "-fx-font-weight: bold; " +
+        "-fx-font-size: "+ bunnyIconSize/TREE_PLUS_PROPORTION +";"
       hgrow = Priority.Always
   }
 
