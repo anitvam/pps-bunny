@@ -3,6 +3,8 @@ package view.scalaFX.utilities
 import scalafx.Includes._
 import com.sun.javafx.charts.Legend
 import javafx.scene.control.Label
+import scalafx.collections.ObservableBuffer
+import scalafx.scene.chart.{LineChart, PieChart, XYChart}
 import scalafx.scene.chart.{LineChart, XYChart}
 import util.PimpScala._
 import java.util.function.Consumer
@@ -21,7 +23,10 @@ object PimpScalaFXChartLibrary {
 
     /**Adds a style to the Style list of the series
      * @param style the name of style*/
-    def addStyle(style:String): Unit = series.getNode.styleClass += style
+    def addStyle(style:String): Unit = {
+      series.getNode.styleClass += style
+      series.getData.foreach(_.getNode.styleClass ++= Seq("chart-line-mySymbol", style))
+    }
 
     /**Adds a new [[XYChart.Data]] to the series
      * @param data the new point*/
@@ -30,7 +35,7 @@ object PimpScalaFXChartLibrary {
 
   /**A richer version of [[XYChart]]*/
   implicit class RichLineChart[A,B](chart:LineChart[A,B]){
-    /**A getter for easier access to the graph legend*/
+    /**A getter for easier access to the chart legend*/
     def legend :Legend = chart.getChildrenUnmodifiable
       .find(_.isInstanceOf[Legend])
       .map(l => l.asInstanceOf[Legend]).get
@@ -68,6 +73,29 @@ object PimpScalaFXChartLibrary {
     def setLabelAsClicked(value:String): Unit = {
       getLabels.foreach(_.styleClass -= "chart-legend-item-clicked")
       label(value) --> {_.styleClass += "chart-legend-item-clicked"}
+    }
+  }
+
+  implicit class RichPieChart(chart:PieChart){
+    /**A getter for easier access to the chart legend*/
+    def legend :Legend = chart.getChildrenUnmodifiable
+      .find(_.isInstanceOf[Legend])
+      .map(l => l.asInstanceOf[Legend]).get
+
+    def += (data:Seq[(String, Double)]): Unit = {
+      val cssClass: PieChart.Data => String = _.getName.replace(" ", "_")+"_Pie"
+      chart.getData.clear()
+      chart.getData ++= ObservableBuffer.from(data.map({ case (x, y) =>
+        PieChart.Data(x, y)
+      }))
+      chart.getData.foreach{ d => d.getNode.styleClass += cssClass(d) }
+      chart.legend.getItems foreach { i =>
+        chart.getData.find(d => i.getText.contains(d.getName)) -->
+          { d =>{
+            i.getSymbol.styleClass += cssClass(d)
+            i.setText(i.getText + " " + d.getPieValue + "%")
+          } }
+      }
     }
 
   }

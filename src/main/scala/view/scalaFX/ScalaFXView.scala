@@ -39,7 +39,7 @@ object ScalaFXView extends View {
 
   def updateView(generationPhase:GenerationPhase, bunnies:Population): Unit =
     Platform.runLater{
-      baseAppController --> { _.showBunnies(bunnies, generationPhase.generationNumber) }
+      baseAppController --> { _.showBunnies(bunnies, generationPhase) }
       PopulationChart.updateChart(generationPhase, bunnies)
     }
 

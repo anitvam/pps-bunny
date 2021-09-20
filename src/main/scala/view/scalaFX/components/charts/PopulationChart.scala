@@ -67,9 +67,8 @@ object PopulationChart {
   def updateChart(generationPhase:GenerationPhase, population:Population): Unit = {
     import ChartConverters._
     total + (generationPhase, population.size)
-    Alleles.values.foreach(ak => {
-      mutations + (ak, (generationPhase, population.count(_.genotype.phenotype.values.toSet.contains(ak))))
-    })
+    Alleles.values.foreach(ak =>
+      mutations + (ak, (generationPhase, population.count(_.genotype.phenotype.values.toSet.contains(ak)))))
     updateChartBound(generationPhase, population.size)
   }
 
@@ -120,7 +119,7 @@ object LineChartComponentFactory{
   def createSeries(name:String, s: SeriesData): XYSeries = {
     XYChart.Series(
       name = name,
-      ObservableBuffer.from(s.data.map({d => XYChart.Data[Number, Number](d.point.x,d.point.y)}))
+      ObservableBuffer.from(s.data.map({d => XYChart.Data[Number,Number](d.point.x, d.point.y)}))
     )
   }
 
