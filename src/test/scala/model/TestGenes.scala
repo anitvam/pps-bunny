@@ -1,33 +1,34 @@
 package model
 
 import model.Bunny.generateBaseFirstBunny
-import model.genome.Genes.{FUR_COLOR, FUR_LENGTH, GeneKind}
-import model.genome.GenesUtils.{assignRandomDominance, getGeneKind}
+import model.genome.Genes.{EARS, FUR_COLOR, FUR_LENGTH, GeneKind}
+import model.genome.KindsUtils.{assignRandomDominance, getGeneKind, resetDominance}
 import model.genome._
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestGenes extends FlatSpec with Matchers {
   "Any Allele" should "not produce letters if the dominance is not defined yet" in {
+    resetDominance()
     Alleles.values.foreach(ak => {
-      val geneKind = getGeneKind(ak)
-      val dominantAllele = StandardAllele(geneKind.base)
-      assert(dominantAllele.getCaseSensitiveLetter(geneKind.letter) == "")
+      val allele = StandardAllele(ak)
+      assert(allele.getLetter == "")
     })
   }
 
-  it should "be settable as dominant" in{
+  it should "be settable as dominant" in {
+    resetDominance()
     noException should be thrownBy assignRandomDominance()
   }
 
   it should "produce an uppercase letter if dominant" in {
     Alleles.values.filter(_.isDominant.get).foreach(ak => {
-      assert(StandardAllele(ak).getCaseSensitiveLetter(getGeneKind(ak).letter).toCharArray()(0).isUpper)
+      assert(StandardAllele(ak).getLetter.toCharArray()(0).isUpper)
     })
   }
 
   it should "produce a lowercase letter if recessive" in {
     Alleles.values.filter(!_.isDominant.get).foreach(ak => {
-      assert(StandardAllele(ak).getCaseSensitiveLetter(getGeneKind(ak).letter).toCharArray()(0).isLower)
+      assert(StandardAllele(ak).getLetter.toCharArray()(0).isLower)
     })
   }
 
@@ -45,11 +46,11 @@ class TestGenes extends FlatSpec with Matchers {
     }
   }
 
-  it should " be initialized with Alleles of the right kind" in {
+  it should "be initialized with Alleles of the right kind" in {
     noException should be thrownBy Gene(Genes.FUR_COLOR, StandardAllele(Alleles.WHITE_FUR), StandardAllele(Alleles.WHITE_FUR))
   }
 
-  it should " be inferable from any of its Alleles" in {
+  it should "be inferable from any of its Alleles" in {
     Genes.values.foreach(gk => {
       assert(getGeneKind(gk.base) == gk)
       assert(getGeneKind(gk.mutated) == gk)
@@ -58,11 +59,23 @@ class TestGenes extends FlatSpec with Matchers {
 
   "Any Genotype" should "throw an Exception if the GeneType in the key is not coherent with the kind in the corresponding Gene" in {
     assertThrows[InconsistentGenotypeException] {
-      val genes: Map[GeneKind, Gene] = Map(
+      val inconsistentGenes: Map[GeneKind, Gene] = Map(
         FUR_COLOR -> Gene(Genes.EARS, StandardAllele(Alleles.HIGH_EARS), StandardAllele(Alleles.HIGH_EARS)),
         FUR_LENGTH -> Gene(Genes.FUR_LENGTH, StandardAllele(Alleles.SHORT_FUR), StandardAllele(Alleles.SHORT_FUR)))
-      PartialGenotype(genes)
+      PartialGenotype(inconsistentGenes)
     }
+  }
+
+  it should "know if it contains any mutated allele" in {
+    val standardGenes: Map[GeneKind, Gene] = Map(
+      EARS -> Gene(Genes.EARS, StandardAllele(Alleles.HIGH_EARS), StandardAllele(Alleles.HIGH_EARS)),
+      FUR_LENGTH -> Gene(Genes.FUR_LENGTH, StandardAllele(Alleles.SHORT_FUR), StandardAllele(Alleles.LONG_FUR)))
+    assert(!PartialGenotype(standardGenes).isJustMutated)
+
+    val mutatedGenes: Map[GeneKind, Gene] = Map(
+      EARS -> Gene(Genes.EARS, StandardAllele(Alleles.HIGH_EARS), StandardAllele(Alleles.HIGH_EARS)),
+      FUR_LENGTH -> Gene(Genes.FUR_LENGTH, JustMutatedAllele(Alleles.LONG_FUR), StandardAllele(Alleles.SHORT_FUR)))
+    assert(PartialGenotype(mutatedGenes).isJustMutated)
   }
 
   "Any completed Genotype" should "throw an Exception if does not contain kind of Genes" in {

@@ -35,9 +35,6 @@ class ChildBunny(override val genotype: CompletedGenotype, override val mom:Opti
  */
 class FirstBunny(genotype: CompletedGenotype) extends ChildBunny(genotype,Option.empty, Option.empty)
 
-sealed trait GenealogicalTree
-
-
 object Bunny {
   /**
    * @return a FirstBunny with the "base" allele for each gene
@@ -60,21 +57,16 @@ object Bunny {
     )
   }
 
+  type baseBunnies = Seq[Bunny]
+  type mutatedBunnies = Seq[Bunny]
+
   /**
    *
    * @param geneKind the kind of Gene we want to split the bunnies by
    * @param bunnies  all the bunnies
-   * @return         a tuple with the sequence of bunnies with the base Allele
-   *                 and the sequence of bunnies with the mutated Allele
+   * @return a tuple with the sequence of bunnies with the base Allele
+   *         and the sequence of bunnies with the mutated Allele
    */
-  def splitBunniesByGene(geneKind: GeneKind, bunnies: Seq[Bunny]): (Seq[Bunny], Seq[Bunny]) =
+  def splitBunniesByGene(geneKind: GeneKind, bunnies: Seq[Bunny]): (baseBunnies, mutatedBunnies) =
     bunnies.partition(_.genotype.phenotype(geneKind) == geneKind.base)
-
-  /**
-   *
-   * @param generations the number of older generations to retrieve
-   * @param bunny       the subject bunny
-   * @return the genealogical tree of the bunny for the specified generations
-   */
-  def generateTree(generations: Int, bunny: Bunny) = ???
 }

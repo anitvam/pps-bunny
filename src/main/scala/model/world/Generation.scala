@@ -1,7 +1,8 @@
 package model.world
 
+import engine.SimulationConstants.{FOOD_INSTANT, FOOD_PHASE, START_PHASE, TEMPERATURE_PHASE, WOLVES_PHASE}
 import model.Bunny
-import model.world.Generation.{Environment, Population}
+import model.world.Generation.Population
 
 /**The unit of time of the simulation and wraps its properties*/
 trait Generation{
@@ -26,7 +27,6 @@ trait Generation{
 
 object Generation{
 
-  type Environment = String
   type Population = Seq[Bunny]
 
   def apply(actualEnvironment:Environment, bunniesAlive:Population): Generation =
@@ -35,6 +35,20 @@ object Generation{
   private class GenerationImpl( override val environment: Environment,
                                 override var population: Population,
                                 override var isEnded:Boolean = false) extends Generation
+}
+
+object GenerationsUtils{
+  /**The phase of a Generation that is identified by its number*/
+  trait GenerationPhase{
+    /**@return the generation number to which the phase refers */
+    def generationNumber:Int
+    /**@return the phase of the generation */
+    def phase:Double
+  }
+  case class StartPhase(override val generationNumber: Int, override val phase: Double = START_PHASE) extends GenerationPhase
+  case class WolvesPhase(override val generationNumber: Int, override val phase: Double = WOLVES_PHASE) extends GenerationPhase
+  case class FoodPhase(override val generationNumber: Int, override val phase: Double = FOOD_PHASE) extends GenerationPhase
+  case class HighTemperaturePhase(override val generationNumber: Int, override val phase: Double = TEMPERATURE_PHASE) extends GenerationPhase
 }
 
 

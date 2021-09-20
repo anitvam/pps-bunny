@@ -1,8 +1,10 @@
 package model.genome
 
+import scala.language.postfixOps
 import model.MultipleDominanceAssignmentException
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
+import util.PimpScala.RichOption
 
 import scala.language.implicitConversions
 import scala.util.Random
@@ -15,25 +17,28 @@ object Alleles extends Enumeration{
 
   /**
    * The information each AlleleKind must have
-   * @param dominant specifies if it's dominant or not, it could be empty it not chosen yet
+   * @param dominant specifies if it's dominant or not, it could be empty if not chosen yet
    */
-  protected case class AllelesVal(private var dominant: Option[Boolean] = Option.empty) extends super.Val {
+
+  protected case class AllelesVal(prettyName: String) extends super.Val {
+    private var dominant: Option[Boolean] = Option.empty
+    def resetDominance: Unit = dominant = Option.empty
     def setDominance(cond: Boolean): Unit =
-      if(dominant.isDefined) throw new MultipleDominanceAssignmentException else dominant = Option(cond)
+      if(dominant?) throw new MultipleDominanceAssignmentException else dominant = Option(cond)
     def isDominant: Option[Boolean] = dominant
   }
   implicit def valueToAllelesVal(x: Value): AllelesVal = x.asInstanceOf[AllelesVal]
 
-  val WHITE_FUR: AllelesVal = AllelesVal()
-  val BROWN_FUR: AllelesVal = AllelesVal()
-  val LONG_FUR: AllelesVal = AllelesVal()
-  val SHORT_FUR: AllelesVal = AllelesVal()
-  val LONG_TEETH: AllelesVal = AllelesVal()
-  val SHORT_TEETH: AllelesVal = AllelesVal()
-  val HIGH_EARS: AllelesVal = AllelesVal()
-  val LOW_EARS: AllelesVal = AllelesVal()
-  val HIGH_JUMP: AllelesVal = AllelesVal()
-  val LOW_JUMP: AllelesVal = AllelesVal()
+  val WHITE_FUR: AllelesVal = AllelesVal("Pelo Bianco")
+  val BROWN_FUR: AllelesVal = AllelesVal("Pelo Marrone")
+  val LONG_FUR: AllelesVal = AllelesVal("Pelo Lungo")
+  val SHORT_FUR: AllelesVal = AllelesVal("Pelo Corto")
+  val LONG_TEETH: AllelesVal = AllelesVal("Denti Lunghi")
+  val SHORT_TEETH: AllelesVal = AllelesVal("Denti Corti")
+  val HIGH_EARS: AllelesVal = AllelesVal("Orecchie Alte")
+  val LOW_EARS: AllelesVal = AllelesVal("Orecchie Basse")
+  val HIGH_JUMP: AllelesVal = AllelesVal("Salto Alto")
+  val LOW_JUMP: AllelesVal = AllelesVal("Salto Basso")
 }
 
 /**
@@ -72,7 +77,7 @@ object Genes extends Enumeration {
                                 letter = "j")
 }
 
-object GenesUtils {
+object KindsUtils {
   /**
    * @param alleleKind  the AlleleKind of which the GeneKind is needed
    * @return            the GeneKind uniquely associated with this AlleleKind
@@ -103,6 +108,11 @@ object GenesUtils {
    */
   def assignRandomDominance(): Unit =
     Genes.values.foreach(gk => setAlleleDominance(List(gk.base, gk.mutated)(Random.nextInt(2))))
+
+  /**
+   * Reset dominance of all Alleles.
+   */
+  def resetDominance(): Unit = Alleles.values.foreach(_.resetDominance)
 }
 
 

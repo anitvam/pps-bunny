@@ -2,22 +2,22 @@ package model.genome
 
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
-import model.genome.GenesUtils.getGeneKind
+import model.genome.KindsUtils.getGeneKind
 import model.{InconsistentAlleleException, InconsistentMutatedAlleleException}
+import util.PimpScala.RichOption
+import scala.language.postfixOps
 
 /**
  * Represents an Allele of a Gene of a specific Bunny.
  */
 sealed trait Allele {
   val kind: AlleleKind
-  val isMutated: Boolean
-
-  def isDominant: Boolean = kind.isDominant.getOrElse(false)
-  def getCaseSensitiveLetter(letter: String): String = {
-    if (kind.isDominant.isDefined) {
-      if (kind.isDominant.get) letter.toUpperCase else letter.toLowerCase
+  val justMutated: Boolean
+  def getLetter: String =
+    if (kind.isDominant?) {
+      if (kind.isDominant.get) getGeneKind(kind).letter.toUpperCase else getGeneKind(kind).letter.toLowerCase
     } else ""
-  }
+  def isDominant: Boolean = kind.isDominant.getOrElse(false)
 }
 
 /**
@@ -25,7 +25,7 @@ sealed trait Allele {
  * @param kind the kind of the Allele.
  */
 case class StandardAllele(kind: AlleleKind) extends Allele {
-  override val isMutated: Boolean = false
+  override val justMutated: Boolean = false
 }
 
 /**
@@ -33,7 +33,7 @@ case class StandardAllele(kind: AlleleKind) extends Allele {
  * @param kind the kind of the Allele.
  */
 case class JustMutatedAllele(kind:AlleleKind) extends Allele{
-  override val isMutated: Boolean = true
+  override val justMutated: Boolean = true
   if (getGeneKind(kind).mutated != kind) throw new InconsistentMutatedAlleleException
 }
 
@@ -47,7 +47,7 @@ trait Gene {
 
   def isHomozygous: Boolean = momAllele.kind == dadAllele.kind
   def getVisibleTrait: AlleleKind = if (isHomozygous || momAllele.isDominant) momAllele.kind else dadAllele.kind
-  def getLetters: String = momAllele.getCaseSensitiveLetter(kind.letter) + dadAllele.getCaseSensitiveLetter(kind.letter)
+  def getLetters: String = momAllele.getLetter + dadAllele.getLetter
 }
 
 object Gene {
