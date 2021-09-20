@@ -77,12 +77,12 @@ Come libreria di testing è stata utilizzata [ScalaTest](https://www.scalatest.o
 
 ### Requisiti Business 
 Di seguito sono riportati i requisiti individuati durante lo studio del dominio e le regole scelte per la sua rappresentazione.
-* Il numero massimo di generazioni è 1000, considerato come numero limite difficilmente raggiungibile senza che i conigli muoiano tutti o superino i loro numero massimo.
+* Il numero massimo di generazioni è 1000, considerato come numero limite difficilmente raggiungibile senza che i conigli muoiano tutti o superino il loro numero massimo.
 * Il numero massimo di coniglietti è 1000, il raggiungimento di tale numero indicherà la fine della simulazione.
 * Ogni coniglietto vive per quattro generazioni.
 
 * Ogni coniglietto avrà inizialmente solamente geni con alleli di tipo base, per i quali la dominanza non è stata ancora scelta. Nel momento in cui viene introdotta la mutazione verrà anche specificato se è essa è dominante o recessiva. Finchè l'utente non compie questa scelta, i coniglietti procederanno nella riproduzione con i caratteri stabiliti inizialmente come base.
-* Ogni generazione di conigli avrà alcuni tratti specifici ereditati dai suoi antenati e altri scaturiti da mutazioni genetiche, grazie a tali caratteristiche essi potranno avere più o meno probabilità di sopravvivenza nello specifico ambiente in cui vengono inseriti. Di seguito sono riportate i geni presi in considerazione nell'applicativo con le possibili mutazioni genetiche e la lettere che vi è associata nell'applicativo.
+* Ogni generazione di conigli avrà alcuni tratti specifici ereditati dai suoi antenati e altri scaturiti da mutazioni genetiche, grazie a tali caratteristiche essi potranno avere più o meno probabilità di sopravvivenza nello specifico ambiente in cui vengono inseriti. Di seguito sono riportati i geni presi in considerazione nell'applicativo con le possibili mutazioni genetiche e la lettera che vi è associata.
 
 | Gene | Base | Mutazione | Lettera |
 | :-------: | :-----: | :-----: | :--: |
@@ -98,9 +98,9 @@ Di seguito sono riportati i requisiti individuati durante lo studio del dominio 
     * La gestione delle risorse alimentari, che possono essere scarse, difficilmente raggiungibili o difficilmente masticabili.
 * L’ambiente può avere un clima caldo o freddo, che andrà a influenzare l'efficacia dei fattori sopracitati.
 * Ogni fattore disturbante elimina una certa percentuale di coniglietti dall’ambiente, in ogni generazione i fattori agiscono uno alla volta sulla popolazione di coniglietti rimasti rispetto all'azione di un eventuale fattore precedente.
-* Ogni generazione dura 12 secondi, dei quali tre a cavallo fra le due generazioni sono dedicati alla riproduzione e nove per l'eliminazione dei coniglieti dovuta alla presenza dei fattori disturbanti, tre per ognuno di essi, nel seguente ordine: predatori, temperature ostili, risorse alimentari.
+* Ogni generazione dura 12 secondi, dei quali 3 secondi a cavallo fra le due generazioni sono dedicati alla riproduzione e 9 secondi per l'eliminazione dei coniglieti dovuta alla presenza dei fattori disturbanti (3 secondi per ogni tipologia) nel seguente ordine: predatori, temperature ostili, risorse alimentari.
 
-* Per quanto riguarda la riproduzione, dalla totalità dei coniglietti si formano casualmente delle coppie, ognuna delle quali genera quattro figli in modo da avere tutte le combinazioni degli alleli rappresentate dal Quadrato di Punnett. </br> Ad esempio, avendo 21 coniglietti si formano 10 coppie, ognuna delle quali fa 4 figli per un totale di 40 figli, quindi al termine della riproduzione avremo 21 + 40 = 61 coniglietti. </br> Di seguito è riportato un esempio di Quadrato di Punnett per il gene riguardante il colore della pelliccia (lettera <tt>f</tt>), con i figli dati dalla coppia d'esempio <tt>ff + fF</tt>.
+* Per quanto riguarda la riproduzione, dalla totalità dei coniglietti si formano casualmente delle coppie, ognuna delle quali genera quattro figli in modo da avere tutte le combinazioni degli alleli rappresentate dal [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett). </br> Ad esempio, avendo 21 coniglietti si formano 10 coppie, ognuna delle quali fa 4 figli per un totale di 40 figli, quindi al termine della riproduzione avremo 21 + 40 = 61 coniglietti. </br> Di seguito è riportato un esempio di Quadrato di Punnett per il gene riguardante il colore della pelliccia (lettera <tt>f</tt>), con i figli dati dalla coppia d'esempio <tt>ff + fF</tt>.
 
 | x | F  | f | 
 | :--: | :--: | :--: |
