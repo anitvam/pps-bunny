@@ -18,7 +18,7 @@ import view.scalaFX.FXControllers.BaseAppControllerInterface
 import view.scalaFX.ScalaFxViewConstants.{SCENE_HEIGHT, SCENE_WIDTH}
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.utilities.FxmlUtils
-import view.scalaFX.utilities.PimpScala.RichOption
+import util.PimpScala._
 
 object ScalaFXView extends View {
   var baseAppController: Option[BaseAppControllerInterface] = Option.empty

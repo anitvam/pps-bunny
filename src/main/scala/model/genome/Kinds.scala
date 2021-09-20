@@ -1,8 +1,10 @@
 package model.genome
 
+import scala.language.postfixOps
 import model.MultipleDominanceAssignmentException
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
+import util.PimpScala.RichOption
 
 import scala.language.implicitConversions
 import scala.util.Random
@@ -22,7 +24,7 @@ object Alleles extends Enumeration{
     private var dominant: Option[Boolean] = Option.empty
     def resetDominance: Unit = dominant = Option.empty
     def setDominance(cond: Boolean): Unit =
-      if(dominant.isDefined) throw new MultipleDominanceAssignmentException else dominant = Option(cond)
+      if(dominant?) throw new MultipleDominanceAssignmentException else dominant = Option(cond)
     def isDominant: Option[Boolean] = dominant
   }
   implicit def valueToAllelesVal(x: Value): AllelesVal = x.asInstanceOf[AllelesVal]

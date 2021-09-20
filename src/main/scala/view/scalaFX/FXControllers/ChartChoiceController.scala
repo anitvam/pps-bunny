@@ -2,7 +2,7 @@ package view.scalaFX.FXControllers
 
 import scalafx.scene.control.RadioButton
 import scalafxml.core.macros.sfxml
-import view.scalaFX.utilities.PimpScala.RichOption
+import util.PimpScala.RichOption
 
 sealed trait ChartChoiceControllerInterface {
   /** Method that initialize the ChartChoiceController

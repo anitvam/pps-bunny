@@ -16,7 +16,7 @@ import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.utilities.EnvironmentImageUtils._
 import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
-import view.scalaFX.utilities.PimpScala.RichOption
+import util.PimpScala.RichOption
 import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
 
 import java.io.IOException
@@ -133,7 +133,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
     }
   }
 
-  override def showPedigreeChart(): Unit = if (selectedBunny.isDefined) {
+  override def showPedigreeChart(): Unit = if (selectedBunny?) {
     val pedigreeChart = PedigreeChart(selectedBunny.get, ScalaFxViewConstants.PREFERRED_CHART_WIDTH).chartPane
     setFitParent(pedigreeChart)
     chartsPane.children = pedigreeChart
