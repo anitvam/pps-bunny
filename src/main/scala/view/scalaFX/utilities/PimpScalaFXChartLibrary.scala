@@ -5,7 +5,6 @@ import com.sun.javafx.charts.Legend
 import javafx.scene.control.Label
 import scalafx.collections.ObservableBuffer
 import scalafx.scene.chart.{LineChart, PieChart, XYChart}
-import view.scalaFX.utilities.PimpScala._
 import scalafx.scene.chart.{LineChart, XYChart}
 import util.PimpScala._
 import java.util.function.Consumer
