@@ -77,15 +77,9 @@ class BaseAppController(private val simulationPane: AnchorPane,
     chartSelectionPanelController = Some(loadedChartChoice._2.getController[ChartChoiceControllerInterface])
     chartSelectionPanelController --> { _.initialize(this) }
 
-    val proportionsChartView = getClass.getResource("/fxml/proportionsChartPane.fxml")
-    if (proportionsChartView == null) {
-      throw new IOException("Cannot load resource: proportionsChartPane.fxml")
-    }
-
-    val loader2 = new FXMLLoader(proportionsChartView, NoDependencyResolver)
-    loader2.load()
-    proportionsChartPane = Some(loader2.getRoot[jfxs.AnchorPane])
-    proportionsChartController = Some(loader2.getController[ChartController])
+    val loadedProportionsChartView = loadFXMLResource[jfxs.AnchorPane]("/fxml/proportionsChartPane.fxml")
+    proportionsChartPane = Some(loadedProportionsChartView._1)
+    proportionsChartController = Some(loadedProportionsChartView._2.getController[ChartController])
 
     AnchorPane.setAnchors(proportionsChartPane.get, 0, 0, 0, 0)
     proportionsChartController --> {_.initialize()}
