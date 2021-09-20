@@ -39,8 +39,6 @@ object PedigreeChart {
     val maxBunnySizeForHeight: Int = ((panelHeight * TREE_INFO_PROPORTION * FONT_INFO_PERCENT) /
       ((TREE_INFO_PROPORTION * FONT_INFO_PERCENT + 1 + FONT_INFO_PERCENT) * tree.generations)).toInt
     bunnyIconSize = Math.min(maxBunnySizeForHeight, maxBunnySizeForWidth)
-    println(maxBunnySizeForWidth)
-    println(maxBunnySizeForHeight)
     PedigreeChartImpl(bunny, tree)
   }
 
