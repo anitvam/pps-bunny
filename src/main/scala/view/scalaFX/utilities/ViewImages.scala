@@ -1,5 +1,6 @@
 package view.scalaFX.utilities
 
+import scala.language.implicitConversions
 import model.Bunny
 import model.genome.Alleles._
 import model.genome.Genes._
