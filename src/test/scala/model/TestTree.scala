@@ -1,5 +1,6 @@
 package model
 
+import scala.language.postfixOps
 import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
 import model.Bunny.generateRandomFirstBunny
 import model.Tree.generateTree
