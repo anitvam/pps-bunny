@@ -81,7 +81,7 @@ Di seguito sono riportati i requisiti individuati durante lo studio del dominio 
 * Il numero massimo di coniglietti è 1000, il raggiungimento di tale numero indicherà la fine della simulazione.
 * Ogni coniglietto vive per quattro generazioni.
 
-* Ogni coniglietto avrà inizialmente solamente geni con alleli di tipo base, per i quali la dominanza non è stata ancora scelta. Nel momento in cui viene introdotta la mutazione verrà anche specificato se è essa è dominante o recessiva. Finchè l'utente non compie questa scelta, i coniglietti procederanno nella riproduzione con i caratteri stabiliti inizialmente come base.
+* Ogni coniglietto avrà inizialmente solamente geni con alleli di tipo base, per i quali la dominanza non è stata ancora scelta. Nel momento in cui viene introdotta la mutazione verrà anche specificato se essa è dominante o recessiva. Finchè l'utente non compie questa scelta, i coniglietti procederanno nella riproduzione con i caratteri stabiliti inizialmente come base.
 * Ogni generazione di conigli avrà alcuni tratti specifici ereditati dai suoi antenati e altri scaturiti da mutazioni genetiche, grazie a tali caratteristiche essi potranno avere più o meno probabilità di sopravvivenza nello specifico ambiente in cui vengono inseriti. Di seguito sono riportati i geni presi in considerazione nell'applicativo con le possibili mutazioni genetiche e la lettera che vi è associata.
 
 | Gene | Base | Mutazione | Lettera |
