@@ -18,24 +18,31 @@ class FactorsPanelController(@FXML private val predatorRadioButton: RadioButton,
                              @FXML private val upperFoodRadioButton: RadioButton,
                              @FXML private val limitedFoodRadioButton: RadioButton,
                              @FXML private val hostileTemperatureRadioButton: RadioButton,
-                             @FXML private val predatorImage: ImageView,
-                             @FXML private val toughFoodImage: ImageView,
-                             @FXML private val upperFoodImage: ImageView,
-                             @FXML private val limitedFoodImage: ImageView,
-                             @FXML private val hostileTemperatureImage: ImageView,
-                             @FXML private val predatorImageTime: ImageView,
-                             @FXML private val toughFoodImageTime: ImageView,
-                             @FXML private val upperFoodImageTime: ImageView,
-                             @FXML private val limitedFoodImageTime: ImageView,
-                             @FXML private val hostileTemperatureImageTime: ImageView
+                             @FXML private val wolf: ImageView,
+                             @FXML private val tough_food: ImageView,
+                             @FXML private val high_food: ImageView,
+                             @FXML private val limited_food: ImageView,
+                             @FXML private val hostile_temperature: ImageView,
+                             @FXML private val wolf_time: ImageView,
+                             @FXML private val tough_food_time: ImageView,
+                             @FXML private val high_food_time: ImageView,
+                             @FXML private val limited_food_time: ImageView,
+                             @FXML private val hostile_temperature_time: ImageView
                             ) extends FactorsPanelControllerInterface {
-  private def insertFactorImage(image: ImageView, url: String = "/img/death.png"): Unit = image.image = new Image(url)
+
+  private def insertFactorImage(image: ImageView, id: String): Unit =
+    try
+      image.image = new Image("/img/factors/" + id + ".png")
+    catch {
+      case _: IllegalArgumentException => image.image = new Image("/img/death.png")
+    }
 
   override def initialize(): Unit = {
-    val factorsImageViews: List[ImageView] = List( predatorImage, predatorImageTime, toughFoodImage, toughFoodImageTime,
-      upperFoodImage, upperFoodImageTime, limitedFoodImage, limitedFoodImageTime, hostileTemperatureImage, hostileTemperatureImageTime )
+    val factorsImageViews: List[ImageView] = List( wolf, tough_food,
+      high_food, limited_food, hostile_temperature, wolf_time, tough_food_time,
+      high_food_time, limited_food_time, hostile_temperature_time)
 
-    factorsImageViews foreach(insertFactorImage(_))
+    factorsImageViews foreach(i => insertFactorImage(i, i.getId))
   }
 
   private def factorOnClick(factor: RadioButton): Unit = println(factor + " selezionato: " + factor.selected.value)
