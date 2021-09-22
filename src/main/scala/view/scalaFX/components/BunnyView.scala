@@ -2,25 +2,22 @@ package view.scalaFX.components
 
 import model.Bunny
 import model.genome.Alleles
-import scalafx.Includes.{at, double2DurationHelper, _}
-import scalafx.animation.{KeyFrame, Timeline}
-import scalafx.scene.image.{Image, ImageView}
-import scalafx.scene.input.MouseEvent
+import scalafx.Includes.{ at, double2DurationHelper }
+import scalafx.animation.{ KeyFrame, Timeline }
+import scalafx.scene.effect.DropShadow
+import scalafx.scene.image.{ Image, ImageView }
 import scalafx.scene.paint.Color
 import scalafx.util.Duration
 import view.scalaFX.ScalaFXView
 import view.scalaFX.ScalaFxViewConstants._
 import view.scalaFX.utilities.Direction._
-import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
+import view.scalaFX.utilities.{ BunnyImageUtils, Direction, ImageType }
 
 import scala.language.postfixOps
 import scala.util.Random
 
 /** Bunny wrapper in order to manage its movement inside of the GUI */
 trait BunnyView {
-
-  /** Type annotation for a Seq of KeyFrames */
-  type AnimationFrames = Seq[KeyFrame]
 
   /** Reference to the model bunny entity */
   val bunny: Bunny
@@ -36,6 +33,9 @@ trait BunnyView {
 
   /** The Y-Axis position of the bunny */
   var positionY: Double
+
+  /** Type annotation for a Seq of KeyFrames */
+  type AnimationFrames = Seq[KeyFrame]
 
   /** Starts the bunny animation */
   def play(): Unit
@@ -53,7 +53,6 @@ object BunnyView {
     val newX = Random.nextInt(PREFERRED_BUNNY_PANEL_WIDTH)
     val newY = Random.nextInt(PREFERRED_BUNNY_PANEL_HEIGHT) + PANEL_SKY_ZONE
 
-<<<<<<< HEAD
     BunnyViewImpl(
       new ImageView {
         image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
@@ -63,24 +62,12 @@ object BunnyView {
         fitHeight = PREFERRED_BUNNY_SIZE
         preserveRatio = true
         scaleX = Direction.scaleXValue(Right)
-        onMouseClicked = (_: MouseEvent) => println("bunny click")
       },
       bunny,
       Right,
       newX,
       newY
     )
-=======
-    BunnyViewImpl(new ImageView {
-      image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
-      x = newX
-      y = newY
-      fitWidth = PREFERRED_BUNNY_SIZE
-      fitHeight = PREFERRED_BUNNY_SIZE
-      preserveRatio = true
-      scaleX = Direction.scaleXValue(Right)
-    }, bunny, Right, newX, newY)
->>>>>>> develop
   }
 
   private case class BunnyViewImpl(imageView: ImageView,
@@ -104,23 +91,14 @@ object BunnyView {
         this.play()
       }
 
-<<<<<<< HEAD
       delay = Duration(STANDARD_BUNNY_JUMP_DURATION + Random.nextInt(RANDOM_BUNNY_JUMP_DELAY))
       autoReverse = true
       cycleCount = 1
       keyFrames = jump()
     }
 
-    imageView.onMouseClicked = _ => ScalaFXView.handleBunnyClick(bunny)
+    imageView.onMouseClicked = _ => ScalaFXView.handleBunnyClick(this)
 
-    override def play(): Unit = timeline.play()
-
-=======
-    imageView.onMouseClicked = _ => {
-      ScalaFXView.handleBunnyClick(this)
-    }
-
->>>>>>> develop
     private def jump(): AnimationFrames = {
       checkDirection()
       Seq(
@@ -145,15 +123,12 @@ object BunnyView {
       )
     }
 
-<<<<<<< HEAD
-=======
     override def play(): Unit = timeline.play()
 
-    override def addClickedEffect(): Unit = imageView.effect =  new DropShadow(10, Color.Black)
+    override def addClickedEffect(): Unit = imageView.effect = new DropShadow(10, Color.Black)
 
     override def removeClickedEffect(): Unit = imageView.effect = null
 
->>>>>>> develop
     /** Method that checks the actual direction of the bunny and update the orientation of its image */
     private def checkDirection(): Unit = {
       if ((positionX + (2 * jumpingValue)) >= PREFERRED_BUNNY_PANEL_WIDTH) {

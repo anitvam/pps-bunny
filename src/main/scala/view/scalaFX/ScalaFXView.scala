@@ -3,7 +3,6 @@ package view.scalaFX
 import controller.ScalaFXLauncher.stage
 import javafx.stage.Screen
 import javafx.{ scene => jfxs }
-import model.Bunny
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
@@ -59,19 +58,10 @@ object ScalaFXView extends View {
     endStage.show()
   }
 
-  <<<<<<< HEAD
-
-  override def handleBunnyClick(bunny: Bunny): Unit = baseAppController --> {
-    _.handleBunnyClick(bunny)
-  }
-
-  =======
-
   override def handleBunnyClick(bunny: BunnyView): Unit = baseAppController --> {
     _.handleBunnyClick(bunny)
   }
 
-  >>>>>>> develop
 }
 
 object ScalaFxViewConstants {
@@ -134,7 +124,6 @@ object ScalaFxViewConstants {
 
     /** Percentual constants to resize the font depending on the plus size */
     val FONT_INFO_PERCENT: Double = 0.6
-
   }
 
 }
