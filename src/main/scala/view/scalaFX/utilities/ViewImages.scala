@@ -133,8 +133,8 @@ case class SummerImage(image: Image = EnvironmentImageUtils.SUMMER_IMAGE) extend
 object EnvironmentImageUtils {
   type JavaBackground = javafx.scene.layout.Background
 
-  val WINTER_IMAGE = new Image("/img/environment/climate_cold.png")
-  val SUMMER_IMAGE = new Image("/img/environment/climate_hot.png")
+  val WINTER_IMAGE = new Image("/img/environment/cold_environment/cold_normal.png")
+  val SUMMER_IMAGE = new Image("/img/environment/hot_environment/hot_normal.png")
 
   implicit def actualClimate(background: ObjectProperty[JavaBackground]): Climate = background.value.getImages.get(0).getImage match {
     case WINTER_IMAGE => Winter()
