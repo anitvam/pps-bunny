@@ -75,6 +75,7 @@ class BaseAppController(
     val loadedFactorsChoicePanel = loadFXMLResource[jfxs.AnchorPane]("/fxml/factorsPanel.fxml")
     factorChoicePane.children += loadedFactorsChoicePanel._1
     factorsPanelController = Some(loadedFactorsChoicePanel._2.getController[FactorsPanelControllerInterface])
+    factorsPanelController.get.initialize()
 
     val loadedChartChoice = loadFXMLResource[jfxs.AnchorPane]("/fxml/chartChoiceSelection.fxml")
     chartChoicePane.children += loadedChartChoice._1
