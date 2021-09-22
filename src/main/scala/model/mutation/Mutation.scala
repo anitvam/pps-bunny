@@ -2,9 +2,7 @@ package model.mutation
 
 import model.genome.Genes.GeneKind
 
-/**
- * Model representation of the mutation
- */
+/** Model representation of the mutation */
 trait Mutation {
   val geneKind: GeneKind
   val isDominant: Boolean
@@ -13,6 +11,7 @@ trait Mutation {
 object Mutation {
   def apply(geneKind: GeneKind, isDominant: Boolean): Mutation = MutationImpl(geneKind, isDominant)
 
-  private case class MutationImpl( override val geneKind: GeneKind,
-                                  override val isDominant: Boolean ) extends Mutation
+  private case class MutationImpl(override val geneKind: GeneKind, override val isDominant: Boolean)
+      extends Mutation
+
 }

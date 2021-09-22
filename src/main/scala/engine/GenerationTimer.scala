@@ -13,32 +13,30 @@ object GenerationTimer {
   /** When the timer is started */
   var start: FiniteDuration = System.currentTimeMillis() millis
 
-  /** Current System time in milliseconds */
-  def getTime: FiniteDuration = System.currentTimeMillis() millis
-
   /** Returns a [[IO]] description that when evaluated will reset the timer */
   def resetTimer: IO[Unit] = IO { start = System.currentTimeMillis() millis }
 
-  /**
-   * Returns a [[IO]] description that when evaluated will create an async task that will wait until
-   * the time specified
+  /** Returns a [[IO]] description that when evaluated will create an async task that will wait until
+   *  the time specified
    *
-   * @param to
+   *  @param to
    *   the moment until when the timer sleep
-   * @return
+   *  @return
    *   the IO monad describing the operation
    */
   def waitFor(to: FiniteDuration): IO[Unit] = waitUntil(getTime - start, to)
 
-  /**
-   * Returns a [[IO]] description that when evaluated will create an async task that will wait for
-   * the interval specified.
+  /** Current System time in milliseconds */
+  def getTime: FiniteDuration = System.currentTimeMillis() millis
+
+  /** Returns a [[IO]] description that when evaluated will create an async task that will wait for
+   *  the interval specified.
    *
-   * @param from
+   *  @param from
    *   the lower bound for of the time interval to be slept
-   * @param to
+   *  @param to
    *   the upper bound of the time interval until when sleep.
-   * @return
+   *  @return
    *   the IO monad describing the sleeping operation.
    */
   def waitUntil(from: FiniteDuration, to: FiniteDuration): IO[Unit] =
