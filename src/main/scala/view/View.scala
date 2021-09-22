@@ -1,8 +1,8 @@
 package view
 
-import model.Bunny
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
+import view.scalaFX.components.BunnyView
 
 /** Methods required to be implemented inside each implementation of the View */
 trait View {
@@ -22,5 +22,5 @@ trait View {
   /** Method that handle the click of a bunny
    *  @param bunny the bunny clicked
    */
-  def handleBunnyClick(bunny: Bunny): Unit
+  def handleBunnyClick(bunny: BunnyView): Unit
 }
