@@ -38,7 +38,7 @@ sealed trait BaseAppControllerInterface {
   def showProportionsChart(): Unit
 
   /** Method that handle the click on a Bunny */
-  def handleBunnyClick(bunny: Bunny): Unit
+  def handleBunnyClick(bunny: BunnyView): Unit
 
   /** Method that shows new bunnies into the GUI and the actual generation number */
   def showBunnies(bunnies:Population, generationPhase: GenerationPhase): Unit
@@ -56,7 +56,7 @@ class BaseAppController(private val simulationPane: AnchorPane,
 
   private var bunnyViews: Seq[BunnyView] = Seq.empty
   private var chartSelectionPanelController: Option[ChartChoiceControllerInterface] = None
-  private var selectedBunny: Option[Bunny] = None
+  private var selectedBunny: Option[BunnyView] = None
   private var mutationsPanelController: Option[MutationsPanelControllerInterface] = Option.empty
   private var proportionsChartController: Option[ChartController] = Option.empty
   private var proportionsChartPane: Option[AnchorPane] = Option.empty
@@ -125,16 +125,15 @@ class BaseAppController(private val simulationPane: AnchorPane,
       generationLabel.text = "Generazione " + generationPhase.generationNumber
       if (generationPhase.generationNumber > 0) {
         mutationsPanelController --> { _.hideMutationIncoming() }
-        // Start movement of the new bunnies
-        newBunnyViews foreach {
-          _.play()
-        }
       }
+
+      // Start movement of the new bunnies
+      newBunnyViews foreach { _.play() }
     }
   }
 
   override def showPedigreeChart(): Unit = if (selectedBunny?) {
-    val pedigreeChart = PedigreeChart(selectedBunny.get, ScalaFxViewConstants.PREFERRED_CHART_WIDTH, ScalaFxViewConstants.PREFERRED_CHART_HEIGHT).chartPane
+    val pedigreeChart = PedigreeChart(selectedBunny.get.bunny, ScalaFxViewConstants.PREFERRED_CHART_WIDTH, ScalaFxViewConstants.PREFERRED_CHART_HEIGHT).chartPane
     setFitParent(pedigreeChart)
     chartsPane.children = pedigreeChart
   } else chartsPane.children = ObservableBuffer.empty
@@ -146,8 +145,10 @@ class BaseAppController(private val simulationPane: AnchorPane,
     chartsPane.children = proportionsChartPane.get
   }
 
-  override def handleBunnyClick(bunny: Bunny): Unit = {
+  override def handleBunnyClick(bunny: BunnyView): Unit = {
+    if (selectedBunny?) selectedBunny.get.removeClickedEffect()
     selectedBunny = Some(bunny)
+    selectedBunny.get.addClickedEffect()
     chartSelectionPanelController --> { _.handleBunnyClick() }
   }
 }

@@ -19,6 +19,7 @@ import view.scalaFX.ScalaFxViewConstants.{SCENE_HEIGHT, SCENE_WIDTH}
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.utilities.FxmlUtils
 import util.PimpScala._
+import view.scalaFX.components.BunnyView
 
 object ScalaFXView extends View {
   var baseAppController: Option[BaseAppControllerInterface] = Option.empty
@@ -59,7 +60,7 @@ object ScalaFXView extends View {
     endStage.show()
   }
 
-  override def handleBunnyClick(bunny: Bunny): Unit = baseAppController --> { _.handleBunnyClick(bunny) }
+  override def handleBunnyClick(bunny: BunnyView): Unit = baseAppController --> { _.handleBunnyClick(bunny) }
 }
 
 object ScalaFxViewConstants {
