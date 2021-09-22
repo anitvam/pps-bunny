@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scalaFX.FXControllers.FactorsPanelController">
    <GridPane layoutX="108.0" layoutY="148.0" prefHeight="180.0" prefWidth="439.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="0.0">
       <columnConstraints>
@@ -51,31 +46,23 @@
                      <Insets left="5.0" top="5.0" />
                   </GridPane.margin>
                </Label>
-               <Label fx:id="factorIncomingLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="237.0" text="Fattore in corso..." textAlignment="CENTER" textFill="#8093f1" textOverrun="CENTER_ELLIPSIS" visible="false" wrapText="true" GridPane.columnIndex="1">
-                  <font>
-                     <Font name="System Bold" size="20.0" />
-                  </font>
-                  <GridPane.margin>
-                     <Insets top="5.0" />
-                  </GridPane.margin>
-               </Label>
             </GridPane>
          </GridPane>
       </AnchorPane>
       <AnchorPane prefHeight="30.0" prefWidth="129.0" GridPane.rowIndex="1">
-         <RadioButton fx:id="predatorRadioButton" contentDisplay="CENTER" layoutX="15.0" layoutY="7.0" mnemonicParsing="false" onAction="#predatorOnClick" text="Predatori" />
+         <CheckBox fx:id="predatorCheckBox" contentDisplay="CENTER" layoutX="15.0" layoutY="7.0" mnemonicParsing="false" onAction="#predatorOnClick" text="Predatori" />
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
-         <RadioButton fx:id="toughFoodRadioButton" contentDisplay="CENTER" layoutX="15.0" layoutY="7.0" mnemonicParsing="false" onAction="#toughFoodOnClick" text="Cibo non masticabile" />
+         <CheckBox fx:id="toughFoodCheckBox" contentDisplay="CENTER" layoutX="15.0" layoutY="7.0" mnemonicParsing="false" onAction="#toughFoodOnClick" text="Cibo non masticabile" />
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
-         <RadioButton fx:id="upperFoodRadioButton" contentDisplay="CENTER" layoutX="15.0" layoutY="8.0" mnemonicParsing="false" onAction="#upperFoodOnClick" text="Cibo in alto" />
+         <CheckBox fx:id="upperFoodCheckBox" contentDisplay="CENTER" layoutX="15.0" layoutY="8.0" mnemonicParsing="false" onAction="#upperFoodOnClick" text="Cibo in alto" />
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
-         <RadioButton fx:id="limitedFoodRadioButton" contentDisplay="CENTER" layoutX="15.0" layoutY="6.0" mnemonicParsing="false" onAction="#limitedFoodOnClick" text="Cibo scarso" />
+         <CheckBox fx:id="limitedFoodCheckBox" contentDisplay="CENTER" layoutX="15.0" layoutY="6.0" mnemonicParsing="false" onAction="#limitedFoodOnClick" text="Cibo scarso" />
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
-         <RadioButton fx:id="hostileTemperatureRadioButton" contentDisplay="CENTER" layoutX="15.0" layoutY="6.0" mnemonicParsing="false" onAction="#hostileTemperatureOnClick" text="Temperature ostili" />
+         <CheckBox fx:id="hostileTemperatureCheckBox" contentDisplay="CENTER" layoutX="15.0" layoutY="6.0" mnemonicParsing="false" onAction="#hostileTemperatureOnClick" text="Temperature ostili" />
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <ImageView fx:id="wolf" fitHeight="30.0" fitWidth="60.0" layoutX="21.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="0.0" />

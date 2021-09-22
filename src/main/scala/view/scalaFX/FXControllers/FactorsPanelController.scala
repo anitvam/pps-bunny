@@ -1,23 +1,21 @@
 package view.scalaFX.FXControllers
 
 import javafx.fxml.FXML
-import scalafx.scene.control.RadioButton
+import scalafx.scene.control.CheckBox
 import scalafx.scene.image.{Image, ImageView}
 import scalafxml.core.macros.sfxml
 
 sealed trait FactorsPanelControllerInterface {
-  /** initialize all the component */
+  /** initialize all the component inside the panel */
   def initialize(): Unit
-  /** Method called when a new generation is loaded that hides the Factors Incoming label*/
-  def hideFactorIncoming(): Unit
 }
 
 @sfxml
-class FactorsPanelController(@FXML private val predatorRadioButton: RadioButton,
-                             @FXML private val toughFoodRadioButton: RadioButton,
-                             @FXML private val upperFoodRadioButton: RadioButton,
-                             @FXML private val limitedFoodRadioButton: RadioButton,
-                             @FXML private val hostileTemperatureRadioButton: RadioButton,
+class FactorsPanelController(@FXML private val predatorCheckBox: CheckBox,
+                             @FXML private val toughFoodCheckBox: CheckBox,
+                             @FXML private val upperFoodCheckBox: CheckBox,
+                             @FXML private val limitedFoodCheckBox: CheckBox,
+                             @FXML private val hostileTemperatureCheckBox: CheckBox,
                              @FXML private val wolf: ImageView,
                              @FXML private val tough_food: ImageView,
                              @FXML private val high_food: ImageView,
@@ -45,17 +43,12 @@ class FactorsPanelController(@FXML private val predatorRadioButton: RadioButton,
     factorsImageViews foreach(i => insertFactorImage(i, i.getId))
   }
 
-  private def factorOnClick(factor: RadioButton): Unit = println(factor + " selezionato: " + factor.selected.value)
-  def predatorOnClick(): Unit = factorOnClick(predatorRadioButton)
-  def toughFoodOnClick(): Unit = factorOnClick(toughFoodRadioButton)
-  def upperFoodOnClick(): Unit = factorOnClick(upperFoodRadioButton)
-  def limitedFoodOnClick(): Unit = factorOnClick(limitedFoodRadioButton)
-  def hostileTemperatureOnClick(): Unit = factorOnClick(hostileTemperatureRadioButton)
+  private def factorOnClick(factor: CheckBox): Unit = println(factor + " selezionato: " + factor.selected.value)
+  def predatorOnClick(): Unit = factorOnClick(predatorCheckBox)
+  def toughFoodOnClick(): Unit = factorOnClick(toughFoodCheckBox)
+  def upperFoodOnClick(): Unit = factorOnClick(upperFoodCheckBox)
+  def limitedFoodOnClick(): Unit = factorOnClick(limitedFoodCheckBox)
+  def hostileTemperatureOnClick(): Unit = factorOnClick(hostileTemperatureCheckBox)
 
-  private def manageChoiceClick(): Unit = println("Factor clicked")
-
-  private def showFactorIncoming(): Unit = {  }
-
-  def hideFactorIncoming(): Unit = {}
 }
 
