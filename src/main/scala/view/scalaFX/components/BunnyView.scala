@@ -5,8 +5,12 @@ import model.genome.Alleles
 import scalafx.Includes._
 import scalafx.Includes.{at, double2DurationHelper}
 import scalafx.animation.{KeyFrame, Timeline}
+import scalafx.beans.property.ObjectProperty
+import scalafx.scene.effect.DropShadow
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.input.MouseEvent
+import scalafx.scene.layout.{BorderPane, Region}
+import scalafx.scene.paint.Color
 import scalafx.util.Duration
 import view.scalaFX.ScalaFXView
 import view.scalaFX.ScalaFxViewConstants._
@@ -38,6 +42,12 @@ trait BunnyView {
 
   /** Starts the bunny animation */
   def play(): Unit
+
+  /** Add clicked effect to this bunny */
+  def addClickedEffect(): Unit
+
+  /** Remove clicked effect from this bunny */
+  def removeClickedEffect(): Unit
 }
 
 object BunnyView {
@@ -54,7 +64,6 @@ object BunnyView {
       fitHeight = PREFERRED_BUNNY_SIZE
       preserveRatio = true
       scaleX = Direction.scaleXValue(Right)
-      onMouseClicked = (_: MouseEvent) => println("bunny click")
     }, bunny, Right, newX, newY)
   }
 
@@ -79,10 +88,10 @@ object BunnyView {
       }
 
     imageView.onMouseClicked = _ => {
-      ScalaFXView.handleBunnyClick(bunny)
+      ScalaFXView.handleBunnyClick(this)
     }
 
-     private def jump(): AnimationFrames = {
+    private def jump(): AnimationFrames = {
       checkDirection()
       Seq(
         at(0 s){
@@ -107,6 +116,10 @@ object BunnyView {
     }
 
     override def play(): Unit = timeline.play()
+
+    override def addClickedEffect(): Unit = imageView.effect =  new DropShadow(10, Color.Black)
+
+    override def removeClickedEffect(): Unit = imageView.effect = null
 
     /** Method that checks the actual direction of the bunny and update the orientation of its image */
     private def checkDirection(): Unit = {
