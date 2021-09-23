@@ -19,7 +19,9 @@ class TestTree extends FlatSpec with Matchers {
     assert(tree.elem == bunny)
   }
 
-  val bunnyWithParents: Bunny = nextGenerationBunnies(List.fill(5)(generateRandomFirstBunny)).filter(_.mom ?).head
+  val bunnyWithParents: Bunny =
+    nextGenerationBunnies(List.fill(5)(generateRandomFirstBunny)).filter(_.mom ?).head
+
   val tree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunnyWithParents)
 
   it should "contain his parents, if he has them" in {
@@ -28,13 +30,13 @@ class TestTree extends FlatSpec with Matchers {
     assert(tree.generations == 2)
   }
 
-  val fullTree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
+  var bunny: Bunny = generateRandomFirstBunny
 
   for (_ <- 0 to MAX_GENEALOGICAL_TREE_GENERATIONS) {
     bunny = nextGenerationBunnies(List.fill(5)(bunny)).filter(_.mom ?).head
   }
 
-  var bunny: Bunny = generateRandomFirstBunny
+  val fullTree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
 
   "A full genealogical tree " should "contain all the required generations" in {
     assert(fullTree.generations == MAX_GENEALOGICAL_TREE_GENERATIONS)
