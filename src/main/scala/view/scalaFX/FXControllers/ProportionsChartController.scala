@@ -60,7 +60,7 @@ class ProportionsChartController(val startPiePane:AnchorPane,
 }
 
 object PieChartConverters {
-  implicit def formStringToGeneKind(geneName:String):GeneKind = Genes.values.filter(_.prettyName == geneName).head
+  implicit def fromStringToGeneKind(geneName:String):GeneKind = Genes.values.filter(_.prettyName == geneName).head
 
   implicit def percentage(d:(Int, Int)):Double = (d._1.toDouble*100/d._2.toDouble).round.toDouble
 
