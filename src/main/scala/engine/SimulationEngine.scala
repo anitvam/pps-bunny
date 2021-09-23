@@ -1,10 +1,10 @@
 package engine
 
 import cats.effect.IO
-import engine.GenerationTimer.{ resetTimer, waitFor }
+import engine.GenerationTimer.{resetTimer, waitFor}
 import engine.Simulation._
 import engine.SimulationConstants._
-import engine.SimulationHistory.{ getBunniesNumber, getGenerationNumber }
+import engine.SimulationHistory.{getBunniesNumber, getGenerationNumber}
 import model.world.GenerationsUtils._
 
 object SimulationEngine {
@@ -24,12 +24,8 @@ object SimulationEngine {
       _ <- updateView(HighTemperaturePhase(getGenerationNumber))
       _ <- waitFor(GENERATION_END)
       _ <- startNewGeneration
-      _ <-
-        if (
-          getGenerationNumber < MAX_GENERATIONS_NUMBER &&
-          getBunniesNumber < MAX_ALIVE_BUNNIES
-        ) simulationLoop()
-        else showEnd(StartPhase(getGenerationNumber))
+      _ <- if (getGenerationNumber < MAX_GENERATIONS_NUMBER && getBunniesNumber < MAX_ALIVE_BUNNIES) simulationLoop()
+      else showEnd(StartPhase(getGenerationNumber))
     } yield ()
   }
 
