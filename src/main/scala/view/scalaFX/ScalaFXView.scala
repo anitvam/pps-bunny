@@ -62,6 +62,14 @@ object ScalaFXView extends View {
 }
 
 object ScalaFxViewConstants {
+  private val SCREEN_BOUNDS = Screen.getPrimary.getVisualBounds
+  private val DEFAULT_SCENE_WIDTH = 1500
+  private val DEFAULT_SCENE_HEIGHT = 900
+  private val WIDTH_SCREEN_BOUND = 300
+  private val HEIGHT_SCREEN_BOUND = 60
+  private val BUNNY_PANEL_PERCENTUAL_WIDTH = 0.6
+  private val BUNNY_PANEL_PERCENTUAL_HEIGTH = 0.25
+  private val BUNNY_PANEL_PERCENTUAL_SKY_ZONE = 0.1
 
   /** Size of the bunny picture */
   val PREFERRED_BUNNY_SIZE = 80
@@ -96,16 +104,10 @@ object ScalaFxViewConstants {
 
   /** Bunny panel bound for the sky zone */
   val PANEL_SKY_ZONE: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_SKY_ZONE).toInt
+
   val PREFERRED_CHART_WIDTH: Int = (SCENE_WIDTH * 0.55).toInt
+
   val PREFERRED_CHART_HEIGHT: Int = (SCENE_HEIGHT * 0.45).toInt
-  private val SCREEN_BOUNDS = Screen.getPrimary.getVisualBounds
-  private val DEFAULT_SCENE_WIDTH = 1500
-  private val DEFAULT_SCENE_HEIGHT = 900
-  private val WIDTH_SCREEN_BOUND = 300
-  private val HEIGHT_SCREEN_BOUND = 60
-  private val BUNNY_PANEL_PERCENTUAL_WIDTH = 0.6
-  private val BUNNY_PANEL_PERCENTUAL_HEIGTH = 0.25
-  private val BUNNY_PANEL_PERCENTUAL_SKY_ZONE = 0.1
 
   /** Constants for the tree visualizaiton */
   object GenealogicalTree {
