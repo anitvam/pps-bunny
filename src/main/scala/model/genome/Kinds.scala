@@ -1,12 +1,11 @@
 package model.genome
 
-import scala.language.postfixOps
 import model.MultipleDominanceAssignmentException
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
 import util.PimpScala.RichOption
 
-import scala.language.implicitConversions
+import scala.language.{implicitConversions, postfixOps}
 import scala.util.Random
 
 /**
@@ -56,25 +55,31 @@ object Genes extends Enumeration {
    */
   protected case class GenesVal(base: AlleleKind,
                                 mutated: AlleleKind,
-                                letter: String) extends super.Val
+                                letter: String,
+                                prettyName: String) extends super.Val
   import scala.language.implicitConversions
   implicit def valueToGenesVal(x: Value): GenesVal = x.asInstanceOf[GenesVal]
 
   val FUR_COLOR: GenesVal =  GenesVal(base = Alleles.WHITE_FUR,
                                 mutated = Alleles.BROWN_FUR,
-                                letter = "f")
+                                letter = "f",
+                                prettyName = "Colore del pelo")
   val FUR_LENGTH: GenesVal = GenesVal(base = Alleles.SHORT_FUR,
                                 mutated = Alleles.LONG_FUR,
-                                letter = "l")
+                                letter = "l",
+                                prettyName = "Lunghezza del pelo")
   val TEETH: GenesVal =      GenesVal(base = Alleles.SHORT_TEETH,
                                 mutated = Alleles.LONG_TEETH,
-                                letter = "t")
+                                letter = "t",
+                                prettyName = "Lunghezza denti")
   val EARS: GenesVal =       GenesVal(base = Alleles.HIGH_EARS,
                                 mutated = Alleles.LOW_EARS,
-                                letter = "e")
+                                letter = "e" ,
+                                prettyName = "Orecchie")
   val JUMP: GenesVal =       GenesVal(base = Alleles.LOW_JUMP,
                                 mutated = Alleles.HIGH_JUMP,
-                                letter = "j")
+                                letter = "j",
+                                prettyName = "Altezza salto")
 }
 
 object KindsUtils {
