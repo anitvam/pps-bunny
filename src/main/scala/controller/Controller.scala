@@ -1,20 +1,23 @@
 package controller
 
-import engine.{SimulationEngine, SimulationHistory}
 import engine.SimulationEngine.simulationLoop
+import engine.SimulationHistory
 import model.mutation.Mutation
-import model.world.{Climate, Environment, Summer, Winter}
 import model.world.Environment.Factors
 import model.world.Generation.Population
+import model.world.{ Climate, Summer, Winter }
 import scalafx.application.Platform
 import view.scalaFX.ScalaFXView
 
-
 object Controller {
 
-  /** Method that starts the simulation
-   * @param climate the Environment Climate
-   * @param factors the Environment Factors*/
+  /**
+   * Method that starts the simulation
+   * @param climate
+   *   the Environment Climate
+   * @param factors
+   *   the Environment Factors
+   */
   def startSimulation(climate: Climate, factors: Factors): Unit = {
     SimulationHistory changeEnvironmentClimate climate
     simulationLoop().unsafeRunAsyncAndForget()
@@ -26,8 +29,11 @@ object Controller {
   /** Method that sets the Winter Climate inside Environment */
   def setWinterClimate(): Unit = SimulationHistory changeEnvironmentClimate Winter()
 
-  /** Method that insert a mutation inside the simulation
-   * @param mutation the Mutation */
+  /**
+   * Method that insert a mutation inside the simulation
+   * @param mutation
+   *   the Mutation
+   */
   def insertMutation(mutation: Mutation): Unit = SimulationHistory introduceMutation mutation
 
   /** Method that shows the end of the simulation on the Application GUI */

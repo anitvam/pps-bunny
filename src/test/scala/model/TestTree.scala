@@ -1,12 +1,13 @@
 package model
 
-import scala.language.postfixOps
 import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
 import model.Bunny.generateRandomFirstBunny
 import model.Tree.generateTree
 import model.world.Reproduction.nextGenerationBunnies
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{ FlatSpec, Matchers }
 import util.PimpScala.RichOption
+
+import scala.language.postfixOps
 
 class TestTree extends FlatSpec with Matchers {
 
@@ -18,20 +19,24 @@ class TestTree extends FlatSpec with Matchers {
     assert(tree.elem == bunny)
   }
 
-  val bunnyWithParents: Bunny = nextGenerationBunnies(List.fill(5)(generateRandomFirstBunny)).filter(_.mom?).head
+  val bunnyWithParents: Bunny = nextGenerationBunnies(List.fill(5)(generateRandomFirstBunny)).filter(_.mom ?).head
   val tree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunnyWithParents)
+
   it should "contain his parents, if he has them" in {
     assert(tree.asInstanceOf[Node[Bunny]].momTree.elem == bunnyWithParents.mom.get)
     assert(tree.asInstanceOf[Node[Bunny]].dadTree.elem == bunnyWithParents.dad.get)
     assert(tree.generations == 2)
   }
 
-  var bunny: Bunny = generateRandomFirstBunny
-  for (_ <- 0 to MAX_GENEALOGICAL_TREE_GENERATIONS) {
-    bunny = nextGenerationBunnies(List.fill(5)(bunny)).filter(_.mom?).head
-  }
   val fullTree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
-  "A full genealogical tree "should "contain all the required generations" in {
+
+  for (_ <- 0 to MAX_GENEALOGICAL_TREE_GENERATIONS) {
+    bunny = nextGenerationBunnies(List.fill(5)(bunny)).filter(_.mom ?).head
+  }
+
+  var bunny: Bunny = generateRandomFirstBunny
+
+  "A full genealogical tree " should "contain all the required generations" in {
     assert(fullTree.generations == MAX_GENEALOGICAL_TREE_GENERATIONS)
   }
 
@@ -52,5 +57,5 @@ class TestTree extends FlatSpec with Matchers {
       bunniesToCheck = bunniesToCheck ++ Seq((mom, momTree), (dad, dadTree))
     })
   }
-}
 
+}
