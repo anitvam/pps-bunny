@@ -66,27 +66,27 @@ class BaseAppController(
     BunnyImage
     val loadedMutationChoicePanel = loadFXMLResource[jfxs.AnchorPane]("/fxml/mutationsPanel.fxml")
     mutationChoicePane.children += loadedMutationChoicePanel._1
-    mutationsPanelController = Some(loadedMutationChoicePanel._2.getController[MutationsPanelControllerInterface])
+    mutationsPanelController =
+      Some(loadedMutationChoicePanel._2.getController[MutationsPanelControllerInterface])
 
     val loadedChartChoice = loadFXMLResource[jfxs.AnchorPane]("/fxml/chartChoiceSelection.fxml")
     chartChoicePane.children += loadedChartChoice._1
     chartSelectionPanelController = Some(loadedChartChoice._2.getController[ChartChoiceControllerInterface])
-    chartSelectionPanelController --> { _.initialize(this) }
+    chartSelectionPanelController --> {
+      _.initialize(this)
+    }
 
     val loadedProportionsChartView = loadFXMLResource[jfxs.AnchorPane]("/fxml/proportionsChartPane.fxml")
     proportionsChartPane = Some(loadedProportionsChartView._1)
     proportionsChartController = Some(loadedProportionsChartView._2.getController[ChartController])
 
     AnchorPane.setAnchors(proportionsChartPane.get, 0, 0, 0, 0)
-    proportionsChartController --> { _.initialize() }
+    proportionsChartController --> {
+      _.initialize()
+    }
 
     showPopulationChart()
-
-//    chartsPane.children =  PopulationChart.chart(325, 500)
   }
-
-  override def showPopulationChart(): Unit = chartsPane.children =
-    PopulationChart.chart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH)
 
   /** Handler of Start button click */
   def startSimulationClick(): Unit = {
@@ -106,6 +106,9 @@ class BaseAppController(
     simulationPane.background = WinterImage()
   }
 
+  override def showPopulationChart(): Unit = chartsPane.children = PopulationChart
+    .chart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH)
+
   def showBunnies(bunnies: Population, generationPhase: GenerationPhase): Unit = {
     proportionsChartController.get.updateChart(generationPhase, bunnies)
     // Bunny visualization inside simulationPane
@@ -122,11 +125,15 @@ class BaseAppController(
 
       generationLabel.text = "Generazione " + generationPhase.generationNumber
       if (generationPhase.generationNumber > 0) {
-        mutationsPanelController --> { _.hideMutationIncoming() }
+        mutationsPanelController --> {
+          _.hideMutationIncoming()
+        }
       }
 
       // Start movement of the new bunnies
-      newBunnyViews foreach { _.play() }
+      newBunnyViews foreach {
+        _.play()
+      }
     }
   }
 
