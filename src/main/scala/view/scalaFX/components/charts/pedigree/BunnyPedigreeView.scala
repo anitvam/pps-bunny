@@ -54,13 +54,13 @@ object BunnyPedigreeView {
 
   private def deadImageView: ImageView = infoImageView("/img/death.png")
 
-  private def mutationImageView: ImageView = infoImageView("/img/mutation.png")
-
   private def infoImageView(path: String): ImageView = new ImageView {
     image = new Image(path)
     fitWidth = bunnyIconSize / TREE_INFO_PROPORTION
     fitHeight = bunnyIconSize / TREE_INFO_PROPORTION
   }
+
+  private def mutationImageView: ImageView = infoImageView("/img/mutation.png")
 
   private case class BunnyPedigreeViewImpl(override val bunny: Bunny) extends BunnyPedigreeView {
     override val pane: Pane = new VBox(bunnyView(bunny), allelesView(bunny), infoView(bunny))
