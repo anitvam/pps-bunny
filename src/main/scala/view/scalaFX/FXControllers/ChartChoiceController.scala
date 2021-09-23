@@ -1,6 +1,7 @@
 package view.scalaFX.FXControllers
 
 import scalafx.scene.control.RadioButton
+import scalafx.scene.layout.VBox
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
 
@@ -14,19 +15,30 @@ sealed trait ChartChoiceControllerInterface {
 }
 
 @sfxml
-class ChartChoiceController( private val pedigreeRadioButton: RadioButton ) extends ChartChoiceControllerInterface {
+class ChartChoiceController( private val pedigreeRadioButton: RadioButton,
+                             private val legendBox: VBox) extends ChartChoiceControllerInterface {
 
   private var baseAppController: Option[BaseAppControllerInterface] = None
 
-  override def initialize(controller: BaseAppControllerInterface): Unit = baseAppController = Some(controller)
+  override def initialize(controller: BaseAppControllerInterface): Unit = {
+    legendBox.setVisible(false)
+    baseAppController = Some(controller)
+  }
 
   override def handleBunnyClick(): Unit = if (pedigreeRadioButton.selected.value) baseAppController --> { _.showPedigreeChart() }
 
-  def showPopulationChart(): Unit = baseAppController --> { _.showPopulationChart() }
+  def showPopulationChart(): Unit = {
+    legendBox.setVisible(false)
+    baseAppController --> { _.showPopulationChart() }
+  }
 
-  def showMutationsChart(): Unit = baseAppController --> { _.showProportionsChart() }
+  def showMutationsChart(): Unit = {
+    legendBox.setVisible(false)
+    baseAppController --> { _.showProportionsChart() }
+  }
 
-  def showPedigreeChart(): Unit = baseAppController --> { _.showPedigreeChart() }
-
-
+  def showPedigreeChart(): Unit = {
+    legendBox.setVisible(true)
+    baseAppController --> { _.showPedigreeChart() }
+  }
 }

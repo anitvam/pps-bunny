@@ -63,11 +63,11 @@ object Genes extends Enumeration {
   val FUR_COLOR: GenesVal =  GenesVal(base = Alleles.WHITE_FUR,
                                 mutated = Alleles.BROWN_FUR,
                                 letter = "f",
-                                prettyName = "Colore del pelo")
+                                prettyName = "Colore pelliccia")
   val FUR_LENGTH: GenesVal = GenesVal(base = Alleles.SHORT_FUR,
                                 mutated = Alleles.LONG_FUR,
                                 letter = "l",
-                                prettyName = "Lunghezza del pelo")
+                                prettyName = "Lunghezza pelo")
   val TEETH: GenesVal =      GenesVal(base = Alleles.SHORT_TEETH,
                                 mutated = Alleles.LONG_TEETH,
                                 letter = "t",
