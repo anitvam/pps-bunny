@@ -53,21 +53,14 @@ object BunnyView {
     val newX = Random.nextInt(PREFERRED_BUNNY_PANEL_WIDTH)
     val newY = Random.nextInt(PREFERRED_BUNNY_PANEL_HEIGHT) + PANEL_SKY_ZONE
 
-    BunnyViewImpl(
-      new ImageView {
-        image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
-        x = newX
-        y = newY
-        fitWidth = PREFERRED_BUNNY_SIZE
-        fitHeight = PREFERRED_BUNNY_SIZE
-        preserveRatio = true
-        scaleX = Direction.scaleXValue(Right)
-      },
-      bunny,
-      Right,
-      newX,
-      newY
-    )
+    val image = new ImageView {
+      image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
+      x = newX
+      y = newY
+      preserveRatio = true
+      scaleX = Direction.scaleXValue(Right)
+    }
+    BunnyViewImpl(image, bunny, Right, newX, newY)
   }
 
   private case class BunnyViewImpl(
