@@ -2,7 +2,6 @@ package view.scalaFX.FXControllers
 
 import controller.Controller
 import javafx.scene.{layout => jfxs}
-import model.genome.KindsUtils.resetDominance
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
@@ -17,7 +16,7 @@ import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.utilities.EnvironmentImageUtils._
 import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
-import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
+import view.scalaFX.utilities.{SummerImage, WinterImage}
 
 import scala.language.postfixOps
 
@@ -51,7 +50,7 @@ class BaseAppController(
     private val startButton: Button,
     private val generationLabel: Label,
     private val chartChoicePane: AnchorPane,
-    private val restartButton : Button
+    private val resetButton : Button
 ) extends BaseAppControllerInterface {
 
   private var bunnyViews: Seq[BunnyView] = Seq.empty
@@ -62,12 +61,6 @@ class BaseAppController(
   private var proportionsChartPane: Option[AnchorPane] = Option.empty
 
   override def initialize(): Unit = {
-    // Load the default environment background
-    simulationPane.background = SummerImage()
-
-    restartButton.setVisible(false)
-
-    BunnyImage
     val loadedMutationChoicePanel = loadFXMLResource[jfxs.AnchorPane]("/fxml/mutationsPanel.fxml")
     mutationChoicePane.children += loadedMutationChoicePanel._1
     mutationsPanelController =
@@ -89,20 +82,34 @@ class BaseAppController(
       _.initialize()
     }
 
+    this.initializeView()
+  }
+
+  private def initializeView(): Unit = {
+    // Load the default environment background
+    simulationPane.background = SummerImage()
+    resetButton.setVisible(false)
     showPopulationChart()
+  }
+
+  private def resetView(): Unit = {
+    this.initializeView()
+    startButton.setVisible(true)
+    mutationsPanelController --> {_.resetMutationsPanel()}
   }
 
   /** Handler of Start button click */
   def startSimulationClick(): Unit = {
     startButton.setVisible(false)
-    restartButton.setVisible(true)
+    resetButton.setVisible(true)
     Controller.startSimulation(simulationPane.background, List.empty)
   }
 
-  /** Handler of Restart button click */
-  def restartSimulationClick(): Unit = {
-    resetDominance()
-    Controller.startSimulation(simulationPane.background, List.empty)
+  /** Handler of Reset button click */
+  def resetSimulationClick(): Unit = {
+    println("restart click")
+    Controller.resetSimulation()
+    this.resetView()
   }
 
   /** Handler of Summer button click */

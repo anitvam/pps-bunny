@@ -2,14 +2,21 @@ package controller
 
 import engine.SimulationEngine.simulationLoop
 import engine.SimulationHistory
+import engine.SimulationHistory.resetHistory
+import model.genome.KindsUtils.resetDominance
 import model.mutation.Mutation
 import model.world.Environment.Factors
 import model.world.Generation.Population
-import model.world.{ Climate, Summer, Winter }
+import model.world.{Climate, Summer, Winter}
 import scalafx.application.Platform
 import view.scalaFX.ScalaFXView
 
 object Controller {
+
+  def resetSimulation(): Unit = {
+    resetDominance()
+    resetHistory()
+  }
 
   /**
    * Method that starts the simulation
