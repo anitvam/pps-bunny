@@ -8,9 +8,9 @@ import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
 import scalafx.geometry.Side
-import scalafx.scene.chart.{LineChart, NumberAxis, XYChart}
+import scalafx.scene.chart.{ LineChart, NumberAxis, XYChart }
 import util.PimpScala.RichOption
-import view.scalaFX.components.charts.LineChartComponentFactory.{createEmptySeries, createXYChartData}
+import view.scalaFX.components.charts.LineChartComponentFactory.{ createEmptySeries, createXYChartData }
 import view.scalaFX.components.charts.PopulationChartDataType._
 import view.scalaFX.utilities.PimpScalaFXChartLibrary._
 
@@ -90,6 +90,7 @@ case class PopulationChart(height: Double, width: Double) {
   val yAxis: NumberAxis = createNumberAxis("Population Axis", 0, 30, 5)
   var mutations: MutationsChartSeries = MutationsChartSeries()
   var total: ChartSeries = ChartSeries(SeriesData(), createEmptySeries("Total"))
+
   val chart: LineChart[Number, Number] =
     createLineChart(xAxis, yAxis, height, width, total.xySeries :: mutations.xySeries)
 
@@ -121,11 +122,13 @@ object ChartConverters {
   object lastPopulationValue {
     def unapply(s: Seq[ChartPoint]): Option[Int] = Some(s.last.point.y)
   }
+
 }
 
 /** A factory for all the components of a LineChart */
 object LineChartComponentFactory {
-  val fromNameToStyle : String => String = _.replace(" ", "_")
+  val fromNameToStyle: String => String = _.replace(" ", "_")
+
   /**
    * Creates a [[NumberAxis]]
    * @param name
@@ -220,25 +223,11 @@ object LineChartComponentFactory {
     chart.legend.getLabels.foreach(li => {
       seriesData.getSeries(li.text.value) --> { s =>
         s.addStyle("population-chart-legend-item")
-        li.onMouseClicked = _ =>
-          s.getName match {
-            case "Total" =>
-              s.enabled = true
-              seriesData filterAndForeach (_.getName != "Total", _.enabled = false)
-              chart.legend.setLabelAsClicked("Total")
-            case _ =>
-              //toggle series visibility
-              s.enabled = !s.getNode.isVisible
-              if (s.getNode.isVisible) {
-                chart.legend.setLabelAsClicked(s.getName)
-                seriesData filterAndForeach (_.getName != s.getName, _.enabled = false)
-              } else {
-                seriesData.getSeries("Total") --> {
-                  _.enabled = true
-                }
-                chart.legend.setLabelAsClicked("Total")
-              }
-          }
+        li.onMouseClicked = _ => {
+          s.enabled = !s.getNode.isVisible
+          if (s.getNode.isVisible) chart.legend.setLabelAsClicked(s.getName)
+          else chart.legend.setLabelAsUnClicked(s.getName)
+        }
       }
     })
     chart
