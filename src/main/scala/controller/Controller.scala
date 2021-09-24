@@ -16,7 +16,6 @@ object Controller {
   def resetSimulation(): Unit = {
     resetDominance()
     resetHistory()
-    //simulationLoop()
   }
 
   /**

@@ -34,5 +34,5 @@ object Simulation {
     SimulationHistory.startNextGeneration()
   }
 
-  implicit def unitToIO(exp: => Unit): IO[Unit] = IO { exp }
+  implicit def unitToIO(exp: => Unit): IO[Unit] = IO {exp}
 }

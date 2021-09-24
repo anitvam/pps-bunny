@@ -9,7 +9,7 @@ import model.world.GenerationsUtils._
 
 object SimulationEngine {
 
-  def simulationLoop(): IO.cancellable[Unit] = {
+  def simulationLoop(): IO[Unit] = {
     for {
       _ <- resetTimer
       _ <- updateView(StartPhase(getGenerationNumber))
