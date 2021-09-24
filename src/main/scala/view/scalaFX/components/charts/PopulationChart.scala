@@ -121,12 +121,11 @@ object ChartConverters {
   object lastPopulationValue {
     def unapply(s: Seq[ChartPoint]): Option[Int] = Some(s.last.point.y)
   }
-
 }
 
 /** A factory for all the components of a LineChart */
 object LineChartComponentFactory {
-
+  val fromNameToStyle : String => String = _.replace(" ", "_")
   /**
    * Creates a [[NumberAxis]]
    * @param name
@@ -182,7 +181,7 @@ object LineChartComponentFactory {
       point
         .nodeProperty()
         .addListener(_ => {
-          point.getNode.styleClass ++= Seq("chart-line-mySymbol", series.getName.replace(" ", "_"))
+          point.getNode.styleClass ++= Seq("chart-line-mySymbol", fromNameToStyle(series.getName))
           point.setExtraValue(v)
           point.getNode.visible = if (v) series.enabled else false
         })
@@ -212,8 +211,8 @@ object LineChartComponentFactory {
       legendSide = Side.Right
     }
     chart ++= seriesData
-    seriesData.foreach(s => s.addStyle(s.getName.replace(" ", "_")))
-    chart.legend.getItems.foreach(i => i.getSymbol.styleClass += i.getText.replace(" ", "_"))
+    seriesData.foreach(s => s.addStyle(fromNameToStyle(s.getName)))
+    chart.legend.getItems.foreach(i => i.getSymbol.styleClass += fromNameToStyle(i.getText))
     //At the beginning only the series "Total" is shown
     chart.legend.setLabelAsClicked("Total")
     seriesData.filterAndForeach(_.getName != "Total", _.enabled = false)
