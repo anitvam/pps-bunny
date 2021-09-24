@@ -80,8 +80,16 @@ object PopulationChart {
   val chart: (Double, Double) => LineChart[Number, Number] =
     createLineChart(xAxis, yAxis, _, _, total.xySeries :: mutations.xySeries)
 
-  var mutations: MutationsChartSeries = MutationsChartSeries()
-  var total: ChartSeries = ChartSeries(SeriesData(), createEmptySeries("Total"))
+  val initMutations: MutationsChartSeries = MutationsChartSeries()
+  val initTotal: ChartSeries = ChartSeries(SeriesData(), createEmptySeries("Total"))
+
+  var mutations: MutationsChartSeries = initMutations
+  var total: ChartSeries = initTotal
+
+  def resetChart(): Unit = {
+    mutations = initMutations
+    total = initTotal
+  }
 
   def updateChart(generationPhase: GenerationPhase, population: Population): Unit = {
     import ChartConverters._

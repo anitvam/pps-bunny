@@ -10,7 +10,7 @@ import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout.AnchorPane
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
-import view.scalaFX.ScalaFxViewConstants
+import view.scalaFX.{ScalaFXView, ScalaFxViewConstants}
 import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
@@ -93,21 +93,25 @@ class BaseAppController(
   }
 
   private def resetView(): Unit = {
-    this.initializeView()
-    startButton.setVisible(true)
+    this.hideBunnies()
+    generationLabel.text = ""
+    PopulationChart.resetChart()
     mutationsPanelController --> {_.resetMutationsPanel()}
+    startButton.setVisible(true)
+    this.initializeView()
   }
 
   /** Handler of Start button click */
   def startSimulationClick(): Unit = {
     startButton.setVisible(false)
     resetButton.setVisible(true)
+    ScalaFXView.stopped = false
     Controller.startSimulation(simulationPane.background, List.empty)
   }
 
   /** Handler of Reset button click */
   def resetSimulationClick(): Unit = {
-    println("restart click")
+    ScalaFXView.stopped = true
     Controller.resetSimulation()
     this.resetView()
   }
@@ -124,36 +128,42 @@ class BaseAppController(
     simulationPane.background = WinterImage()
   }
 
-  override def showPopulationChart(): Unit = chartsPane.children = PopulationChart
-    .chart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH)
+  private def hideBunnies(): Unit ={
+    bunnyViews = Seq.empty
+    simulationPane.children = Seq.empty
+  }
 
   def showBunnies(bunnies: Population, generationPhase: GenerationPhase): Unit = {
-    proportionsChartController.get.updateChart(generationPhase, bunnies)
-    // Bunny visualization inside simulationPane
-    if (bunnyViews.size != bunnies.size) {
-      val newBunnyViews = bunnies filter {
-        _.age == 0
-      } map {
-        BunnyView(_)
-      }
-      bunnyViews = bunnyViews.filter(_.bunny.alive) ++ newBunnyViews
-      simulationPane.children = bunnyViews map {
-        _.imageView
-      }
+      proportionsChartController.get.updateChart(generationPhase, bunnies)
 
-      generationLabel.text = "Generazione " + generationPhase.generationNumber
-      if (generationPhase.generationNumber > 0) {
-        mutationsPanelController --> {
-          _.hideMutationIncoming()
+    // Bunny visualization inside simulationPane
+      if (bunnyViews.size != bunnies.size) {
+        val newBunnyViews = bunnies filter {
+          _.age == 0
+        } map {
+          BunnyView(_)
+        }
+        bunnyViews = bunnyViews.filter(_.bunny.alive) ++ newBunnyViews
+        simulationPane.children = bunnyViews map {
+          _.imageView
+        }
+
+        generationLabel.text = "Generazione " + generationPhase.generationNumber
+        if (generationPhase.generationNumber > 0) {
+          mutationsPanelController --> {
+            _.hideMutationIncoming()
+          }
+        }
+
+        // Start movement of the new bunnies
+        newBunnyViews foreach {
+          _.play()
         }
       }
-
-      // Start movement of the new bunnies
-      newBunnyViews foreach {
-        _.play()
-      }
-    }
   }
+
+  override def showPopulationChart(): Unit = chartsPane.children = PopulationChart
+    .chart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH)
 
   override def showPedigreeChart(): Unit =
     if (selectedBunny ?) {
