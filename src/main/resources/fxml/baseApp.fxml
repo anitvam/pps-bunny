@@ -107,11 +107,6 @@
                                         <Insets />
                                     </GridPane.margin>
                                 </HBox>
-                        <Button fx:id="resetButton" mnemonicParsing="false" text="Reset" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="6" onAction="#resetSimulationClick">
-                           <GridPane.margin>
-                              <Insets right="40.0"/>
-                           </GridPane.margin>
-                        </Button>
                             </children>
                      <GridPane.margin>
                         <Insets />

@@ -10,7 +10,7 @@ import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout.AnchorPane
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
-import view.scalaFX.{ScalaFXView, ScalaFxViewConstants}
+import view.scalaFX.ScalaFxViewConstants
 import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
@@ -24,6 +24,8 @@ sealed trait BaseAppControllerInterface {
 
   /** Method that initialize the application interface */
   def initialize(): Unit
+
+  def reset():Unit
 
   /** Method that shows population chart inside chartsPane */
   def showPopulationChart(): Unit
@@ -49,8 +51,7 @@ class BaseAppController(
     private val factorChoicePane: AnchorPane,
     private val startButton: Button,
     private val generationLabel: Label,
-    private val chartChoicePane: AnchorPane,
-    private val resetButton : Button
+    private val chartChoicePane: AnchorPane
 ) extends BaseAppControllerInterface {
 
   private var bunnyViews: Seq[BunnyView] = Seq.empty
@@ -88,33 +89,29 @@ class BaseAppController(
   private def initializeView(): Unit = {
     // Load the default environment background
     simulationPane.background = SummerImage()
-    resetButton.setVisible(false)
     showPopulationChart()
   }
 
-  private def resetView(): Unit = {
-    this.hideBunnies()
+  private def resetSimulationPanel(): Unit ={
+    bunnyViews = Seq.empty
+    simulationPane.children = Seq.empty
     generationLabel.text = ""
+    startButton.setVisible(true)
+  }
+
+  def reset(): Unit = {
+    this.resetSimulationPanel()
     PopulationChart.resetChart()
     mutationsPanelController --> {_.resetMutationsPanel()}
-    startButton.setVisible(true)
     this.initializeView()
   }
 
   /** Handler of Start button click */
   def startSimulationClick(): Unit = {
     startButton.setVisible(false)
-    resetButton.setVisible(true)
-    ScalaFXView.stopped = false
     Controller.startSimulation(simulationPane.background, List.empty)
   }
 
-  /** Handler of Reset button click */
-  def resetSimulationClick(): Unit = {
-    ScalaFXView.stopped = true
-    Controller.resetSimulation()
-    this.resetView()
-  }
 
   /** Handler of Summer button click */
   def setEnvironmentSummer(): Unit = {
@@ -126,11 +123,6 @@ class BaseAppController(
   def setEnvironmentWinter(): Unit = {
     Controller.setWinterClimate()
     simulationPane.background = WinterImage()
-  }
-
-  private def hideBunnies(): Unit ={
-    bunnyViews = Seq.empty
-    simulationPane.children = Seq.empty
   }
 
   def showBunnies(bunnies: Population, generationPhase: GenerationPhase): Unit = {

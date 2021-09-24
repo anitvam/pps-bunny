@@ -13,7 +13,7 @@ import view.scalaFX.ScalaFXView
 
 object Controller {
 
-  def resetSimulation(): Unit = {
+  private def reset: Unit = {
     resetDominance()
     resetHistory()
   }
@@ -44,7 +44,10 @@ object Controller {
   def insertMutation(mutation: Mutation): Unit = SimulationHistory introduceMutation mutation
 
   /** Method that shows the end of the simulation on the Application GUI */
-  def showEnd(): Unit = Platform runLater { ScalaFXView.showEnd() }
+  def showEnd(): Unit = Platform runLater {
+    ScalaFXView.showEnd()
+    this.reset
+  }
 
   def population: Population = SimulationHistory.getActualPopulation
 

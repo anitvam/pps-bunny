@@ -22,7 +22,6 @@ import view.scalaFX.utilities.FxmlUtils
 
 object ScalaFXView extends View {
   var baseAppController: Option[BaseAppControllerInterface] = Option.empty
-  var stopped = false
 
   def start(): Unit = {
     val loadedRootPanel = FxmlUtils.loadFXMLResource[jfxs.Parent]("/fxml/baseApp.fxml")
@@ -39,10 +38,8 @@ object ScalaFXView extends View {
   }
 
   def updateView(generationPhase: GenerationPhase, bunnies: Population): Unit = Platform.runLater {
-    if (!this.stopped) {
-      baseAppController --> { _.showBunnies(bunnies, generationPhase) }
-      PopulationChart.updateChart(generationPhase, bunnies)
-    }
+    baseAppController --> { _.showBunnies(bunnies, generationPhase) }
+    PopulationChart.updateChart(generationPhase, bunnies)
   }
 
   override def showEnd(): Unit = {
@@ -59,6 +56,8 @@ object ScalaFXView extends View {
       resizable = false
     }
     endStage.show()
+
+    Platform.runLater { baseAppController --> { _.reset() } }
   }
 
   override def handleBunnyClick(bunny: BunnyView): Unit = baseAppController --> { _.handleBunnyClick(bunny) }
