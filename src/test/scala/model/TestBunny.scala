@@ -35,9 +35,17 @@ class TestBunny extends FlatSpec with Matchers {
 
   they should "contain every Bunny in the original group except from one, if they are odd" in {
     val someBunnies = Seq.fill(11)(generateRandomFirstBunny)
+    println(combineCouples(someBunnies))
     val bunniesInCouples = combineCouples(someBunnies).flatMap(couple => List(couple._1, couple._2))
     assert(someBunnies.count(b => !bunniesInCouples.contains(b)) == 1)
     someBunnies.filter(b => bunniesInCouples.contains(b)).foreach(b => assert(bunniesInCouples.contains(b)))
+  }
+
+  they should "be empty, if there was only one Bunny" in {
+    val oneBunny = Seq(generateRandomFirstBunny)
+    val bunniesInCouples = combineCouples(oneBunny)
+    println(bunniesInCouples)
+    assert(bunniesInCouples.isEmpty)
   }
 
   val mom: FirstBunny = generateRandomFirstBunny
@@ -77,9 +85,19 @@ class TestBunny extends FlatSpec with Matchers {
     assert(children.size == (bunniesNum/2)*4)
   }
 
+  they should "be zero if there were no couples and just one Bunny" in {
+    val oneBunny = Seq(generateRandomFirstBunny)
+    val children = generateAllChildren(oneBunny)
+    assert(children.size == 0)
+  }
+
   val nextGenBunnies: Seq[Bunny] = nextGenerationBunnies(bunnies)
   "Next generation " should "contain 4 children for each couple and the previous bunnies" in {
     assert(nextGenBunnies.size == (bunniesNum/2)*4 + bunniesNum)
+  }
+
+  it should "contain just one bunny if there was only one" in {
+    assert(nextGenerationBunnies(Seq(generateRandomFirstBunny)).size == 1)
   }
 
   it should "contain all of the original bunnies in the next generation" in {
