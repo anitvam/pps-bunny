@@ -27,18 +27,14 @@ class ChartChoiceController( private val pedigreeRadioButton: RadioButton,
 
   override def handleBunnyClick(): Unit = if (pedigreeRadioButton.selected.value) baseAppController --> { _.showPedigreeChart() }
 
-  def showPopulationChart(): Unit = {
-    legendBox.setVisible(false)
-    baseAppController --> { _.showPopulationChart() }
+  private def showChart(legendVisibility: Boolean, chartToShow : BaseAppControllerInterface => Unit) {
+    legendBox.setVisible(legendVisibility)
+    baseAppController --> { chartToShow }
   }
 
-  def showMutationsChart(): Unit = {
-    legendBox.setVisible(false)
-    baseAppController --> { _.showProportionsChart() }
-  }
+  def showPopulationChart(): Unit = showChart(legendVisibility = false, _.showPopulationChart())
 
-  def showPedigreeChart(): Unit = {
-    legendBox.setVisible(true)
-    baseAppController --> { _.showPedigreeChart() }
-  }
+  def showProportionsChart(): Unit = showChart(legendVisibility = false, _.showProportionsChart())
+
+  def showPedigreeChart(): Unit = showChart(legendVisibility = true, _.showPedigreeChart())
 }
