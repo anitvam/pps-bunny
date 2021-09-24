@@ -1,6 +1,7 @@
 package view.scalaFX.components.charts.pedigree
 
 import model.Bunny
+import scalafx.geometry.Insets
 import scalafx.scene.image.{ Image, ImageView }
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
@@ -22,20 +23,34 @@ trait BunnyPedigreeView {
 }
 
 object BunnyPedigreeView {
+  val BUNNY_ALLELE_PADDING = 3
+
   def apply(bunny: Bunny): BunnyPedigreeView = BunnyPedigreeViewImpl(bunny)
 
-  private def bunnyView(bunny: Bunny): ImageView = new ImageView {
-    image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
-    fitWidth = bunnyIconSize
-    fitHeight = bunnyIconSize
-    preserveRatio = true
-    scaleX = Direction.scaleXValue(Right)
+  private def bunnyView(bunny: Bunny): HBox = new HBox {
+
+    children = Seq(
+      spacingRegion,
+      new ImageView {
+        image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
+        fitWidth = bunnyIconSize
+        fitHeight = bunnyIconSize
+        preserveRatio = true
+        scaleX = Direction.scaleXValue(Right)
+      },
+      spacingRegion
+    )
+
+    padding = Insets(top = 0, left = 0, bottom = BUNNY_ALLELE_PADDING, right = 0)
+
   }
 
   private def allelesView(bunny: Bunny): HBox = new HBox(
     spacingRegion,
     new Text {
-      text = bunny.genotype.genes.values.map(g => g.momAllele.getLetter + g.dadAllele.getLetter + " ").reduce(_ + _)
+      text = bunny.genotype.genes.values
+        .map(g => g.momAllele.getLetter + g.dadAllele.getLetter + " ")
+        .reduce(_ + _)
 
       style = "-fx-font-family: \"Helvetica\"; " +
         "-fx-font-weight: bold; " +
@@ -63,7 +78,9 @@ object BunnyPedigreeView {
   private def mutationImageView: ImageView = infoImageView("/img/mutation.png")
 
   private case class BunnyPedigreeViewImpl(override val bunny: Bunny) extends BunnyPedigreeView {
+
     override val pane: Pane = new VBox(bunnyView(bunny), allelesView(bunny), infoView(bunny))
+
   }
 
 }

@@ -28,7 +28,7 @@ trait PedigreeChart {
 object PedigreeChart {
 
   /** The size required for the bunny icons */
-  var bunnyIconSize: Int = TREE_BUNNY_SIZE
+  var bunnyIconSize: Int = MAX_TREE_BUNNY_SIZE
 
   def apply(bunny: Bunny): PedigreeChart = {
     this(bunny, PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH)
@@ -40,7 +40,7 @@ object PedigreeChart {
       (Math.pow(TREE_PLUS_PROPORTION + 1, tree.generations - 1) - 1)).toInt
     val maxBunnySizeForHeight: Int = ((panelHeight * TREE_INFO_PROPORTION * FONT_INFO_PERCENT) /
       ((TREE_INFO_PROPORTION * FONT_INFO_PERCENT + 1 + FONT_INFO_PERCENT) * tree.generations)).toInt
-    bunnyIconSize = Math.min(maxBunnySizeForHeight, maxBunnySizeForWidth)
+    bunnyIconSize = Seq(maxBunnySizeForHeight, maxBunnySizeForWidth, MAX_TREE_BUNNY_SIZE).min
     PedigreeChartImpl(bunny, tree)
   }
 
@@ -101,8 +101,7 @@ object PedigreeChart {
   def plusView: Text = new Text {
     text = "+"
 
-    style = "-fx-font-weight: bold; " +
-      "-fx-font-size: " + bunnyIconSize / TREE_PLUS_PROPORTION + ";"
+    style = "-fx-font-weight: bold; -fx-font-size: " + bunnyIconSize / TREE_PLUS_PROPORTION + ";"
 
     hgrow = Priority.Always
   }
@@ -110,19 +109,19 @@ object PedigreeChart {
   private case class PedigreeChartImpl(override val bunny: Bunny, override val tree: BinaryTree[Bunny])
       extends PedigreeChart {
 
-    override val chartPane = new VBox {
-      children = spacingRegion +: rows.reverse :+ spacingRegion
-      alignment = Pos.Center
-    }
-
     var rows: Seq[HBox] = Seq()
+
+    var row: (HBox, Seq[Option[BinaryTree[Bunny]]]) = (new HBox(), Seq(Option(tree)))
 
     for (_ <- 1 to tree.generations) {
       row = createRow(row._2)
       rows = rows :+ row._1
     }
 
-    var row: (HBox, Seq[Option[BinaryTree[Bunny]]]) = (new HBox(), Seq(Option(tree)))
+    override val chartPane = new VBox {
+      children = spacingRegion +: rows.reverse :+ spacingRegion
+      alignment = Pos.Center
+    }
 
   }
 
