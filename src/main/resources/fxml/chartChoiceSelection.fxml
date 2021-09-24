@@ -20,7 +20,7 @@
                   <Font name="System Bold" size="17.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
             <RadioButton contentDisplay="CENTER" mnemonicParsing="false" onAction="#showPopulationChart" selected="true" text="Popolazione" textOverrun="CENTER_ELLIPSIS" wrapText="true">
@@ -34,7 +34,7 @@
                   <Insets bottom="10.0" left="15.0" right="5.0" top="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" onAction="#showMutationsChart" text="Proporzioni" textOverrun="CENTER_ELLIPSIS" toggleGroup="$chartChoice" wrapText="true">
+            <RadioButton mnemonicParsing="false" onAction="#showProportionsChart" text="Proporzioni" toggleGroup="$chartChoice" wrapText="true">
                <font>
                   <Font size="16.0" />
                </font>
@@ -50,6 +50,44 @@
                   <Insets bottom="10.0" left="15.0" right="5.0" top="10.0" />
                </VBox.margin>
             </RadioButton>
+            <VBox fx:id="legendBox">
+               <padding>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+               </padding>
+               <Label text="Legenda" textAlignment="LEFT" wrapText="true">
+                  <padding>
+                     <Insets bottom="5.0"/>
+                  </padding>
+                  <font>
+                     <Font name="System Bold" size="17.0" />
+                  </font>
+               </Label>
+               <Label text="F = Colore pelliccia" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                  <padding>
+                     <Insets bottom="2.0"/>
+                  </padding>
+               </Label>
+               <Label text="L = Lunghezza pelo" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                  <padding>
+                     <Insets bottom="2.0"/>
+                  </padding>
+               </Label>
+               <Label text="T = Lunghezza denti" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                  <padding>
+                     <Insets bottom="2.0"/>
+                  </padding>
+               </Label>
+               <Label text="E = Orecchie" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                  <padding>
+                     <Insets bottom="2.0"/>
+                  </padding>
+               </Label>
+               <Label text="J = Altezza salto" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                  <padding>
+                     <Insets bottom="2.0"/>
+                  </padding>
+               </Label>
+            </VBox>
          </children>
       </VBox>
    </children>

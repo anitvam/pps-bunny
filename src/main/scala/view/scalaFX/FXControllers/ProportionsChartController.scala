@@ -1,20 +1,20 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-import model.world.Generation.Population
-import scalafx.scene.chart.PieChart
-import scalafx.scene.control.{Button, Label, RadioButton, ToggleGroup, Tooltip}
+import engine.SimulationConstants.START_PHASE
 import javafx.scene.{control => jfxc}
 import model.Bunny
-import model.genome.{Gene, Genes}
+import model.genome.Genes
 import model.genome.Genes.GeneKind
-import scalafx.scene.layout.{AnchorPane, VBox}
+import model.world.Generation.Population
+import model.world.GenerationsUtils.GenerationPhase
+import scalafx.scene.chart.PieChart
+import scalafx.scene.control.ToggleGroup
+import scalafx.scene.layout.AnchorPane
 import scalafxml.core.macros.sfxml
+import view.scalaFX.FXControllers.PieChartConverters._
 import view.scalaFX.FXControllers.PieChartFactory.createEmptyPieChart
 import view.scalaFX.utilities.PimpScalaFXChartLibrary._
-import PieChartConverters._
-import engine.SimulationConstants.START_PHASE
-import model.world.GenerationsUtils.GenerationPhase
 
 import scala.language.implicitConversions
 
@@ -60,15 +60,9 @@ class ProportionsChartController(val startPiePane:AnchorPane,
 }
 
 object PieChartConverters {
-  implicit def formStringToGeneKind(geneName:String):GeneKind = geneName match {
-    case "Colore Pelo" => Genes.FUR_COLOR
-    case "Lunghezza Pelo" => Genes.FUR_LENGTH
-    case "Orecchie" => Genes.EARS
-    case "Denti" => Genes.TEETH
-    case "Salto" => Genes.JUMP
-  }
-  implicit def percentage(d:(Int, Int)):Double = (d._1.toDouble*100/d._2.toDouble).round.toDouble
+  implicit def fromStringToGeneKind(geneName:String):GeneKind = Genes.values.filter(_.prettyName == geneName).head
 
+  implicit def percentage(d:(Int, Int)):Double = (d._1.toDouble*100/d._2.toDouble).round.toDouble
 
   private def getBaseAndMutatedBunnies(population: Population, geneKind: GeneKind): (Seq[Bunny], Seq[Bunny]) =
     population.partition(_.genotype.phenotype.visibleTraits(geneKind) == geneKind.base)
