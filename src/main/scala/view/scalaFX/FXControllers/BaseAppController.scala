@@ -1,13 +1,14 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-import javafx.scene.{ layout => jfxs }
+import javafx.scene.{layout => jfxs}
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
-import scalafx.scene.control.{ Button, Label }
+import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout.AnchorPane
+import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
 import view.scalaFX.ScalaFxViewConstants
@@ -15,8 +16,8 @@ import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.utilities.EnvironmentImageUtils._
-import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
-import view.scalaFX.utilities.{ BunnyImage, SummerImage, WinterImage }
+import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
+import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
 
 import scala.language.postfixOps
 
@@ -45,6 +46,7 @@ sealed trait BaseAppControllerInterface {
 class BaseAppController(
     private val simulationPane: AnchorPane,
     private val chartsPane: AnchorPane,
+    private val pedigreeText: Text,
     private val mutationChoicePane: AnchorPane,
     private val factorChoicePane: AnchorPane,
     private val startButton: Button,
@@ -106,9 +108,6 @@ class BaseAppController(
     simulationPane.background = WinterImage()
   }
 
-  override def showPopulationChart(): Unit = chartsPane.children = PopulationChart
-    .chart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH)
-
   def showBunnies(bunnies: Population, generationPhase: GenerationPhase): Unit = {
     proportionsChartController.get.updateChart(generationPhase, bunnies)
     // Bunny visualization inside simulationPane
@@ -137,6 +136,9 @@ class BaseAppController(
     }
   }
 
+  override def showPopulationChart(): Unit = chartsPane.children = PopulationChart
+    .chart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH)
+
   override def showPedigreeChart(): Unit =
     if (selectedBunny ?) {
       val pedigreeChart = PedigreeChart(
@@ -146,7 +148,11 @@ class BaseAppController(
       ).chartPane
       setFitParent(pedigreeChart)
       chartsPane.children = pedigreeChart
-    } else chartsPane.children = ObservableBuffer.empty
+      pedigreeText.setVisible(false)
+    } else {
+      chartsPane.children = pedigreeText
+      pedigreeText.setVisible(true)
+    }
 
   override def showProportionsChart(): Unit = {
     chartsPane.children = proportionsChartPane.get
