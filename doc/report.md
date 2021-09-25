@@ -12,6 +12,9 @@ delle mutazioni sia dei conigli che dell'ambiente circostante.
 
 La proposta si ispira al seguente gioco: https://phet.colorado.edu/en/simulation/natural-selection.
 
+### Genetica
+Il dominio dell'applicazione riguarda la genetica, perciò si è pensato di fornire una breve introduzione su tale argomento e sulla terminologia utilizzata nella relazione.
+
 ## Processo di sviluppo adottato
 Il processo di sviluppo adottato mette in pratica le metodologie previste dalla programmazione Agile, in particolare alcuni aspetti del framework **Scrum**:
 * prevedendo delle riunioni periodiche per organizzare il lavoro, lo Sprint Planning e la Sprint Review,
@@ -74,8 +77,6 @@ di ogni `pull request` è possibile visualizzare se i test passano o meno, mante
 Come libreria di testing è stata utilizzata [ScalaTest](https://www.scalatest.org/).
 
 ## Requisiti
-
-// mini-introduzione sulle regole della genetica utilizzate? (cos'è genotipo, fenotipo, dominante, recessivo, omozigote etc...)
 
 ### Requisiti Business 
 Di seguito sono riportati i requisiti individuati durante lo studio del dominio e le regole scelte per la sua rappresentazione.
