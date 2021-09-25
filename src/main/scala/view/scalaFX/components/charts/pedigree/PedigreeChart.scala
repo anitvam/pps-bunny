@@ -2,14 +2,14 @@ package view.scalaFX.components.charts.pedigree
 
 import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
 import model.Tree.generateTree
-import model.{ BinaryTree, Bunny, Node }
+import model.{BinaryTree, Bunny, Node}
 import scalafx.geometry.Pos
 import scalafx.scene.image.ImageView
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
 import util.PimpScala._
 import view.scalaFX.ScalaFxViewConstants.GenealogicalTree._
-import view.scalaFX.ScalaFxViewConstants.{ PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH }
+import view.scalaFX.ScalaFxViewConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
 
 import scala.language.postfixOps
 
@@ -31,7 +31,7 @@ object PedigreeChart {
   var bunnyIconSize: Int = MAX_TREE_BUNNY_SIZE
 
   def apply(bunny: Bunny): PedigreeChart = {
-    this(bunny, PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH)
+    this (bunny, PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH)
   }
 
   def apply(bunny: Bunny, panelWidth: Int, panelHeight: Int): PedigreeChart = {
@@ -45,10 +45,8 @@ object PedigreeChart {
   }
 
   /**
-   * @param trees
-   *   The tree with the elems that need to be in this row
-   * @return
-   *   The view of a row and the trees which needs to be inserted in the next one
+   * @param trees The tree with the elems that need to be in this row
+   * @return The view of a row and the trees which needs to be inserted in the next one
    */
   private def createRow(trees: Seq[Option[BinaryTree[Bunny]]]): (HBox, Seq[Option[BinaryTree[Bunny]]]) = {
     var nextTrees: Seq[Option[BinaryTree[Bunny]]] = Seq()
@@ -79,6 +77,7 @@ object PedigreeChart {
         nextTrees ++= Seq(Option.empty, Option.empty)
       }
     })
+
     (row, nextTrees)
   }
 
@@ -100,19 +99,13 @@ object PedigreeChart {
 
   def plusView: Text = new Text {
     text = "+"
-
     style = "-fx-font-weight: bold; -fx-font-size: " + bunnyIconSize / TREE_PLUS_PROPORTION + ";"
-
     hgrow = Priority.Always
   }
 
-  private case class PedigreeChartImpl(override val bunny: Bunny, override val tree: BinaryTree[Bunny])
-      extends PedigreeChart {
-
+  private case class PedigreeChartImpl(override val bunny: Bunny, override val tree: BinaryTree[Bunny]) extends PedigreeChart {
     var rows: Seq[HBox] = Seq()
-
     var row: (HBox, Seq[Option[BinaryTree[Bunny]]]) = (new HBox(), Seq(Option(tree)))
-
     for (_ <- 1 to tree.generations) {
       row = createRow(row._2)
       rows = rows :+ row._1
@@ -122,7 +115,5 @@ object PedigreeChart {
       children = spacingRegion +: rows.reverse :+ spacingRegion
       alignment = Pos.Center
     }
-
   }
-
 }
