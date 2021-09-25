@@ -6,12 +6,15 @@ import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
 
 sealed trait ChartChoiceControllerInterface {
-  /** Method that initialize the ChartChoiceController
-   * @param controller the BaseAppControllerInterface instance */
+
+  /**
+   * Method that initialize the ChartChoiceController
+   * @param controller the BaseAppControllerInterface instance
+   */
   def initialize(controller: BaseAppControllerInterface): Unit
 
   /** Method that handle the click of a Bunny */
-  def handleBunnyClick():Unit
+  def handleBunnyClick(): Unit
 }
 
 @sfxml
@@ -25,7 +28,8 @@ class ChartChoiceController( private val pedigreeRadioButton: RadioButton,
     baseAppController = Some(controller)
   }
 
-  override def handleBunnyClick(): Unit = if (pedigreeRadioButton.selected.value) baseAppController --> { _.showPedigreeChart() }
+  override def handleBunnyClick(): Unit =
+    if (pedigreeRadioButton.selected.value) baseAppController --> { _.showPedigreeChart() }
 
   private def showChart(legendVisibility: Boolean, chartToShow : BaseAppControllerInterface => Unit) {
     legendBox.setVisible(legendVisibility)
