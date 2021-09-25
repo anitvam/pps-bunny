@@ -43,7 +43,6 @@ object ScalaFXView extends View {
   }
 
   override def showEnd(): Unit = {
-
     val endStage = new Stage {
       title = "Fine simulazione"
       scene = new Scene(new AnchorPane {

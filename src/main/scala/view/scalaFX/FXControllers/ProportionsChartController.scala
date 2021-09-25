@@ -58,7 +58,6 @@ class ProportionsChartController(
   }
 
   def onRadioButtonClick(): Unit = fillPieCharts(Controller.population, getSelectedGeneKind)
-
 }
 
 object PieChartConverters {

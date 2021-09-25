@@ -102,6 +102,7 @@ class BaseAppController(
   def reset(): Unit = {
     this.resetSimulationPanel()
     PopulationChart.resetChart()
+    selectedBunny = Option.empty
     mutationsPanelController --> {_.resetMutationsPanel()}
     this.initializeView()
   }
@@ -126,7 +127,7 @@ class BaseAppController(
   }
 
   def showBunnies(bunnies: Population, generationPhase: GenerationPhase): Unit = {
-      proportionsChartController.get.updateChart(generationPhase, bunnies)
+      proportionsChartController --> {_.updateChart(generationPhase, bunnies)}
 
     // Bunny visualization inside simulationPane
       if (bunnyViews.size != bunnies.size) {
