@@ -21,7 +21,6 @@ class TestReproduction extends FlatSpec with Matchers{
 
   they should "contain every Bunny in the original group except from one, if they are odd" in {
     val someBunnies = Seq.fill(11)(generateRandomFirstBunny)
-    println(combineCouples(someBunnies))
     val bunniesInCouples = combineCouples(someBunnies).flatMap(couple => List(couple._1, couple._2))
     assert(someBunnies.count(b => !bunniesInCouples.contains(b)) == 1)
     someBunnies.filter(b => bunniesInCouples.contains(b)).foreach(b => assert(bunniesInCouples.contains(b)))
@@ -30,7 +29,6 @@ class TestReproduction extends FlatSpec with Matchers{
   they should "be empty, if there was only one Bunny" in {
     val oneBunny = Seq(generateRandomFirstBunny)
     val bunniesInCouples = combineCouples(oneBunny)
-    println(bunniesInCouples)
     assert(bunniesInCouples.isEmpty)
   }
 

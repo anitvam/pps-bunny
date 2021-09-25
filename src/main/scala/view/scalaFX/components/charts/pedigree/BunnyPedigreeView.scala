@@ -2,13 +2,13 @@ package view.scalaFX.components.charts.pedigree
 
 import model.Bunny
 import scalafx.geometry.Insets
-import scalafx.scene.image.{ Image, ImageView }
+import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
-import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{ FONT_INFO_PERCENT, TREE_INFO_PROPORTION }
-import view.scalaFX.components.charts.pedigree.PedigreeChart.{ bunnyIconSize, spacingRegion }
+import view.scalaFX.ScalaFxViewConstants.GenealogicalTree.{BUNNY_ALLELE_PADDING, FONT_INFO_PERCENT, TREE_INFO_PROPORTION}
+import view.scalaFX.components.charts.pedigree.PedigreeChart.{bunnyIconSize, spacingRegion}
 import view.scalaFX.utilities.Direction.Right
-import view.scalaFX.utilities.{ BunnyImageUtils, Direction, ImageType }
+import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
 
 /**
  * Represents the view on the Bunny in a tree.
@@ -23,7 +23,6 @@ trait BunnyPedigreeView {
 }
 
 object BunnyPedigreeView {
-  val BUNNY_ALLELE_PADDING = 3
 
   def apply(bunny: Bunny): BunnyPedigreeView = BunnyPedigreeViewImpl(bunny)
 

@@ -124,6 +124,8 @@ object ScalaFxViewConstants {
     /** Percentual constants to resize the font depending on the plus size */
     val FONT_INFO_PERCENT: Double = 0.8
 
+    /** The padding between the bunny and its alleles */
+    val BUNNY_ALLELE_PADDING = 3
   }
 
 }

@@ -31,20 +31,21 @@ object Reproduction {
     var childrenGenotypes = List.fill(CHILDREN_FOR_EACH_COUPLE)(PartialGenotype(Map()))
 
     Genes.values.foreach(gk => {
-      val genesOfReproduction : List[Gene]= Random.shuffle (
+      val genesOfReproduction : List[Gene]=
         (for { momAllele <- mom.getStandardAlleles(gk)
                dadAllele <- dad.getStandardAlleles(gk)
-              } yield Gene(gk, momAllele, dadAllele)).toList)
+              } yield Gene(gk, momAllele, dadAllele)).toList
+      val shufflesGenes = Random.shuffle(genesOfReproduction)
 
       childrenGenotypes =
         (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE)
-          yield childrenGenotypes(i) + genesOfReproduction(i)).toList
+          yield childrenGenotypes(i) +  shufflesGenes(i)).toList
 
-      mutations filter { _.geneKind == gk } foreach { m =>
-          childrenGenotypes = childrenGenotypes(CHILDREN_FOR_EACH_COUPLE - 1) +
-          Gene(gk, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenotypes.take(CHILDREN_FOR_EACH_COUPLE - 1)}
-
+      mutations filter { _.geneKind == gk } foreach { _ =>
+          val mutatedGenotype = childrenGenotypes(CHILDREN_FOR_EACH_COUPLE - 1) + Gene(gk, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated))
+          childrenGenotypes =  mutatedGenotype :: childrenGenotypes.take(CHILDREN_FOR_EACH_COUPLE - 1)}
     })
+
     childrenGenotypes.map(cg => new ChildBunny(CompletedGenotype(cg.genes), Option(mom), Option(dad)))
   }
 
