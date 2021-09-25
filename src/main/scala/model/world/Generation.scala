@@ -1,6 +1,6 @@
 package model.world
 
-import engine.SimulationConstants.{FOOD_INSTANT, FOOD_PHASE, START_PHASE, TEMPERATURE_PHASE, WOLVES_PHASE}
+import engine.SimulationConstants.{FOOD_PHASE, START_PHASE, TEMPERATURE_PHASE, WOLVES_PHASE}
 import model.Bunny
 import model.world.Generation.Population
 
@@ -9,12 +9,15 @@ trait Generation{
   /**@return the current [[Environment]]*/
   def environment: Environment
 
-  /**@return the current [[Population]]*/
+  /**@return the [[Population]] with both alive and dead bunny*/
   def population: Population
 
-  /**Updates the current population
+  /**Updates the population
    * @param bunnies the new set of bunnies*/
   def population_=(bunnies:Population): Unit
+
+  /**@return the alive [[Population]] */
+  def livingPopulation : Population = population.filter(_.alive)
 
   def isEnded: Boolean
 
@@ -22,7 +25,7 @@ trait Generation{
   def isEnded_=(isEnded:Boolean): Unit
 
   /**@return the current number of alive bunnies*/
-  def getBunniesNumber:Int = population.count(_.alive)
+  def getAliveBunniesNumber:Int = livingPopulation.size
 }
 
 object Generation{

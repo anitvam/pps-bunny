@@ -14,11 +14,6 @@ object SimulationHistory{
 
   var history: History = List(Generation(Environment(Summer(), List.empty), generateInitialCouple))
 
-  /** Initialize the [[History]] of this simulation
-   * @param environment the initial environment of the first [[Generation]] */
-  def initialize(environment: Environment): Unit =
-    history = Generation(environment, generateInitialCouple) :: history
-
   /** Introduce a new mutation */
   def introduceMutation(mutation: Mutation): Unit = {
     getActualGeneration.environment.mutations = mutation :: getActualGeneration.environment.mutations
@@ -42,10 +37,10 @@ object SimulationHistory{
   def getGenerationNumber: Int = history.length-1
 
   /**@return how many bunnies are alive in the actual generation*/
-  def getBunniesNumber: Int = getActualGeneration.getBunniesNumber
+  def getBunniesNumber: Int = getActualGeneration.getAliveBunniesNumber
 
   /**@return the [[Population]] of the actual generation*/
-  def getActualPopulation: Population = getActualGeneration.population
+  def getActualPopulation: Population = getActualGeneration.livingPopulation
 
   /**@return the [[Population]]  for the next [[Generation]]*/
   def getPopulationForNextGeneration : Population = nextGenerationBunnies(getActualPopulation, getActualGeneration.environment.mutations)
