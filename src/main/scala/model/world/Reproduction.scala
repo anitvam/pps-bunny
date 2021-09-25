@@ -15,8 +15,10 @@ object Reproduction {
   type Couple = (Bunny, Bunny)
 
   /**
-   * @param bunnies a seq of bunnies
-   * @return a seq of random couples formed from all of the bunnies (or most of them, if they are odd)
+   * @param bunnies
+   *   a seq of bunnies
+   * @return
+   *   a seq of random couples formed from all of the bunnies (or most of them, if they are odd)
    */
   def combineCouples(bunnies: Population): Couples = {
     val split = Random.shuffle(bunnies).splitAt(bunnies.size / 2)

@@ -4,6 +4,7 @@ import cats.effect.IO
 import engine.SimulationHistory._
 import model.world.GenerationsUtils.GenerationPhase
 import view.scalaFX.ScalaFXView
+
 import scala.language.implicitConversions
 
 object Simulation {
@@ -16,15 +17,15 @@ object Simulation {
     println("BUNNIES ARE EATING")
   }
 
-  def applyTemperatureDamage : IO[Unit] = {
+  def applyTemperatureDamage: IO[Unit] = {
     println("SOME BUNNIES DIED BECAUSE OF TEMPERATURE")
   }
 
-  def updateView(generationPhase:GenerationPhase) : IO[Unit] = {
+  def updateView(generationPhase: GenerationPhase): IO[Unit] = {
     ScalaFXView.updateView(generationPhase, getActualPopulation)
   }
 
-  def showEnd(generationPhase:GenerationPhase):IO[Unit] = {
+  def showEnd(generationPhase: GenerationPhase): IO[Unit] = {
     ScalaFXView.updateView(generationPhase, getActualPopulation)
     controller.Controller.showEnd()
   }
@@ -33,5 +34,5 @@ object Simulation {
     SimulationHistory.startNextGeneration()
   }
 
-  implicit def unitToIO(exp: => Unit) : IO[Unit] = IO{exp}
+  implicit def unitToIO(exp: => Unit): IO[Unit] = IO { exp }
 }

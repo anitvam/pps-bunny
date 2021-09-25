@@ -127,5 +127,4 @@ object ScalaFxViewConstants {
     /** The padding between the bunny and its alleles */
     val BUNNY_ALLELE_PADDING = 3
   }
-
 }
