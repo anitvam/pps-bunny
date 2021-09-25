@@ -103,6 +103,7 @@ class BaseAppController(
     this.resetSimulationPanel()
     PopulationChart.resetChart()
     selectedBunny = Option.empty
+    proportionsChartController --> {_.resetChart()}
     mutationsPanelController --> {_.resetMutationsPanel()}
     this.initializeView()
   }

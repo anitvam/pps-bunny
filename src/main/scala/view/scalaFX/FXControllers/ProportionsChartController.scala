@@ -21,6 +21,7 @@ import scala.language.implicitConversions
 trait ChartController {
   def initialize(): Unit
   def updateChart(generationPhase: GenerationPhase, population: Population): Unit
+  def resetChart(): Unit
 }
 
 @sfxml
@@ -58,6 +59,8 @@ class ProportionsChartController(
   }
 
   def onRadioButtonClick(): Unit = fillPieCharts(Controller.population, getSelectedGeneKind)
+
+  override def resetChart(): Unit = this.onRadioButtonClick()
 }
 
 object PieChartConverters {
