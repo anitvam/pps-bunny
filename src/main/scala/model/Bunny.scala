@@ -1,6 +1,6 @@
 package model
 import model.genome.Genes.GeneKind
-import model.genome.{CompletedGenotype, Gene, Genes, StandardAllele}
+import model.genome._
 
 import scala.util.Random
 
@@ -19,6 +19,10 @@ sealed trait Bunny {
       .map(g => "\t" + g._1 + ": "+ g._2.getVisibleTrait.toString.toLowerCase + " (" + g._2.getLetters + ")")
       .reduce(_ + "\n" + _)
       .replace("_", " ") + "\n"
+  }
+
+  def getStandardAlleles(geneKind: GeneKind): Seq[Allele] = {
+    Seq(StandardAllele(genotype(geneKind).momAllele.kind), StandardAllele(genotype(geneKind).dadAllele.kind))
   }
 }
 
