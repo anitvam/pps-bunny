@@ -3,6 +3,7 @@ package engine
 import model.genome.KindsUtils
 import model.mutation.Mutation
 import model.world.Generation.Population
+import util.PimpScala.RichTuple2
 import model.world.Reproduction.{ generateInitialCouple, nextGenerationBunnies }
 import model.world._
 
@@ -12,7 +13,7 @@ object SimulationHistory {
 
   type History = List[Generation]
 
-  var history: History = List(Generation(Environment(Summer(), List.empty), generateInitialCouple))
+  var history: History = List(Generation(Environment(Summer(), List.empty), generateInitialCouple.toSeq))
 
   /** Introduce a new mutation */
   def introduceMutation(mutation: Mutation): Unit = {
