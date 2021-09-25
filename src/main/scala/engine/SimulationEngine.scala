@@ -5,7 +5,11 @@ import engine.GenerationTimer.{resetTimer, waitFor}
 import engine.Simulation._
 import engine.SimulationConstants._
 import engine.SimulationHistory.{getBunniesNumber, getGenerationNumber}
+<<<<<<< HEAD
 import model.world.GenerationsUtils._
+=======
+import model.world.GenerationsUtils.{FoodPhase, HighTemperaturePhase, StartPhase, WolvesPhase}
+>>>>>>> Test new Factor implementation inside the engine
 
 object SimulationEngine {
 
@@ -24,9 +28,16 @@ object SimulationEngine {
       _ <- updateView(HighTemperaturePhase(getGenerationNumber))
       _ <- waitFor(GENERATION_END)
       _ <- startNewGeneration
+<<<<<<< HEAD
       _ <- if (getGenerationNumber < MAX_GENERATIONS_NUMBER && getBunniesNumber < MAX_ALIVE_BUNNIES) simulationLoop()
       else showEnd(StartPhase(getGenerationNumber))
     } yield ()
   }
 
+=======
+      _ <- if(getGenerationNumber < MAX_GENERATIONS_NUMBER &&
+        getBunniesNumber < MAX_ALIVE_BUNNIES) simulationLoop() else showEnd(StartPhase(getGenerationNumber))
+    } yield()
+  }
+>>>>>>> Test new Factor implementation inside the engine
 }
