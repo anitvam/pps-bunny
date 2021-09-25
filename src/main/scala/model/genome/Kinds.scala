@@ -27,10 +27,8 @@ object Alleles extends Enumeration {
 
   /**
    * The information each AlleleKind must have
-   * @param dominant
-   *   specifies if it's dominant or not, it could be empty if not chosen yet
+   * @param prettyName the name of each allele, that will be shown to the user
    */
-
   protected case class AllelesVal(prettyName: String) extends super.Val {
     private var dominant: Option[Boolean] = Option.empty
     def resetDominance: Unit = dominant = Option.empty
@@ -52,12 +50,9 @@ object Genes extends Enumeration {
 
   /**
    * The information each GeneKind must have.
-   * @param base
-   *   the base Allele of the gene
-   * @param mutated
-   *   the mutated Allele of the gene
-   * @param letter
-   *   the letter which corresponds to this gene
+   * @param base the base Allele of the gene
+   * @param mutated the mutated Allele of the gene
+   * @param letter the letter which corresponds to this gene
    */
   protected case class GenesVal(base: AlleleKind,
                                 mutated: AlleleKind,

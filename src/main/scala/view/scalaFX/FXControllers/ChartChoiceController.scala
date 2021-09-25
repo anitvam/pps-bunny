@@ -9,8 +9,7 @@ sealed trait ChartChoiceControllerInterface {
 
   /**
    * Method that initialize the ChartChoiceController
-   * @param controller
-   *   the BaseAppControllerInterface instance
+   * @param controller the BaseAppControllerInterface instance
    */
   def initialize(controller: BaseAppControllerInterface): Unit
 

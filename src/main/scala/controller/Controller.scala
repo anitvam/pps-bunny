@@ -20,10 +20,8 @@ object Controller {
 
   /**
    * Method that starts the simulation
-   * @param climate
-   *   the Environment Climate
-   * @param factors
-   *   the Environment Factors
+   * @param climate the Environment Climate
+   * @param factors the Environment Factors
    */
   def startSimulation(climate: Climate, factors: Factors): Unit = {
     SimulationHistory changeEnvironmentClimate climate
@@ -38,8 +36,7 @@ object Controller {
 
   /**
    * Method that insert a mutation inside the simulation
-   * @param mutation
-   *   the Mutation
+   * @param mutation the Mutation
    */
   def insertMutation(mutation: Mutation): Unit = SimulationHistory introduceMutation mutation
 

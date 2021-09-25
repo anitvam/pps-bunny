@@ -101,7 +101,6 @@ object PopulationChart {
     if (x > xAxis.upperBound.toDouble) xAxis.upperBound = x + 2
     if (size > yAxis.upperBound.toInt) yAxis.upperBound = size + 10
   }
-
 }
 
 /** Some implicit method for conversions */

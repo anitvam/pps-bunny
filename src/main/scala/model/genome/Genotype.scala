@@ -36,8 +36,7 @@ sealed trait Genotype {
 
 /**
  * Represents a Genotype which many not contain all the Genes of the world, so it's incomplete.
- * @param genes
- *   the Genes of the Genotype
+ * @param genes the Genes of the Genotype
  */
 case class PartialGenotype(genes: Map[GeneKind, Gene]) extends Genotype {
   def +(gene: Gene): PartialGenotype = PartialGenotype(genes + (gene.kind -> gene))
@@ -45,8 +44,7 @@ case class PartialGenotype(genes: Map[GeneKind, Gene]) extends Genotype {
 
 /**
  * Represents a Genotype which for sure contains all the Genes of the world.
- * @param genes
- *   the Genes of the Genotype
+ * @param genes the Genes of the Genotype
  */
 case class CompletedGenotype(genes: Map[GeneKind, Gene]) extends Genotype {
   def +(gene: Gene): CompletedGenotype = CompletedGenotype(genes + (gene.kind -> gene))
