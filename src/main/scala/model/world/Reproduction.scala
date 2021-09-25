@@ -1,6 +1,6 @@
 package model.world
 
-import engine.SimulationConstants.{ CHILDREN_FOR_EACH_COUPLE, MAX_BUNNY_AGE }
+import engine.SimulationConstants.{CHILDREN_FOR_EACH_COUPLE, MAX_BUNNY_AGE}
 import model.Bunny.generateBaseFirstBunny
 import model._
 import model.genome._
@@ -14,16 +14,13 @@ object Reproduction {
   type Couples = Seq[(Bunny, Bunny)]
 
   /**
-   * @return
-   *   the first two bunnies of the simulation
+   * @return the first two bunnies of the simulation
    */
   def generateInitialCouple: Population = Seq(generateBaseFirstBunny, generateBaseFirstBunny)
 
   /**
-   * @param bunnies
-   *   bunnies from the last generation
-   * @return
-   *   the new bunnies, adding the children and removing the ones who are dead
+   * @param bunnies bunnies from the last generation
+   * @return the new bunnies, adding the children and removing the ones who are dead
    */
   def nextGenerationBunnies(bunnies: Population, mutations: Mutations = List()): Population = {
     val children = generateAllChildren(bunnies, mutations)
@@ -33,10 +30,8 @@ object Reproduction {
   }
 
   /**
-   * @param bunnies
-   *   a seq of bunnies
-   * @return
-   *   a seq with the children of the bunnies
+   * @param bunnies a seq of bunnies
+   * @return a seq with the children of the bunnies
    */
   def generateAllChildren(bunnies: Population, mutations: Mutations = List()): Population = {
     val couples = combineCouples(bunnies)
@@ -57,12 +52,9 @@ object Reproduction {
   }
 
   /**
-   * @param mom
-   *   a bunny
-   * @param dad
-   *   another bunny
-   * @return
-   *   the 4 children of the couple, one for each cell of the Punnett's square
+   * @param mom a bunny
+   * @param dad another bunny
+   * @return the 4 children of the couple, one for each cell of the Punnett's square
    */
   def generateChildren(mom: Bunny, dad: Bunny, mutations: Mutations = List()): Population = {
     var childrenGenotypes = List.fill(CHILDREN_FOR_EACH_COUPLE)(PartialGenotype(Map()))

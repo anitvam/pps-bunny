@@ -4,8 +4,7 @@ import model.MultipleDominanceAssignmentException
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
 import util.PimpScala.RichOption
-
-import scala.language.{ implicitConversions, postfixOps }
+import scala.language.{implicitConversions, postfixOps}
 import scala.util.Random
 
 /**
@@ -28,10 +27,8 @@ object Alleles extends Enumeration {
 
   /**
    * The information each AlleleKind must have
-   * @param dominant
-   *   specifies if it's dominant or not, it could be empty if not chosen yet
+   * @param prettyName the name of each allele, that will be shown to the user
    */
-
   protected case class AllelesVal(prettyName: String) extends super.Val {
     private var dominant: Option[Boolean] = Option.empty
     def resetDominance: Unit = dominant = Option.empty
@@ -50,24 +47,40 @@ object Alleles extends Enumeration {
 object Genes extends Enumeration {
   type GeneKind = Value
   import Alleles.AlleleKind
-  val FUR_COLOR: GenesVal = GenesVal(base = Alleles.WHITE_FUR, mutated = Alleles.BROWN_FUR, letter = "f")
-  import scala.language.implicitConversions
-  implicit def valueToGenesVal(x: Value): GenesVal = x.asInstanceOf[GenesVal]
-  val FUR_LENGTH: GenesVal = GenesVal(base = Alleles.SHORT_FUR, mutated = Alleles.LONG_FUR, letter = "l")
-  val TEETH: GenesVal = GenesVal(base = Alleles.SHORT_TEETH, mutated = Alleles.LONG_TEETH, letter = "t")
-  val EARS: GenesVal = GenesVal(base = Alleles.HIGH_EARS, mutated = Alleles.LOW_EARS, letter = "e")
-  val JUMP: GenesVal = GenesVal(base = Alleles.LOW_JUMP, mutated = Alleles.HIGH_JUMP, letter = "j")
 
   /**
    * The information each GeneKind must have.
-   * @param base
-   *   the base Allele of the gene
-   * @param mutated
-   *   the mutated Allele of the gene
-   * @param letter
-   *   the letter which corresponds to this gene
+   * @param base the base Allele of the gene
+   * @param mutated the mutated Allele of the gene
+   * @param letter the letter which corresponds to this gene
    */
-  protected case class GenesVal(base: AlleleKind, mutated: AlleleKind, letter: String) extends super.Val
+  protected case class GenesVal(base: AlleleKind,
+                                mutated: AlleleKind,
+                                letter: String,
+                                prettyName: String) extends super.Val
+  import scala.language.implicitConversions
+  implicit def valueToGenesVal(x: Value): GenesVal = x.asInstanceOf[GenesVal]
+
+  val FUR_COLOR: GenesVal =  GenesVal(base = Alleles.WHITE_FUR,
+                                mutated = Alleles.BROWN_FUR,
+                                letter = "f",
+                                prettyName = "Colore pelliccia")
+  val FUR_LENGTH: GenesVal = GenesVal(base = Alleles.SHORT_FUR,
+                                mutated = Alleles.LONG_FUR,
+                                letter = "l",
+                                prettyName = "Lunghezza pelo")
+  val TEETH: GenesVal =      GenesVal(base = Alleles.SHORT_TEETH,
+                                mutated = Alleles.LONG_TEETH,
+                                letter = "t",
+                                prettyName = "Lunghezza denti")
+  val EARS: GenesVal =       GenesVal(base = Alleles.HIGH_EARS,
+                                mutated = Alleles.LOW_EARS,
+                                letter = "e" ,
+                                prettyName = "Orecchie")
+  val JUMP: GenesVal =       GenesVal(base = Alleles.LOW_JUMP,
+                                mutated = Alleles.HIGH_JUMP,
+                                letter = "j",
+                                prettyName = "Altezza salto")
 }
 
 object KindsUtils {

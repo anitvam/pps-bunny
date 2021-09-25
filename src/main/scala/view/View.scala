@@ -12,10 +12,8 @@ trait View {
 
   /**
    * Method that displays a list of bunnies and the generation number
-   * @param bunnies
-   *   the list of bunnies
-   * @param generationNumber
-   *   the generation number
+   * @param bunnies the list of bunnies
+   * @param generationNumber the generation number
    */
   def updateView(generationNumber: GenerationPhase, bunnies: Population): Unit
 
@@ -24,8 +22,7 @@ trait View {
 
   /**
    * Method that handle the click of a bunny
-   * @param bunny
-   *   the bunny clicked
+   * @param bunny the clicked bunny
    */
   def handleBunnyClick(bunny: BunnyView): Unit
 }

@@ -47,8 +47,7 @@ object Bunny {
   type mutatedBunnies = Seq[Bunny]
 
   /**
-   * @return
-   *   a FirstBunny with the "base" allele for each gene
+   * @return a FirstBunny with the "base" allele for each gene
    */
   def generateBaseFirstBunny: FirstBunny = new FirstBunny(
     CompletedGenotype(
@@ -57,8 +56,7 @@ object Bunny {
   )
 
   /**
-   * @return
-   *   a FirstBunny with a random allele for each gene
+   * @return a FirstBunny with a random allele for each gene
    */
   def generateRandomFirstBunny: FirstBunny = {
     new FirstBunny(
@@ -74,16 +72,10 @@ object Bunny {
   }
 
   /**
-   * @param geneKind
-   * the kind of Gene we want to split the bunnies by
-   * @param bunnies
-   * all the bunnies
-   * @return
-   * a tuple with the sequence of bunnies with the base Allele and the sequence of bunnies with the mutated Allele
+   * @param geneKind the kind of Gene we want to split the bunnies by
+   * @param bunnies  all the bunnies
+   * @return a tuple with the sequence of bunnies with the base Allele and the sequence of bunnies with the mutated Allele
    */
-  def splitBunniesByGene(
-                          geneKind: GeneKind,
-                          bunnies: Seq[Bunny]
-                        ): (baseBunnies, mutatedBunnies) = bunnies.partition(_.genotype.phenotype(geneKind) == geneKind.base)
-
+  def splitBunniesByGene(geneKind: GeneKind, bunnies: Seq[Bunny]): (baseBunnies, mutatedBunnies) =
+    bunnies.partition(_.genotype.phenotype(geneKind) == geneKind.base)
 }

@@ -15,8 +15,7 @@ trait Generation {
 
   /**
    * Updates the current population
-   * @param bunnies
-   *   the new set of bunnies
+   * @param bunnies the new set of bunnies
    */
   def population_=(bunnies: Population): Unit
 

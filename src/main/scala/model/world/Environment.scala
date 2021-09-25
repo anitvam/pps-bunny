@@ -8,15 +8,13 @@ trait Environment {
 
   /**
    * Get the actual climate of the Environment
-   * @return
-   *   the Climate
+   * @return the Climate
    */
   def climate: Climate
 
   /**
    * Set a new climate inside the Environment
-   * @param climate
-   *   the new climate value
+   * @param climate the new climate value
    */
   def climate_=(climate: Climate): Unit
 
@@ -43,8 +41,7 @@ object Environment {
 
   /**
    * Generate an Environment from the previous one
-   * @param environment
-   *   the previous Environment
+   * @param environment the previous Environment
    */
   def fromPreviousOne(environment: Environment): Environment = apply(environment.climate, environment.factors)
 

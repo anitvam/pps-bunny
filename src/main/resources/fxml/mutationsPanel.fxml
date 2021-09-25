@@ -97,133 +97,99 @@
                                 </GridPane>
                             </children>
                         </GridPane>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-                    <children>
-                        <Label text="Colore del pelo" textOverrun="CENTER_ELLIPSIS" wrapText="true"
-                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                               AnchorPane.topAnchor="0.0">
-                            <padding>
-                                <Insets left="10.0"/>
-                            </padding>
-                        </Label>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
-                    <children>
-                        <Label text="Lunghezza del pelo" textOverrun="CENTER_ELLIPSIS" wrapText="true"
-                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                               AnchorPane.topAnchor="0.0">
-                            <padding>
-                                <Insets left="10.0"/>
-                            </padding>
-                        </Label>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
-                    <children>
-                        <Label text="Orecchie" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <padding>
-                                <Insets left="10.0"/>
-                            </padding>
-                        </Label>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
-                    <children>
-                        <Label text="Lunghezza Denti" textOverrun="CENTER_ELLIPSIS" wrapText="true"
-                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                               AnchorPane.topAnchor="0.0">
-                            <padding>
-                                <Insets left="10.0"/>
-                            </padding>
-                        </Label>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
-                    <children>
-                        <Label text="Altezza Salto" textOverrun="CENTER_ELLIPSIS" wrapText="true"
-                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                               AnchorPane.topAnchor="0.0">
-                            <padding>
-                                <Insets left="10.0"/>
-                            </padding>
-                        </Label>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <children>
-                        <Button fx:id="furColorDominantChoiceButton" contentDisplay="CENTER" mnemonicParsing="false"
-                                onAction="#furColorDominantChoiceClick" text="Marrone" AnchorPane.bottomAnchor="10.0"
-                                AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"/>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                    <children>
-                        <Button fx:id="furColorRecessiveChoiceButton" contentDisplay="CENTER" mnemonicParsing="false"
-                                onAction="#furColorRecessiveChoiceClick" text="Marrone" AnchorPane.bottomAnchor="10.0"
-                                AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"/>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                    <children>
-                        <Button fx:id="furLengthDominantChoiceButton" contentDisplay="CENTER" mnemonicParsing="false"
-                                onAction="#furLengthDominantChoiceClick" text="Folto" AnchorPane.bottomAnchor="10.0"
-                                AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"/>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                    <children>
-                        <Button fx:id="furLengthRecessiveChoiceButton" contentDisplay="CENTER" mnemonicParsing="false"
-                                onAction="#furLengthRecessiveChoiceClick" text="Folto" AnchorPane.bottomAnchor="10.0"
-                                AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"/>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                    <children>
-                        <Button fx:id="earsDominantChoiceButton" contentDisplay="CENTER" mnemonicParsing="false"
-                                onAction="#earsDominantChoiceClick" text="Basse" AnchorPane.bottomAnchor="10.0"
-                                AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"/>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                    <children>
-                        <Button fx:id="earsRecessiveChoiceButton" contentDisplay="CENTER" mnemonicParsing="false"
-                                onAction="#earsRecessiveChoiceClick" text="Basse" AnchorPane.bottomAnchor="10.0"
-                                AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"/>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                    <children>
-                        <Button fx:id="teethDominantChoiceButton" contentDisplay="CENTER" mnemonicParsing="false"
-                                onAction="#teethDominantChoiceClick" text="Lunghi" AnchorPane.bottomAnchor="10.0"
-                                AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"/>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                    <children>
-                        <Button fx:id="teethRecessiveChoiceButton" contentDisplay="CENTER" mnemonicParsing="false"
-                                onAction="#teethRecessiveChoiceClick" text="Lunghi" AnchorPane.bottomAnchor="10.0"
-                                AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"/>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                    <children>
-                        <Button fx:id="jumpDominantChoiceButton" mnemonicParsing="false"
-                                onAction="#jumpDominantChoiceClick" text="Alto" AnchorPane.bottomAnchor="10.0"
-                                AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"/>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                    <children>
-                        <Button fx:id="jumpRecessiveChoiceButton" mnemonicParsing="false"
-                                onAction="#jumpRecessiveChoiceClick" text="Alto" AnchorPane.bottomAnchor="10.0"
-                                AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"/>
-                    </children>
-                </AnchorPane>
-            </children>
-        </GridPane>
-    </children>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <Label text="Colore pelliccia" textOverrun="CENTER_ELLIPSIS" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding></Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                  <Label text="Lunghezza pelo" textOverrun="CENTER_ELLIPSIS" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding></Label>
+               </children>
+            </AnchorPane>
+             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
+                 <children>
+                     <Label text="Lunghezza denti" textOverrun="CENTER_ELLIPSIS" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                         <padding>
+                             <Insets left="10.0" />
+                         </padding></Label>
+                 </children>
+             </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+               <children>
+                  <Label text="Orecchie" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding></Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
+               <children>
+                  <Label text="Altezza salto" textOverrun="CENTER_ELLIPSIS" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding></Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Button fx:id="furColorDominantChoiceButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#furColorDominantChoiceClick" text="Marrone" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <Button fx:id="furColorRecessiveChoiceButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#furColorRecessiveChoiceClick" text="Marrone" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <Button fx:id="furLengthDominantChoiceButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#furLengthDominantChoiceClick" text="Folto" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <children>
+                  <Button fx:id="furLengthRecessiveChoiceButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#furLengthRecessiveChoiceClick" text="Folto" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <Button fx:id="earsDominantChoiceButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#earsDominantChoiceClick" text="Basse" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <children>
+                  <Button fx:id="earsRecessiveChoiceButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#earsRecessiveChoiceClick" text="Basse" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <children>
+                  <Button fx:id="teethDominantChoiceButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#teethDominantChoiceClick" text="Lunghi" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <children>
+                  <Button fx:id="teethRecessiveChoiceButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#teethRecessiveChoiceClick" text="Lunghi" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <children>
+                  <Button fx:id="jumpDominantChoiceButton" mnemonicParsing="false" onAction="#jumpDominantChoiceClick" text="Alto" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <children>
+                  <Button fx:id="jumpRecessiveChoiceButton" mnemonicParsing="false" onAction="#jumpRecessiveChoiceClick" text="Alto" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </GridPane>
+   </children>
 </AnchorPane>

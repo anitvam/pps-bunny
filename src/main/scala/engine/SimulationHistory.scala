@@ -16,8 +16,7 @@ object SimulationHistory {
 
   /**
    * Initialize the [[History]] of this simulation
-   * @param environment
-   *   the initial environment of the first [[Generation]]
+   * @param environment the initial environment of the first [[Generation]]
    */
   def initialize(environment: Environment): Unit = history = Generation(environment, generateInitialCouple) :: history
 
@@ -64,8 +63,7 @@ object SimulationHistory {
 
   /**
    * Change the Environment of the actual generation
-   * @param climate
-   *   the climate to set into the Environment
+   * @param climate the climate to set into the Environment
    */
   def changeEnvironmentClimate(climate: Climate): Unit = getActualGeneration.environment.climate = climate
 }

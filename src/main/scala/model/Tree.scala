@@ -11,10 +11,8 @@ sealed trait BinaryTree[A] {
 
 /**
  * Represents a Leaf of the Tree, with just an element.
- * @param elem
- *   the element in the leaf
- * @tparam A
- *   the type of the element
+ * @param elem the element in the leaf
+ * @tparam A the type of the element
  */
 case class Leaf[A](elem: A) extends BinaryTree[A] {
   override val generations: Int = 1
@@ -22,14 +20,10 @@ case class Leaf[A](elem: A) extends BinaryTree[A] {
 
 /**
  * Represents a Node of the Tree, with an element and two branches
- * @param elem
- *   the element in the node
- * @param momTree
- *   one of the branches
- * @param dadTree
- *   the other branch
- * @tparam A
- *   the type of the element
+ * @param elem  the element in the node
+ * @param momTree one of the branches
+ * @param dadTree the other branch
+ * @tparam A the type of the element
  */
 case class Node[A](override val elem: A, momTree: BinaryTree[A], dadTree: BinaryTree[A]) extends BinaryTree[A] {
   override val generations: Int = Math.max(momTree.generations, dadTree.generations) + 1
@@ -38,12 +32,9 @@ case class Node[A](override val elem: A, momTree: BinaryTree[A], dadTree: Binary
 object Tree {
 
   /**
-   * @param generations
-   *   the number of older generations to retrieve
-   * @param bunny
-   *   the subject bunny
-   * @return
-   *   the genealogical tree of the bunny for the specified generations
+   * @param generations the number of older generations to retrieve
+   * @param bunny the subject bunny
+   * @return the genealogical tree of the bunny for the specified generations
    */
   def generateTree(generations: Int, bunny: Bunny): BinaryTree[Bunny] = {
     if (generations == 1 || bunny.mom.isEmpty) Leaf(bunny)
