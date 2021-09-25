@@ -66,8 +66,7 @@ class BaseAppController(
     BunnyImage
     val loadedMutationChoicePanel = loadFXMLResource[jfxs.AnchorPane]("/fxml/mutationsPanel.fxml")
     mutationChoicePane.children += loadedMutationChoicePanel._1
-    mutationsPanelController =
-      Some(loadedMutationChoicePanel._2.getController[MutationsPanelControllerInterface])
+    mutationsPanelController = Some(loadedMutationChoicePanel._2.getController[MutationsPanelControllerInterface])
 
     val loadedChartChoice = loadFXMLResource[jfxs.AnchorPane]("/fxml/chartChoiceSelection.fxml")
     chartChoicePane.children += loadedChartChoice._1
@@ -90,7 +89,7 @@ class BaseAppController(
 
   /** Handler of Start button click */
   def startSimulationClick(): Unit = {
-    startButton.setVisible(false)
+    startButton.visible = false
     Controller.startSimulation(simulationPane.background, List.empty)
   }
 
@@ -106,8 +105,8 @@ class BaseAppController(
     simulationPane.background = WinterImage()
   }
 
-  override def showPopulationChart(): Unit = chartsPane.children = PopulationChart
-    .chart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH)
+  override def showPopulationChart(): Unit = chartsPane.children =
+    PopulationChart.chart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH)
 
   def showBunnies(bunnies: Population, generationPhase: GenerationPhase): Unit = {
     proportionsChartController.get.updateChart(generationPhase, bunnies)
