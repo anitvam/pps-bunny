@@ -5,19 +5,19 @@ import model.mutation.Mutation
 import model.world.{Climate, Environment, Generation, Summer}
 import model.world.Generation.Population
 import model.world.Reproduction.{generateInitialCouple, nextGenerationBunnies}
-
+import util.PimpScala.RichTuple2
 import scala.language.implicitConversions
 
 object SimulationHistory{
 
   type History = List[Generation]
 
-  var history: History = List(Generation(Environment(Summer(), List.empty), generateInitialCouple))
+  var history: History = List(Generation(Environment(Summer(), List.empty), generateInitialCouple.toSeq))
 
   /** Initialize the [[History]] of this simulation
    * @param environment the initial environment of the first [[Generation]] */
   def initialize(environment: Environment): Unit =
-    history = Generation(environment, generateInitialCouple) :: history
+    history = Generation(environment, generateInitialCouple.toSeq) :: history
 
   /** Introduce a new mutation */
   def introduceMutation(mutation: Mutation): Unit = {

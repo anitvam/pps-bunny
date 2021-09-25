@@ -6,12 +6,13 @@ import model._
 import model.genome._
 import model.world.Environment.Mutations
 import model.world.Generation.Population
-
+import util.PimpScala.RichTuple2
 import scala.util.Random
 
 object Reproduction {
 
-  type Couples = Seq[(Bunny, Bunny)]
+  type Couples = Seq[Couple]
+  type Couple = (Bunny, Bunny)
 
   /**
    * @param bunnies a seq of bunnies
@@ -32,8 +33,8 @@ object Reproduction {
 
     Genes.values.foreach(gk => {
       val genesOfReproduction : List[Gene]=
-        (for { momAllele <- mom.getStandardAlleles(gk)
-               dadAllele <- dad.getStandardAlleles(gk)
+        (for { momAllele <- mom.getStandardAlleles(gk).toSeq
+               dadAllele <- dad.getStandardAlleles(gk).toSeq
               } yield Gene(gk, momAllele, dadAllele)).toList
       val shufflesGenes = Random.shuffle(genesOfReproduction)
 
@@ -63,7 +64,7 @@ object Reproduction {
   /**    
    * @return the first two bunnies of the simulation
    * */
-  def generateInitialCouple:Population = Seq(generateBaseFirstBunny, generateBaseFirstBunny)
+  def generateInitialCouple: Couple = (generateBaseFirstBunny, generateBaseFirstBunny)
 
   /**
    * @param bunnies bunnies from the last generation
