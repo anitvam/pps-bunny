@@ -52,16 +52,6 @@ object SimulationHistory {
   /** Terminate the actual [[Generation]] */
   def endActualGeneration(): Unit = getActualGeneration.isEnded = true
 
-  /** @return the [[Population]]  for the next [[Generation]] */
-  def getPopulationForNextGeneration: Population =
-    nextGenerationBunnies(getActualPopulation, getActualGeneration.environment.mutations)
-
-  /** @return the [[Population]] of the actual generation */
-  def getActualPopulation: Population = getActualGeneration.population
-
-  /** @return the [[Environment]]  for the next [[Generation]] */
-  def getEnvironmentForNextGeneration: Environment = Environment.fromPreviousOne(getActualGeneration.environment)
-
   /**
    * Change the Environment of the actual generation
    * @param climate the climate to set into the Environment
