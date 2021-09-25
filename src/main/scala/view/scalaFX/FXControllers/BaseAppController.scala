@@ -5,7 +5,6 @@ import javafx.scene.{layout => jfxs}
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
-import scalafx.collections.ObservableBuffer
 import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout.AnchorPane
 import scalafx.scene.text.Text
@@ -148,11 +147,7 @@ class BaseAppController(
       ).chartPane
       setFitParent(pedigreeChart)
       chartsPane.children = pedigreeChart
-      pedigreeText.setVisible(false)
-    } else {
-      chartsPane.children = pedigreeText
-      pedigreeText.setVisible(true)
-    }
+    } else chartsPane.children = pedigreeText
 
   override def showProportionsChart(): Unit = {
     chartsPane.children = proportionsChartPane.get

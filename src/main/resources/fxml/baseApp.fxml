@@ -44,9 +44,9 @@
                                     <GridPane.margin>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </GridPane.margin>
-                           <children>
-                              <Text fx:id="pedigreeText" layoutX="53.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clicca su un coniglietto per visualizzarne l'albero genealogico." textAlignment="CENTER" visible="false" wrappingWidth="220.6689453125" />
-                           </children>
+                                    <children>
+                                        <Text fx:id="pedigreeText" layoutX="200.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clicca su un coniglietto per visualizzarne l'albero genealogico." textAlignment="CENTER" wrappingWidth="220.6689453125" />
+                                    </children>
                                 </AnchorPane>
                                 <AnchorPane fx:id="chartChoicePane" prefHeight="200.0" prefWidth="200.0" styleClass="panel" GridPane.columnIndex="1">
                                     <GridPane.margin>
