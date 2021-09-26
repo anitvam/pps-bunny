@@ -1,12 +1,12 @@
 package controller
 
 import engine.SimulationEngine.simulationLoop
-import engine.SimulationHistory
 import engine.SimulationHistory.resetHistory
 import model.genome.KindsUtils.resetDominance
+import engine.{ SimulationEngine, SimulationHistory }
 import model.world.Generation.Population
 import model.world.disturbingFactors.Factor
-import model.world.{Mutation, Summer, Winter}
+import model.world.{ Mutation, Summer, Winter }
 import scalafx.application.Platform
 import view.scalaFX.ScalaFXView
 
@@ -14,8 +14,16 @@ object Controller {
 
   /**
    * Method that starts the simulation
+   * @param climate
+   *   the Environment Climate
+   * @param factors
+   *   the Environment Factors
    */
   def startSimulation(): Unit = simulationLoop().unsafeRunAsyncAndForget()
+
+  def incrementSimulationSpeed(): Unit = {
+    SimulationEngine.incrementSpeed()
+  }
 
   /** Method that sets the Summer Climate inside Environment */
   def setSummerClimate(): Unit = SimulationHistory changeEnvironmentClimate Summer()

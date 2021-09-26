@@ -1,23 +1,23 @@
 package engine
 
-import scala.concurrent.duration.{ DurationInt, FiniteDuration }
+import scala.concurrent.duration.{ DurationDouble, DurationInt, FiniteDuration }
 import scala.language.postfixOps
 
 object SimulationConstants {
 
   /** After how many milliseconds from the start of generation the wolves can eat */
-  val WOLF_INSTANT: FiniteDuration = 3000 millis
+  val WOLF_INSTANT: Double = 3000
 
   /** After how many milliseconds from the start of generation the bunnies can eat */
-  val FOOD_INSTANT: FiniteDuration = 6000 millis
+  val FOOD_INSTANT: Double = 6000
 
   /**
    * After how many milliseconds from the start of generation the bunnies are affected by high temperatures
    */
-  val TEMP_INSTANT: FiniteDuration = 9000 millis
+  val TEMP_INSTANT: Double = 9000
 
   /** Duration in milliseconds of a generation */
-  val GENERATION_END: FiniteDuration = 12000 millis
+  val GENERATION_END: Double = 12000
 
   /** Double value associated to generation initial phase */
   val START_PHASE: Double = 0.0

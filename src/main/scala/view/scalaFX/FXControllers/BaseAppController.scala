@@ -1,23 +1,23 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-import engine.SimulationConstants.{FOOD_PHASE, START_PHASE, WOLVES_PHASE}
+import engine.SimulationConstants.{ FOOD_PHASE, START_PHASE, WOLVES_PHASE }
 import javafx.fxml.FXML
-import javafx.scene.{layout => jfxs}
+import javafx.scene.{ layout => jfxs }
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
-import scalafx.scene.control.{Button, Label}
-import scalafx.scene.layout.{AnchorPane, Background}
+import scalafx.scene.control.{ Button, Label }
+import scalafx.scene.layout.{ AnchorPane, Background }
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
-import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
+import view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH }
 import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
-import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
 import view.scalaFX.utilities._
+import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
 
 import scala.language.postfixOps
 
@@ -52,6 +52,9 @@ sealed trait BaseAppControllerInterface {
    *   the current background
    */
   def changeBackgroundEnvironment(background: Background): Unit
+
+  def addSpeedUp(): Unit
+
 }
 
 @sfxml
@@ -203,4 +206,5 @@ class BaseAppController(
 
   override def changeBackgroundEnvironment(background: Background): Unit = simulationPane.background = background
 
+  override def addSpeedUp(): Unit = Controller.incrementSimulationSpeed()
 }
