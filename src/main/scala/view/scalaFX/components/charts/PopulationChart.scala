@@ -35,6 +35,8 @@ object PopulationChartDataType {
       case _                      => println(data)
     }
 
+    def reset(): Unit = data = Seq()
+
   }
 
   /** A wrapper for a sequence of points and the graphic element that displays them */
@@ -43,6 +45,11 @@ object PopulationChartDataType {
     def +(p: Point): Unit = {
       seriesData ^ p
       seriesData.data takeRight 2 foreach { xySeries += createXYChartData(_, xySeries) }
+    }
+
+    def reset(): Unit = {
+      seriesData.reset()
+      xySeries.getData.clear()
     }
 
   }
@@ -61,6 +68,8 @@ object PopulationChartDataType {
       mutationMap(ak) + p
     }
 
+    def reset(): Unit = mutationMap.values foreach { _.reset() }
+
   }
 
   /** Ad hoc ChartPoint extractor */
@@ -71,22 +80,17 @@ object PopulationChartDataType {
 }
 
 /** A singleton to managed the chart */
-object PopulationChart {
+case class PopulationChart(height: Double, width: Double) {
   import LineChartComponentFactory._
 
   val xAxis: NumberAxis = createNumberAxis("Generation Axis", 0, 6, 1)
   val yAxis: NumberAxis = createNumberAxis("Population Axis", 0, 30, 5)
 
-  val chart: (Double, Double) => LineChart[Number, Number] =
-    createLineChart(xAxis, yAxis, _, _, total.xySeries :: mutations.xySeries)
-
-
   var mutations: MutationsChartSeries = MutationsChartSeries()
   var total: ChartSeries = ChartSeries(SeriesData(), createEmptySeries("Total"))
 
-  def resetChart(): Unit = {
-    //??
-  }
+  val chart: LineChart[Number, Number] =
+    createLineChart(xAxis, yAxis, height, width, total.xySeries :: mutations.xySeries)
 
   def updateChart(generationPhase: GenerationPhase, population: Population): Unit = {
     import ChartConverters._
@@ -101,6 +105,7 @@ object PopulationChart {
     if (x > xAxis.upperBound.toDouble) xAxis.upperBound = x + 2
     if (size > yAxis.upperBound.toInt) yAxis.upperBound = size + 10
   }
+
 }
 
 /** Some implicit method for conversions */

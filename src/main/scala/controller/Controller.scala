@@ -7,21 +7,23 @@ import model.genome.KindsUtils.resetDominance
 import model.mutation.Mutation
 import model.world.Environment.Factors
 import model.world.Generation.Population
-import model.world.{Climate, Summer, Winter}
+import model.world.{ Climate, Summer, Winter }
 import scalafx.application.Platform
 import view.scalaFX.ScalaFXView
 
 object Controller {
 
-  private def reset: Unit = {
+  def reset(): Unit = {
     resetDominance()
     resetHistory()
   }
 
   /**
    * Method that starts the simulation
-   * @param climate the Environment Climate
-   * @param factors the Environment Factors
+   * @param climate
+   *   the Environment Climate
+   * @param factors
+   *   the Environment Factors
    */
   def startSimulation(climate: Climate, factors: Factors): Unit = {
     SimulationHistory changeEnvironmentClimate climate
@@ -36,14 +38,14 @@ object Controller {
 
   /**
    * Method that insert a mutation inside the simulation
-   * @param mutation the Mutation
+   * @param mutation
+   *   the Mutation
    */
   def insertMutation(mutation: Mutation): Unit = SimulationHistory introduceMutation mutation
 
   /** Method that shows the end of the simulation on the Application GUI */
   def showEnd(): Unit = Platform runLater {
     ScalaFXView.showEnd()
-    this.reset
   }
 
   def population: Population = SimulationHistory.getActualPopulation

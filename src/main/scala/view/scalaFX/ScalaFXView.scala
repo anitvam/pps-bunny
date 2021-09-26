@@ -39,7 +39,8 @@ object ScalaFXView extends View {
 
   def updateView(generationPhase: GenerationPhase, bunnies: Population): Unit = Platform.runLater {
     baseAppController --> { _.showBunnies(bunnies, generationPhase) }
-    PopulationChart.updateChart(generationPhase, bunnies)
+//    PopulationChart.updateChart(generationPhase, bunnies)
+
   }
 
   override def showEnd(): Unit = {
@@ -128,4 +129,5 @@ object ScalaFxViewConstants {
     /** The padding between the bunny and its alleles */
     val BUNNY_ALLELE_PADDING = 3
   }
+
 }
