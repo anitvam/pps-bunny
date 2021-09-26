@@ -79,7 +79,6 @@ object PopulationChartDataType {
 
 }
 
-/** A singleton to managed the chart */
 case class PopulationChart(height: Double, width: Double) {
   import LineChartComponentFactory._
 
