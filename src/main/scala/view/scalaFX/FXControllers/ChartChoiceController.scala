@@ -9,17 +9,26 @@ sealed trait ChartChoiceControllerInterface {
 
   /**
    * Method that initialize the ChartChoiceController
-   * @param controller the BaseAppControllerInterface instance
+   * @param controller
+   *   the BaseAppControllerInterface instance
    */
   def initialize(controller: BaseAppControllerInterface): Unit
+
+  /**
+   * Method that reset the ChartChoiceController
+   */
+  def reset(): Unit
 
   /** Method that handle the click of a Bunny */
   def handleBunnyClick(): Unit
 }
 
 @sfxml
-class ChartChoiceController( private val pedigreeRadioButton: RadioButton,
-                             private val legendBox: VBox) extends ChartChoiceControllerInterface {
+class ChartChoiceController(
+    private val pedigreeRadioButton: RadioButton,
+    private val legendBox: VBox,
+    private val populationRadioButton: RadioButton
+) extends ChartChoiceControllerInterface {
 
   private var baseAppController: Option[BaseAppControllerInterface] = None
 
@@ -28,10 +37,12 @@ class ChartChoiceController( private val pedigreeRadioButton: RadioButton,
     baseAppController = Some(controller)
   }
 
+  override def reset(): Unit = populationRadioButton.selected = true
+
   override def handleBunnyClick(): Unit =
     if (pedigreeRadioButton.selected.value) baseAppController --> { _.showPedigreeChart() }
 
-  private def showChart(legendVisibility: Boolean, chartToShow : BaseAppControllerInterface => Unit) {
+  private def showChart(legendVisibility: Boolean, chartToShow: BaseAppControllerInterface => Unit) {
     legendBox.setVisible(legendVisibility)
     baseAppController --> { chartToShow }
   }
