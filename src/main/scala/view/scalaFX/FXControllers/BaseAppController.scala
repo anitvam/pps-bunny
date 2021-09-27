@@ -110,6 +110,7 @@ class BaseAppController(
       this.initializeView()
       startSimulationClick()
     }
+    startButton.text = "RESTART"
     startButton.setVisible(true)
   }
 
