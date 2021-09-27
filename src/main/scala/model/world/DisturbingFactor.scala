@@ -5,7 +5,7 @@ import model.Bunny
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes
 import model.genome.Genes.GeneKind
-import model.world.FactorsUtils.{ filterBunniesWithAlleles, killPercentageBunnies }
+import model.world.FactorsUtils.{ applyCustomDamage, filterBunniesWithAlleles }
 import model.world.Generation.Population
 import scala.util.Random._
 
@@ -86,23 +86,23 @@ sealed trait FoodFactor extends Factor {
       case (false, false, true) => super.applyDamage(bunniesSplitByToughFoodGene._1, climate)
       case (true, true, false) =>
         super.applyDamage(bunniesSplitByHighFoodGene._1, climate)
-        killPercentageBunnies(bunniesSplitByHighFoodGene._2, lowDamage)
+        applyCustomDamage(bunniesSplitByHighFoodGene._2, lowDamage)
       case (true, false, true) =>
         super.applyDamage(bunniesSplitByHighFoodGene._1, climate)
-        killPercentageBunnies(
+        applyCustomDamage(
           filterBunniesWithAlleles(bunnies, highFoodDamagedGene.mutated, toughFoodDamagedGene.base),
           lowDamage
         )
       case (false, true, true) =>
         super.applyDamage(bunniesSplitByToughFoodGene._1, climate)
-        killPercentageBunnies(bunniesSplitByToughFoodGene._2, lowDamage)
+        applyCustomDamage(bunniesSplitByToughFoodGene._2, lowDamage)
       case (true, true, true) =>
         super.applyDamage(bunniesSplitByHighFoodGene._1, climate)
         super.applyDamage(
           filterBunniesWithAlleles(bunnies, highFoodDamagedGene.mutated, toughFoodDamagedGene.base),
           climate
         )
-        killPercentageBunnies(
+        applyCustomDamage(
           filterBunniesWithAlleles(bunnies, highFoodDamagedGene.mutated, toughFoodDamagedGene.mutated),
           lowDamage
         )
@@ -117,7 +117,7 @@ object Factor {
   abstract class BasicFactor extends Factor {
 
     override def applyDamage(bunnies: Population, climate: Climate): Population =
-      killPercentageBunnies(bunnies, normalDamage)
+      applyCustomDamage(bunnies, normalDamage)
 
   }
 
@@ -161,12 +161,12 @@ object Factor {
 
     override protected def summerAction(bunnies: Population): Population = {
       val splitBunnies = Bunny.splitBunniesByGene(afflictedGene, bunnies)
-      killPercentageBunnies(splitBunnies._2, normalDamage) ++ splitBunnies._1
+      applyCustomDamage(splitBunnies._2, normalDamage) ++ splitBunnies._1
     }
 
     override protected def winterAction(bunnies: Population): Population = {
       val splitBunnies = Bunny.splitBunniesByGene(afflictedGene, bunnies)
-      killPercentageBunnies(splitBunnies._1, normalDamage) ++ splitBunnies._2
+      applyCustomDamage(splitBunnies._1, normalDamage) ++ splitBunnies._2
     }
 
   }
@@ -181,26 +181,26 @@ object Factor {
     private val firstGeneAffected: GeneKind = Genes.FUR_COLOR
     private val secondGeneAffected: GeneKind = Genes.EARS
 
-    override def summerAction(bunnies: Population): Population = manageKillBunnies(
+    override def summerAction(bunnies: Population): Population = killBunnies(
       bunnies,
       filterBunniesWithAlleles(bunnies, firstGeneAffected.mutated, secondGeneAffected.base),
       filterBunniesWithAlleles(bunnies, firstGeneAffected.base, secondGeneAffected.mutated)
     )
 
-    override def winterAction(bunnies: Population): Population = manageKillBunnies(
+    override def winterAction(bunnies: Population): Population = killBunnies(
       bunnies,
       filterBunniesWithAlleles(bunnies, firstGeneAffected.base, secondGeneAffected.base),
       filterBunniesWithAlleles(bunnies, firstGeneAffected.mutated, secondGeneAffected.mutated)
     )
 
-    private def manageKillBunnies(
+    private def killBunnies(
         bunnies: Population,
         bunniesWithLowDamage: Population,
         bunniesWithHighDamage: Population
     ): Population = {
-      killPercentageBunnies(bunniesWithLowDamage, lowDamage)
-      killPercentageBunnies(bunnies diff bunniesWithLowDamage diff bunniesWithHighDamage, normalDamage)
-      killPercentageBunnies(bunniesWithHighDamage, highDamage)
+      applyCustomDamage(bunniesWithLowDamage, lowDamage)
+      applyCustomDamage(bunnies diff bunniesWithLowDamage diff bunniesWithHighDamage, normalDamage)
+      applyCustomDamage(bunniesWithHighDamage, highDamage)
       bunnies
     }
 
@@ -219,9 +219,8 @@ object FactorsUtils {
    * @return
    *   the updated population
    */
-  def killPercentageBunnies(bunnies: Population, percentage: Double): Population = {
+  def applyCustomDamage(bunnies: Population, percentage: Double): Population = {
     shuffle(bunnies) take (bunnies.length * percentage).toInt foreach { _.alive = false }
-    println("Ho ucciso " + (bunnies.length * percentage).toInt + " conigli c: da una lista di " + bunnies.length)
     bunnies
   }
 
