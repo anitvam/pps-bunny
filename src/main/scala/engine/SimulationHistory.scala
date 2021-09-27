@@ -28,22 +28,23 @@ object SimulationHistory {
 
   /** Reset all the mutations added */
   def resetMutations(): Unit = getActualGeneration.environment.mutations = List()
-  
-  /**@return how many generation have been lived*/
-  def getGenerationNumber: Int = history.length-1
 
-  /**@return how many bunnies are alive in the actual generation*/
+  /** @return how many generation have been lived */
+  def getGenerationNumber: Int = history.length - 1
+
+  /** @return how many bunnies are alive in the actual generation */
   def getBunniesNumber: Int = getActualGeneration.getAliveBunniesNumber
 
-  /**@return the [[Population]] of the actual generation*/
+  /** @return the [[Population]] of the actual generation */
   def getActualPopulation: Population = getActualGeneration.livingPopulation
 
-  /**@return the [[Population]]  for the next [[Generation]]*/
-  def getPopulationForNextGeneration : Population = nextGenerationBunnies(getActualPopulation, getActualGeneration.environment.mutations)
+  /** @return the [[Population]]  for the next [[Generation]] */
+  def getPopulationForNextGeneration: Population =
+    nextGenerationBunnies(getActualPopulation, getActualGeneration.environment.mutations)
 
-  /**@return the [[Environment]]  for the next [[Generation]]*/
-  def getEnvironmentForNextGeneration : Environment = Environment.fromPreviousOne(getActualGeneration.environment)
-  
+  /** @return the [[Environment]]  for the next [[Generation]] */
+  def getEnvironmentForNextGeneration: Environment = Environment.fromPreviousOne(getActualGeneration.environment)
+
   /** Terminate the actual [[Generation]] and start the next one */
   def startNextGeneration(): Unit = {
     endActualGeneration()
@@ -55,7 +56,8 @@ object SimulationHistory {
 
   /**
    * Change the Environment of the actual generation
-   * @param climate the climate to set into the Environment
+   * @param climate
+   *   the climate to set into the Environment
    */
   def changeEnvironmentClimate(climate: Climate): Unit = getActualGeneration.environment.climate = climate
 }

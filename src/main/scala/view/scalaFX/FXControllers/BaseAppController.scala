@@ -1,11 +1,14 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-import javafx.scene.{layout => jfxs}
-import model.world.Generation.Population
-import model.world.GenerationsUtils.GenerationPhase
+
 import scalafx.Includes._
-import scalafx.scene.control.{Button, Label}
+import engine.SimulationConstants.START_PHASE
+import javafx.scene.{ layout => jfxs }
+import model.world.Generation.Population
+import scalafx.collections.ObservableBuffer
+import model.world.GenerationsUtils.{ GenerationPhase, StartPhase }
+import scalafx.scene.control.{ Button, Label }
 import scalafx.scene.layout.AnchorPane
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
@@ -15,8 +18,8 @@ import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.utilities.EnvironmentImageUtils._
-import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
-import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
+import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
+import view.scalaFX.utilities.{ BunnyImage, SummerImage, WinterImage }
 
 import scala.language.postfixOps
 
@@ -72,18 +75,14 @@ class BaseAppController(
     val loadedChartChoice = loadFXMLResource[jfxs.AnchorPane]("/fxml/chartChoiceSelection.fxml")
     chartChoicePane.children += loadedChartChoice._1
     chartSelectionPanelController = Some(loadedChartChoice._2.getController[ChartChoiceControllerInterface])
-    chartSelectionPanelController --> {
-      _.initialize(this)
-    }
+    chartSelectionPanelController --> { _.initialize(this) }
 
     val loadedProportionsChartView = loadFXMLResource[jfxs.AnchorPane]("/fxml/proportionsChartPane.fxml")
     proportionsChartPane = Some(loadedProportionsChartView._1)
     proportionsChartController = Some(loadedProportionsChartView._2.getController[ChartController])
 
-    AnchorPane.setAnchors(proportionsChartPane.get, 0, 0, 0, 0)
-    proportionsChartController --> {
-      _.initialize()
-    }
+    setFitParent(proportionsChartPane.get)
+    proportionsChartController --> { _.initialize() }
 
     showPopulationChart()
   }
@@ -106,36 +105,31 @@ class BaseAppController(
     simulationPane.background = WinterImage()
   }
 
+  override def showPopulationChart(): Unit = chartsPane.children =
+    PopulationChart.chart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH)
+
   def showBunnies(bunnies: Population, generationPhase: GenerationPhase): Unit = {
     proportionsChartController.get.updateChart(generationPhase, bunnies)
+
+    bunnyViews = bunnyViews.filter(_.bunny.alive)
+
+    println("bunnies alive: " + bunnyViews.length)
     // Bunny visualization inside simulationPane
-    if (bunnyViews.size != bunnies.size) {
-      val newBunnyViews = bunnies filter {
-        _.age == 0
-      } map {
-        BunnyView(_)
-      }
-      bunnyViews = bunnyViews.filter(_.bunny.alive) ++ newBunnyViews
-      simulationPane.children = bunnyViews map {
-        _.imageView
-      }
+    if (generationPhase.phase == START_PHASE) {
+      val newBunnyViews = bunnies filter { _.age == 0 } map { BunnyView(_) }
+      bunnyViews = bunnyViews ++ newBunnyViews
 
       generationLabel.text = "Generazione " + generationPhase.generationNumber
       if (generationPhase.generationNumber > 0) {
-        mutationsPanelController --> {
-          _.hideMutationIncoming()
-        }
+        mutationsPanelController --> { _.hideMutationIncoming() }
       }
 
       // Start movement of the new bunnies
-      newBunnyViews foreach {
-        _.play()
-      }
+      newBunnyViews foreach { _.play() }
     }
+    simulationPane.children = ObservableBuffer.empty
+    simulationPane.children = bunnyViews map { _.imageView }
   }
-
-  override def showPopulationChart(): Unit = chartsPane.children = PopulationChart
-    .chart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH)
 
   override def showPedigreeChart(): Unit =
     if (selectedBunny ?) {
