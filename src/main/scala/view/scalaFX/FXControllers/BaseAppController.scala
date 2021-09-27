@@ -67,8 +67,7 @@ class BaseAppController(
     BunnyImage
     val loadedMutationChoicePanel = loadFXMLResource[jfxs.AnchorPane]("/fxml/mutationsPanel.fxml")
     mutationChoicePane.children += loadedMutationChoicePanel._1
-    mutationsPanelController =
-      Some(loadedMutationChoicePanel._2.getController[MutationsPanelControllerInterface])
+    mutationsPanelController = Some(loadedMutationChoicePanel._2.getController[MutationsPanelControllerInterface])
 
     val loadedChartChoice = loadFXMLResource[jfxs.AnchorPane]("/fxml/chartChoiceSelection.fxml")
     chartChoicePane.children += loadedChartChoice._1
@@ -91,7 +90,7 @@ class BaseAppController(
 
   /** Handler of Start button click */
   def startSimulationClick(): Unit = {
-    startButton.setVisible(false)
+    startButton.visible = false
     Controller.startSimulation(simulationPane.background, List.empty)
   }
 
