@@ -6,4 +6,8 @@ object PimpScala {
     def -->(consumer: A => Unit): Unit = option.foreach(consumer)
     def ? : Boolean = option.isDefined
   }
+
+  implicit class RichTuple2[A](tuple: (A, A)){
+    def toSeq: Seq[A] = Seq(tuple._1, tuple._2)
+  }
 }

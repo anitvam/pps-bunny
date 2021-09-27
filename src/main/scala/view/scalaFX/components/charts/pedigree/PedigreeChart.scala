@@ -30,15 +30,27 @@ object PedigreeChart {
   /** The size required for the bunny icons */
   var bunnyIconSize: Int = MAX_TREE_BUNNY_SIZE
 
+  /**
+   * To create a chart with the standard panel size
+   * @param bunny the bunny that is the subject of the tree
+   * @return the pedigree chart
+   */
   def apply(bunny: Bunny): PedigreeChart = {
     this (bunny, PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH)
   }
 
-  def apply(bunny: Bunny, panelWidth: Int, panelHeight: Int): PedigreeChart = {
+  /**
+   * To create a chart with
+   * @param bunny the bunny that is the subject of the tree
+   * @param chartWidth the width of the panel and maximum width of the tree
+   * @param chartHeight the height of the panel and maximum height of the tree
+   * @return the pedigree chart
+   */
+  def apply(bunny: Bunny, chartWidth: Int, chartHeight: Int): PedigreeChart = {
     val tree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
-    val maxBunnySizeForWidth: Int = ((panelWidth * TREE_PLUS_PROPORTION) /
+    val maxBunnySizeForWidth: Int = ((chartWidth * TREE_PLUS_PROPORTION) /
       (Math.pow(TREE_PLUS_PROPORTION + 1, tree.generations - 1) - 1)).toInt
-    val maxBunnySizeForHeight: Int = ((panelHeight * TREE_INFO_PROPORTION * FONT_INFO_PERCENT) /
+    val maxBunnySizeForHeight: Int = ((chartHeight * TREE_INFO_PROPORTION * FONT_INFO_PERCENT) /
       ((TREE_INFO_PROPORTION * FONT_INFO_PERCENT + 1 + FONT_INFO_PERCENT) * tree.generations)).toInt
     bunnyIconSize = Seq(maxBunnySizeForHeight, maxBunnySizeForWidth, MAX_TREE_BUNNY_SIZE).min
     PedigreeChartImpl(bunny, tree)
@@ -81,6 +93,7 @@ object PedigreeChart {
     (row, nextTrees)
   }
 
+  /** Creates a spacing region to justify the rows of bunnies */
   def spacingRegion: Region = new Region {
     hgrow = Priority.Always
   }
@@ -97,6 +110,7 @@ object PedigreeChart {
     txt
   }
 
+  /** Creates a view of the plus between couples of bunnies */
   def plusView: Text = new Text {
     text = "+"
     style = "-fx-font-weight: bold; -fx-font-size: " + bunnyIconSize / TREE_PLUS_PROPORTION + ";"
