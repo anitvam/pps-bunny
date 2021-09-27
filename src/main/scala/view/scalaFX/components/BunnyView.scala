@@ -28,15 +28,6 @@ trait BunnyView {
   /** The image of the bunny displayed on the GUI */
   val imageView: ImageView
 
-  /** The Direction of the bunny jumps */
-  var direction: Direction
-
-  /** The X-Axis position of the bunny */
-  var positionX: Double
-
-  /** The Y-Axis position of the bunny */
-  var positionY: Double
-
   /** Starts the bunny animation */
   def play(): Unit
 
@@ -66,9 +57,9 @@ object BunnyView {
   private case class BunnyViewImpl(
       imageView: ImageView,
       bunny: Bunny,
-      var direction: Direction,
-      var positionX: Double,
-      var positionY: Double
+      private var direction: Direction,
+      private var positionX: Double,
+      private var positionY: Double
   ) extends BunnyView {
 
     private val normalImage: Image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)

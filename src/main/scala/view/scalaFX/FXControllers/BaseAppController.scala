@@ -1,13 +1,16 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
+
+import scalafx.Includes._
+import engine.SimulationConstants.START_PHASE
 import javafx.scene.{ layout => jfxs }
 import model.world.Generation.Population
-import model.world.GenerationsUtils.GenerationPhase
-import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
+import model.world.GenerationsUtils.{ GenerationPhase, StartPhase }
 import scalafx.scene.control.{ Button, Label }
 import scalafx.scene.layout.AnchorPane
+import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
 import view.scalaFX.ScalaFxViewConstants
@@ -48,6 +51,7 @@ sealed trait BaseAppControllerInterface {
 class BaseAppController(
     private val simulationPane: AnchorPane,
     private val chartsPane: AnchorPane,
+    private val pedigreeText: Text,
     private val mutationChoicePane: AnchorPane,
     private val factorChoicePane: AnchorPane,
     private val startButton: Button,
@@ -134,33 +138,25 @@ class BaseAppController(
   }
 
   def showBunnies(bunnies: Population, generationPhase: GenerationPhase): Unit = {
-    proportionsChartController --> { _.updateChart(generationPhase, bunnies) }
+    proportionsChartController.get.updateChart(generationPhase, bunnies)
     populationChart --> { _.updateChart(generationPhase, bunnies) }
+    bunnyViews = bunnyViews.filter(_.bunny.alive)
 
     // Bunny visualization inside simulationPane
-    if (bunnyViews.size != bunnies.size) {
-      val newBunnyViews = bunnies filter {
-        _.age == 0
-      } map {
-        BunnyView(_)
-      }
-      bunnyViews = bunnyViews.filter(_.bunny.alive) ++ newBunnyViews
-      simulationPane.children = bunnyViews map {
-        _.imageView
-      }
+    if (generationPhase.phase == START_PHASE) {
+      val newBunnyViews = bunnies filter { _.age == 0 } map { BunnyView(_) }
+      bunnyViews = bunnyViews ++ newBunnyViews
 
       generationLabel.text = "Generazione " + generationPhase.generationNumber
       if (generationPhase.generationNumber > 0) {
-        mutationsPanelController --> {
-          _.hideMutationIncoming()
-        }
+        mutationsPanelController --> { _.hideMutationIncoming() }
       }
 
       // Start movement of the new bunnies
-      newBunnyViews foreach {
-        _.play()
-      }
+      newBunnyViews foreach { _.play() }
     }
+    simulationPane.children = ObservableBuffer.empty
+    simulationPane.children = bunnyViews map { _.imageView }
   }
 
   override def showPopulationChart(): Unit = populationChart --> { c => chartsPane.children = c.chart }
@@ -174,7 +170,7 @@ class BaseAppController(
       ).chartPane
       setFitParent(pedigreeChart)
       chartsPane.children = pedigreeChart
-    } else chartsPane.children = ObservableBuffer.empty
+    } else chartsPane.children = pedigreeText
 
   override def showProportionsChart(): Unit = {
     chartsPane.children = proportionsChartPane.get

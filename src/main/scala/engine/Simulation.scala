@@ -3,6 +3,7 @@ package engine
 import cats.effect.IO
 import controller.Controller
 import engine.SimulationHistory._
+import model.world.Factor._
 import model.world.GenerationsUtils.GenerationPhase
 import view.scalaFX.ScalaFXView
 
@@ -11,11 +12,15 @@ import scala.language.implicitConversions
 object Simulation {
 
   def wolvesEat: IO[Unit] = {
-    println("WOLVES ARE EATING")
+    val wolves = Wolves()
+    SimulationHistory.getActualGeneration.population = wolves
+      .applyDamage(SimulationHistory.getActualPopulation, SimulationHistory.getActualGeneration.environment.climate)
   }
 
   def bunniesEat: IO[Unit] = {
-    println("BUNNIES ARE EATING")
+    val limitedFood = UnfriendlyClimate()
+    SimulationHistory.getActualGeneration.population = limitedFood
+      .applyDamage(SimulationHistory.getActualPopulation, SimulationHistory.getActualGeneration.environment.climate)
   }
 
   def applyTemperatureDamage: IO[Unit] = {
