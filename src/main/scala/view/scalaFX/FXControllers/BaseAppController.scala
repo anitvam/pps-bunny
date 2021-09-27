@@ -25,6 +25,7 @@ sealed trait BaseAppControllerInterface {
   /** Method that initialize the application interface */
   def initialize(): Unit
 
+  /** Method to reset the application interface and start a new simulation */
   def reset(): Unit
 
   /** Method that shows population chart inside chartsPane */
@@ -108,14 +109,14 @@ class BaseAppController(
       mutationsPanelController --> { _.resetMutationsPanel() }
       chartSelectionPanelController --> { _.reset() }
       this.initializeView()
-      startSimulationClick()
+      startSimulation()
     }
     startButton.text = "RESTART"
     startButton.setVisible(true)
   }
 
   /** Handler of Start button click */
-  def startSimulationClick(): Unit = {
+  def startSimulation(): Unit = {
     startButton.setVisible(false)
     Controller.startSimulation(simulationPane.background, List.empty)
   }

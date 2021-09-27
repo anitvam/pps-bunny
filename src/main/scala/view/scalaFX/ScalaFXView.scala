@@ -2,22 +2,21 @@ package view.scalaFX
 
 import controller.ScalaFXLauncher.stage
 import javafx.stage.Screen
-import javafx.{ scene => jfxs }
+import javafx.{scene => jfxs}
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
 import scalafx.application.JFXApp3.PrimaryStage
 import scalafx.application.Platform
 import scalafx.scene.Scene
-import scalafx.scene.image.{ Image, ImageView }
+import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.AnchorPane
 import scalafx.stage.Stage
 import util.PimpScala._
 import view._
 import view.scalaFX.FXControllers.BaseAppControllerInterface
-import view.scalaFX.ScalaFxViewConstants.{ SCENE_HEIGHT, SCENE_WIDTH }
+import view.scalaFX.ScalaFxViewConstants.{SCENE_HEIGHT, SCENE_WIDTH}
 import view.scalaFX.components.BunnyView
-import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.utilities.FxmlUtils
 
 object ScalaFXView extends View {
@@ -39,8 +38,6 @@ object ScalaFXView extends View {
 
   def updateView(generationPhase: GenerationPhase, bunnies: Population): Unit = Platform.runLater {
     baseAppController --> { _.showBunnies(bunnies, generationPhase) }
-//    PopulationChart.updateChart(generationPhase, bunnies)
-
   }
 
   override def showEnd(): Unit = {
