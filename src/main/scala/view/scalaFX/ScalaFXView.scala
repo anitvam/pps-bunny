@@ -37,7 +37,7 @@ object ScalaFXView extends View {
   }
 
   def updateView(generationPhase: GenerationPhase, bunnies: Population): Unit = Platform.runLater {
-    baseAppController --> { _.showBunnies(bunnies, generationPhase) }
+    baseAppController --> { _.updateView(bunnies, generationPhase) }
   }
 
   override def showEnd(): Unit = {
