@@ -1,14 +1,13 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-
-import scalafx.Includes._
 import engine.SimulationConstants.START_PHASE
-import javafx.scene.{ layout => jfxs }
+import javafx.scene.{layout => jfxs}
 import model.world.Generation.Population
+import model.world.GenerationsUtils.GenerationPhase
+import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
-import model.world.GenerationsUtils.{ GenerationPhase, StartPhase }
-import scalafx.scene.control.{ Button, Label }
+import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout.AnchorPane
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
@@ -18,8 +17,8 @@ import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.utilities.EnvironmentImageUtils._
-import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
-import view.scalaFX.utilities.{ BunnyImage, SummerImage, WinterImage }
+import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
+import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
 
 import scala.language.postfixOps
 
@@ -113,7 +112,6 @@ class BaseAppController(
 
     bunnyViews = bunnyViews.filter(_.bunny.alive)
 
-    println("bunnies alive: " + bunnyViews.length)
     // Bunny visualization inside simulationPane
     if (generationPhase.phase == START_PHASE) {
       val newBunnyViews = bunnies filter { _.age == 0 } map { BunnyView(_) }

@@ -3,12 +3,12 @@ package view.scalaFX.utilities
 import model.Bunny
 import model.genome.Alleles._
 import model.genome.Genes._
-import model.genome.{ Genes, Phenotype }
-import model.world.{ Climate, Summer, Winter }
+import model.genome.{Genes, Phenotype}
+import model.world.{Climate, Summer, Winter}
 import scalafx.beans.property.ObjectProperty
 import scalafx.scene.image.Image
 import scalafx.scene.layout._
-import view.scalaFX.utilities.ImageType.{ ImageType, Jumping, Normal }
+import view.scalaFX.utilities.ImageType.{ImageType, Jumping, Normal}
 
 import scala.language.implicitConversions
 
