@@ -86,8 +86,9 @@ object PopulationChartDataType {
 case class PopulationChart(height: Double, width: Double) {
   import LineChartComponentFactory._
 
-  val xAxis: NumberAxis = createNumberAxis("Generation Axis", 0, 6, 1)
-  val yAxis: NumberAxis = createNumberAxis("Population Axis", 0, 30, 5)
+  val xAxis: NumberAxis = createNumberAxis("Generazioni", 0, 6, 1)
+  val yAxis: NumberAxis = createNumberAxis("Popolazione", 0, 30, 5)
+
   var mutations: MutationsChartSeries = MutationsChartSeries()
   var total: ChartSeries = ChartSeries(SeriesData(), createEmptySeries("Total"))
 
