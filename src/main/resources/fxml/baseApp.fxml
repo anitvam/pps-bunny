@@ -119,17 +119,17 @@
                            <children>
                               <Button disable="true" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" styleClass="speeddown-button">
                                  <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    <Insets bottom="30.0" left="10.0" right="10.0" top="10.0" />
                                  </HBox.margin>
                               </Button>
                               <Button disable="true" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" styleClass="restart-button">
                                  <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    <Insets bottom="30.0" left="10.0" right="10.0" top="10.0" />
                                  </HBox.margin>
                               </Button>
                               <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" styleClass="speedup-button" onAction="#addSpeedUp">
                                  <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    <Insets bottom="30.0" left="10.0" right="10.0" top="10.0" />
                                  </HBox.margin>
                               </Button>
                            </children>
