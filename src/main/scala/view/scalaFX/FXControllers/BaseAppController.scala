@@ -54,7 +54,6 @@ sealed trait BaseAppControllerInterface {
   def changeBackgroundEnvironment(background: Background): Unit
 
   def addSpeedUp(): Unit
-
 }
 
 @sfxml
@@ -66,7 +65,8 @@ class BaseAppController(
     @FXML private val factorChoicePane: AnchorPane,
     @FXML private val startButton: Button,
     @FXML private val generationLabel: Label,
-    @FXML private val chartChoicePane: AnchorPane
+    @FXML private val chartChoicePane: AnchorPane,
+    @FXML private val speedButton: Button
 ) extends BaseAppControllerInterface {
 
   private var bunnyViews: Seq[BunnyView] = Seq.empty
@@ -206,5 +206,13 @@ class BaseAppController(
 
   override def changeBackgroundEnvironment(background: Background): Unit = simulationPane.background = background
 
-  override def addSpeedUp(): Unit = Controller.incrementSimulationSpeed()
+  def addSpeedUp(): Unit = {
+    Controller.incrementSimulationSpeed()
+    speedButton.text = speedButton.getText match {
+      case "1x" => "2x"
+      case "2x" => "4x"
+      case "4x" => "1x"
+    }
+  }
+
 }
