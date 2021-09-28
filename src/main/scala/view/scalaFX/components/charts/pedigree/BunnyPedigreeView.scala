@@ -27,6 +27,7 @@ object BunnyPedigreeView {
   def apply(bunny: Bunny): BunnyPedigreeView = BunnyPedigreeViewImpl(bunny)
 
   private def bunnyView(bunny: Bunny): HBox = new HBox {
+
     children = Seq(
       spacingRegion,
       new ImageView {
@@ -38,18 +39,19 @@ object BunnyPedigreeView {
       },
       spacingRegion
     )
+
     padding = Insets(top = 0, left = 0, bottom = BUNNY_ALLELE_PADDING, right = 0)
   }
 
   private def allelesView(bunny: Bunny): HBox = new HBox(
     spacingRegion,
     new Text {
-      text = bunny.genotype.genes.values
-        .map(g => g.momAllele.getLetter + g.dadAllele.getLetter + " ")
-        .reduce(_ + _)
+      text = bunny.genotype.genes.values.map(g => g.momAllele.getLetter + g.dadAllele.getLetter + " ").reduce(_ + _)
+
       style = "-fx-font-family: \"Helvetica\"; " +
         "-fx-font-weight: bold; " +
         "-fx-font-size: " + bunnyIconSize / TREE_INFO_PROPORTION * FONT_INFO_PERCENT + "px"
+
     },
     spacingRegion
   )
@@ -63,15 +65,16 @@ object BunnyPedigreeView {
 
   private def deadImageView: ImageView = infoImageView("/img/death.png")
 
+  private def mutationImageView: ImageView = infoImageView("/img/mutation.png")
+
   private def infoImageView(path: String): ImageView = new ImageView {
     image = new Image(path)
     fitWidth = bunnyIconSize / TREE_INFO_PROPORTION
     fitHeight = bunnyIconSize / TREE_INFO_PROPORTION
   }
 
-  private def mutationImageView: ImageView = infoImageView("/img/mutation.png")
-
   private case class BunnyPedigreeViewImpl(override val bunny: Bunny) extends BunnyPedigreeView {
     override val pane: Pane = new VBox(bunnyView(bunny), allelesView(bunny), infoView(bunny))
   }
+
 }
