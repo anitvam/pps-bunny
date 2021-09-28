@@ -74,7 +74,10 @@ class BaseAppController(@FXML private val simulationPane: AnchorPane,
     val loadedFactorsChoicePanel = loadFXMLResource[jfxs.AnchorPane]("/fxml/factorsPanel.fxml")
     factorChoicePane.children += loadedFactorsChoicePanel._1
     factorsPanelController = Some(loadedFactorsChoicePanel._2.getController[FactorsPanelControllerInterface])
+<<<<<<< HEAD
     factorsPanelController.get.initialize()
+=======
+>>>>>>> 78e90d1 (add disturbing factors first gui implementation)
 
     val loadedChartChoice = loadFXMLResource[jfxs.AnchorPane]("/fxml/chartChoiceSelection.fxml")
     chartChoicePane.children += loadedChartChoice._1
