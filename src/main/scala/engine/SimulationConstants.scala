@@ -11,13 +11,17 @@ object SimulationConstants {
   /** After how many milliseconds from the start of generation the bunnies can eat */
   val FOOD_INSTANT: Double = 6000
 
-  /**
-   * After how many milliseconds from the start of generation the bunnies are affected by high temperatures
-   */
+  /** After how many milliseconds from the start of generation the bunnies are affected by high temperatures */
   val TEMP_INSTANT: Double = 9000
 
   /** Duration in milliseconds of a generation */
   val GENERATION_END: Double = 12000
+
+  val DEFAULT_SPEED: Double = 1
+
+  val TWO_PER_SPEED: Double = 0.5
+
+  val FOUR_PER_SPEED: Double = 0.25
 
   /** Double value associated to generation initial phase */
   val START_PHASE: Double = 0.0

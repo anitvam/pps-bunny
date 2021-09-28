@@ -13,7 +13,11 @@ import scala.concurrent.duration.{ DurationDouble, FiniteDuration }
 object SimulationEngine {
   var simulationSpeed: Double = 1
 
-  def incrementSpeed(): Unit = simulationSpeed /= 2
+  def incrementSpeed(): Unit = simulationSpeed match {
+    case DEFAULT_SPEED  => simulationSpeed = TWO_PER_SPEED
+    case TWO_PER_SPEED  => simulationSpeed = FOUR_PER_SPEED
+    case FOUR_PER_SPEED => simulationSpeed = DEFAULT_SPEED
+  }
 
   def simulationLoop(): IO[Unit] = {
     for {
