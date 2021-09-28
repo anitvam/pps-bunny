@@ -1,8 +1,13 @@
 package view.scalaFX.FXControllers
 
+<<<<<<< HEAD
 import engine.DisturbingFactors
 import engine.SimulationHistory
 import engine.SimulationHistory.getActualGeneration
+=======
+import engine.SimulationConstants.DisturbingFactors
+import engine.SimulationHistory
+>>>>>>> 91b551a (add first implementation for introducing and removing factors)
 import javafx.fxml.FXML
 import model.world.Environment.Factor
 import scalafx.scene.control.CheckBox
@@ -55,5 +60,6 @@ class FactorsPanelController(@FXML private val wolfCheckBox: CheckBox,
   def onHighFoodClick(): Unit = factorOnClick(highFoodCheckBox, DisturbingFactors.HIGH_FOOD)
   def onLimitedFoodClick(): Unit = factorOnClick(limitedFoodCheckBox, DisturbingFactors.LIMITED_FOOD)
   def onHostileTemperatureClick(): Unit = factorOnClick(hostileTemperatureCheckBox, DisturbingFactors.HOSTILE_TEMPERATURE)
+
 }
 

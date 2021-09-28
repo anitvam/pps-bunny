@@ -11,9 +11,11 @@ import scala.language.implicitConversions
 object Simulation {
 
   def wolvesEat: IO[Unit] = {
-    val wolves = Wolves()
-    SimulationHistory.getActualGeneration.population = wolves
-      .applyDamage(SimulationHistory.getActualPopulation, SimulationHistory.getActualGeneration.environment.climate)
+    if(getActualGeneration.environment.factors.contains("Wolf")) {
+      println("WOLVES ARE EATING")
+    } else {
+      println()
+    }
   }
 
   def bunniesEat: IO[Unit] = {

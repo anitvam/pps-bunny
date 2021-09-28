@@ -2,6 +2,8 @@ package engine
 
 import model.genome.KindsUtils
 import model.mutation.Mutation
+
+import model.world.{Climate, Environment, Generation, Summer}
 import model.world.Generation.Population
 import util.PimpScala.RichTuple2
 import model.world.Reproduction.{ generateInitialCouple, nextGenerationBunnies }
@@ -23,7 +25,22 @@ object SimulationHistory {
     else KindsUtils.setAlleleDominance(mutation.geneKind.base)
   }
 
-  /** @return the actual [[Generation]] */
+  /** Introduce a new factor */
+  def introduceFactor(factor: Factor): Unit =
+    getActualGeneration.environment.factors = factor :: getActualGeneration.environment.factors
+
+  /** Remove a factor */
+  def removeFactor(factor: Factor): Unit = {
+    getActualGeneration.environment.factors = getActualGeneration.environment.factors.filter(_ != factor)
+    println(getActualGeneration.environment.factors)
+  }
+
+  /** Reset all the mutations added */
+  def resetMutations(): Unit = {
+    getActualGeneration.environment.mutations = List()
+  }
+
+  /**@return the actual [[Generation]]*/
   def getActualGeneration: Generation = history.head
 
   /** Reset all the mutations added */

@@ -36,6 +36,10 @@ trait Environment {
 
   /** @return the Environment Factors */
   def factors: Factors
+
+  /** Set a list of factors inside the Environment
+   * @param factors a List[Factor]*/
+  def factors_=(factors: Factors): Unit
 }
 
 object Environment {
@@ -58,6 +62,13 @@ object Environment {
       override var mutations: Mutations = List()
   ) extends Environment {}
 
+<<<<<<< HEAD
+=======
+  private case class EnvironmentImpl(override var climate: Climate,
+                                     override var factors: Factors = List(),
+                                     override var mutations: Mutations = List()) extends Environment {
+  }
+>>>>>>> 91b551a (add first implementation for introducing and removing factors)
 }
 
 /** Climate Trait */

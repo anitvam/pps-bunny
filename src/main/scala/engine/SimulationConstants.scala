@@ -1,6 +1,12 @@
 package engine
 
+<<<<<<< HEAD
 import scala.concurrent.duration.{ DurationInt, FiniteDuration }
+=======
+import model.world.Environment.Factor
+
+import scala.concurrent.duration.{DurationInt, FiniteDuration}
+>>>>>>> 91b551a (add first implementation for introducing and removing factors)
 import scala.language.postfixOps
 
 object SimulationConstants {
