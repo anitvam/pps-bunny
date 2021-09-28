@@ -1,7 +1,11 @@
 package model.world
 
 import model.mutation.Mutation
+<<<<<<< HEAD
 import model.world.Environment.{ Factors, Mutations }
+=======
+import model.world.Environment.{Factors, Mutations}
+>>>>>>> 078c6a7 (refactor some code)
 
 /** Environment of a Generation */
 trait Environment {

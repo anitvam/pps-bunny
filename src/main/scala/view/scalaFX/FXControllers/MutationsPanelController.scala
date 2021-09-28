@@ -1,6 +1,7 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
+import javafx.fxml.FXML
 import model.genome.Genes._
 import model.mutation.Mutation
 import scalafx.scene.control.{ Button, Label }

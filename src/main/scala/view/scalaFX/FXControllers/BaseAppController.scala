@@ -1,7 +1,9 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
+
 import engine.SimulationConstants.START_PHASE
+import javafx.fxml.FXML
 import javafx.scene.{layout => jfxs}
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
@@ -44,16 +46,14 @@ sealed trait BaseAppControllerInterface {
 }
 
 @sfxml
-class BaseAppController(
-    private val simulationPane: AnchorPane,
-    private val chartsPane: AnchorPane,
-    private val pedigreeText: Text,
-    private val mutationChoicePane: AnchorPane,
-    private val factorChoicePane: AnchorPane,
-    private val startButton: Button,
-    private val generationLabel: Label,
-    private val chartChoicePane: AnchorPane
-) extends BaseAppControllerInterface {
+class BaseAppController(@FXML private val simulationPane: AnchorPane,
+                        @FXML private val chartsPane: AnchorPane,
+                        @FXML private val pedigreeText: Text,
+                        @FXML private val mutationChoicePane: AnchorPane,
+                        @FXML private val factorChoicePane: AnchorPane,
+                        @FXML private val startButton: Button,
+                        @FXML private val generationLabel: Label,
+                        @FXML private val chartChoicePane: AnchorPane) extends BaseAppControllerInterface {
 
   private var bunnyViews: Seq[BunnyView] = Seq.empty
   private var chartSelectionPanelController: Option[ChartChoiceControllerInterface] = None
@@ -67,7 +67,6 @@ class BaseAppController(
     // Load the default environment background
     simulationPane.background = SummerImage()
 
-    BunnyImage
     val loadedMutationChoicePanel = loadFXMLResource[jfxs.AnchorPane]("/fxml/mutationsPanel.fxml")
     mutationChoicePane.children += loadedMutationChoicePanel._1
     mutationsPanelController = Some(loadedMutationChoicePanel._2.getController[MutationsPanelControllerInterface])

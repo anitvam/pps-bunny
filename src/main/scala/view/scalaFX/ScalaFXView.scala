@@ -109,9 +109,9 @@ object ScalaFxViewConstants {
 
   val PREFERRED_CHART_HEIGHT: Int = (SCENE_HEIGHT * 0.45).toInt
 
-  /** Constants for the tree visualizaiton */
-  object GenealogicalTree {
 
+  /** Constants for the tree visualization */
+  object GenealogicalTree{
     /** Size of the bunny picture in the tree */
     val MAX_TREE_BUNNY_SIZE: Int = 80
 

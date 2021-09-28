@@ -1,5 +1,6 @@
 package view.scalaFX.FXControllers
 
+import javafx.fxml.FXML
 import scalafx.scene.control.RadioButton
 import scalafx.scene.layout.VBox
 import scalafxml.core.macros.sfxml
@@ -18,8 +19,8 @@ sealed trait ChartChoiceControllerInterface {
 }
 
 @sfxml
-class ChartChoiceController( private val pedigreeRadioButton: RadioButton,
-                             private val legendBox: VBox) extends ChartChoiceControllerInterface {
+class ChartChoiceController( @FXML private val pedigreeRadioButton: RadioButton,
+                             @FXML private val legendBox: VBox) extends ChartChoiceControllerInterface {
 
   private var baseAppController: Option[BaseAppControllerInterface] = None
 

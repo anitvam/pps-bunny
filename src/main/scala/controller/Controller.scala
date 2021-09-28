@@ -5,7 +5,11 @@ import engine.SimulationHistory
 import model.mutation.Mutation
 import model.world.Environment.Factors
 import model.world.Generation.Population
+<<<<<<< HEAD
 import model.world.{ Climate, Summer, Winter }
+=======
+import model.world.{Climate, Summer, Winter}
+>>>>>>> 078c6a7 (refactor some code)
 import scalafx.application.Platform
 import view.scalaFX.ScalaFXView
 

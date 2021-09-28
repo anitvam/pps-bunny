@@ -2,7 +2,7 @@ package view.scalaFX.FXControllers
 
 import controller.Controller
 import engine.SimulationConstants.START_PHASE
-import javafx.scene.{ control => jfxc }
+import javafx.scene.{control => jfxc}
 import model.Bunny
 import model.genome.Genes
 import model.genome.Genes.GeneKind
@@ -30,8 +30,8 @@ class ProportionsChartController(
     val pieChart: ToggleGroup
 ) extends ChartController {
 
-  private var startPie: PieChart = createEmptyPieChart("Inizio Generazione")
-  private var currentPie: PieChart = createEmptyPieChart("Attualmente")
+  private val startPie: PieChart = createEmptyPieChart("Inizio Generazione")
+  private val currentPie: PieChart = createEmptyPieChart("Attualmente")
 
   override def initialize(): Unit = {
 
