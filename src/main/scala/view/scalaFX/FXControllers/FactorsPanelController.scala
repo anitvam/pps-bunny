@@ -42,7 +42,7 @@ class FactorsPanelController(@FXML private val wolfCheckBox: CheckBox,
     factorsImageViews foreach (i => insertFactorImage(i, i.getId))
   }
 
-  private def factorOnClick(factor: CheckBox, disturbingFactor: Factor): Unit = {
+  private def factorOnClick(factor: CheckBox, disturbingFactor: String): Unit = {
     if(factor.selected.value) SimulationHistory.introduceFactor(disturbingFactor) else SimulationHistory.removeFactor(disturbingFactor)
     baseAppController --> {_.changeBackgroundEnvironment(getActualGeneration.environment.factors.filter(f => f != DisturbingFactors.WOLF &&
       f != DisturbingFactors.HOSTILE_TEMPERATURE), getActualGeneration.environment.climate)
