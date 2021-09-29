@@ -40,9 +40,9 @@ object WolfView {
   }
 
   private case class WolfViewImpl( imageView: ImageView,
-                                   var direction: Direction,
-                                   var positionX: Double,
-                                   var positionY: Double) extends WolfView {
+                                   private var direction: Direction,
+                                   private var positionX: Double,
+                                   private var positionY: Double) extends WolfView {
     private val SPEED = 200
     private val movingSpace = PREFERRED_BUNNY_PANEL_WIDTH / SPEED
     private var lastTime = 0L
