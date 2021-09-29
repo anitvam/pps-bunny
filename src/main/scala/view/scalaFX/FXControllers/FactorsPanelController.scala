@@ -1,15 +1,14 @@
 package view.scalaFX.FXControllers
 
-import engine.DisturbingFactors
-import engine.SimulationHistory
+import engine.{DisturbingFactors, SimulationHistory}
 import engine.SimulationHistory.getActualGeneration
 import javafx.fxml.FXML
-import model.world.Environment.Factor
+import model.world.Factor
 import scalafx.scene.control.CheckBox
 import scalafx.scene.image.{Image, ImageView}
 import scalafxml.core.macros.sfxml
-import view.scalaFX.ScalaFXView.baseAppController
 import util.PimpScala._
+import view.scalaFX.ScalaFXView.baseAppController
 
 sealed trait FactorsPanelControllerInterface {
   /** initialize all the component inside the panel */

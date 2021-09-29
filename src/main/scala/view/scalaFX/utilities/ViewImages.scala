@@ -176,7 +176,7 @@ object EnvironmentImageUtils {
     case Summer() => summerImage
   }
 
-  def getBackgroundEnvironment(factors: Factors, climate: Climate): Background = factors.sorted match {
+  def getBackgroundEnvironment(factors: Factors, climate: Climate): Background = factors.toList.sorted match {
     case List(DisturbingFactors.HIGH_FOOD, DisturbingFactors.LIMITED_FOOD, DisturbingFactors.TOUGH_FOOD)  =>
       getImageBackgroundCorrespondingToClimate(SummerImageLimitedHighToughFood(), WinterImageLimitedHighToughFood(), climate)
     case List(DisturbingFactors.HIGH_FOOD, DisturbingFactors.LIMITED_FOOD) =>

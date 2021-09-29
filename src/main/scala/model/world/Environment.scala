@@ -33,6 +33,10 @@ trait Environment {
 
   /** @return the Environment Factors */
   def factors: Factors
+
+  /** Set a list of factors inside the Environment
+   * @param factors a List[Factor]*/
+  def factors_=(factors: Factors): Unit
 }
 
 object Environment {
