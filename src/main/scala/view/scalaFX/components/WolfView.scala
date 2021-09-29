@@ -12,7 +12,7 @@ import scala.util.Random
 /** Bunny wrapper in order to manage its movement inside of the GUI */
 trait WolfView {
   /** Reference to the model disturbing factor entity */
-//  val wolf: DisturbingFactor
+  //  val wolf: DisturbingFactor
 
   /** The image of the disturbing factor displayed on the GUI */
   val imageView: ImageView
@@ -75,5 +75,3 @@ object WolfView {
     }
   }
 }
-
-

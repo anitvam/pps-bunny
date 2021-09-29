@@ -1,14 +1,15 @@
 package view.scalaFX.FXControllers
 
-import engine.{DisturbingFactors, SimulationHistory}
+import engine.DisturbingFactors
+import engine.SimulationHistory
 import engine.SimulationHistory.getActualGeneration
 import javafx.fxml.FXML
-import model.world.Factor
+import model.world.Environment.Factor
 import scalafx.scene.control.CheckBox
 import scalafx.scene.image.{Image, ImageView}
 import scalafxml.core.macros.sfxml
-import util.PimpScala._
 import view.scalaFX.ScalaFXView.baseAppController
+import util.PimpScala._
 
 sealed trait FactorsPanelControllerInterface {
   /** initialize all the component inside the panel */
@@ -42,7 +43,7 @@ class FactorsPanelController(@FXML private val wolfCheckBox: CheckBox,
     factorsImageViews foreach (i => insertFactorImage(i, i.getId))
   }
 
-  private def factorOnClick(factor: CheckBox, disturbingFactor: String): Unit = {
+  private def factorOnClick(factor: CheckBox, disturbingFactor: Factor): Unit = {
     if(factor.selected.value) SimulationHistory.introduceFactor(disturbingFactor) else SimulationHistory.removeFactor(disturbingFactor)
     baseAppController --> {_.changeBackgroundEnvironment(getActualGeneration.environment.factors.filter(f => f != DisturbingFactors.WOLF &&
       f != DisturbingFactors.HOSTILE_TEMPERATURE), getActualGeneration.environment.climate)

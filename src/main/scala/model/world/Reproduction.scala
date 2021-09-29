@@ -6,19 +6,16 @@ import model._
 import model.genome._
 import model.world.Environment.Mutations
 import model.world.Generation.Population
-import util.PimpScala.RichTuple2
+
 import scala.util.Random
 
 object Reproduction {
 
-  type Couples = Seq[Couple]
-  type Couple = (Bunny, Bunny)
+  type Couples = Seq[(Bunny, Bunny)]
 
   /**
-   * @param bunnies
-   *   a seq of bunnies
-   * @return
-   *   a seq of random couples formed from all of the bunnies (or most of them, if they are odd)
+   * @param bunnies a seq of bunnies
+   * @return a seq of random couples formed from all of the bunnies (or most of them, if they are odd)
    */
   def combineCouples(bunnies: Population): Couples = {
     val split = Random.shuffle(bunnies).splitAt(bunnies.size / 2)
@@ -34,21 +31,22 @@ object Reproduction {
     var childrenGenotypes = List.fill(CHILDREN_FOR_EACH_COUPLE)(PartialGenotype(Map()))
 
     Genes.values.foreach(gk => {
-      val genesOfReproduction : List[Gene]=
-        (for { momAllele <- mom.getStandardAlleles(gk).toSeq
-               dadAllele <- dad.getStandardAlleles(gk).toSeq
-              } yield Gene(gk, momAllele, dadAllele)).toList
-      val shufflesGenes = Random.shuffle(genesOfReproduction)
+      val grandmaMomAllele = StandardAllele(mom.genotype(gk).momAllele.kind)
+      val grandpaMomAllele = StandardAllele(mom.genotype(gk).dadAllele.kind)
+      val grandmaDadAllele = StandardAllele(dad.genotype(gk).momAllele.kind)
+      val grandpaDadAllele = StandardAllele(dad.genotype(gk).dadAllele.kind)
+      val genesOfReproduction : List[Gene]= List( Gene(gk, grandmaMomAllele, grandmaDadAllele),
+        Gene(gk, grandpaMomAllele, grandmaDadAllele),
+        Gene(gk, grandmaMomAllele, grandpaDadAllele),
+        Gene(gk, grandpaMomAllele, grandpaDadAllele) )
+      val shuffledGenes = Random.shuffle(genesOfReproduction)
+      childrenGenotypes = (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE) yield childrenGenotypes(i) + shuffledGenes(i)).toList
 
-      childrenGenotypes =
-        (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE)
-          yield childrenGenotypes(i) +  shufflesGenes(i)).toList
+      mutations filter { _.geneKind == gk } foreach { m =>
+          childrenGenotypes = childrenGenotypes(CHILDREN_FOR_EACH_COUPLE - 1) +
+          Gene(m.geneKind, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenotypes.take(CHILDREN_FOR_EACH_COUPLE - 1)}
 
-      mutations filter { _.geneKind == gk } foreach { _ =>
-          val mutatedGenotype = childrenGenotypes(CHILDREN_FOR_EACH_COUPLE - 1) + Gene(gk, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated))
-          childrenGenotypes =  mutatedGenotype :: childrenGenotypes.take(CHILDREN_FOR_EACH_COUPLE - 1)}
     })
-
     childrenGenotypes.map(cg => new ChildBunny(CompletedGenotype(cg.genes), Option(mom), Option(dad)))
   }
 
@@ -66,7 +64,7 @@ object Reproduction {
   /**    
    * @return the first two bunnies of the simulation
    * */
-  def generateInitialCouple: Couple = (generateBaseFirstBunny, generateBaseFirstBunny)
+  def generateInitialCouple:Population = Seq(generateBaseFirstBunny, generateBaseFirstBunny)
 
   /**
    * @param bunnies bunnies from the last generation

@@ -1,8 +1,5 @@
 package engine
 
-import model.world.Factor
-import model.world.Factor.{FoodFactorImpl, UnfriendlyClimate, Wolves}
-
 /** Enumeration for the disturbing factors */
 object DisturbingFactors extends Enumeration {
   val WOLF: String =  "Wolf"

@@ -99,7 +99,7 @@ class BaseAppController(@FXML private val simulationPane: AnchorPane,
 
     showPopulationChart()
 
-    //    chartsPane.children =  PopulationChart.chart(325, 500)
+//    chartsPane.children =  PopulationChart.chart(325, 500)
   }
 
   /** Handler of Start button click */
