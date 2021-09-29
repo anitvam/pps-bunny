@@ -26,11 +26,11 @@ object SimulationHistory {
   }
 
   /** Introduce a new factor */
-  def introduceFactor(factor: Factor): Unit =
+  def introduceFactor(factor: String): Unit =
     getActualGeneration.environment.factors = factor :: getActualGeneration.environment.factors
 
   /** Remove a factor */
-  def removeFactor(factor: Factor): Unit = {
+  def removeFactor(factor: String): Unit = {
     getActualGeneration.environment.factors = getActualGeneration.environment.factors.filter(_ != factor)
     println(getActualGeneration.environment.factors)
   }
