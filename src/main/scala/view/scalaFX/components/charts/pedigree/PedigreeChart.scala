@@ -64,47 +64,6 @@ object PedigreeChart {
     PedigreeChartImpl(bunny, tree)
   }
 
-<<<<<<< HEAD
-=======
-  private case class PedigreeChartImpl(override val bunny: Bunny,
-                                  override val tree: BinaryTree[Bunny]) extends PedigreeChart{
-    var rows: Seq[HBox] = Seq()
-    var row: (HBox, Seq[Option[BinaryTree[Bunny]]]) = (new HBox(), Seq(Option(tree)))
-    for (_ <- 1 to tree.generations){
-      row = createRow(row._2)
-      rows = rows :+ row._1
-    }
-
-    override val chartPane: VBox = new VBox {
-        children = spacingRegion +: rows.reverse :+ spacingRegion
-        alignment = Pos.Center
-    }
-  }
-
-  def spacingRegion: Region = new Region {
-    hgrow = Priority.Always
-  }
-
-  /** Creates an empty ImageView with the same size of the bunny, for the bunnies with no ancient relatives */
-  def emptyImageView: ImageView = new ImageView {
-    fitWidth = bunnyIconSize
-  }
-
-  def plusView: Text = new Text {
-      text = "+"
-      style = "-fx-font-weight: bold; " +
-        "-fx-font-size: "+ bunnyIconSize/TREE_PLUS_PROPORTION +";"
-      hgrow = Priority.Always
-  }
-
-  /** Creates an empty Text with the same size of the plus, for the bunnies with no ancient relatives */
-  def emptyPlusView: Text = {
-   val txt = plusView
-    txt setVisible false
-    txt
-  }
-
->>>>>>> 078c6a7 (refactor some code)
   /**
    * @param trees
    * The tree with the elems that need to be in this row

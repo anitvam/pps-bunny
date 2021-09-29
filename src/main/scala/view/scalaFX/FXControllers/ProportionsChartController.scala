@@ -2,6 +2,7 @@ package view.scalaFX.FXControllers
 
 import controller.Controller
 import engine.SimulationConstants.START_PHASE
+import javafx.fxml.FXML
 import javafx.scene.{control => jfxc}
 import model.Bunny
 import model.genome.Genes
@@ -25,9 +26,9 @@ trait ChartController {
 
 @sfxml
 class ProportionsChartController(
-    val startPiePane: AnchorPane,
-    val currentPiePane: AnchorPane,
-    val pieChart: ToggleGroup
+                                  @FXML val startPiePane: AnchorPane,
+                                  @FXML val currentPiePane: AnchorPane,
+                                  @FXML val pieChart: ToggleGroup
 ) extends ChartController {
 
   private val startPie: PieChart = createEmptyPieChart("Inizio Generazione")

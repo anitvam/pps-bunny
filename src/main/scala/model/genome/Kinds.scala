@@ -14,8 +14,7 @@ object Alleles extends Enumeration {
   type AlleleKind = Value
   val WHITE_FUR: AllelesVal = AllelesVal("Pelo Bianco")
 
-<<<<<<< HEAD
-=======
+
   /**
    * The information each AlleleKind must have
    * @param prettyName dominant specifies if it's dominant or not, it could be empty if not chosen yet
@@ -27,7 +26,7 @@ object Alleles extends Enumeration {
       if(dominant?) throw new MultipleDominanceAssignmentException else dominant = Option(cond)
     def isDominant: Option[Boolean] = dominant
   }
->>>>>>> 078c6a7 (refactor some code)
+
   implicit def valueToAllelesVal(x: Value): AllelesVal = x.asInstanceOf[AllelesVal]
   val BROWN_FUR: AllelesVal = AllelesVal("Pelo Marrone")
   val LONG_FUR: AllelesVal = AllelesVal("Pelo Lungo")
@@ -38,20 +37,6 @@ object Alleles extends Enumeration {
   val LOW_EARS: AllelesVal = AllelesVal("Orecchie Basse")
   val HIGH_JUMP: AllelesVal = AllelesVal("Salto Alto")
   val LOW_JUMP: AllelesVal = AllelesVal("Salto Basso")
-
-  /**
-   * The information each AlleleKind must have
-   * @param prettyName the name of each allele, that will be shown to the user
-   */
-  protected case class AllelesVal(prettyName: String) extends super.Val {
-    private var dominant: Option[Boolean] = Option.empty
-    def resetDominance: Unit = dominant = Option.empty
-
-    def setDominance(cond: Boolean): Unit =
-      if (dominant ?) throw new MultipleDominanceAssignmentException else dominant = Option(cond)
-
-    def isDominant: Option[Boolean] = dominant
-  }
 
 }
 

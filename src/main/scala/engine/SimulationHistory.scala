@@ -35,11 +35,6 @@ object SimulationHistory {
     println(getActualGeneration.environment.factors)
   }
 
-  /** Reset all the mutations added */
-  def resetMutations(): Unit = {
-    getActualGeneration.environment.mutations = List()
-  }
-
   /**@return the actual [[Generation]]*/
   def getActualGeneration: Generation = history.head
 

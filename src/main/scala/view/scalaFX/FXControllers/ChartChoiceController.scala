@@ -32,7 +32,7 @@ class ChartChoiceController( @FXML private val pedigreeRadioButton: RadioButton,
   override def handleBunnyClick(): Unit =
     if (pedigreeRadioButton.selected.value) baseAppController --> { _.showPedigreeChart() }
 
-  private def showChart(legendVisibility: Boolean, chartToShow : BaseAppControllerInterface => Unit) {
+  private def showChart(legendVisibility: Boolean, chartToShow : BaseAppControllerInterface => Unit): Unit = {
     legendBox.setVisible(legendVisibility)
     baseAppController --> { chartToShow }
   }
