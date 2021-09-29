@@ -55,7 +55,7 @@ object Environment {
 
   private case class EnvironmentImpl(
       override var climate: Climate,
-      override val factors: Factors = List(),
+      override var factors: Factors = List(),
       override var mutations: Mutations = List()
   ) extends Environment {
   }
