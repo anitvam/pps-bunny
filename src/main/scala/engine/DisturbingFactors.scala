@@ -5,9 +5,9 @@ import model.world.Factor.{FoodFactorImpl, UnfriendlyClimate, Wolves}
 
 /** Enumeration for the disturbing factors */
 object DisturbingFactors extends Enumeration {
-  val WOLF: Factor =  Wolves()
-  val HIGH_FOOD: Factor = FoodFactorImpl(true, false, false)
-  val TOUGH_FOOD: Factor = FoodFactorImpl(false, false, true)
-  val LIMITED_FOOD: Factor = FoodFactorImpl(false, true, false)
-  val HOSTILE_TEMPERATURE: Factor =  UnfriendlyClimate()
+  val WOLF: String =  "Wolf"
+  val HIGH_FOOD: String =  "High Food"
+  val TOUGH_FOOD: String =  "Tough Food"
+  val LIMITED_FOOD: String =  "Limited Food"
+  val HOSTILE_TEMPERATURE: String =  "Hostile Temperature"
 }
