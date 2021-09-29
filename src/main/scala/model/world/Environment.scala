@@ -42,7 +42,7 @@ trait Environment {
 object Environment {
 
   type Mutations = List[Mutation]
-  type Factors = List[Factor]
+  type Factors = List[String]
 
   /**
    * Generate an Environment from the previous one
