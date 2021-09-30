@@ -1,6 +1,6 @@
 package view.scalaFX.utilities
 
-object Chart extends Enumeration {
-  type Chart = Value
+object ChartType extends Enumeration {
+  type ChartType = Value
   val Population, Pedigree, Proportions = Value
 }
