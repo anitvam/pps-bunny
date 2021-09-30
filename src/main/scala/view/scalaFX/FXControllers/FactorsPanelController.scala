@@ -1,23 +1,20 @@
 package view.scalaFX.FXControllers
 
-import engine.SimulationHistory
+import engine.SimulationHistory.getActualGeneration
+import engine.{DisturbingFactors, SimulationHistory}
 import javafx.fxml.FXML
 import scalafx.scene.control.CheckBox
-import scalafx.scene.image.{ Image, ImageView }
+import scalafx.scene.image.{Image, ImageView}
 import scalafxml.core.macros.sfxml
 import util.PimpScala._
-import view.scalaFX.utilities.{
-  SummerImage, SummerImageHighFood, SummerImageHighToughFood, SummerImageLimitedFood, SummerImageLimitedHighFood,
-  SummerImageLimitedHighToughFood, SummerImageLimitedToughFood, SummerImageToughFood, WinterImage, WinterImageHighFood,
-  WinterImageHighToughFood, WinterImageLimitedFood, WinterImageLimitedHighFood, WinterImageLimitedHighToughFood,
-  WinterImageLimitedToughFood, WinterImageToughFood
-}
+import view.scalaFX.utilities.{SummerImage, SummerImageHighFood, SummerImageHighToughFood, SummerImageLimitedFood, SummerImageLimitedHighFood, SummerImageLimitedHighToughFood, SummerImageLimitedToughFood, SummerImageToughFood, WinterImage, WinterImageHighFood, WinterImageHighToughFood, WinterImageLimitedFood, WinterImageLimitedHighFood, WinterImageLimitedHighToughFood, WinterImageLimitedToughFood, WinterImageToughFood}
 
 sealed trait FactorsPanelControllerInterface {
 
   /** initialize all the component inside the panel */
   def initialize(baseAppController: BaseAppControllerInterface): Unit
   def manageEnvironmentBackgroundChange(): Unit
+  def onWolfClick()
 }
 
 @sfxml
@@ -49,8 +46,9 @@ class FactorsPanelController(
     factorsImageViews foreach (i => insertFactorImage(i, i.getId))
   }
 
-  private def onFactorClick(factor: CheckBox, introduce: () => Unit, remove: () => Unit): Unit =
+  private def onFactorClick(factor: CheckBox, introduce: () => Unit, remove: () => Unit): Unit = {
     if (factor.selected.value) introduce() else remove()
+  }
 
   override def manageEnvironmentBackgroundChange(): Unit = {
     import view.scalaFX.utilities.EnvironmentImageUtils._
@@ -72,32 +70,36 @@ class FactorsPanelController(
     }
   }
 
-  def onWolfClick(): Unit =
-    onFactorClick(wolfCheckBox, () => SimulationHistory.introduceFactor(), () => SimulationHistory.removeFactor())
-
+  def onWolfClick(): Unit ={
+    if (wolfCheckBox.selected.value) {
+      getActualGeneration.factors = DisturbingFactors.WOLF :: getActualGeneration.factors
+    } else {
+      getActualGeneration.factors.filter(_ != DisturbingFactors.WOLF)
+    }
+  }
   def onToughFoodClick(): Unit = {
-    onFactorClick(toughFoodCheckBox, () => SimulationHistory.introduceFactor(), () => SimulationHistory.removeFactor())
+    onFactorClick(toughFoodCheckBox, () => SimulationHistory.introduceFactor(DisturbingFactors.TOUGH_FOOD), () => SimulationHistory.removeFactor(DisturbingFactors.HIGH_FOOD))
     manageEnvironmentBackgroundChange()
   }
 
   def onHighFoodClick(): Unit = {
-    onFactorClick(toughFoodCheckBox, () => SimulationHistory.introduceFactor(), () => SimulationHistory.removeFactor())
+    onFactorClick(toughFoodCheckBox, () => SimulationHistory.introduceFactor(DisturbingFactors.HIGH_FOOD), () => SimulationHistory.removeFactor(DisturbingFactors.HIGH_FOOD))
     manageEnvironmentBackgroundChange()
   }
 
   def onLimitedFoodClick(): Unit = {
     onFactorClick(
       limitedFoodCheckBox,
-      () => SimulationHistory.introduceFactor(),
-      () => SimulationHistory.removeFactor()
+      () => SimulationHistory.introduceFactor(DisturbingFactors.LIMITED_FOOD),
+      () => SimulationHistory.removeFactor(DisturbingFactors.LIMITED_FOOD)
     )
     manageEnvironmentBackgroundChange()
   }
 
   def onHostileTemperatureClick(): Unit = onFactorClick(
     hostileTemperatureCheckBox,
-    () => SimulationHistory.introduceFactor(),
-    () => SimulationHistory.removeFactor()
+    () => SimulationHistory.introduceFactor(DisturbingFactors.HOSTILE_TEMPERATURE),
+    () => SimulationHistory.removeFactor(DisturbingFactors.HOSTILE_TEMPERATURE)
   )
 
 }

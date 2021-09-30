@@ -57,4 +57,7 @@ object SimulationConstants {
   val WOLF_LOW_DAMAGE = 0.2
   val WOLF_MEDIUM_DAMAGE = 0.3
   val WOLF_HIGH_DAMAGE = 0.4
+
+  /** Number of wolves */
+  val NUMBER_OF_WOLVES: Int = 5
 }
