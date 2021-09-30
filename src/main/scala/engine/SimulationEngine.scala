@@ -40,6 +40,10 @@ object SimulationEngine {
     } yield ()
   }
 
+  def resetEngine(): Unit = {
+    simulationSpeed = 1
+  }
+
 }
 
 object engineConversions {

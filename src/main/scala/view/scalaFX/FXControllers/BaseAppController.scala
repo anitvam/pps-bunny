@@ -112,7 +112,7 @@ class BaseAppController(
   }
 
   def reset(): Unit = {
-    startButton.onAction = _ => {
+    speedButton.onAction = _ => {
       Controller.reset()
       this.resetSimulationPanel()
       selectedBunny = Option.empty
@@ -120,10 +120,13 @@ class BaseAppController(
       mutationsPanelController --> { _.reset() }
       chartSelectionPanelController --> { _.reset() }
       this.initializeView()
+      speedButton.onAction = _ => addSpeedUp()
+      speedButton.text = "2x"
+      speedButton.styleClass -= "restart-button"
       startSimulation()
     }
-    startButton.text = "RESTART"
-    startButton.setVisible(true)
+    speedButton.text = ""
+    speedButton.styleClass += "restart-button"
   }
 
   private def resetSimulationPanel(): Unit = {

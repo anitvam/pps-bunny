@@ -1,6 +1,6 @@
 package controller
 
-import engine.SimulationEngine.simulationLoop
+import engine.SimulationEngine.{ resetEngine, simulationLoop }
 import engine.SimulationHistory.resetHistory
 import model.genome.KindsUtils.resetDominance
 import engine.{ SimulationEngine, SimulationHistory }
@@ -48,6 +48,7 @@ object Controller {
   def reset(): Unit = {
     resetDominance()
     resetHistory()
+    resetEngine()
   }
 
   def population: Population = SimulationHistory.getActualPopulation
