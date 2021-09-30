@@ -13,7 +13,12 @@ object SimulationHistory {
 
   type History = List[Generation]
 
-  var history: History = List(Generation(Environment(Summer(), List.empty), generateInitialCouple.toSeq))
+  val historyInit: () => History = () => List(Generation(Environment(Summer(), List.empty), generateInitialCouple.toSeq))
+
+  var history: History = historyInit()
+
+  /** Resets history to the initial value */
+  def resetHistory(): Unit = history = historyInit()
 
   /** Introduce a new mutation */
   def introduceMutation(mutation: Mutation): Unit = {

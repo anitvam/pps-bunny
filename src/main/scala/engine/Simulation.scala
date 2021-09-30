@@ -1,6 +1,7 @@
 package engine
 
 import cats.effect.IO
+import controller.Controller
 import engine.SimulationHistory._
 import model.world.Factor._
 import model.world.GenerationsUtils.GenerationPhase
@@ -32,7 +33,7 @@ object Simulation {
 
   def showEnd(generationPhase: GenerationPhase): IO[Unit] = {
     ScalaFXView.updateView(generationPhase, getActualPopulation)
-    controller.Controller.showEnd()
+    Controller.showEnd()
   }
 
   def startNewGeneration: IO[Unit] = {

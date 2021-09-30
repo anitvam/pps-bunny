@@ -19,7 +19,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
-            <RadioButton contentDisplay="CENTER" mnemonicParsing="false" onAction="#showPopulationChart" selected="true" text="Popolazione" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+            <RadioButton fx:id="populationRadioButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showPopulationChart" selected="true" text="Popolazione" textOverrun="CENTER_ELLIPSIS" wrapText="true">
                <toggleGroup>
                   <ToggleGroup fx:id="chartChoice" />
                </toggleGroup>

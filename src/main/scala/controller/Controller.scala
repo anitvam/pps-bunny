@@ -2,10 +2,12 @@ package controller
 
 import engine.SimulationEngine.simulationLoop
 import engine.SimulationHistory
+import engine.SimulationHistory.resetHistory
+import model.genome.KindsUtils.resetDominance
 import model.mutation.Mutation
 import model.world.Environment.Factors
 import model.world.Generation.Population
-import model.world.{ Climate, Summer, Winter }
+import model.world.{Climate, Summer, Winter}
 import scalafx.application.Platform
 import view.scalaFX.ScalaFXView
 
@@ -29,13 +31,20 @@ object Controller {
 
   /**
    * Method that insert a mutation inside the simulation
-   * @param mutation the Mutation
+   * @param mutation the Mutation to insert
    */
   def insertMutation(mutation: Mutation): Unit = SimulationHistory introduceMutation mutation
 
   /** Method that shows the end of the simulation on the Application GUI */
-  def showEnd(): Unit = Platform runLater { ScalaFXView.showEnd() }
+  def showEnd(): Unit = Platform runLater {
+    ScalaFXView.showEnd()
+  }
+
+  /** Resets the simulation model to its initial state */
+  def reset(): Unit = {
+    resetDominance()
+    resetHistory()
+  }
 
   def population: Population = SimulationHistory.getActualPopulation
-
 }

@@ -18,7 +18,7 @@ import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.utilities.EnvironmentImageUtils._
 import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
-import view.scalaFX.utilities.{BunnyImage, SummerImage, WinterImage}
+import view.scalaFX.utilities.{Chart, SummerImage, WinterImage}
 
 import scala.language.postfixOps
 
@@ -26,6 +26,9 @@ sealed trait BaseAppControllerInterface {
 
   /** Method that initialize the application interface */
   def initialize(): Unit
+
+  /** Method to reset the application interface and start a new simulation */
+  def reset(): Unit
 
   /** Method that shows population chart inside chartsPane */
   def showPopulationChart(): Unit
@@ -40,7 +43,7 @@ sealed trait BaseAppControllerInterface {
   def handleBunnyClick(bunny: BunnyView): Unit
 
   /** Method that shows new bunnies into the GUI and the actual generation number */
-  def showBunnies(bunnies: Population, generationPhase: GenerationPhase): Unit
+  def updateView(bunnies: Population, generationPhase: GenerationPhase): Unit
 }
 
 @sfxml
@@ -61,12 +64,10 @@ class BaseAppController(
   private var mutationsPanelController: Option[MutationsPanelControllerInterface] = Option.empty
   private var proportionsChartController: Option[ChartController] = Option.empty
   private var proportionsChartPane: Option[AnchorPane] = Option.empty
+  private var populationChart: Option[PopulationChart] = Option.empty
 
   override def initialize(): Unit = {
-    // Load the default environment background
-    simulationPane.background = SummerImage()
 
-    BunnyImage
     val loadedMutationChoicePanel = loadFXMLResource[jfxs.AnchorPane]("/fxml/mutationsPanel.fxml")
     mutationChoicePane.children += loadedMutationChoicePanel._1
     mutationsPanelController = Some(loadedMutationChoicePanel._2.getController[MutationsPanelControllerInterface])
@@ -80,15 +81,45 @@ class BaseAppController(
     proportionsChartPane = Some(loadedProportionsChartView._1)
     proportionsChartController = Some(loadedProportionsChartView._2.getController[ChartController])
 
-    setFitParent(proportionsChartPane.get)
+    AnchorPane.setAnchors(proportionsChartPane.get, 0, 0, 0, 0)
     proportionsChartController --> { _.initialize() }
 
+    this.initializeView()
+  }
+
+  private def initializeView(): Unit = {
+    // Load the default environment background
+    simulationPane.background = SummerImage()
+    populationChart =
+      Some(PopulationChart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH))
     showPopulationChart()
   }
 
+  private def resetSimulationPanel(): Unit = {
+    bunnyViews = Seq.empty
+    simulationPane.children = Seq.empty
+    generationLabel.text = ""
+    startButton.setVisible(true)
+  }
+
+  def reset(): Unit = {
+    startButton.onAction = _ => {
+      Controller.reset()
+      this.resetSimulationPanel()
+      selectedBunny = Option.empty
+      proportionsChartController --> { _.resetChart() }
+      mutationsPanelController --> { _.resetMutationsPanel() }
+      chartSelectionPanelController --> { _.reset() }
+      this.initializeView()
+      startSimulation()
+    }
+    startButton.text = "RESTART"
+    startButton.setVisible(true)
+  }
+
   /** Handler of Start button click */
-  def startSimulationClick(): Unit = {
-    startButton.visible = false
+  def startSimulation(): Unit = {
+    startButton.setVisible(false)
     Controller.startSimulation(simulationPane.background, List.empty)
   }
 
@@ -104,11 +135,10 @@ class BaseAppController(
     simulationPane.background = WinterImage()
   }
 
-  override def showPopulationChart(): Unit = chartsPane.children =
-    PopulationChart.chart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH)
-
-  def showBunnies(bunnies: Population, generationPhase: GenerationPhase): Unit = {
+  def updateView(bunnies: Population, generationPhase: GenerationPhase): Unit = {
     proportionsChartController.get.updateChart(generationPhase, bunnies)
+    populationChart --> { _.updateChart(generationPhase, bunnies) }
+    if (chartSelectionPanelController.get.activeChart == Chart.Pedigree) showPedigreeChart()
 
     bunnyViews = bunnyViews.filter(_.bunny.alive)
 
@@ -129,6 +159,8 @@ class BaseAppController(
     simulationPane.children = bunnyViews map { _.imageView }
   }
 
+  override def showPopulationChart(): Unit = populationChart --> { c => chartsPane.children = c.chart }
+
   override def showPedigreeChart(): Unit =
     if (selectedBunny ?) {
       val pedigreeChart = PedigreeChart(
@@ -140,9 +172,7 @@ class BaseAppController(
       chartsPane.children = pedigreeChart
     } else chartsPane.children = pedigreeText
 
-  override def showProportionsChart(): Unit = {
-    chartsPane.children = proportionsChartPane.get
-  }
+  override def showProportionsChart(): Unit = chartsPane.children = proportionsChartPane.get
 
   override def handleBunnyClick(bunny: BunnyView): Unit = {
     if (selectedBunny ?) selectedBunny.get.removeClickedEffect()

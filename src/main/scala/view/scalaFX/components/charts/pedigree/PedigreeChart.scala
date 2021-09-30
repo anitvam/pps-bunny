@@ -99,9 +99,9 @@ object PedigreeChart {
         nextTrees ++= Seq(Option.empty, Option.empty)
       }
     })
-
     (row, nextTrees)
   }
+
 
   /** Creates a spacing region to justify the rows of bunnies */
   def spacingRegion: Region = new Region {
