@@ -1,9 +1,11 @@
 package view.scalaFX.FXControllers
 
+import controller.Controller
 import engine.SimulationHistory
 import javafx.fxml.FXML
+import model.world.Factor
 import scalafx.scene.control.CheckBox
-import scalafx.scene.image.{Image, ImageView}
+import scalafx.scene.image.{ Image, ImageView }
 import scalafxml.core.macros.sfxml
 import util.PimpScala._
 import view.scalaFX.ScalaFXConstants.WOLVES_NUMBER
@@ -49,21 +51,8 @@ class FactorsPanelController(
       case _: IllegalArgumentException =>
     }
 
-  def onWolfClick(): Unit =
-    onFactorClick(wolfCheckBox, () => SimulationHistory.introduceFactor(), () => SimulationHistory.removeFactor())
-
-  def onToughFoodClick(): Unit = {
-    onFactorClick(toughFoodCheckBox, () => SimulationHistory.introduceFactor(), () => SimulationHistory.removeFactor())
-    manageEnvironmentBackgroundChange()
-  }
-
-  def onHighFoodClick(): Unit = {
-    onFactorClick(toughFoodCheckBox, () => SimulationHistory.introduceFactor(), () => SimulationHistory.removeFactor())
-    manageEnvironmentBackgroundChange()
-  }
-
-  private def onFactorClick(factor: CheckBox, introduce: () => Unit, remove: () => Unit): Unit =
-    if (factor.selected.value) introduce() else remove()
+  private def onFactorClick(checkBox: CheckBox, factor: Factor): Unit =
+    if (checkBox.selected.value) Controller.introduceFactor(factor) else Controller.removeFactor(factor)
 
   override def manageEnvironmentBackgroundChange(): Unit = {
     import view.scalaFX.utilities.EnvironmentImageUtils._
@@ -85,20 +74,33 @@ class FactorsPanelController(
     }
   }
 
-  def onLimitedFoodClick(): Unit = {
+  def onWolfClick(): Unit = onFactorClick(wolfCheckBox, Factor.Wolves())
+
+  def onToughFoodClick(): Unit = {
     onFactorClick(
-      limitedFoodCheckBox,
-      () => SimulationHistory.introduceFactor(),
-      () => SimulationHistory.removeFactor()
+      toughFoodCheckBox,
+      Factor.FoodFactorImpl(isHighFood = false, isLimitedFood = false, isToughFood = true)
     )
     manageEnvironmentBackgroundChange()
   }
 
-  def onHostileTemperatureClick(): Unit = onFactorClick(
-    hostileTemperatureCheckBox,
-    () => SimulationHistory.introduceFactor(),
-    () => SimulationHistory.removeFactor()
-  )
+  def onHighFoodClick(): Unit = {
+    onFactorClick(
+      highFoodCheckBox,
+      Factor.FoodFactorImpl(isHighFood = true, isLimitedFood = false, isToughFood = false)
+    )
+    manageEnvironmentBackgroundChange()
+  }
+
+  def onLimitedFoodClick(): Unit = {
+    onFactorClick(
+      limitedFoodCheckBox,
+      Factor.FoodFactorImpl(isHighFood = false, isLimitedFood = true, isToughFood = false)
+    )
+    manageEnvironmentBackgroundChange()
+  }
+
+  def onHostileTemperatureClick(): Unit = onFactorClick(hostileTemperatureCheckBox, Factor.UnfriendlyClimate())
 
   override def showWolvesEating(): Unit = {
     if (wolfCheckBox.isSelected) wolvesView foreach (w => {

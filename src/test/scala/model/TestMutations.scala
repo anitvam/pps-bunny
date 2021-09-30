@@ -1,6 +1,6 @@
 package model
 
-import engine.SimulationHistory.introduceMutation
+import controller.Controller
 import model.Bunny.generateBaseFirstBunny
 import model.genome.Genes
 import model.genome.KindsUtils.resetDominance
@@ -16,7 +16,7 @@ class TestMutations extends FlatSpec with Matchers {
   val mutationTeeth: Mutation = Mutation(Genes.TEETH, isDominant = false)
 
   "When introducing a Mutation" should "compare to the utmost only half population" in {
-    introduceMutation(mutationFurColor)
+    Controller.insertMutation(mutationFurColor)
 
     val nextGeneration = nextGenerationBunnies(children, List(mutationFurColor))
     val bunnyWithMutation = nextGeneration filter (_.genotype.phenotype(Genes.FUR_COLOR) == Genes.FUR_COLOR.mutated)
@@ -28,7 +28,7 @@ class TestMutations extends FlatSpec with Matchers {
   "When introducing more than one Mutations" should "compare only a Mutation for Bunny" in {
     val mutations = List(mutationFurColor, mutationFurLength, mutationTeeth)
     try {
-      mutations.foreach(introduceMutation)
+      mutations.foreach(Controller.insertMutation)
     } catch {
       case _: MultipleDominanceAssignmentException =>
         println("Allele corresponding to the Mutation set before. Ignoring this method")
