@@ -3,17 +3,12 @@ package view.scalaFX.FXControllers
 import engine.SimulationHistory
 import javafx.fxml.FXML
 import scalafx.scene.control.CheckBox
-import scalafx.scene.image.{ Image, ImageView }
+import scalafx.scene.image.{Image, ImageView}
 import scalafxml.core.macros.sfxml
 import util.PimpScala._
-import view.scalaFX.ScalaFxViewConstants.WOLVES_NUMBER
+import view.scalaFX.ScalaFXConstants.WOLVES_NUMBER
 import view.scalaFX.components.WolfView
-import view.scalaFX.utilities.{
-  SummerImage, SummerImageHighFood, SummerImageHighToughFood, SummerImageLimitedFood, SummerImageLimitedHighFood,
-  SummerImageLimitedHighToughFood, SummerImageLimitedToughFood, SummerImageToughFood, WinterImage, WinterImageHighFood,
-  WinterImageHighToughFood, WinterImageLimitedFood, WinterImageLimitedHighFood, WinterImageLimitedHighToughFood,
-  WinterImageLimitedToughFood, WinterImageToughFood
-}
+import view.scalaFX.utilities.{SummerImage, SummerImageHighFood, SummerImageHighToughFood, SummerImageLimitedFood, SummerImageLimitedHighFood, SummerImageLimitedHighToughFood, SummerImageLimitedToughFood, SummerImageToughFood, WinterImage, WinterImageHighFood, WinterImageHighToughFood, WinterImageLimitedFood, WinterImageLimitedHighFood, WinterImageLimitedHighToughFood, WinterImageLimitedToughFood, WinterImageToughFood}
 
 sealed trait FactorsPanelControllerInterface {
 

@@ -1,10 +1,8 @@
 package view.scalaFX.components
 
-import scalafx.animation.{ AnimationTimer, KeyFrame }
-import scalafx.scene.image.{ Image, ImageView }
-import view.scalaFX.ScalaFxViewConstants.{
-  PANEL_SKY_ZONE, PREFERRED_BUNNY_PANEL_HEIGHT, PREFERRED_SIMULATION_PANEL_WIDTH, PREFERRED_WOLF_PANEL_HEIGHT
-}
+import scalafx.animation.{AnimationTimer, KeyFrame}
+import scalafx.scene.image.{Image, ImageView}
+import view.scalaFX.ScalaFXConstants.{PANEL_SKY_ZONE, PREFERRED_SIMULATION_PANEL_WIDTH, PREFERRED_WOLF_PANEL_HEIGHT}
 import view.scalaFX.utilities.Direction
 import view.scalaFX.utilities.Direction._
 

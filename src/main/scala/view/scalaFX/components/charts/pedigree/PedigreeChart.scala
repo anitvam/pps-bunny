@@ -8,8 +8,8 @@ import scalafx.scene.image.ImageView
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
 import util.PimpScala._
-import view.scalaFX.ScalaFxViewConstants.GenealogicalTree._
-import view.scalaFX.ScalaFxViewConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
+import view.scalaFX.ScalaFXConstants.GenealogicalTree._
+import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
 
 import scala.language.postfixOps
 

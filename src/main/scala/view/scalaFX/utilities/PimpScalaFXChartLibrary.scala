@@ -6,6 +6,7 @@ import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
 import scalafx.scene.chart.{LineChart, PieChart, XYChart}
 import util.PimpScala._
+import view.scalaFX.ScalaFXConstants.Style.PopulationLegend.{CLICKED_ITEM_STYLE, ITEM_STYLE}
 
 object PimpScalaFXChartLibrary {
 
@@ -73,8 +74,6 @@ object PimpScalaFXChartLibrary {
 
   /** A richer version of [[Legend]] */
   implicit class RichChartLegend(legend: Legend) {
-    val ITEM_STYLE: String = "population-chart-legend-item"
-    val CLICKED_ITEM_STYLE: String = "population-chart-legend-item-clicked"
 
     /** Set the specified label as clicked by adding a specific style */
     def setLabelAsClicked(value: String): Unit = {
