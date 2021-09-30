@@ -19,7 +19,7 @@ import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.components.{ BunnyView, WolfView }
 import view.scalaFX.utilities.EnvironmentImageUtils._
-import view.scalaFX.utilities.{ Chart, SummerImage }
+import view.scalaFX.utilities.{SummerImage }
 import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
 import view.scalaFX.utilities._
 
@@ -158,7 +158,7 @@ class BaseAppController(
   def updateView(bunnies: Population, generationPhase: GenerationPhase): Unit = {
     proportionsChartController.get.updateChart(generationPhase, bunnies)
     populationChart --> { _.updateChart(generationPhase, bunnies) }
-    if (chartSelectionPanelController.get.activeChart == Chart.Pedigree) showPedigreeChart()
+    if (chartSelectionPanelController.get.activeChart == ChartType.Pedigree) showPedigreeChart()
 
     bunnyViews.filterNot(_.bunny.alive).foreach(bv => simulationPane.children.remove(bv.imageView))
     bunnyViews = bunnyViews.filter(_.bunny.alive)
