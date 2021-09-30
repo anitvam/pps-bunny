@@ -56,7 +56,11 @@
     -fx-background-color: black;
 }
 
-.chart-legend-item-clicked {
+.population-chart-legend-item {
+    -fx-padding: 2px;
+}
+
+.population-chart-legend-item-clicked {
     -fx-background-color: lightgray;
     -fx-background-radius: 5px;
     -fx-padding: 2px;

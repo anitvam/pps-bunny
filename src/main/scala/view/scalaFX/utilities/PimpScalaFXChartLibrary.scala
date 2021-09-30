@@ -73,11 +73,19 @@ object PimpScalaFXChartLibrary {
 
   /** A richer version of [[Legend]] */
   implicit class RichChartLegend(legend: Legend) {
+    val ITEM_STYLE: String = "population-chart-legend-item"
+    val CLICKED_ITEM_STYLE: String = "population-chart-legend-item-clicked"
 
     /** Set the specified label as clicked by adding a specific style */
     def setLabelAsClicked(value: String): Unit = {
-      getLabels.foreach(_.styleClass -= "chart-legend-item-clicked")
-      label(value) --> { _.styleClass += "chart-legend-item-clicked" }
+      getLabels.foreach({l =>
+        l.styleClass -= CLICKED_ITEM_STYLE
+        l.styleClass += ITEM_STYLE
+      })
+      label(value) --> { l =>
+        l.styleClass -= ITEM_STYLE
+        l.styleClass += CLICKED_ITEM_STYLE
+      }
     }
 
     /**

@@ -221,6 +221,7 @@ object LineChartComponentFactory {
 
     chart.legend.getLabels.foreach(li => {
       seriesData.getSeries(li.text.value) --> { s =>
+        s.addStyle("population-chart-legend-item")
         li.onMouseClicked = _ =>
           s.getName match {
             case "Total" =>
