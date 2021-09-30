@@ -74,14 +74,14 @@ object ScalaFxViewConstants {
   private val BUNNY_PANEL_PERCENTUAL_HEIGTH = 0.25
   private val BUNNY_PANEL_PERCENTUAL_SKY_ZONE = 0.1
 
-  /** Size of the bunny picture */
-  val PREFERRED_BUNNY_SIZE = 80
-
   /** Normal Jump height */
   val NORMAL_JUMP_HEIGHT = 40
 
   /** High Jump height */
   val HIGH_JUMP_HEIGHT = 80
+
+  /** Number of wolves to show */
+  val WOLVES_NUMBER = 5
 
   /** Random bound on jump delay */
   val RANDOM_BUNNY_JUMP_DELAY = 5000

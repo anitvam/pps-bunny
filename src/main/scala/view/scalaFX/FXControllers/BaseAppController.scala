@@ -12,6 +12,7 @@ import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
 import view.scalaFX.ScalaFxViewConstants
+import view.scalaFX.ScalaFxViewConstants.WOLVES_NUMBER
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.components.{ BunnyView, WolfView }
@@ -182,7 +183,7 @@ class BaseAppController(
   }
 
   override def showWolvesEating(): Unit = {
-    val wolvesView = (1 to 5) map (_ => WolfView())
+    val wolvesView = (1 to WOLVES_NUMBER) map (_ => WolfView())
     wolvesView foreach (w => {
       simulationPane.children.add(w.imageView)
       w.play()
