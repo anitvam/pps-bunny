@@ -80,7 +80,7 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                <AnchorPane pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                     <children>
                                         <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="200.0" minHeight="50.0" minWidth="200.0" mnemonicParsing="false" onAction="#startSimulation" prefHeight="50.0" prefWidth="200.0" text="START" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                             <font>
