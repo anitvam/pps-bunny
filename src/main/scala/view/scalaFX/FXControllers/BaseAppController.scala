@@ -98,7 +98,7 @@ class BaseAppController(
     proportionsChartPane = Some(loadedProportionsChartView._1)
     proportionsChartController = Some(loadedProportionsChartView._2.getController[ChartController])
 
-    AnchorPane.setAnchors(proportionsChartPane.get, 0, 0, 0, 0)
+    setFitParent(proportionsChartPane.get)
     proportionsChartController --> { _.initialize() }
 
     this.initializeView()
