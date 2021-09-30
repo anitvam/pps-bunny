@@ -6,9 +6,9 @@ import javafx.scene.{ layout => jfxs }
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
-import scalafx.collections.ObservableBuffer
 import scalafx.scene.control.{ Button, Label }
 import scalafx.scene.layout.AnchorPane
+import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
 import view.scalaFX.ScalaFxViewConstants
@@ -19,6 +19,7 @@ import view.scalaFX.utilities.EnvironmentImageUtils._
 import view.scalaFX.utilities.{ Chart, SummerImage }
 import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
 import view.scalaFX.utilities._
+
 import scala.language.postfixOps
 
 sealed trait BaseAppControllerInterface {
@@ -57,8 +58,6 @@ sealed trait BaseAppControllerInterface {
 
 @sfxml
 class BaseAppController(
-    @FXML private val simulationPane: AnchorPane,
-    @FXML private val chartsPane: AnchorPane,
     @FXML private val pedigreeText: Text,
     @FXML private val simulationPane: AnchorPane,
     @FXML private val chartsPane: AnchorPane,
