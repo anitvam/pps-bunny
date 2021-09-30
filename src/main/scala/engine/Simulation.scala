@@ -4,6 +4,7 @@ import cats.effect.IO
 import controller.Controller
 import engine.SimulationHistory._
 import model.world.Factor._
+import model.world.FoodFactor
 import model.world.GenerationsUtils.GenerationPhase
 import view.scalaFX.ScalaFXView
 
@@ -12,19 +13,21 @@ import scala.language.implicitConversions
 object Simulation {
 
   def wolvesEat: IO[Unit] = {
-    val wolves = Wolves()
-    SimulationHistory.getActualGeneration.population = wolves
-      .applyDamage(SimulationHistory.getActualPopulation, SimulationHistory.getActualGeneration.environment.climate)
+    val wolvesFactor = getActualGeneration.environment.factors.filter(_.isInstanceOf[Wolves])
+    if (wolvesFactor.nonEmpty) getActualGeneration.population =
+      wolvesFactor.head.applyDamage(getActualPopulation, getActualGeneration.environment.climate)
   }
 
   def bunniesEat: IO[Unit] = {
-    val limitedFood = UnfriendlyClimate()
-    SimulationHistory.getActualGeneration.population = limitedFood
-      .applyDamage(SimulationHistory.getActualPopulation, SimulationHistory.getActualGeneration.environment.climate)
+    val foodFactor = getActualGeneration.environment.factors.filter(_.isInstanceOf[FoodFactor])
+    if (foodFactor.nonEmpty) getActualGeneration.population =
+      foodFactor.head.applyDamage(getActualPopulation, getActualGeneration.environment.climate)
   }
 
   def applyTemperatureDamage: IO[Unit] = {
-    println("SOME BUNNIES DIED BECAUSE OF TEMPERATURE")
+    val temperatureFactor = getActualGeneration.environment.factors.filter(_.isInstanceOf[UnfriendlyClimate])
+    if (temperatureFactor.nonEmpty) getActualGeneration.population =
+      temperatureFactor.head.applyDamage(getActualPopulation, getActualGeneration.environment.climate)
   }
 
   def updateView(generationPhase: GenerationPhase): IO[Unit] = {

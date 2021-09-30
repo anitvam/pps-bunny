@@ -1,7 +1,10 @@
 package model.world
 
+import engine.SimulationHistory.getActualGeneration
+import model.genome.KindsUtils
 import model.mutation.Mutation
 import model.world.Environment.{ Factors, Mutations }
+import model.world.Factor.{ FoodFactorImpl, Wolves }
 
 /** Environment of a Generation */
 trait Environment {
@@ -31,7 +34,11 @@ trait Environment {
   def mutations_=(mutations: Mutations): Unit
 
   /** @return the Environment Factors */
-  def factors: Factors
+  var factors: Factors
+
+  def introduceFactor(factor: Factor): Unit
+  def removeFactor(factor: Factor): Unit
+  def introduceMutation(mutation: Mutation): Unit
 }
 
 object Environment {
@@ -50,9 +57,53 @@ object Environment {
 
   private case class EnvironmentImpl(
       override var climate: Climate,
-      override val factors: Factors,
+      override var factors: Factors,
       override var mutations: Mutations = List()
-  ) extends Environment {}
+  ) extends Environment {
+
+    override def introduceFactor(factor: Factor): Unit = factor match {
+      case FoodFactorImpl(isHighFood, isLimitedFood, isToughFood) if factors.exists(_.isInstanceOf[FoodFactor]) =>
+        val previous: FoodFactor = factors.filter(_.isInstanceOf[FoodFactor]).head.asInstanceOf[FoodFactor]
+        factors = factors.filter(!_.isInstanceOf[FoodFactor])
+        factors = FoodFactorImpl(
+          isHighFood || previous.isHighFood,
+          isLimitedFood || previous.isLimitedFood,
+          isToughFood || previous.isToughFood
+        ) :: factors
+        println("E' stato introdotto " + factors.head)
+      case _ =>
+        factors = factor :: factors
+        println("E' stato introdotto " + factor)
+    }
+
+    override def removeFactor(factor: Factor): Unit = factor match {
+      case FoodFactorImpl(isHighFood, isLimitedFood, isToughFood) =>
+        println(factors)
+        val previous: FoodFactor = factors.filter(_.isInstanceOf[FoodFactor]).head.asInstanceOf[FoodFactor]
+        println(previous)
+        factors = factors.filter(!_.isInstanceOf[FoodFactor])
+        if (isHighFood) FoodFactorImpl(
+          isHighFood = false,
+          isLimitedFood = previous.isLimitedFood,
+          isToughFood = previous.isToughFood
+        ) :: factors
+        if (isToughFood) FoodFactorImpl(previous.isHighFood, previous.isLimitedFood, isToughFood = false) :: factors
+        if (isLimitedFood) FoodFactorImpl(previous.isHighFood, isLimitedFood = false, previous.isToughFood) :: factors
+        println("E' stato rimosso un FoodFactor(" + isHighFood + "," + isLimitedFood + "," + isToughFood + ")")
+      case _ =>
+        factors = factors.filter(_ != factor)
+        println("E' stato rimosso " + factor)
+    }
+
+    /** Introduce a new mutation */
+    def introduceMutation(mutation: Mutation): Unit = {
+      mutations = mutation :: mutations
+
+      if (mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
+      else KindsUtils.setAlleleDominance(mutation.geneKind.base)
+    }
+
+  }
 
 }
 
