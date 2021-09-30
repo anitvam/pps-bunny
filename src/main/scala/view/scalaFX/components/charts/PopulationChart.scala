@@ -2,6 +2,7 @@ package view.scalaFX.components.charts
 
 import model.genome.Alleles
 import model.genome.Alleles.AlleleKind
+import model.genome.KindsUtils.getGeneKind
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
@@ -13,6 +14,7 @@ import view.scalaFX.components.charts.LineChartComponentFactory.{createEmptySeri
 import view.scalaFX.components.charts.PopulationChartDataType._
 import view.scalaFX.utilities.PimpScalaFXChartLibrary._
 
+import scala.collection.immutable.ListMap
 import scala.language.implicitConversions
 
 object PopulationChartDataType {
@@ -60,6 +62,7 @@ object PopulationChartDataType {
     Alleles.values.foreach { ak =>
       mutationMap = mutationMap + (ak -> ChartSeries(SeriesData(), createEmptySeries(ak.prettyName)))
     }
+    mutationMap = ListMap(mutationMap.toSeq.sortBy(entry => getGeneKind(entry._1)):_*)
 
     def seriesData: Seq[SeriesData] = mutationMap.values.map(_.seriesData).toSeq
     def xySeries: List[XYSeries] = mutationMap.values.map(_.xySeries).toList
