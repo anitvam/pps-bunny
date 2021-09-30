@@ -39,6 +39,32 @@ class MutationsPanelController(
     otherButton = furColorRecessiveChoiceButton
   )
 
+  private def manageChoiceClick(
+      geneKind: GeneKind,
+      isDominant: Boolean,
+      newText: String,
+      buttonClicked: Button,
+      otherButton: Button
+  ): Unit = {
+    Controller.insertMutation(Mutation(geneKind, isDominant))
+    otherButton.text = newText
+    updateButtonStyle(buttonClicked, otherButton)
+    showMutationIncoming()
+    disableButtons(buttonClicked, otherButton)
+  }
+
+  private def disableButtons(firstButton: Button, secondButton: Button): Unit = {
+    firstButton.disable = true
+    secondButton.disable = true
+  }
+
+  private def updateButtonStyle(clicked: Button, other: Button): Unit = {
+    clicked.styleClass += CHOSEN_BUTTON_STYLE
+    other.styleClass += OTHER_BUTTON_STYLE
+  }
+
+  private def showMutationIncoming(): Unit = mutationIncomingLabel.visible = true
+
   def furColorRecessiveChoiceClick(): Unit = manageChoiceClick(
     FUR_COLOR,
     isDominant = false,
@@ -111,48 +137,32 @@ class MutationsPanelController(
     otherButton = jumpDominantChoiceButton
   )
 
-  private def manageChoiceClick(
-      geneKind: GeneKind,
-      isDominant: Boolean,
-      newText: String,
-      buttonClicked: Button,
-      otherButton: Button
-  ): Unit = {
-    Controller.insertMutation(Mutation(geneKind, isDominant))
-    otherButton.text = newText
-    updateButtonStyle(buttonClicked, otherButton)
-    showMutationIncoming()
-    disableButtons(buttonClicked, otherButton)
+  def resetMutationsPanel(): Unit = {
+    hideMutationIncoming()
+    resetButtons(
+      Seq(
+        jumpRecessiveChoiceButton,
+        jumpDominantChoiceButton,
+        teethRecessiveChoiceButton,
+        teethDominantChoiceButton,
+        earsRecessiveChoiceButton,
+        earsDominantChoiceButton,
+        furLengthRecessiveChoiceButton,
+        furLengthDominantChoiceButton,
+        furColorRecessiveChoiceButton,
+        furColorDominantChoiceButton
+      )
+    )
   }
-
-  private def disableButtons(firstButton: Button, secondButton: Button): Unit = {
-    firstButton.disable = true
-    secondButton.disable = true
-  }
-
-  private def updateButtonStyle(clicked: Button, other: Button): Unit = {
-    clicked.styleClass += CHOSEN_BUTTON_STYLE
-    other.styleClass += OTHER_BUTTON_STYLE
-  }
-
-  private def showMutationIncoming(): Unit = mutationIncomingLabel.visible = true
 
   def hideMutationIncoming(): Unit = mutationIncomingLabel.visible = false
 
-  def resetMutationsPanel(): Unit = {
-    hideMutationIncoming()
-    resetButtons(Seq( jumpRecessiveChoiceButton, jumpDominantChoiceButton,
-                      teethRecessiveChoiceButton, teethDominantChoiceButton,
-                      earsRecessiveChoiceButton, earsDominantChoiceButton,
-                      furLengthRecessiveChoiceButton, furLengthDominantChoiceButton,
-                      furColorRecessiveChoiceButton, furColorDominantChoiceButton))
-  }
-
-  private def resetButtons(btns:Seq[Button]): Unit = {
+  private def resetButtons(btns: Seq[Button]): Unit = {
     btns.foreach(btn => {
       btn.styleClass -= CHOSEN_BUTTON_STYLE
       btn.styleClass -= OTHER_BUTTON_STYLE
       btn.disable = false
     })
   }
+
 }

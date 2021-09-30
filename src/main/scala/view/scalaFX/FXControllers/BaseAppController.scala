@@ -105,19 +105,13 @@ class BaseAppController(
   private def initializeView(): Unit = {
     // Load the default environment background
     simulationPane.background = SummerImage()
-    populationChart =
-      Some(PopulationChart(PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH))
+    populationChart = Some(PopulationChart(PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH))
     showPopulationChart()
 
 //    chartsPane.children =  PopulationChart.chart(325, 500)
   }
 
-  private def resetSimulationPanel(): Unit = {
-    bunnyViews = Seq.empty
-    simulationPane.children = Seq.empty
-    generationLabel.text = ""
-    startButton.setVisible(true)
-  }
+  override def showPopulationChart(): Unit = populationChart --> { c => chartsPane.children = c.chart }
 
   def reset(): Unit = {
     startButton.onAction = _ => {
@@ -131,6 +125,13 @@ class BaseAppController(
       startSimulation()
     }
     startButton.text = "RESTART"
+    startButton.setVisible(true)
+  }
+
+  private def resetSimulationPanel(): Unit = {
+    bunnyViews = Seq.empty
+    simulationPane.children = Seq.empty
+    generationLabel.text = ""
     startButton.setVisible(true)
   }
 
@@ -182,8 +183,6 @@ class BaseAppController(
       factorsPanelController --> { _.removeWolves() }
     }
   }
-
-  override def showPopulationChart(): Unit = populationChart --> { c => chartsPane.children = c.chart }
 
   override def showPedigreeChart(): Unit =
     if (selectedBunny ?) {

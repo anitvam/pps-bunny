@@ -15,11 +15,10 @@ trait WolfView {
   /** Reference to the model disturbing factor entity */
 //  val wolf: DisturbingFactor
 
-  /** The image of the disturbing factor displayed on the GUI */
-  val imageView: ImageView
-
   /** Type annotation for a Seq of KeyFrames */
   type AnimationFrames = Seq[KeyFrame]
+  /** The image of the disturbing factor displayed on the GUI */
+  val imageView: ImageView
 
   /** Starts the disturbing factor animation */
   def play(): Unit
@@ -53,8 +52,6 @@ object WolfView {
   ) extends WolfView {
     private val SPEED = 200
     private val movingSpace = PREFERRED_SIMULATION_PANEL_WIDTH / SPEED
-    private var lastTime = 0L
-
     private val timer: AnimationTimer = AnimationTimer(t => {
       if (lastTime > 0) {
         checkDirection()
@@ -63,6 +60,7 @@ object WolfView {
       }
       lastTime = t
     })
+    private var lastTime = 0L
 
     override def play(): Unit = timer.start()
 

@@ -62,7 +62,8 @@ object PopulationChartDataType {
     Alleles.values.foreach { ak =>
       mutationMap = mutationMap + (ak -> ChartSeries(SeriesData(), createEmptySeries(ak.prettyName)))
     }
-    mutationMap = ListMap(mutationMap.toSeq.sortBy(entry => getGeneKind(entry._1)):_*)
+
+    mutationMap = ListMap(mutationMap.toSeq.sortBy(entry => getGeneKind(entry._1)): _*)
 
     def seriesData: Seq[SeriesData] = mutationMap.values.map(_.seriesData).toSeq
     def xySeries: List[XYSeries] = mutationMap.values.map(_.xySeries).toList
@@ -87,10 +88,8 @@ case class PopulationChart(height: Double, width: Double) {
 
   val xAxis: NumberAxis = createNumberAxis("Generation Axis", 0, 6, 1)
   val yAxis: NumberAxis = createNumberAxis("Population Axis", 0, 30, 5)
-
   var mutations: MutationsChartSeries = MutationsChartSeries()
   var total: ChartSeries = ChartSeries(SeriesData(), createEmptySeries("Total"))
-
   val chart: LineChart[Number, Number] =
     createLineChart(xAxis, yAxis, height, width, total.xySeries :: mutations.xySeries)
 

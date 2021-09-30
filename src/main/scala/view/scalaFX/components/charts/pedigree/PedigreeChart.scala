@@ -102,7 +102,6 @@ object PedigreeChart {
     (row, nextTrees)
   }
 
-
   /** Creates a spacing region to justify the rows of bunnies */
   def spacingRegion: Region = new Region {
     hgrow = Priority.Always
@@ -132,6 +131,7 @@ object PedigreeChart {
 
     var rows: Seq[HBox] = Seq()
     var row: (HBox, Seq[Option[BinaryTree[Bunny]]]) = (new HBox(), Seq(Option(tree)))
+
     for (_ <- 1 to tree.generations) {
       row = createRow(row._2)
       rows = rows :+ row._1
@@ -141,6 +141,7 @@ object PedigreeChart {
       children = spacingRegion +: rows.reverse :+ spacingRegion
       alignment = Pos.Center
     }
+
   }
 
 }

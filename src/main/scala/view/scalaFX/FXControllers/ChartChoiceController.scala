@@ -9,6 +9,9 @@ import view.scalaFX.utilities.ChartType.ChartType
 
 sealed trait ChartChoiceControllerInterface {
 
+  /** States which is the active chart */
+  var activeChart: ChartType = ChartType.Population
+
   /**
    * Method that initialize the ChartChoiceController
    * @param controller
@@ -23,9 +26,6 @@ sealed trait ChartChoiceControllerInterface {
 
   /** Method that handle the click of a Bunny */
   def handleBunnyClick(): Unit
-
-  /** States which is the active chart */
-  var activeChart: ChartType = ChartType.Population
 }
 
 @sfxml
@@ -47,15 +47,20 @@ class ChartChoiceController(
   override def handleBunnyClick(): Unit =
     if (pedigreeRadioButton.selected.value) baseAppController --> { _.showPedigreeChart() }
 
-  private def showChart(legendVisibility: Boolean, chartToShow: BaseAppControllerInterface => Unit, chartType: ChartType) {
+  def showPopulationChart(): Unit = showChart(legendVisibility = false, _.showPopulationChart(), ChartType.Population)
+
+  def showProportionsChart(): Unit =
+    showChart(legendVisibility = false, _.showProportionsChart(), ChartType.Proportions)
+
+  private def showChart(
+      legendVisibility: Boolean,
+      chartToShow: BaseAppControllerInterface => Unit,
+      chartType: ChartType
+  ) {
     legendBox.setVisible(legendVisibility)
     this.activeChart = chartType
     baseAppController --> { chartToShow }
   }
-
-  def showPopulationChart(): Unit = showChart(legendVisibility = false, _.showPopulationChart(), ChartType.Population)
-
-  def showProportionsChart(): Unit = showChart(legendVisibility = false, _.showProportionsChart(), ChartType.Proportions)
 
   def showPedigreeChart(): Unit = showChart(legendVisibility = true, _.showPedigreeChart(), ChartType.Pedigree)
 }

@@ -20,7 +20,7 @@ object PimpScalaFXChartLibrary {
      * Sets the series and its point visibility
      *
      * @param isVisible
-     * specifies if they are visible
+     *   specifies if they are visible
      */
     def enabled_=(isVisible: Boolean): Unit = {
       series.getNode.visible = isVisible
@@ -31,7 +31,7 @@ object PimpScalaFXChartLibrary {
      * Adds a style to the Style list of the series
      *
      * @param style
-     * the name of style
+     *   the name of style
      */
     def addStyle(style: String): Unit = {
       series.getNode.styleClass += style
@@ -42,7 +42,7 @@ object PimpScalaFXChartLibrary {
      * Adds a new [[XYChart.Data]] to the series
      *
      * @param data
-     * the new point
+     *   the new point
      */
     def +=(data: XYChart.Data[A, B]): Boolean = series.dataProperty().value.add(data)
   }
@@ -77,7 +77,7 @@ object PimpScalaFXChartLibrary {
 
     /** Set the specified label as clicked by adding a specific style */
     def setLabelAsClicked(value: String): Unit = {
-      getLabels.foreach({l =>
+      getLabels.foreach({ l =>
         l.styleClass -= CLICKED_ITEM_STYLE
         l.styleClass += ITEM_STYLE
       })
@@ -91,9 +91,9 @@ object PimpScalaFXChartLibrary {
      * A getter for easier access to the label of the specified value
      *
      * @param value
-     * the name of the label you are looking for
+     *   the name of the label you are looking for
      * @return
-     * the label if present
+     *   the label if present
      */
     def label(value: String): Option[Label] =
       legend.getChildrenUnmodifiable.find(_.asInstanceOf[Label].text.value == value).map(_.asInstanceOf[Label])
