@@ -1,11 +1,13 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
+import engine.SimulationConstants.{ FOOD_PHASE, START_PHASE, WOLVES_PHASE }
 import javafx.fxml.FXML
 import javafx.scene.{ layout => jfxs }
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
+import scalafx.collections.ObservableBuffer
 import scalafx.scene.control.{ Button, Label }
 import scalafx.scene.layout.AnchorPane
 import scalafx.scene.text.Text
@@ -31,6 +33,8 @@ sealed trait BaseAppControllerInterface {
   /** Method to reset the application interface and start a new simulation */
   def reset(): Unit
 
+  def simulationPane: AnchorPane
+
   /** Method that shows population chart inside chartsPane */
   def showPopulationChart(): Unit
 
@@ -46,9 +50,6 @@ sealed trait BaseAppControllerInterface {
   /** Method that shows new bunnies into the GUI and the actual generation number */
   def updateView(bunnies: Population, generationPhase: GenerationPhase): Unit
 
-  /** Method that shows wolves eating into the GUI */
-  def showWolvesEating(): Unit
-
   /**
    * Method that change background on the simulationPane
    * @param background
@@ -60,7 +61,7 @@ sealed trait BaseAppControllerInterface {
 @sfxml
 class BaseAppController(
     @FXML private val pedigreeText: Text,
-    @FXML private val simulationPane: AnchorPane,
+    @FXML val simulationPane: AnchorPane,
     @FXML private val chartsPane: AnchorPane,
     @FXML private val mutationChoicePane: AnchorPane,
     @FXML private val factorChoicePane: AnchorPane,
@@ -159,35 +160,30 @@ class BaseAppController(
     populationChart --> { _.updateChart(generationPhase, bunnies) }
     if (chartSelectionPanelController.get.activeChart == Chart.Pedigree) showPedigreeChart()
 
+    bunnyViews.filterNot(_.bunny.alive).foreach(bv => simulationPane.children.remove(bv.imageView))
     bunnyViews = bunnyViews.filter(_.bunny.alive)
+
     // Bunny visualization inside simulationPane
-    if (bunnyViews.size != bunnies.size) {
-      val newBunnyViews = bunnies filter {
-        _.age == 0
-      } map {
-        BunnyView(_)
-      }
-      bunnyViews = bunnyViews.filter(_.bunny.alive) ++ newBunnyViews
-      simulationPane.children = bunnyViews map {
-        _.imageView
-      }
+    if (generationPhase.phase == START_PHASE) {
+      val newBunnyViews = bunnies filter { _.age == 0 } map { BunnyView(_) }
+      bunnyViews = bunnyViews ++ newBunnyViews
 
       generationLabel.text = "Generazione " + generationPhase.generationNumber
       if (generationPhase.generationNumber > 0) {
         mutationsPanelController --> { _.hideMutationIncoming() }
       }
-
+      simulationPane.children ++= newBunnyViews.map(_.imageView)
       // Start movement of the new bunnies
       newBunnyViews foreach { _.play() }
     }
-  }
 
-  override def showWolvesEating(): Unit = {
-    val wolvesView = (1 to WOLVES_NUMBER) map (_ => WolfView())
-    wolvesView foreach (w => {
-      simulationPane.children.add(w.imageView)
-      w.play()
-    })
+    if (generationPhase.phase == WOLVES_PHASE) {
+      factorsPanelController --> { _.showWolvesEating() }
+    }
+
+    if (generationPhase.phase == FOOD_PHASE) {
+      factorsPanelController --> { _.removeWolves() }
+    }
   }
 
   override def showPopulationChart(): Unit = populationChart --> { c => chartsPane.children = c.chart }

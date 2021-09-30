@@ -40,10 +40,6 @@ object ScalaFXView extends View {
     baseAppController --> { _.updateView(bunnies, generationPhase) }
   }
 
-  def showWolves(): Unit = {
-    Platform.runLater { baseAppController --> { _.showWolvesEating() } }
-  }
-
   override def showEnd(): Unit = {
     val endStage = new Stage {
       title = "Fine simulazione"

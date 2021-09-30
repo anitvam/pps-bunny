@@ -6,6 +6,8 @@ import scalafx.scene.control.CheckBox
 import scalafx.scene.image.{ Image, ImageView }
 import scalafxml.core.macros.sfxml
 import util.PimpScala._
+import view.scalaFX.ScalaFxViewConstants.WOLVES_NUMBER
+import view.scalaFX.components.WolfView
 import view.scalaFX.utilities.{
   SummerImage, SummerImageHighFood, SummerImageHighToughFood, SummerImageLimitedFood, SummerImageLimitedHighFood,
   SummerImageLimitedHighToughFood, SummerImageLimitedToughFood, SummerImageToughFood, WinterImage, WinterImageHighFood,
@@ -18,6 +20,8 @@ sealed trait FactorsPanelControllerInterface {
   /** initialize all the component inside the panel */
   def initialize(baseAppController: BaseAppControllerInterface): Unit
   def manageEnvironmentBackgroundChange(): Unit
+  def showWolvesEating(): Unit
+  def removeWolves(): Unit
 }
 
 @sfxml
@@ -35,6 +39,7 @@ class FactorsPanelController(
 ) extends FactorsPanelControllerInterface {
 
   private var baseAppController: Option[BaseAppControllerInterface] = None
+  private var wolvesView: Seq[WolfView] = Seq()
 
   private def insertFactorImage(image: ImageView, id: String): Unit =
     try image.image = new Image("/img/factors/" + id + ".png")
@@ -45,7 +50,7 @@ class FactorsPanelController(
   override def initialize(baseAppController: BaseAppControllerInterface): Unit = {
     this.baseAppController = Some(baseAppController)
     val factorsImageViews: List[ImageView] = List(wolf, tough_food, high_food, limited_food, hostile_temperature)
-
+    wolvesView = (1 to WOLVES_NUMBER) map (_ => WolfView())
     factorsImageViews foreach (i => insertFactorImage(i, i.getId))
   }
 
@@ -99,5 +104,18 @@ class FactorsPanelController(
     () => SimulationHistory.introduceFactor(),
     () => SimulationHistory.removeFactor()
   )
+
+  override def showWolvesEating(): Unit = {
+    if (wolfCheckBox.isSelected) wolvesView foreach (w => {
+      baseAppController --> { b => b.simulationPane.children.add(w.imageView) }
+      w.play()
+    })
+  }
+
+  override def removeWolves(): Unit = {
+    wolvesView foreach (w => {
+      baseAppController --> { b => b.simulationPane.children.remove(w.imageView) }
+    })
+  }
 
 }

@@ -12,7 +12,6 @@ import scala.language.implicitConversions
 object Simulation {
 
   def wolvesEat: IO[Unit] = {
-    ScalaFXView.showWolves()
     val wolves = Wolves()
     SimulationHistory.getActualGeneration.population = wolves
       .applyDamage(SimulationHistory.getActualPopulation, SimulationHistory.getActualGeneration.environment.climate)
