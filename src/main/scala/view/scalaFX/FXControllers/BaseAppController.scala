@@ -59,6 +59,9 @@ sealed trait BaseAppControllerInterface {
 class BaseAppController(
     @FXML private val simulationPane: AnchorPane,
     @FXML private val chartsPane: AnchorPane,
+    @FXML private val pedigreeText: Text,
+    @FXML private val simulationPane: AnchorPane,
+    @FXML private val chartsPane: AnchorPane,
     @FXML private val mutationChoicePane: AnchorPane,
     @FXML private val factorChoicePane: AnchorPane,
     @FXML private val startButton: Button,
