@@ -100,10 +100,13 @@ object ScalaFxViewConstants {
     else SCREEN_BOUNDS.getHeight - HEIGHT_SCREEN_BOUND
 
   /** Bunny panel inside application window width */
-  val PREFERRED_BUNNY_PANEL_WIDTH: Int = (SCENE_WIDTH * BUNNY_PANEL_PERCENTUAL_WIDTH).toInt
+  val PREFERRED_SIMULATION_PANEL_WIDTH: Int = (SCENE_WIDTH * BUNNY_PANEL_PERCENTUAL_WIDTH).toInt
 
   /** Bunny panel inside application window height */
   val PREFERRED_BUNNY_PANEL_HEIGHT: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_HEIGTH).toInt
+
+  /** Wolf panel zone inside application window height */
+  val PREFERRED_WOLF_PANEL_HEIGHT: Int = PREFERRED_BUNNY_PANEL_HEIGHT - 100
 
   /** Bunny panel bound for the sky zone */
   val PANEL_SKY_ZONE: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_SKY_ZONE).toInt
