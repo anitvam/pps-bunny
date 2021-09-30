@@ -198,7 +198,7 @@ class BaseAppController(
       ).chartPane
       setFitParent(pedigreeChart)
       chartsPane.children = pedigreeChart
-    } else chartsPane.children = ObservableBuffer.empty
+    } else chartsPane.children = pedigreeText
 
   override def showProportionsChart(): Unit = chartsPane.children = proportionsChartPane.get
 
