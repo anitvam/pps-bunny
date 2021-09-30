@@ -65,4 +65,7 @@ object SimulationHistory {
    *   the climate to set into the Environment
    */
   def changeEnvironmentClimate(climate: Climate): Unit = getActualGeneration.environment.climate = climate
+
+  def introduceFactor(): Unit = println("Introdotto un fattore")
+  def removeFactor(): Unit = println("Rimosso un fattore")
 }
