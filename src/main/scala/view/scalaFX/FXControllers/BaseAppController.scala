@@ -107,11 +107,7 @@ class BaseAppController(
     simulationPane.background = SummerImage()
     populationChart = Some(PopulationChart(PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH))
     showPopulationChart()
-
-//    chartsPane.children =  PopulationChart.chart(325, 500)
   }
-
-  override def showPopulationChart(): Unit = populationChart --> { c => chartsPane.children = c.chart }
 
   def reset(): Unit = {
     startButton.onAction = _ => {
@@ -183,6 +179,8 @@ class BaseAppController(
       factorsPanelController --> { _.removeWolves() }
     }
   }
+
+  override def showPopulationChart(): Unit = populationChart --> { c => chartsPane.children = c.chart }
 
   override def showPedigreeChart(): Unit =
     if (selectedBunny ?) {
