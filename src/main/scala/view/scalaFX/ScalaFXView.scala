@@ -2,20 +2,20 @@ package view.scalaFX
 
 import controller.ScalaFXLauncher.stage
 import javafx.stage.Screen
-import javafx.{scene => jfxs}
+import javafx.{ scene => jfxs }
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
 import scalafx.application.JFXApp3.PrimaryStage
 import scalafx.application.Platform
 import scalafx.scene.Scene
-import scalafx.scene.image.{Image, ImageView}
+import scalafx.scene.image.{ Image, ImageView }
 import scalafx.scene.layout.AnchorPane
 import scalafx.stage.Stage
 import util.PimpScala._
 import view._
 import view.scalaFX.FXControllers.BaseAppControllerInterface
-import view.scalaFX.ScalaFxViewConstants.{SCENE_HEIGHT, SCENE_WIDTH}
+import view.scalaFX.ScalaFxViewConstants.{ SCENE_HEIGHT, SCENE_WIDTH }
 import view.scalaFX.components.BunnyView
 import view.scalaFX.utilities.FxmlUtils
 
@@ -70,14 +70,14 @@ object ScalaFxViewConstants {
   private val BUNNY_PANEL_PERCENTUAL_HEIGTH = 0.25
   private val BUNNY_PANEL_PERCENTUAL_SKY_ZONE = 0.1
 
-  /** Size of the bunny picture */
-  val PREFERRED_BUNNY_SIZE = 80
-
   /** Normal Jump height */
   val NORMAL_JUMP_HEIGHT = 40
 
   /** High Jump height */
   val HIGH_JUMP_HEIGHT = 80
+
+  /** Number of wolves to show */
+  val WOLVES_NUMBER = 5
 
   /** Random bound on jump delay */
   val RANDOM_BUNNY_JUMP_DELAY = 5000
@@ -96,10 +96,13 @@ object ScalaFxViewConstants {
     else SCREEN_BOUNDS.getHeight - HEIGHT_SCREEN_BOUND
 
   /** Bunny panel inside application window width */
-  val PREFERRED_BUNNY_PANEL_WIDTH: Int = (SCENE_WIDTH * BUNNY_PANEL_PERCENTUAL_WIDTH).toInt
+  val PREFERRED_SIMULATION_PANEL_WIDTH: Int = (SCENE_WIDTH * BUNNY_PANEL_PERCENTUAL_WIDTH).toInt
 
   /** Bunny panel inside application window height */
   val PREFERRED_BUNNY_PANEL_HEIGHT: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_HEIGTH).toInt
+
+  /** Wolf panel zone inside application window height */
+  val PREFERRED_WOLF_PANEL_HEIGHT: Int = PREFERRED_BUNNY_PANEL_HEIGHT - 100
 
   /** Bunny panel bound for the sky zone */
   val PANEL_SKY_ZONE: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_SKY_ZONE).toInt
