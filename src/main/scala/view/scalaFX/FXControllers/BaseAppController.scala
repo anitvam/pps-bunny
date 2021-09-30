@@ -46,7 +46,7 @@ sealed trait BaseAppControllerInterface {
   def updateView(bunnies: Population, generationPhase: GenerationPhase): Unit
 
   /** Method that shows wolves eating into the GUI */
-  def showWolvesEating(numberOfWolves: Int): Unit
+  def showWolvesEating(): Unit
 
   /**
    * Method that change background on the simulationPane
@@ -181,8 +181,8 @@ class BaseAppController(
     }
   }
 
-  def showWolvesEating(numberOfWolves: Int): Unit = {
-    val wolvesView = (1 to numberOfWolves) map (_ => WolfView())
+  override def showWolvesEating(): Unit = {
+    val wolvesView = (1 to 5) map (_ => WolfView())
     wolvesView foreach (w => {
       simulationPane.children.add(w.imageView)
       w.play()
