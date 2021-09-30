@@ -115,7 +115,7 @@ object ScalaFxViewConstants {
     val MAX_TREE_BUNNY_SIZE: Int = 80
 
     /** Proportion constants to resize the view of the info size in the tree depending on the bunny size */
-    val TREE_INFO_PROPORTION: Int = 4
+    val TREE_INFO_PROPORTION: Int = 3
 
     /** Proportion constants to resize the plus size in the tree depending on the bunny size */
     val TREE_PLUS_PROPORTION: Int = 2

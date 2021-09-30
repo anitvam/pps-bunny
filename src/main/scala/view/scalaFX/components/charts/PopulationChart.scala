@@ -7,9 +7,9 @@ import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
 import scalafx.geometry.Side
-import scalafx.scene.chart.{ LineChart, NumberAxis, XYChart }
+import scalafx.scene.chart.{LineChart, NumberAxis, XYChart}
 import util.PimpScala.RichOption
-import view.scalaFX.components.charts.LineChartComponentFactory.{ createEmptySeries, createXYChartData }
+import view.scalaFX.components.charts.LineChartComponentFactory.{createEmptySeries, createXYChartData}
 import view.scalaFX.components.charts.PopulationChartDataType._
 import view.scalaFX.utilities.PimpScalaFXChartLibrary._
 
