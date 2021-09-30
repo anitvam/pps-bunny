@@ -16,13 +16,14 @@ import scala.language.implicitConversions
 /** Enumeration for all the bunny images */
 object BunnyImage extends Enumeration {
 
+  case class BunnyImage(normalImage: Image, jumpingImage: Image, phenotype: Phenotype) extends super.Val
+  import scala.language.implicitConversions
+  implicit def valueToBunnyImage(x: Value): BunnyImage = x.asInstanceOf[BunnyImage]
   val BrownHighEarsLongTeethNormalFur: BunnyImage = BunnyImage(
     new Image("/img/bunnies/brown/high_ears/long_teeth/normal_fur/normal.png"),
     new Image("/img/bunnies/brown/high_ears/long_teeth/normal_fur/jumping.png"),
     Phenotype(Map(FUR_COLOR -> BROWN_FUR, EARS -> HIGH_EARS, TEETH -> LONG_TEETH, FUR_LENGTH -> SHORT_FUR))
   )
-  import scala.language.implicitConversions
-  implicit def valueToBunnyImage(x: Value): BunnyImage = x.asInstanceOf[BunnyImage]
   val BrownHighEarsLongTeethThickFur: BunnyImage = BunnyImage(
     new Image("/img/bunnies/brown/high_ears/long_teeth/thick_fur/normal.png"),
     new Image("/img/bunnies/brown/high_ears/long_teeth/thick_fur/jumping.png"),
@@ -98,9 +99,6 @@ object BunnyImage extends Enumeration {
     new Image("/img/bunnies/white/long_ears/normal_teeth/thick_fur/jumping.png"),
     Phenotype(Map(FUR_COLOR -> WHITE_FUR, EARS -> LOW_EARS, TEETH -> SHORT_TEETH, FUR_LENGTH -> LONG_FUR))
   )
-
-  case class BunnyImage(normalImage: Image, jumpingImage: Image, phenotype: Phenotype) extends super.Val
-
 }
 
 /** Enumeration that describes the type of a Bunny image */

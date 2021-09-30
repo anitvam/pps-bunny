@@ -47,20 +47,20 @@ class ChartChoiceController(
   override def handleBunnyClick(): Unit =
     if (pedigreeRadioButton.selected.value) baseAppController --> { _.showPedigreeChart() }
 
-  def showPopulationChart(): Unit = showChart(legendVisibility = false, _.showPopulationChart(), ChartType.Population)
-
-  def showProportionsChart(): Unit =
-    showChart(legendVisibility = false, _.showProportionsChart(), ChartType.Proportions)
-
   private def showChart(
-      legendVisibility: Boolean,
-      chartToShow: BaseAppControllerInterface => Unit,
-      chartType: ChartType
-  ) {
+                         legendVisibility: Boolean,
+                         chartToShow: BaseAppControllerInterface => Unit,
+                         chartType: ChartType
+                       ) : Unit = {
     legendBox.setVisible(legendVisibility)
     this.activeChart = chartType
     baseAppController --> { chartToShow }
   }
+
+  def showPopulationChart(): Unit = showChart(legendVisibility = false, _.showPopulationChart(), ChartType.Population)
+
+  def showProportionsChart(): Unit =
+    showChart(legendVisibility = false, _.showProportionsChart(), ChartType.Proportions)
 
   def showPedigreeChart(): Unit = showChart(legendVisibility = true, _.showPedigreeChart(), ChartType.Pedigree)
 }
