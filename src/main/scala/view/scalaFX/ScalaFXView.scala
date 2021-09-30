@@ -58,11 +58,6 @@ object ScalaFXView extends View {
   }
 
   override def handleBunnyClick(bunny: BunnyView): Unit = baseAppController --> { _.handleBunnyClick(bunny) }
-
-   def showWolves(numberOfWolves: Int): Unit =
-    Platform.runLater{
-      baseAppController --> {_.showWolvesEating(numberOfWolves)}
-    }
 }
 
 object ScalaFxViewConstants {

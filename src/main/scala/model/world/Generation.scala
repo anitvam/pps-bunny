@@ -27,9 +27,6 @@ trait Generation {
   
   /**@return the current number of alive bunnies*/
   def getAliveBunniesNumber:Int = livingPopulation.size
-
-  def factors: List[String]
-  def factors_=(factor: List[String]): Unit
 }
 
 object Generation {
@@ -42,8 +39,7 @@ object Generation {
   private class GenerationImpl(
       override val environment: Environment,
       override var population: Population,
-      override var isEnded: Boolean = false,
-      override var factors: List[String] = List()
+      override var isEnded: Boolean = false
   ) extends Generation
 
 }

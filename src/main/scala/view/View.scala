@@ -25,6 +25,4 @@ trait View {
    * @param bunny the clicked bunny
    */
   def handleBunnyClick(bunny: BunnyView): Unit
-
-  def showWolves(numberOfWolves: Int): Unit
 }

@@ -60,7 +60,7 @@ object WolfView {
 
     /** Method that checks the actual direction of the bunny and update the orientation of its image */
     private def checkDirection(): Unit = {
-      if (positionX + 70 >= PREFERRED_BUNNY_PANEL_WIDTH) {
+      if (positionX + 40 >= PREFERRED_BUNNY_PANEL_WIDTH) {
         direction = Left
       } else if (positionX - 40 < 0) {
         direction = Right

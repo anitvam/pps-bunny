@@ -1,13 +1,10 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-import engine.{ DisturbingFactors, SimulationHistory }
 import javafx.fxml.FXML
 import javafx.scene.{ layout => jfxs }
-import model.world.Environment.Factors
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
-import model.world.{ Climate, Summer, Winter }
 import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
 import scalafx.scene.control.{ Button, Label }
@@ -19,7 +16,7 @@ import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.components.{ BunnyView, WolfView }
 import view.scalaFX.utilities.EnvironmentImageUtils._
-import view.scalaFX.utilities.{ Chart, SummerImage, WinterImage }
+import view.scalaFX.utilities.{ Chart, SummerImage }
 import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
 import view.scalaFX.utilities._
 import scala.language.postfixOps
@@ -183,13 +180,11 @@ class BaseAppController(
   }
 
   def showWolvesEating(numberOfWolves: Int): Unit = {
-
     val wolvesView = (1 to numberOfWolves) map (_ => WolfView())
     wolvesView foreach (w => {
       simulationPane.children.add(w.imageView)
       w.play()
     })
-
   }
 
   override def showPopulationChart(): Unit = populationChart --> { c => chartsPane.children = c.chart }
