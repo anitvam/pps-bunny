@@ -1,24 +1,25 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-import engine.SimulationConstants.{FOOD_PHASE, START_PHASE, WOLVES_PHASE}
+import engine.SimulationConstants.{ FOOD_PHASE, START_PHASE, WOLVES_PHASE }
 import javafx.fxml.FXML
-import javafx.scene.{layout => jfxs}
+import javafx.scene.{ layout => jfxs }
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
-import scalafx.scene.control.{Button, Label}
+import scalafx.scene.control.{ Button, Label }
 import scalafx.scene.layout.AnchorPane
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
-import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
+import view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH }
 import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.utilities.EnvironmentImageUtils._
-import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
-import view.scalaFX.utilities.{SummerImage, _}
+import view.scalaFX.utilities.SummerImage
+import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
+import view.scalaFX.utilities._
 
 import scala.language.postfixOps
 
@@ -104,7 +105,7 @@ class BaseAppController(
 
   private def initializeView(): Unit = {
     // Load the default environment background
-    simulationPane.background = SummerImage()
+    factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
     populationChart = Some(PopulationChart(PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH))
     showPopulationChart()
   }
