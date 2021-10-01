@@ -3,7 +3,7 @@ package view.scalaFX.FXControllers
 import controller.Controller
 import engine.SimulationHistory
 import javafx.fxml.FXML
-import model.world.Factor
+import model.world.{ Factor, HighFoodFactor, LimitedFoodFactor, ToughFoodFactor }
 import scalafx.scene.control.CheckBox
 import scalafx.scene.image.{ Image, ImageView }
 import scalafxml.core.macros.sfxml
@@ -79,7 +79,7 @@ class FactorsPanelController(
   def onToughFoodClick(): Unit = {
     onFactorClick(
       toughFoodCheckBox,
-      Factor.FoodFactorImpl(isHighFood = false, isLimitedFood = false, isToughFood = true)
+      ToughFoodFactor()
     )
     manageEnvironmentBackgroundChange()
   }
@@ -87,7 +87,7 @@ class FactorsPanelController(
   def onHighFoodClick(): Unit = {
     onFactorClick(
       highFoodCheckBox,
-      Factor.FoodFactorImpl(isHighFood = true, isLimitedFood = false, isToughFood = false)
+      HighFoodFactor()
     )
     manageEnvironmentBackgroundChange()
   }
@@ -95,7 +95,7 @@ class FactorsPanelController(
   def onLimitedFoodClick(): Unit = {
     onFactorClick(
       limitedFoodCheckBox,
-      Factor.FoodFactorImpl(isHighFood = false, isLimitedFood = true, isToughFood = false)
+      LimitedFoodFactor()
     )
     manageEnvironmentBackgroundChange()
   }

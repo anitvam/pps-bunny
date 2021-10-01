@@ -47,14 +47,14 @@ object SimulationConstants {
   val MAX_GENEALOGICAL_TREE_GENERATIONS: Int = 4
 
   /** Food factors damage to bunnies */
-  val FOOD_FACTOR_NORMAL_DAMAGE = 0.3
-  val FOOD_FACTOR_LOW_DAMAGE = 0.15
+  val FOOD_FACTOR_NORMAL_DAMAGE = 0.8
+  val FOOD_FACTOR_LOW_DAMAGE = 0.6
 
   /** Unfriendly climate damage to bunnies */
-  val UNFRIENDLY_CLIMATE_DAMAGE = 0.3
+  val UNFRIENDLY_CLIMATE_DAMAGE = 0.6
 
   /** Wolf damages to bunnies */
-  val WOLF_LOW_DAMAGE = 0.2
-  val WOLF_MEDIUM_DAMAGE = 0.3
-  val WOLF_HIGH_DAMAGE = 0.4
+  val WOLF_LOW_DAMAGE = 0.6
+  val WOLF_MEDIUM_DAMAGE = 0.7
+  val WOLF_HIGH_DAMAGE = 0.8
 }

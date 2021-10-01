@@ -4,7 +4,10 @@ import engine.SimulationHistory.getActualGeneration
 import model.genome.KindsUtils
 import model.mutation.Mutation
 import model.world.Environment.{ Factors, Mutations }
-import model.world.Factor.{ FoodFactorImpl, Wolves }
+import model.world.Factor._
+import model.world.FactorsUtils.FactorTypes._
+
+import scala.::
 
 /** Environment of a Generation */
 trait Environment {
@@ -61,33 +64,21 @@ object Environment {
       override var mutations: Mutations = List()
   ) extends Environment {
 
-    override def introduceFactor(factor: Factor): Unit = factor match {
-      case FoodFactorImpl(isHighFood, isLimitedFood, isToughFood) if factors.exists(_.isInstanceOf[FoodFactor]) =>
-        val previous: FoodFactor = factors.filter(_.isInstanceOf[FoodFactor]).head.asInstanceOf[FoodFactor]
-        factors = factors.filter(!_.isInstanceOf[FoodFactor])
-        factors = FoodFactorImpl(
-          isHighFood || previous.isHighFood,
-          isLimitedFood || previous.isLimitedFood,
-          isToughFood || previous.isToughFood
-        ) :: factors
+    override def introduceFactor(factor: Factor): Unit = factor.factorType match {
+      case FoodFactorKind if factors.exists(_.factorType == FoodFactorKind) =>
+        val previous: FoodFactor = factors.filter(_.factorType == FoodFactorKind).head.asInstanceOf[FoodFactor]
+        factors = factors.filter(_.factorType != factor.factorType)
+        factors = previous.combineWith(factor.asInstanceOf[FoodFactor]) :: factors
       case _ => factors = factor :: factors
+
     }
 
-    override def removeFactor(factor: Factor): Unit = factor match {
-      case FoodFactorImpl(false, false, false) => factors = factors.filter(!_.isInstanceOf[FoodFactor])
-      case FoodFactorImpl(isHighFood, isLimitedFood, isToughFood) =>
-        val previous: FoodFactor = factors.filter(_.isInstanceOf[FoodFactor]).head.asInstanceOf[FoodFactor]
-        factors = factors.filter(!_.isInstanceOf[FoodFactor])
-        if (isHighFood) factors = FoodFactorImpl(
-          isHighFood = false,
-          isLimitedFood = previous.isLimitedFood,
-          isToughFood = previous.isToughFood
-        ) :: factors
-        if (isToughFood)
-          factors = FoodFactorImpl(previous.isHighFood, previous.isLimitedFood, isToughFood = false) :: factors
-        if (isLimitedFood)
-          factors = FoodFactorImpl(previous.isHighFood, isLimitedFood = false, previous.isToughFood) :: factors
-      case _ => factors = factors.filter(_ != factor)
+    override def removeFactor(factor: Factor): Unit = factor.factorType match {
+      case FoodFactorKind if factor.asInstanceOf[FoodFactor].isCombined =>
+        val previous: FoodFactor = factors.filter(_.factorType == FoodFactorKind).head.asInstanceOf[FoodFactor]
+        factors = factors.filter(_.factorType != factor.factorType)
+        factors = previous.removeSubFactor(factor.asInstanceOf[FoodFactor]) :: factors
+      case _ => factors = factors.filter(_.factorType != factor.factorType)
     }
 
     /** Introduce a new mutation */
