@@ -21,6 +21,7 @@ trait WolfView extends AnimalView {
 object WolfView {
 
   def apply(factorsPanelController: Option[FactorsPanelControllerInterface]): WolfView = {
+
     val newX = Random.nextInt(PREFERRED_SIMULATION_PANEL_WIDTH - PREFERRED_SIMULATION_PANEL_BORDER)
     val newY = Random.nextInt(PREFERRED_WOLF_PANEL_HEIGHT) + PANEL_SKY_ZONE
 
