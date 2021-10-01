@@ -124,8 +124,8 @@ class BaseAppController(
     startButton.setVisible(true)
   }
 
-  def reset(): Unit = {
-    speedButton.onAction = _ => {
+  override def reset(): Unit = {
+    startButton.onAction = _ => {
       Controller.reset()
       this.resetSimulationPanel()
       selectedBunny = Option.empty

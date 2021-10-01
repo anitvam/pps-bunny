@@ -30,6 +30,7 @@ sealed trait FactorsPanelControllerInterface {
    * @param wolfImage the image of the wolf to be removed from the panel
    */
   def removeWolf(wolfImage: ImageView): Unit
+
 }
 
 @sfxml

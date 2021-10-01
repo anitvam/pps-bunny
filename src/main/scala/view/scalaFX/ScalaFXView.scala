@@ -78,5 +78,3 @@ object ScalaFXView extends View {
   }
 
 }
-
-
