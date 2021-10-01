@@ -342,7 +342,7 @@ object FactorsUtils {
    *   the updated population
    */
   def applyCustomDamage(bunnies: Population, percentage: Double): Population = {
-    Random.shuffle(bunnies) take (bunnies.length * percentage).toInt foreach { _.alive = false }
+    Random.shuffle(bunnies) take (bunnies.length * percentage).round.toInt foreach { _.alive = false }
     bunnies
   }
 
