@@ -31,3 +31,5 @@ class InconsistentMutatedAlleleException
     extends ExplainedException(
       "Mutated allele EXCEPTION: the allele has isMutated as true, but the kind of the allele is the base one"
     )
+
+class InvalidFoodFactor extends ExplainedException("The specified Food Factor is invalid for this operation")
