@@ -81,9 +81,10 @@ sealed trait FoodFactor extends Factor {
     val bunniesSplitByToughFoodGene = Bunny.splitBunniesByGene(toughFoodDamagedGene, bunnies)
 
     (isHighFood, isLimitedFood, isToughFood) match {
-      case (true, false, false) => super.applyDamage(bunniesSplitByHighFoodGene._1, climate)
-      case (false, true, false) => super.applyDamage(bunnies, climate)
-      case (false, false, true) => super.applyDamage(bunniesSplitByToughFoodGene._1, climate)
+      case (false, false, false) =>
+      case (true, false, false)  => super.applyDamage(bunniesSplitByHighFoodGene._1, climate)
+      case (false, true, false)  => super.applyDamage(bunnies, climate)
+      case (false, false, true)  => super.applyDamage(bunniesSplitByToughFoodGene._1, climate)
       case (true, true, false) =>
         super.applyDamage(bunniesSplitByHighFoodGene._1, climate)
         applyCustomDamage(bunniesSplitByHighFoodGene._2, lowDamage)
