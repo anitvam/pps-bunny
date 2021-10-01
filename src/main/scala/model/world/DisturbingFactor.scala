@@ -97,7 +97,7 @@ case class HighFoodFactor(override val afflictedGene: GeneKind = Genes.JUMP, ove
 
 }
 
-case class ToughFoodFactor(override val afflictedGene: GeneKind = Genes.JUMP, override val isCombined: Boolean = false)
+case class ToughFoodFactor(override val afflictedGene: GeneKind = Genes.TEETH, override val isCombined: Boolean = false)
     extends BasicFactor
     with FoodFactor
     with FactorWithOneGene {
@@ -233,6 +233,7 @@ case class LimitedHighToughFoodFactor(override val isCombined: Boolean = true) e
     case _: LimitedFoodFactor => HighToughFoodFactor()
     case _: ToughFoodFactor   => LimitedHighFoodFactor()
     case _: HighFoodFactor    => LimitedToughFoodFactor()
+    case _                    => throw new InvalidFoodFactor()
   }
 
 }

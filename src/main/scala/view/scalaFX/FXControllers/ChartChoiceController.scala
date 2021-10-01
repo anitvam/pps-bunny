@@ -48,10 +48,10 @@ class ChartChoiceController(
     if (pedigreeRadioButton.selected.value) baseAppController --> { _.showPedigreeChart() }
 
   private def showChart(
-                         legendVisibility: Boolean,
-                         chartToShow: BaseAppControllerInterface => Unit,
-                         chartType: ChartType
-                       ) : Unit = {
+      legendVisibility: Boolean,
+      chartToShow: BaseAppControllerInterface => Unit,
+      chartType: ChartType
+  ): Unit = {
     legendBox.setVisible(legendVisibility)
     this.activeChart = chartType
     baseAppController --> { chartToShow }
