@@ -1,7 +1,7 @@
 package view.scalaFX.components
 
 import engine.SimulationConstants.PhasesConstants.WOLVES_PHASE
-import scalafx.animation.{AnimationTimer, KeyFrame}
+import scalafx.animation.AnimationTimer
 import scalafx.scene.image.{Image, ImageView}
 import view.scalaFX.FXControllers.FactorsPanelControllerInterface
 import view.scalaFX.ScalaFXConstants.Wolf.PREFERRED_WOLF_PANEL_HEIGHT
@@ -17,18 +17,6 @@ trait WolfView extends AnimalView {
 
   /** Reference to the factor panel controller entity */
   val factorsPanelController: Option[FactorsPanelControllerInterface]
-
-  /** Type annotation for a Seq of KeyFrames */
-  override type AnimationFrames = Seq[KeyFrame]
-
-  /** The image of the disturbing factor displayed on the GUI */
-  val imageView: ImageView
-
-  /** Starts the wolves factor animation */
-  def play(): Unit
-
-  /** Stops the wolves factor animation */
-  def stop(): Unit
 
 }
 
@@ -68,8 +56,13 @@ object WolfView {
 
     private val timer: AnimationTimer = AnimationTimer(_ => {
       if ( lastTime <= WOLVES_PHASE * 1000 ) {
-        checkDirection()
-        moveHorizontally()
+        checkDirection(
+          positionX + imageView.getFitWidth/2 >= PREFERRED_SIMULATION_PANEL_WIDTH - PREFERRED_SIMULATION_PANEL_BORDER,
+          positionX - imageView.getFitWidth/2 < 0
+        )
+        moveHorizontally(
+          movingSpace
+        )
         imageView.x = positionX
         lastTime += 1
       } else stop()
@@ -83,23 +76,6 @@ object WolfView {
       lastTime = 0L
 
 //      factorsPanelController.get.notifyEndWolvesAnimation()
-    }
-
-    /** Method that checks the actual direction of the wolves and update the orientation of its image */
-    private def checkDirection(): Unit = {
-      if (positionX + imageView.getFitWidth/2 >= PREFERRED_SIMULATION_PANEL_WIDTH - PREFERRED_SIMULATION_PANEL_BORDER) {
-        direction = Left
-      } else if (positionX - imageView.getFitWidth/2 < 0) {
-        direction = Right
-      }
-      imageView.setScaleX(scaleXValue(direction))
-    }
-
-
-    /** Method that moves that update the wolves position according to wolves actual Direction */
-    private def moveHorizontally(): Unit = direction match {
-      case Right => positionX = positionX + movingSpace
-      case Left  => positionX = positionX - movingSpace
     }
 
   }

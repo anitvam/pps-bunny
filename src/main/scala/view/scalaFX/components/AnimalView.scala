@@ -3,6 +3,7 @@ package view.scalaFX.components
 import scalafx.animation.KeyFrame
 import scalafx.scene.image.ImageView
 import view.scalaFX.utilities.Direction.{ scaleXValue, Direction, Left, Right }
+import view.scalaFX.utilities.Direction.{Direction, Left, Right, scaleXValue}
 
 abstract class AnimalView {
 
@@ -24,14 +25,13 @@ abstract class AnimalView {
 
   /** Stops the animation */
   def stop(): Unit
+  
 
   /**
    * Method that checks the actual direction of the animal and update the orientation of its image according to the
    * specific condition
-   * @param conditionForChangingDirectionLeft:
-   *   the condition when changing direction to Left
-   * @param conditionForChangingDirectionRight:
-   *   the condition when changing direction to Right
+   * @param conditionForChangingDirectionLeft: the condition when changing direction to Left
+   * @param conditionForChangingDirectionRight: the condition when changing direction to Right
    */
   def checkDirection(conditionForChangingDirectionLeft: Boolean, conditionForChangingDirectionRight: Boolean): Unit = {
     if (conditionForChangingDirectionLeft) direction = Left
@@ -40,10 +40,9 @@ abstract class AnimalView {
     imageView.setScaleX(scaleXValue(direction))
   }
 
-  /**
-   * Method that moves the animal position according to animal actual Direction
-   * @param movingSpace:
-   *   the value of the moving space for the animal
+
+  /** Method that moves the animal position according to animal actual Direction
+   * @param movingSpace: represent the value of the moving space for the animal
    */
   def moveHorizontally(movingSpace: Double): Unit = direction match {
     case Right => positionX += movingSpace
