@@ -19,7 +19,7 @@ import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.components.{ BunnyView, WolfView }
 import view.scalaFX.utilities.EnvironmentImageUtils._
-import view.scalaFX.utilities.{SummerImage }
+import view.scalaFX.utilities.SummerImage
 import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
 import view.scalaFX.utilities._
 
@@ -107,7 +107,7 @@ class BaseAppController(
 
   private def initializeView(): Unit = {
     // Load the default environment background
-    simulationPane.background = SummerImage()
+    factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
     populationChart =
       Some(PopulationChart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH))
     showPopulationChart()
