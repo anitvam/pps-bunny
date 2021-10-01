@@ -54,7 +54,7 @@
 
 .restart-button{
     -fx-background-image: url("/img/restart.png");
-    -fx-background-size: 3em 3em;
+    -fx-background-size: 2em 2em;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
 }
