@@ -2,7 +2,7 @@ package view.scalaFX.components
 
 import scalafx.animation.{AnimationTimer, KeyFrame}
 import scalafx.scene.image.{Image, ImageView}
-import view.scalaFX.ScalaFXConstants.{PANEL_SKY_ZONE, PREFERRED_SIMULATION_PANEL_WIDTH, PREFERRED_WOLF_PANEL_HEIGHT}
+import view.scalaFX.ScalaFXConstants.{PANEL_SKY_ZONE, PREFERRED_SIMULATION_PANEL_BORDER, PREFERRED_SIMULATION_PANEL_WIDTH, PREFERRED_WOLF_PANEL_HEIGHT}
 import view.scalaFX.utilities.Direction
 import view.scalaFX.utilities.Direction._
 
@@ -52,6 +52,9 @@ object WolfView {
   ) extends WolfView {
     private val SPEED = 200
     private val movingSpace = PREFERRED_SIMULATION_PANEL_WIDTH / SPEED
+
+    private var lastTime = 0L
+
     private val timer: AnimationTimer = AnimationTimer(t => {
       if (lastTime > 0) {
         checkDirection()
@@ -60,15 +63,14 @@ object WolfView {
       }
       lastTime = t
     })
-    private var lastTime = 0L
 
     override def play(): Unit = timer.start()
 
     /** Method that checks the actual direction of the bunny and update the orientation of its image */
     private def checkDirection(): Unit = {
-      if (positionX + 40 >= PREFERRED_SIMULATION_PANEL_WIDTH) {
+      if (positionX + imageView.getFitWidth/2 >= PREFERRED_SIMULATION_PANEL_WIDTH - PREFERRED_SIMULATION_PANEL_BORDER) {
         direction = Left
-      } else if (positionX - 40 < 0) {
+      } else if (positionX - imageView.getFitWidth/2 < 0) {
         direction = Right
       }
       imageView.setScaleX(scaleXValue(direction))

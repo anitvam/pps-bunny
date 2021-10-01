@@ -46,6 +46,8 @@ object ScalaFXConstants {
   /** Wolf panel zone inside application window height */
   val PREFERRED_WOLF_PANEL_HEIGHT: Int = PREFERRED_BUNNY_PANEL_HEIGHT - 100
 
+  val PREFERRED_SIMULATION_PANEL_BORDER: Int = 70
+
   /** Bunny panel bound for the sky zone */
   val PANEL_SKY_ZONE: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_SKY_ZONE).toInt
 
