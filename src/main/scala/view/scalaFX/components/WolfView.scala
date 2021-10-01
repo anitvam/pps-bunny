@@ -27,7 +27,7 @@ trait WolfView {
 object WolfView {
 
   def apply(): WolfView = {
-    val newX = Random.nextInt(PREFERRED_SIMULATION_PANEL_WIDTH)
+    val newX = Random.nextInt(PREFERRED_SIMULATION_PANEL_WIDTH - PREFERRED_SIMULATION_PANEL_BORDER)
     val newY = Random.nextInt(PREFERRED_WOLF_PANEL_HEIGHT) + PANEL_SKY_ZONE
 
     WolfViewImpl(
