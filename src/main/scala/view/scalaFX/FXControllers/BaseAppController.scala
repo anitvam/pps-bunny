@@ -3,21 +3,20 @@ package view.scalaFX.FXControllers
 import controller.Controller
 import engine.SimulationConstants.PhasesConstants._
 import javafx.fxml.FXML
-import javafx.scene.{ layout => jfxs }
+import javafx.scene.{layout => jfxs}
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
-import scalafx.scene.control.{ Button, Label }
-import scalafx.scene.layout.{ AnchorPane, Background }
+import scalafx.scene.control.{Button, Label}
+import scalafx.scene.layout.{AnchorPane, Background}
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
+import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
 import view.scalaFX.components.{BunnyView, ClockView}
-import view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH }
-import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
-import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
+import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
 import view.scalaFX.utilities._
 
 import scala.language.{implicitConversions, postfixOps}
@@ -118,6 +117,13 @@ class BaseAppController(
     showPopulationChart()
   }
 
+  private def resetSimulationPanel(): Unit = {
+    bunnyViews = Seq.empty
+    simulationPane.children = Seq.empty
+    generationLabel.text = ""
+    startButton.setVisible(true)
+  }
+
   def reset(): Unit = {
     speedButton.onAction = _ => {
       Controller.reset()
@@ -136,13 +142,6 @@ class BaseAppController(
     }
     speedButton.text = ""
     speedButton.styleClass += "restart-button"
-  }
-
-  private def resetSimulationPanel(): Unit = {
-    bunnyViews = Seq.empty
-    simulationPane.children = Seq.empty
-    generationLabel.text = ""
-    startButton.setVisible(true)
   }
 
   /** Handler of Start button click */

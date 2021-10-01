@@ -4,7 +4,7 @@ import controller.Controller
 import javafx.fxml.FXML
 import model.world.disturbingFactors._
 import scalafx.scene.control.CheckBox
-import scalafx.scene.image.{ Image, ImageView }
+import scalafx.scene.image.{Image, ImageView}
 import scalafxml.core.macros.sfxml
 import util.PimpScala._
 import view.scalaFX.ScalaFXConstants.Wolf.WOLVES_NUMBER
