@@ -5,6 +5,7 @@ import controller.Controller
 import engine.SimulationHistory._
 import model.world.Factor._
 import model.world.FoodFactor
+import model.world.FactorsUtils.FactorTypes._
 import model.world.GenerationsUtils.GenerationPhase
 import view.scalaFX.ScalaFXView
 
@@ -12,23 +13,11 @@ import scala.language.implicitConversions
 
 object Simulation {
 
-  def wolvesEat: IO[Unit] = {
-    val wolvesFactor = getActualGeneration.environment.factors.filter(_.isInstanceOf[Wolves])
-    if (wolvesFactor.nonEmpty) getActualGeneration.population =
-      wolvesFactor.head.applyDamage(getActualPopulation, getActualGeneration.environment.climate)
-  }
+  def wolvesEat: IO[Unit] = applyFactorDamage(WolvesFactorKind)
 
-  def bunniesEat: IO[Unit] = {
-    val foodFactor = getActualGeneration.environment.factors.filter(_.isInstanceOf[FoodFactor])
-    if (foodFactor.nonEmpty) getActualGeneration.population =
-      foodFactor.head.applyDamage(getActualPopulation, getActualGeneration.environment.climate)
-  }
+  def bunniesEat: IO[Unit] = applyFactorDamage(FoodFactorKind)
 
-  def applyTemperatureDamage: IO[Unit] = {
-    val temperatureFactor = getActualGeneration.environment.factors.filter(_.isInstanceOf[UnfriendlyClimate])
-    if (temperatureFactor.nonEmpty) getActualGeneration.population =
-      temperatureFactor.head.applyDamage(getActualPopulation, getActualGeneration.environment.climate)
-  }
+  def applyTemperatureDamage: IO[Unit] = applyFactorDamage(UnfriendlyClimateFactorKind)
 
   def updateView(generationPhase: GenerationPhase): IO[Unit] = {
     ScalaFXView.updateView(generationPhase, getActualPopulation)
@@ -44,4 +33,11 @@ object Simulation {
   }
 
   implicit def unitToIO(exp: => Unit): IO[Unit] = IO { exp }
+
+  private def applyFactorDamage(factorKind: FactorKind): Unit = getActualGeneration.environment.factors
+    .filter(_.factorType == factorKind)
+    .foreach(factor =>
+      getActualGeneration.population = factor.applyDamage(getActualPopulation, getActualGeneration.environment.climate)
+    )
+
 }
