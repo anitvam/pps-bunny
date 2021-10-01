@@ -93,11 +93,14 @@ class ProportionsChartController(
     val generation = SimulationHistory.history(SimulationHistory.getGenerationNumber - generationNumber)
     displayedGenerationNumber = generationNumber
     genText.text = s"Generazione $displayedGenerationNumber"
+    currentPie.title = "Fine Generazione"
     fillPieCharts(generation.population, getSelectedGeneKind)
     if (displayedGenerationNumber == 0) backBtn.disable = true
     if (displayedGenerationNumber == SimulationHistory.getGenerationNumber) {
       isInHistoryMode = false
       nextBtn.disable = true
+      currentPie.title = "Attualmente"
+
     }
   }
 
