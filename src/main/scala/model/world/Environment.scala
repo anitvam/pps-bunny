@@ -74,18 +74,19 @@ object Environment {
     }
 
     override def removeFactor(factor: Factor): Unit = factor match {
+      case FoodFactorImpl(false, false, false) => factors = factors.filter(!_.isInstanceOf[FoodFactor])
       case FoodFactorImpl(isHighFood, isLimitedFood, isToughFood) =>
-        println(factors)
         val previous: FoodFactor = factors.filter(_.isInstanceOf[FoodFactor]).head.asInstanceOf[FoodFactor]
-        println(previous)
         factors = factors.filter(!_.isInstanceOf[FoodFactor])
-        if (isHighFood) FoodFactorImpl(
+        if (isHighFood) factors = FoodFactorImpl(
           isHighFood = false,
           isLimitedFood = previous.isLimitedFood,
           isToughFood = previous.isToughFood
         ) :: factors
-        if (isToughFood) FoodFactorImpl(previous.isHighFood, previous.isLimitedFood, isToughFood = false) :: factors
-        if (isLimitedFood) FoodFactorImpl(previous.isHighFood, isLimitedFood = false, previous.isToughFood) :: factors
+        if (isToughFood)
+          factors = FoodFactorImpl(previous.isHighFood, previous.isLimitedFood, isToughFood = false) :: factors
+        if (isLimitedFood)
+          factors = FoodFactorImpl(previous.isHighFood, isLimitedFood = false, previous.isToughFood) :: factors
       case _ => factors = factors.filter(_ != factor)
     }
 
