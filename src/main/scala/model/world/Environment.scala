@@ -70,10 +70,7 @@ object Environment {
           isLimitedFood || previous.isLimitedFood,
           isToughFood || previous.isToughFood
         ) :: factors
-        println("E' stato introdotto " + factors.head)
-      case _ =>
-        factors = factor :: factors
-        println("E' stato introdotto " + factor)
+      case _ => factors = factor :: factors
     }
 
     override def removeFactor(factor: Factor): Unit = factor match {
@@ -89,10 +86,7 @@ object Environment {
         ) :: factors
         if (isToughFood) FoodFactorImpl(previous.isHighFood, previous.isLimitedFood, isToughFood = false) :: factors
         if (isLimitedFood) FoodFactorImpl(previous.isHighFood, isLimitedFood = false, previous.isToughFood) :: factors
-        println("E' stato rimosso un FoodFactor(" + isHighFood + "," + isLimitedFood + "," + isToughFood + ")")
-      case _ =>
-        factors = factors.filter(_ != factor)
-        println("E' stato rimosso " + factor)
+      case _ => factors = factors.filter(_ != factor)
     }
 
     /** Introduce a new mutation */
