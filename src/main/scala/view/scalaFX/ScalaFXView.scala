@@ -44,7 +44,9 @@ object ScalaFXView extends View {
   def start(): Unit = {
     val loadedRootPanel = FxmlUtils.loadFXMLResource[jfxs.Parent]("/fxml/baseApp.fxml")
     baseAppController = Some(loadedRootPanel._2.getController[BaseAppControllerInterface])
-    baseAppController --> { _.initialize() }
+    baseAppController --> {
+      _.initialize()
+    }
 
     stage = new PrimaryStage {
       title = "Bunnies"
@@ -56,7 +58,9 @@ object ScalaFXView extends View {
   }
 
   def updateView(generationPhase: GenerationPhase, bunnies: Population): Unit = Platform.runLater {
-    baseAppController --> { _.updateView(bunnies, generationPhase) }
+    baseAppController --> {
+      _.updateView(bunnies, generationPhase)
+    }
   }
 
   override def showEnd(endType: SimulationEndType): Unit = {
@@ -73,4 +77,5 @@ object ScalaFXView extends View {
   }
 
 }
+
 

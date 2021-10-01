@@ -124,8 +124,8 @@ class BaseAppController(
     startButton.setVisible(true)
   }
 
-  def reset(): Unit = {
-    speedButton.onAction = _ => {
+  override def reset(): Unit = {
+    startButton.onAction = _ => {
       Controller.reset()
       this.resetSimulationPanel()
       selectedBunny = Option.empty
@@ -171,7 +171,7 @@ class BaseAppController(
     factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
   }
 
-  def updateView(bunnies: Population, generationPhase: GenerationPhase): Unit = {
+  override def updateView(bunnies: Population, generationPhase: GenerationPhase): Unit = {
     proportionsChartController.get.updateChart(generationPhase, bunnies)
     populationChart --> { _.updateChart(generationPhase, bunnies) }
     if (chartSelectionPanelController.get.activeChart == ChartType.Pedigree) showPedigreeChart()
@@ -195,8 +195,6 @@ class BaseAppController(
       newBunnyViews foreach { _.play() }
 
     }
-
-//    if (generationPhase.phase == WolfPhaseConstants.WOLVES_PHASE) factorsPanelController --> { _.showWolvesEating() }
 
   }
 
