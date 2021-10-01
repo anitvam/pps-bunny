@@ -103,8 +103,8 @@ case class PopulationChart(height: Double, width: Double) {
   }
 
   def updateChartBound(x: Double, size: Int): Unit = {
-    if (x > xAxis.upperBound.toDouble) xAxis.upperBound = x + 2
-    if (size > yAxis.upperBound.toInt) yAxis.upperBound = size + 10
+    if (x >= xAxis.upperBound.toDouble) xAxis.upperBound = x + 2
+    if (size >= yAxis.upperBound.toInt) yAxis.upperBound = size + 10
   }
 
 }
