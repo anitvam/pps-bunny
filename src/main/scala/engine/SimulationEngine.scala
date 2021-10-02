@@ -5,9 +5,11 @@ import engine.GenerationTimer.{ resetTimer, waitFor }
 import engine.Simulation._
 import engine.SimulationConstants._
 import engine.SimulationHistory.{ getBunniesNumber, getGenerationNumber }
-import model.world.GenerationsUtils.{ FoodPhase, HighTemperaturePhase, StartPhase, WolvesPhase }
+import model.world.GenerationsUtils.{ FoodPhase, GenerationPhase, HighTemperaturePhase, StartPhase, WolvesPhase }
+
 import scala.language.{ implicitConversions, postfixOps }
 import engineConversions._
+
 import scala.concurrent.duration.{ DurationDouble, FiniteDuration }
 
 object SimulationEngine {
@@ -19,24 +21,39 @@ object SimulationEngine {
     case FOUR_PER_SPEED => simulationSpeed = DEFAULT_SPEED
   }
 
-  def simulationLoop(): IO[Unit] = {
+  def generationPhase(generationPhase: GenerationPhase, action: IO[Unit]): IO[Unit] = for {
+    _ <- waitFor((generationPhase.instant, simulationSpeed))
+    _ <- action
+    _ <- updateView(generationPhase)
+  } yield ()
+
+  def generationLoop(): IO[Unit] = {
+    println("generation LOOP")
     for {
       _ <- resetTimer
-      _ <- updateView(StartPhase(getGenerationNumber))
-      _ <- waitFor((WOLF_INSTANT, simulationSpeed))
-      _ <- wolvesEat
-      _ <- updateView(WolvesPhase(getGenerationNumber))
-      _ <- waitFor((FOOD_INSTANT, simulationSpeed))
-      _ <- bunniesEat
-      _ <- updateView(FoodPhase(getGenerationNumber))
-      _ <- waitFor((TEMP_INSTANT, simulationSpeed))
-      _ <- applyTemperatureDamage
-      _ <- updateView(HighTemperaturePhase(getGenerationNumber))
-      _ <- waitFor((GENERATION_END, simulationSpeed))
-      _ <- startNewGeneration
+      _ <- generationPhase(WolvesPhase(getGenerationNumber), wolvesEat)
       _ <-
-        if (getGenerationNumber < MAX_GENERATIONS_NUMBER && getBunniesNumber < MAX_ALIVE_BUNNIES) simulationLoop()
+        if (getBunniesNumber >= MIN_ALIVE_BUNNIES) generationPhase(FoodPhase(getGenerationNumber), bunniesEat)
+        else showEnd(WolvesPhase(getGenerationNumber))
+      _ <-
+        if (getBunniesNumber >= MIN_ALIVE_BUNNIES)
+          generationPhase(HighTemperaturePhase(getGenerationNumber), applyTemperatureDamage)
+        else showEnd(FoodPhase(getGenerationNumber))
+      _ <-
+        if (getBunniesNumber >= MIN_ALIVE_BUNNIES)
+          generationPhase(StartPhase(getGenerationNumber + 1), startNewGeneration)
+        else showEnd(HighTemperaturePhase(getGenerationNumber))
+      _ <-
+        if (getGenerationNumber < MAX_GENERATIONS_NUMBER && getBunniesNumber < MAX_ALIVE_BUNNIES) generationLoop()
         else showEnd(StartPhase(getGenerationNumber))
+    } yield ()
+  }
+
+  def simulationLoop(): IO[Unit] = {
+    println("SIMULATION LOOP")
+    for {
+      _ <- updateView(StartPhase(getGenerationNumber))
+      _ <- generationLoop()
     } yield ()
   }
 

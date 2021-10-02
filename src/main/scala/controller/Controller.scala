@@ -5,6 +5,7 @@ import engine.SimulationHistory.resetHistory
 import model.genome.KindsUtils.resetDominance
 import engine.{ SimulationEngine, SimulationHistory }
 import model.world.Generation.Population
+import model.world.GenerationsUtils.GenerationPhase
 import model.world.disturbingFactors.Factor
 import model.world.{ Mutation, Summer, Winter }
 import scalafx.application.Platform
@@ -40,8 +41,8 @@ object Controller {
     SimulationHistory.getActualGeneration.environment introduceMutation mutation
 
   /** Method that shows the end of the simulation on the Application GUI */
-  def showEnd(): Unit = Platform runLater {
-    ScalaFXView.showEnd()
+  def showEnd(generationPhase: GenerationPhase): Unit = Platform runLater {
+    ScalaFXView.showEnd(generationPhase)
   }
 
   /** Resets the simulation model to its initial state */

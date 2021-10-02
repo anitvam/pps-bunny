@@ -2,6 +2,7 @@ package engine
 
 import cats.effect.IO
 import controller.Controller
+import engine.SimulationConstants.START_PHASE
 import engine.SimulationHistory._
 import model.world.disturbingFactors.FactorTypes._
 import model.world.GenerationsUtils.GenerationPhase
@@ -18,16 +19,16 @@ object Simulation {
 
   def applyTemperatureDamage: IO[Unit] = applyFactorDamage(UnfriendlyClimateFactorKind)
 
-  def updateView(generationPhase: GenerationPhase): IO[Unit] = {
+  def updateView(generationPhase: GenerationPhase): IO[Unit] =
     ScalaFXView.updateView(generationPhase, getActualPopulation)
-  }
 
   def showEnd(generationPhase: GenerationPhase): IO[Unit] = {
-    ScalaFXView.updateView(generationPhase, getActualPopulation)
-    Controller.showEnd()
+    if (generationPhase.phase == START_PHASE) ScalaFXView.updateView(generationPhase, getActualPopulation)
+    Controller.showEnd(generationPhase)
   }
 
   def startNewGeneration: IO[Unit] = {
+    println("INIZIA NUOVA GENERAZIONE")
     SimulationHistory.startNextGeneration()
   }
 

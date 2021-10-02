@@ -6,7 +6,7 @@ import scala.language.postfixOps
 object SimulationConstants {
 
   /** After how many milliseconds from the start of generation the wolves can eat */
-  val WOLF_INSTANT: Double = 3000
+  val WOLVES_INSTANT: Double = 3000
 
   /** After how many milliseconds from the start of generation the bunnies can eat */
   val FOOD_INSTANT: Double = 6000
@@ -37,6 +37,9 @@ object SimulationConstants {
 
   /** Maximum number of alive bunnies in the world */
   val MAX_ALIVE_BUNNIES: Int = 1000
+
+  /** Minimum number of alive bunnies in the world */
+  val MIN_ALIVE_BUNNIES: Int = 1
 
   /** Maximum number of generations in a simulation */
   val MAX_GENERATIONS_NUMBER: Int = 1000
