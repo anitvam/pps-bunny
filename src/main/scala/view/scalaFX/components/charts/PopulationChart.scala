@@ -10,6 +10,7 @@ import scalafx.collections.ObservableBuffer
 import scalafx.geometry.Side
 import scalafx.scene.chart.{ LineChart, NumberAxis, XYChart }
 import util.PimpScala.RichOption
+import view.scalaFX.ScalaFXConstants.Style.PopulationLegend.ITEM_STYLE
 import view.scalaFX.components.charts.LineChartComponentFactory.{ createEmptySeries, createXYChartData }
 import view.scalaFX.components.charts.PopulationChartDataType._
 import view.scalaFX.utilities.PimpScalaFXChartLibrary._
@@ -222,6 +223,7 @@ object LineChartComponentFactory {
     seriesData.filterAndForeach(_.getName != "Total", _.enabled = false)
 
     chart.legend.getLabels.foreach(li => {
+      li.styleClass += ITEM_STYLE
       seriesData.getSeries(li.text.value) --> { s =>
         s.addStyle("population-chart-legend-item")
         li.onMouseClicked = _ => {
