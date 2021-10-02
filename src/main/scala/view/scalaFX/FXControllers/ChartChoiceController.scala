@@ -9,6 +9,9 @@ import view.scalaFX.utilities.ChartType.ChartType
 
 sealed trait ChartChoiceControllerInterface {
 
+  /** States which is the active chart */
+  var activeChart: ChartType = ChartType.Population
+
   /**
    * Method that initialize the ChartChoiceController
    * @param controller
@@ -23,9 +26,6 @@ sealed trait ChartChoiceControllerInterface {
 
   /** Method that handle the click of a Bunny */
   def handleBunnyClick(): Unit
-
-  /** States which is the active chart */
-  var activeChart: ChartType = ChartType.Population
 }
 
 @sfxml

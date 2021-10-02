@@ -2,6 +2,7 @@ package view.scalaFX.components.charts
 
 import model.genome.Alleles
 import model.genome.Alleles.AlleleKind
+import model.genome.KindsUtils.getGeneKind
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
@@ -13,6 +14,7 @@ import view.scalaFX.components.charts.LineChartComponentFactory.{createEmptySeri
 import view.scalaFX.components.charts.PopulationChartDataType._
 import view.scalaFX.utilities.PimpScalaFXChartLibrary._
 
+import scala.collection.immutable.ListMap
 import scala.language.implicitConversions
 
 object PopulationChartDataType {
@@ -61,6 +63,8 @@ object PopulationChartDataType {
       mutationMap = mutationMap + (ak -> ChartSeries(SeriesData(), createEmptySeries(ak.prettyName)))
     }
 
+    mutationMap = ListMap(mutationMap.toSeq.sortBy(entry => getGeneKind(entry._1)): _*)
+
     def seriesData: Seq[SeriesData] = mutationMap.values.map(_.seriesData).toSeq
     def xySeries: List[XYSeries] = mutationMap.values.map(_.xySeries).toList
 
@@ -84,10 +88,8 @@ case class PopulationChart(height: Double, width: Double) {
 
   val xAxis: NumberAxis = createNumberAxis("Generation Axis", 0, 6, 1)
   val yAxis: NumberAxis = createNumberAxis("Population Axis", 0, 30, 5)
-
   var mutations: MutationsChartSeries = MutationsChartSeries()
   var total: ChartSeries = ChartSeries(SeriesData(), createEmptySeries("Total"))
-
   val chart: LineChart[Number, Number] =
     createLineChart(xAxis, yAxis, height, width, total.xySeries :: mutations.xySeries)
 
@@ -101,8 +103,8 @@ case class PopulationChart(height: Double, width: Double) {
   }
 
   def updateChartBound(x: Double, size: Int): Unit = {
-    if (x > xAxis.upperBound.toDouble) xAxis.upperBound = x + 2
-    if (size > yAxis.upperBound.toInt) yAxis.upperBound = size + 10
+    if (x >= xAxis.upperBound.toDouble) xAxis.upperBound = x + 2
+    if (size >= yAxis.upperBound.toInt) yAxis.upperBound = size + 10
   }
 
 }
@@ -218,6 +220,7 @@ object LineChartComponentFactory {
 
     chart.legend.getLabels.foreach(li => {
       seriesData.getSeries(li.text.value) --> { s =>
+        s.addStyle("population-chart-legend-item")
         li.onMouseClicked = _ =>
           s.getName match {
             case "Total" =>

@@ -3,9 +3,7 @@ package engine
 import cats.effect.IO
 import controller.Controller
 import engine.SimulationHistory._
-import model.world.Factor._
-import model.world.FoodFactor
-import model.world.FactorsUtils.FactorTypes._
+import model.world.disturbingFactors.FactorTypes._
 import model.world.GenerationsUtils.GenerationPhase
 import view.scalaFX.ScalaFXView
 

@@ -3,7 +3,8 @@ package model.world
 import model.genome.KindsUtils
 import model.mutation.Mutation
 import model.world.Environment.{ Factors, Mutations }
-import model.world.FactorsUtils.FactorTypes._
+import model.world.disturbingFactors.FactorTypes._
+import model.world.disturbingFactors.{ Factor, FoodFactor }
 import util.PimpScala._
 
 /** Environment of a Generation */

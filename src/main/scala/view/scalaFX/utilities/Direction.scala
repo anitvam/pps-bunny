@@ -10,9 +10,9 @@ object Direction extends Enumeration {
    * direction
    *
    * @param direction
-   * the actual direction
+   *   the actual direction
    * @return
-   * the scaleX value
+   *   the scaleX value
    */
   def scaleXValue(direction: Direction): Int = if (direction == Right) 1 else -1
 }

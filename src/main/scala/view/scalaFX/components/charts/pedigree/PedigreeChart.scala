@@ -8,8 +8,8 @@ import scalafx.scene.image.ImageView
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
 import util.PimpScala._
-import view.scalaFX.ScalaFxViewConstants.GenealogicalTree._
-import view.scalaFX.ScalaFxViewConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
+import view.scalaFX.ScalaFXConstants.GenealogicalTree._
+import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
 
 import scala.language.postfixOps
 
@@ -102,7 +102,6 @@ object PedigreeChart {
     (row, nextTrees)
   }
 
-
   /** Creates a spacing region to justify the rows of bunnies */
   def spacingRegion: Region = new Region {
     hgrow = Priority.Always
@@ -132,6 +131,7 @@ object PedigreeChart {
 
     var rows: Seq[HBox] = Seq()
     var row: (HBox, Seq[Option[BinaryTree[Bunny]]]) = (new HBox(), Seq(Option(tree)))
+
     for (_ <- 1 to tree.generations) {
       row = createRow(row._2)
       rows = rows :+ row._1
@@ -141,6 +141,7 @@ object PedigreeChart {
       children = spacingRegion +: rows.reverse :+ spacingRegion
       alignment = Pos.Center
     }
+
   }
 
 }

@@ -4,13 +4,14 @@ import engine.SimulationConstants
 import model.Bunny.{ generateRandomFirstBunny, splitBunniesByGene }
 import model.genome.Genes.GeneKind
 import model.genome.{ Alleles, Genes }
-import model.world.Factor.{ UnfriendlyClimate, Wolves }
-import model.world.FactorsUtils.filterBunniesWithAlleles
+import model.world.disturbingFactors._
+import model.world.disturbingFactors.FactorsUtils.filterBunniesWithAlleles
 import model.world.Generation.Population
-import model.world.{
+import model.world.disturbingFactors.{
   HighFoodFactor, HighToughFoodFactor, LimitedFoodFactor, LimitedHighFoodFactor, LimitedHighToughFoodFactor,
-  LimitedToughFoodFactor, Summer, ToughFoodFactor, Winter
+  LimitedToughFoodFactor, ToughFoodFactor
 }
+import model.world.{ Summer, Winter }
 import org.scalatest.{ FlatSpec, Matchers }
 
 class TestFactors extends FlatSpec with Matchers {

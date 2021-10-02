@@ -7,7 +7,8 @@ import model.genome.KindsUtils.resetDominance
 import model.mutation.Mutation
 import model.world.Environment.Factors
 import model.world.Generation.Population
-import model.world.{ Climate, Factor, Summer, Winter }
+import model.world.disturbingFactors.Factor
+import model.world.{ Climate, Summer, Winter }
 import scalafx.application.Platform
 import view.scalaFX.ScalaFXView
 
