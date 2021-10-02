@@ -1,8 +1,8 @@
 package util
 
 import model.world.Environment.Factors
-import model.world.FactorsUtils.FactorTypes.FoodFactorKind
-import model.world.{ Factor, FoodFactor }
+import model.world.disturbingFactors.FactorTypes.FoodFactorKind
+import model.world.disturbingFactors._
 
 object PimpScala {
 

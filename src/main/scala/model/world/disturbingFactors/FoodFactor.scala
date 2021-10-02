@@ -52,8 +52,10 @@ abstract class SingleFoodFactor(override val isCombined: Boolean = false) extend
 abstract class DoubleFoodFactor(override val isCombined: Boolean = true) extends SingleFoodFactor {
   val decoupleFactor: PartialFunction[FoodFactor, FoodFactor]
 
-  override def removeSubFactor(foodFactor: FoodFactor): FoodFactor =
-    decoupleFactor applyOrElse (foodFactor, throw new InvalidFoodFactor())
+  override def removeSubFactor(foodFactor: FoodFactor): FoodFactor = {
+    //decoupleFactor applyOrElse (foodFactor, throw new InvalidFoodFactor())
+    if (decoupleFactor isDefinedAt foodFactor) decoupleFactor(foodFactor) else throw new InvalidFoodFactor()
+  }
 
 }
 
