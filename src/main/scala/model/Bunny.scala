@@ -2,9 +2,8 @@ package model
 
 import engine.SimulationConstants.MAX_BUNNY_AGE
 import model.genome.Genes.GeneKind
+import model.genome.KindsUtils.getRandomAlleleKind
 import model.genome._
-
-import scala.util.Random
 
 /**
  * Represents a Bunny.
@@ -58,7 +57,6 @@ class ChildBunny(
 class FirstBunny(genotype: CompletedGenotype) extends ChildBunny(genotype, Option.empty, Option.empty)
 
 object Bunny {
-
   type baseBunnies = Seq[Bunny]
   type mutatedBunnies = Seq[Bunny]
 
@@ -79,9 +77,7 @@ object Bunny {
       CompletedGenotype(
         Genes.values.unsorted
           .map(gk => {
-            (gk, Gene(gk,
-              StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2))),
-              StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2)))))
+            (gk, Gene(gk, StandardAllele(getRandomAlleleKind(gk)), StandardAllele(getRandomAlleleKind(gk))))
           }).toMap
       )
     )
