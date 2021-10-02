@@ -11,8 +11,10 @@ trait ClimateImage {
   val image: Image
 }
 
-case class WinterImage(image: Image = EnvironmentImageUtils.WINTER_IMAGE) extends ClimateImage
-case class SummerImage(image: Image = EnvironmentImageUtils.SUMMER_IMAGE) extends ClimateImage
+case class WinterImage(image: Image = new Image("/img/environment/cold_environment/cold_normal.png"))
+    extends ClimateImage
+
+case class SummerImage(image: Image = new Image("/img/environment/hot_environment/hot_normal.png")) extends ClimateImage
 
 case class WinterImageHighFood(image: Image = new Image("/img/environment/cold_environment/cold_high_food.png"))
     extends ClimateImage
@@ -67,9 +69,6 @@ case class SummerImageToughFood(image: Image = new Image("/img/environment/hot_e
 object EnvironmentImageUtils {
   import scala.language.implicitConversions
   type JavaBackground = javafx.scene.layout.Background
-
-  val WINTER_IMAGE = new Image("/img/environment/cold_environment/cold_normal.png")
-  val SUMMER_IMAGE = new Image("/img/environment/hot_environment/hot_normal.png")
 
   implicit def actualClimate(background: ObjectProperty[JavaBackground]): Climate =
     if (background.value.getImages.get(0).getImage.getUrl.contains("cold")) Winter() else Summer()
