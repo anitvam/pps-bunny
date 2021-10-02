@@ -56,10 +56,13 @@ object PedigreeChart {
    */
   def apply(bunny: Bunny, chartWidth: Int, chartHeight: Int): PedigreeChart = {
     val tree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
+
     val maxBunnySizeForWidth: Int = ((chartWidth * TREE_PLUS_PROPORTION) /
       (Math.pow(TREE_PLUS_PROPORTION + 1, tree.generations - 1) - 1)).toInt
+
     val maxBunnySizeForHeight: Int = ((chartHeight * TREE_INFO_PROPORTION * FONT_INFO_PERCENT) /
       ((TREE_INFO_PROPORTION * FONT_INFO_PERCENT + 1 + FONT_INFO_PERCENT) * tree.generations)).toInt
+
     bunnyIconSize = Seq(maxBunnySizeForHeight, maxBunnySizeForWidth, MAX_TREE_BUNNY_SIZE).min
     PedigreeChartImpl(bunny, tree)
   }
