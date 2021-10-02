@@ -6,7 +6,7 @@ import model._
 import model.genome._
 import model.world.Environment.Mutations
 import model.world.Generation.Population
-import util.PimpScala.RichTuple2
+import util.PimpScala._
 
 import scala.util.Random
 
@@ -35,19 +35,18 @@ object Reproduction {
     var childrenGenotypes = List.fill(CHILDREN_FOR_EACH_COUPLE)(PartialGenotype(Map()))
 
     Genes.values.foreach(gk => {
-      val genesOfReproduction : List[Gene]=
-        (for { momAllele <- mom.getStandardAlleles(gk).toSeq
-               dadAllele <- dad.getStandardAlleles(gk).toSeq
-              } yield Gene(gk, momAllele, dadAllele)).toList
-      val shufflesGenes = Random.shuffle(genesOfReproduction)
+      var childrenGenes: List[Gene] =
+        Random.shuffle(
+          (for {momAllele <- mom.getStandardAlleles(gk).toSeq
+                dadAllele <- dad.getStandardAlleles(gk).toSeq
+                } yield Gene(gk, momAllele, dadAllele)).toList)
+
+      if (mutations.get(_.geneKind == gk) ?)
+        childrenGenes = Gene(gk, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenes.take(CHILDREN_FOR_EACH_COUPLE - 1)
 
       childrenGenotypes =
         (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE)
-          yield childrenGenotypes(i) +  shufflesGenes(i)).toList
-
-      mutations filter { _.geneKind == gk } foreach { _ =>
-          val mutatedGenotype = childrenGenotypes(CHILDREN_FOR_EACH_COUPLE - 1) + Gene(gk, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated))
-          childrenGenotypes =  mutatedGenotype :: childrenGenotypes.take(CHILDREN_FOR_EACH_COUPLE - 1)}
+          yield childrenGenotypes(i) + childrenGenes(i)).toList
     })
 
     childrenGenotypes.map(cg => new ChildBunny(CompletedGenotype(cg.genes), Option(mom), Option(dad)))
