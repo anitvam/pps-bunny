@@ -32,7 +32,7 @@ trait Factor {
   def factorType: FactorKind
 }
 
-trait FactorWithOneGene extends Factor {
+trait FactorWithOneGene extends BasicFactor {
 
   /**
    * The afflicted Gene of this Factor
@@ -40,9 +40,10 @@ trait FactorWithOneGene extends Factor {
    *   a Option[GeneKind]
    */
   val affectedGene: GeneKind
+
 }
 
-trait FactorWithTwoGenes extends Factor {
+trait FactorWithTwoGenes extends BasicFactor {
   val firstGeneAffected: GeneKind
   val secondGeneAffected: GeneKind
 }
@@ -62,7 +63,7 @@ abstract class BasicFactor extends Factor {
 
 }
 
-abstract class ClimateFactor extends Factor {
+abstract class ClimateFactor() extends BasicFactor {
 
   /**
    * Action performed on a Population of Bunnies on summer
