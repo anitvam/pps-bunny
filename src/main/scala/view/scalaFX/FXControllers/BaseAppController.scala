@@ -119,6 +119,7 @@ class BaseAppController(
       proportionsChartController --> { _.resetChart() }
       mutationsPanelController --> { _.reset() }
       chartSelectionPanelController --> { _.reset() }
+      factorsPanelController --> { _.reset() }
       this.initializeView()
       speedButton.onAction = _ => addSpeedUp()
       speedButton.text = "2x"
