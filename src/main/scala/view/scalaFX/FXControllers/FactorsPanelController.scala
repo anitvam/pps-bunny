@@ -60,17 +60,16 @@ class FactorsPanelController(
     import view.scalaFX.utilities.EnvironmentImageUtils._
     baseAppController --> { b =>
       b.changeBackgroundEnvironment(
-          (toughFoodCheckBox.isSelected, highFoodCheckBox.isSelected, limitedFoodCheckBox.isSelected) match {
-            case (false, false, false) => (SummerImage(), WinterImage())
-            case (true, false, false)  => (SummerImageToughFood(), WinterImageToughFood())
-            case (false, true, false)  => (SummerImageHighFood(), WinterImageHighFood())
-            case (false, false, true)  => (SummerImageLimitedFood(), WinterImageLimitedFood())
-            case (true, false, true)   => (SummerImageLimitedToughFood(), WinterImageLimitedToughFood())
-            case (true, true, false)   => (SummerImageHighToughFood(), WinterImageHighToughFood())
-            case (false, true, true)   => (SummerImageLimitedHighFood(), WinterImageLimitedHighFood())
-            case (true, true, true)    => (SummerImageLimitedHighToughFood(), WinterImageLimitedHighToughFood())
-          }
-        )
+        (toughFoodCheckBox.isSelected, highFoodCheckBox.isSelected, limitedFoodCheckBox.isSelected) match {
+          case (false, false, false) => (SummerImage(), WinterImage())
+          case (true, false, false)  => (SummerImageToughFood(), WinterImageToughFood())
+          case (false, true, false)  => (SummerImageHighFood(), WinterImageHighFood())
+          case (false, false, true)  => (SummerImageLimitedFood(), WinterImageLimitedFood())
+          case (true, false, true)   => (SummerImageLimitedToughFood(), WinterImageLimitedToughFood())
+          case (true, true, false)   => (SummerImageHighToughFood(), WinterImageHighToughFood())
+          case (false, true, true)   => (SummerImageLimitedHighFood(), WinterImageLimitedHighFood())
+          case (true, true, true)    => (SummerImageLimitedHighToughFood(), WinterImageLimitedHighToughFood())
+        }
       )
     }
   }
