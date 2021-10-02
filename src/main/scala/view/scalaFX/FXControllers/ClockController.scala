@@ -21,16 +21,16 @@ trait ClockControllerInterface {
 
 class ClockController extends ClockControllerInterface {
   private var analogueClock: Group = new Group()
-  private val clockRadius = 30
+  private val clockRadius = 35
   private val hourHand = Line(0, 0, 0, -clockRadius)
-  private val brand = Label("")
+  private val labelClock = Label("")
 
   override def initialize(): Group = {
     val face = Circle(clockRadius, clockRadius, clockRadius)
     face.id = "face"
-    brand.id = "brand"
-    brand.layoutXProperty().bind(face.centerXProperty().subtract(brand.widthProperty().divide(2)))
-    brand.layoutYProperty().bind(face.centerYProperty().add(face.radiusProperty().divide(2)))
+    labelClock.id = "labelClock"
+    labelClock.layoutXProperty().bind(face.centerXProperty().subtract(labelClock.widthProperty().divide(2)))
+    labelClock.layoutYProperty().bind(face.centerYProperty().add(face.radiusProperty().divide(2)))
     hourHand.setTranslateX(clockRadius)
     hourHand.setTranslateY(clockRadius)
     hourHand.id = "hourHand"
@@ -46,7 +46,7 @@ class ClockController extends ClockControllerInterface {
       ticks.getChildren.add(tick)
     }
 
-    analogueClock = new Group(face, brand, ticks, spindle, hourHand)
+    analogueClock = new Group(face, labelClock, ticks, spindle, hourHand)
     analogueClock.setTranslateX(40)
     analogueClock.getStylesheets.add("/fxml/stylesheets/clock.css")
 
@@ -59,5 +59,5 @@ class ClockController extends ClockControllerInterface {
   override def rotateClockHand(rotation: Double): Unit =
     hourHand.getTransforms.add(new Rotate(rotation * (360 / 4)))
 
-  override def updateLabel(label: String): Unit = brand.text = label
+  override def updateLabel(label: String): Unit = labelClock.setText(label)
 }

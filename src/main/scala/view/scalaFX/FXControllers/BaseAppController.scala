@@ -56,7 +56,7 @@ sealed trait BaseAppControllerInterface {
 
   def addSpeedUp(): Unit
 
-  def updateClock(position: Double, label: String): Unit
+  def updateClock(phase: Double, label: String): Unit
 }
 
 @sfxml
@@ -242,8 +242,8 @@ class BaseAppController(
     }
   }
 
-  def updateClock(position: Double, label: String): Unit = {
-    clockController.rotateClockHand(position)
-//    clockController.updateLabel(label)
+  def updateClock(phase: Double, label: String): Unit = {
+    clockController.rotateClockHand(phase)
+    clockController.updateLabel(label)
   }
 }
