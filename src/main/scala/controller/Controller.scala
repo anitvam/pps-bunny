@@ -5,9 +5,9 @@ import engine.SimulationHistory
 import engine.SimulationHistory.resetHistory
 import model.genome.KindsUtils.resetDominance
 import model.mutation.Mutation
-import model.world.Environment.Factors
 import model.world.Generation.Population
-import model.world.{Climate, Summer, Winter}
+import model.world.disturbingFactors.Factor
+import model.world.{ Summer, Winter }
 import scalafx.application.Platform
 import view.scalaFX.ScalaFXView
 
@@ -15,13 +15,8 @@ object Controller {
 
   /**
    * Method that starts the simulation
-   * @param climate the Environment Climate
-   * @param factors the Environment Factors
    */
-  def startSimulation(climate: Climate, factors: Factors): Unit = {
-    SimulationHistory changeEnvironmentClimate climate
-    simulationLoop().unsafeRunAsyncAndForget()
-  }
+  def startSimulation(): Unit = simulationLoop().unsafeRunAsyncAndForget()
 
   /** Method that sets the Summer Climate inside Environment */
   def setSummerClimate(): Unit = SimulationHistory changeEnvironmentClimate Summer()
@@ -31,9 +26,11 @@ object Controller {
 
   /**
    * Method that insert a mutation inside the simulation
-   * @param mutation the Mutation to insert
+   * @param mutation
+   *   the Mutation to insert
    */
-  def insertMutation(mutation: Mutation): Unit = SimulationHistory introduceMutation mutation
+  def insertMutation(mutation: Mutation): Unit =
+    SimulationHistory.getActualGeneration.environment introduceMutation mutation
 
   /** Method that shows the end of the simulation on the Application GUI */
   def showEnd(): Unit = Platform runLater {
@@ -47,4 +44,8 @@ object Controller {
   }
 
   def population: Population = SimulationHistory.getActualPopulation
+
+  def introduceFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment introduceFactor factor
+
+  def removeFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment removeFactor factor
 }

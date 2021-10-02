@@ -6,6 +6,7 @@ import model.world.Generation.Population
 import util.PimpScala.RichTuple2
 import model.world.Reproduction.{ generateInitialCouple, nextGenerationBunnies }
 import model.world._
+import model.world.disturbingFactors.Factors
 
 import scala.language.implicitConversions
 
@@ -13,20 +14,12 @@ object SimulationHistory {
 
   type History = List[Generation]
 
-  val historyInit: () => History = () => List(Generation(Environment(Summer(), List.empty), generateInitialCouple.toSeq))
+  val historyInit: () => History = () => List(Generation(Environment(Summer(), Factors()), generateInitialCouple.toSeq))
 
   var history: History = historyInit()
 
   /** Resets history to the initial value */
   def resetHistory(): Unit = history = historyInit()
-
-  /** Introduce a new mutation */
-  def introduceMutation(mutation: Mutation): Unit = {
-    getActualGeneration.environment.mutations = mutation :: getActualGeneration.environment.mutations
-
-    if (mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
-    else KindsUtils.setAlleleDominance(mutation.geneKind.base)
-  }
 
   /** @return the actual [[Generation]] */
   def getActualGeneration: Generation = history.head
@@ -65,7 +58,4 @@ object SimulationHistory {
    *   the climate to set into the Environment
    */
   def changeEnvironmentClimate(climate: Climate): Unit = getActualGeneration.environment.climate = climate
-
-  def introduceFactor(): Unit = println("Introdotto un fattore")
-  def removeFactor(): Unit = println("Rimosso un fattore")
 }

@@ -1,7 +1,11 @@
 package model.world
 
+import model.genome.KindsUtils
 import model.mutation.Mutation
-import model.world.Environment.{ Factors, Mutations }
+import model.world.Environment.Mutations
+import model.world.disturbingFactors.FactorTypes._
+import model.world.disturbingFactors.{ Factor, Factors, FoodFactor }
+import util.PimpScala._
 
 /** Environment of a Generation */
 trait Environment {
@@ -31,13 +35,16 @@ trait Environment {
   def mutations_=(mutations: Mutations): Unit
 
   /** @return the Environment Factors */
-  def factors: Factors
+  var factors: Factors
+
+  def introduceFactor(factor: Factor): Unit
+  def removeFactor(factor: Factor): Unit
+  def introduceMutation(mutation: Mutation): Unit
 }
 
 object Environment {
 
   type Mutations = List[Mutation]
-  type Factors = List[Factor]
 
   /**
    * Generate an Environment from the previous one
@@ -50,9 +57,22 @@ object Environment {
 
   private case class EnvironmentImpl(
       override var climate: Climate,
-      override val factors: Factors,
+      override var factors: Factors,
       override var mutations: Mutations = List()
-  ) extends Environment {}
+  ) extends Environment {
+
+    override def introduceFactor(factor: Factor): Unit = factors add factor
+
+    override def removeFactor(factor: Factor): Unit = factors remove factor
+
+    /** Introduce a new mutation */
+    def introduceMutation(mutation: Mutation): Unit = {
+      if (mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
+      else KindsUtils.setAlleleDominance(mutation.geneKind.base)
+      mutations = mutation :: mutations
+    }
+
+  }
 
 }
 

@@ -11,4 +11,8 @@ object PimpScala {
     def toSeq: Seq[A] = Seq(tuple._1, tuple._2)
   }
 
+  implicit class RichList[A](list: List[A]) {
+    def -?(pred: A => Boolean): List[A] = list.filterNot(pred)
+  }
+
 }
