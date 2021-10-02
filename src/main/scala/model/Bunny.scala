@@ -1,5 +1,6 @@
 package model
 
+import engine.SimulationConstants.MAX_BUNNY_AGE
 import model.genome.Genes.GeneKind
 import model.genome._
 
@@ -29,15 +30,23 @@ sealed trait Bunny {
   def getStandardAlleles(geneKind: GeneKind): (Allele, Allele) = {
     (StandardAllele(genotype(geneKind).momAllele.kind), StandardAllele(genotype(geneKind).dadAllele.kind))
   }
+
+  /**
+   * Updates the bunny instance for the next generation, increasing the age and setting the right alive value.
+   */
+  def updateBunny(): Unit = {
+    age += 1
+    if (age >= MAX_BUNNY_AGE) alive = false
+  }
 }
 
 /**
  * Represents a Bunny that as just been created.
  */
 class ChildBunny(
-    override val genotype: CompletedGenotype,
-    override val mom: Option[Bunny],
-    override val dad: Option[Bunny]
+                  override val genotype: CompletedGenotype,
+                  override val mom: Option[Bunny],
+                  override val dad: Option[Bunny]
 ) extends Bunny {
   override var age: Int = 0
   override var alive: Boolean = true

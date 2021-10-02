@@ -55,11 +55,11 @@ object BunnyView {
   }
 
   private case class BunnyViewImpl(
-      imageView: ImageView,
-      bunny: Bunny,
-      private var direction: Direction,
-      private var positionX: Double,
-      private var positionY: Double
+                                    imageView: ImageView,
+                                    bunny: Bunny,
+                                    private var direction: Direction,
+                                    private var positionX: Double,
+                                    private var positionY: Double
   ) extends BunnyView {
 
     private val normalImage: Image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)

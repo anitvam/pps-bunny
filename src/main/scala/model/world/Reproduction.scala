@@ -1,12 +1,13 @@
 package model.world
 
-import engine.SimulationConstants.{CHILDREN_FOR_EACH_COUPLE, MAX_BUNNY_AGE}
+import engine.SimulationConstants.CHILDREN_FOR_EACH_COUPLE
 import model.Bunny.generateBaseFirstBunny
 import model._
 import model.genome._
 import model.world.Environment.Mutations
 import model.world.Generation.Population
 import util.PimpScala.RichTuple2
+
 import scala.util.Random
 
 object Reproduction {
@@ -73,9 +74,7 @@ object Reproduction {
    * @return        the new bunnies, adding the children and removing the ones who are dead
    */
   def nextGenerationBunnies(bunnies: Population, mutations: Mutations = List()): Population = {
-    val children = generateAllChildren(bunnies, mutations)
-    bunnies.foreach(_.age+=1)
-    bunnies.foreach(b => if (b.age >= MAX_BUNNY_AGE) b.alive = false)
-    children ++ bunnies.filter(_.alive)
+    bunnies.foreach(_.updateBunny())
+    generateAllChildren(bunnies, mutations) ++ bunnies.filter(_.alive)
   }
 }
