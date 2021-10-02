@@ -3,8 +3,8 @@ package engine
 import cats.effect.IO
 import controller.Controller
 import engine.SimulationHistory._
-import model.world.disturbingFactors.FactorTypes._
 import model.world.GenerationsUtils.GenerationPhase
+import model.world.disturbingFactors.FactorTypes._
 import util.PimpScala.RichOption
 import model.world.disturbingFactors.PimpFactors._
 import view.scalaFX.ScalaFXView

@@ -7,20 +7,20 @@ import javafx.scene.{ layout => jfxs }
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
-import scalafx.scene.control.{ Button, Label }
-import scalafx.scene.layout.{ AnchorPane, Background }
+import scalafx.scene.control.{Button, Label}
+import scalafx.scene.layout.{AnchorPane, Background}
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
-import view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH }
+import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
 import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
-
+import view.scalaFX.utilities.EnvironmentImageUtils._
+import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
 import view.scalaFX.utilities._
-import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
 
-import scala.language.postfixOps
+import scala.language.{implicitConversions, postfixOps}
 
 sealed trait BaseAppControllerInterface {
 
@@ -55,6 +55,8 @@ sealed trait BaseAppControllerInterface {
   def changeBackgroundEnvironment(background: Background): Unit
 
   def addSpeedUp(): Unit
+
+  def updateClock(position: Double, label: String): Unit
 }
 
 @sfxml
@@ -70,7 +72,8 @@ class BaseAppController(
     @FXML private val speedButton: Button,
     @FXML private val summerButton: Button,
     @FXML private val winterButton: Button,
-    @FXML private val informationPanel: AnchorPane
+    @FXML private val informationPanel: AnchorPane,
+    @FXML private val clock: AnchorPane
 ) extends BaseAppControllerInterface {
 
   private var bunnyViews: Seq[BunnyView] = Seq.empty
@@ -81,6 +84,7 @@ class BaseAppController(
   private var proportionsChartController: Option[ChartController] = Option.empty
   private var proportionsChartPane: Option[AnchorPane] = Option.empty
   private var populationChart: Option[PopulationChart] = Option.empty
+  private val clockController: ClockControllerInterface = new ClockController()
 
   override def initialize(): Unit = {
 
@@ -105,6 +109,7 @@ class BaseAppController(
     setFitParent(proportionsChartPane.get)
     proportionsChartController --> { _.initialize() }
 
+    clock.children = clockController.initialize()
     this.initializeView()
   }
 
@@ -112,7 +117,19 @@ class BaseAppController(
     // Load the default environment background
     factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
     populationChart = Some(PopulationChart(PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH))
+    simulationPane.background = SummerImage()
+    populationChart =
+      Some(PopulationChart(PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH))
     showPopulationChart()
+
+//    chartsPane.children =  PopulationChart.chart(325, 500)
+  }
+
+  private def resetSimulationPanel(): Unit = {
+    bunnyViews = Seq.empty
+    simulationPane.children = Seq.empty
+    generationLabel.text = ""
+    startButton.setVisible(true)
   }
 
   def reset(): Unit = {
@@ -132,13 +149,6 @@ class BaseAppController(
     }
     speedButton.text = ""
     speedButton.styleClass += "restart-button"
-  }
-
-  private def resetSimulationPanel(): Unit = {
-    bunnyViews = Seq.empty
-    simulationPane.children = Seq.empty
-    generationLabel.text = ""
-    startButton.setVisible(true)
   }
 
   /** Handler of Start button click */
@@ -232,4 +242,8 @@ class BaseAppController(
     }
   }
 
+  def updateClock(position: Double, label: String): Unit = {
+    clockController.rotateClockHand(position)
+//    clockController.updateLabel(label)
+  }
 }
