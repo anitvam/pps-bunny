@@ -13,11 +13,20 @@ import scala.language.implicitConversions
 
 object Simulation {
 
-  def wolvesEat: IO[Unit] = applyFactorDamage(WolvesFactorKind)
+  def wolvesEat: IO[Unit] = {
+    ScalaFXView.updateClock("Wolf")
+    applyFactorDamage(WolvesFactorKind)
+  }
 
-  def bunniesEat: IO[Unit] = applyFactorDamage(FoodFactorKind)
+  def bunniesEat: IO[Unit] = {
+    ScalaFXView.updateClock("Food")
+    applyFactorDamage(FoodFactorKind)
+  }
 
-  def applyTemperatureDamage: IO[Unit] = applyFactorDamage(UnfriendlyClimateFactorKind)
+  def applyTemperatureDamage: IO[Unit] = {
+    ScalaFXView.updateClock("Temperature")
+    applyFactorDamage(UnfriendlyClimateFactorKind)
+  }
 
   def updateView(generationPhase: GenerationPhase): IO[Unit] =
     ScalaFXView.updateView(generationPhase, getActualPopulation)
@@ -35,6 +44,7 @@ object Simulation {
   }
 
   def startNewGeneration: IO[Unit] = {
+    ScalaFXView.updateClock("New Gen")
     SimulationHistory.startNextGeneration()
   }
 

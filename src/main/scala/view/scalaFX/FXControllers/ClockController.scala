@@ -14,7 +14,7 @@ trait ClockControllerInterface {
   def start(): Unit
 
   /** Rotate the clock hand to corresponding period */
-  def rotateClockHand(rotation: Double): Unit
+  def rotateClockHand(): Unit
 
   def updateLabel(label: String): Unit
 }
@@ -56,8 +56,8 @@ class ClockController extends ClockControllerInterface {
   override def start(): Unit = {
   }
 
-  override def rotateClockHand(rotation: Double): Unit =
-    hourHand.getTransforms.add(new Rotate(rotation * (360 / 4)))
+  override def rotateClockHand(): Unit =
+    hourHand.getTransforms.add(new Rotate(90))
 
   override def updateLabel(label: String): Unit = labelClock.setText(label)
 }
