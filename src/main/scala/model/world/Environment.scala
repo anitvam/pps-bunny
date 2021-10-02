@@ -2,9 +2,9 @@ package model.world
 
 import model.genome.KindsUtils
 import model.mutation.Mutation
-import model.world.Environment.{ Factors, Mutations }
+import model.world.Environment.Mutations
 import model.world.disturbingFactors.FactorTypes._
-import model.world.disturbingFactors.{ Factor, FoodFactor }
+import model.world.disturbingFactors.{ Factor, Factors, FoodFactor }
 import util.PimpScala._
 
 /** Environment of a Generation */
@@ -45,7 +45,6 @@ trait Environment {
 object Environment {
 
   type Mutations = List[Mutation]
-  type Factors = List[Factor]
 
   /**
    * Generate an Environment from the previous one
@@ -62,26 +61,9 @@ object Environment {
       override var mutations: Mutations = List()
   ) extends Environment {
 
-    override def introduceFactor(factor: Factor): Unit = factors = managedFactor(factor)(
-      factors.foodFactorIsPresent,
-      factors.combineFoodFactor(_),
-      _ :: factors
-    )
+    override def introduceFactor(factor: Factor): Unit = factors addFactor factor
 
-    override def removeFactor(factor: Factor): Unit = factors = managedFactor(factor)(
-      factors.foodFactorIsPresent && factors.getFoodFactor.isCombined,
-      factors.updateFoodFactor(_),
-      f => factors -? (_.factorType == f.factorType)
-    )
-
-    private def managedFactor(factor: Factor)(
-        foodFactorCondition: Boolean,
-        foodFactorOp: FoodFactor => Factors,
-        otherFactorOp: Factor => Factors
-    ): Factors = factor.factorType match {
-      case FoodFactorKind if foodFactorCondition => foodFactorOp(factor.asInstanceOf[FoodFactor])
-      case _                                     => otherFactorOp(factor)
-    }
+    override def removeFactor(factor: Factor): Unit = factors removeFactor factor
 
     /** Introduce a new mutation */
     def introduceMutation(mutation: Mutation): Unit = {

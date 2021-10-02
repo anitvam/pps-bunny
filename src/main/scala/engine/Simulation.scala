@@ -5,6 +5,7 @@ import controller.Controller
 import engine.SimulationHistory._
 import model.world.disturbingFactors.FactorTypes._
 import model.world.GenerationsUtils.GenerationPhase
+import util.PimpScala.RichOption
 import view.scalaFX.ScalaFXView
 
 import scala.language.implicitConversions
@@ -32,11 +33,9 @@ object Simulation {
 
   implicit def unitToIO(exp: => Unit): IO[Unit] = IO { exp }
 
-  private def applyFactorDamage(factorKind: FactorKind): Unit = getActualGeneration.environment.factors
-    .filter(_.factorType == factorKind)
-    .foreach(factor => {
-      println("APPLICO: " + factor.getClass)
-      getActualGeneration.population = factor.applyDamage(getActualPopulation, getActualGeneration.environment.climate)
-    })
+  private def applyFactorDamage(factorKind: FactorKind): Unit =
+    getActualGeneration.environment.factors.getFactor(factorKind) --> { f =>
+      getActualGeneration.population = f applyDamage (getActualPopulation, getActualGeneration.environment.climate)
+    }
 
 }

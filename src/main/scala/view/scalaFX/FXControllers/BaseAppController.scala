@@ -6,6 +6,7 @@ import javafx.fxml.FXML
 import javafx.scene.{ layout => jfxs }
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
+import model.world.disturbingFactors.Factors
 import scalafx.Includes._
 import scalafx.scene.control.{ Button, Label }
 import scalafx.scene.layout.{ AnchorPane, Background }
@@ -135,7 +136,7 @@ class BaseAppController(
   /** Handler of Start button click */
   def startSimulation(): Unit = {
     startButton.setVisible(false)
-    Controller.startSimulation(simulationPane.background, List.empty)
+    Controller.startSimulation()
   }
 
   /** Handler of Summer button click */
