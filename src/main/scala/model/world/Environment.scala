@@ -5,6 +5,9 @@ import model.mutation.Mutation
 import model.world.Environment.{ Factors, Mutations }
 import model.world.FactorsUtils.FactorTypes._
 import util.PimpScala._
+import model.world.disturbingFactors.{ Factor, FoodFactor }
+import model.world.disturbingFactors._
+import model.world.disturbingFactors.FactorTypes._
 
 /** Environment of a Generation */
 trait Environment {

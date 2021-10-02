@@ -3,7 +3,9 @@ package view.scalaFX.FXControllers
 import controller.Controller
 import engine.SimulationHistory
 import javafx.fxml.FXML
-import model.world.{ Factor, HighFoodFactor, LimitedFoodFactor, ToughFoodFactor }
+import model.world.disturbingFactors.{
+  Factor, HighFoodFactor, LimitedFoodFactor, ToughFoodFactor, UnfriendlyClimate, Wolves
+}
 import scalafx.scene.control.CheckBox
 import scalafx.scene.image.{ Image, ImageView }
 import scalafxml.core.macros.sfxml
@@ -74,7 +76,7 @@ class FactorsPanelController(
     }
   }
 
-  def onWolfClick(): Unit = onFactorClick(wolfCheckBox, Factor.Wolves())
+  def onWolfClick(): Unit = onFactorClick(wolfCheckBox, Wolves())
 
   def onToughFoodClick(): Unit = {
     onFactorClick(
@@ -100,7 +102,7 @@ class FactorsPanelController(
     manageEnvironmentBackgroundChange()
   }
 
-  def onHostileTemperatureClick(): Unit = onFactorClick(hostileTemperatureCheckBox, Factor.UnfriendlyClimate())
+  def onHostileTemperatureClick(): Unit = onFactorClick(hostileTemperatureCheckBox, UnfriendlyClimate())
 
   override def showWolvesEating(): Unit = {
     if (wolfCheckBox.isSelected) wolvesView foreach (w => {
