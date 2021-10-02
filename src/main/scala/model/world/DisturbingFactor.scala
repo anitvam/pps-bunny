@@ -8,10 +8,7 @@ import model.genome.Genes.GeneKind
 import model.world.Factor.BasicFactor
 import model.world.FactorsUtils.{ applyCustomDamage, filterBunniesWithAlleles }
 import model.world.Generation.Population
-
-import java.util
 import scala.util.Random
-import scala.util.Random._
 
 sealed trait Factor {
   import model.world.FactorsUtils.FactorTypes._
@@ -41,7 +38,12 @@ sealed trait FactorWithOneGene extends Factor {
    * @return
    *   a Option[GeneKind]
    */
-  val afflictedGene: GeneKind
+  val affectedGene: GeneKind
+}
+
+sealed trait FactorWithTwoGenes extends Factor {
+  val firstGeneAffected: GeneKind
+  val secondGeneAffected: GeneKind
 }
 
 sealed trait PredatorFactor extends Factor {
@@ -57,68 +59,61 @@ sealed trait FoodFactor extends Factor {
   import model.world.FactorsUtils.FactorTypes._
 
   override val normalDamage: Double = FOOD_FACTOR_NORMAL_DAMAGE
-  val lowDamage: Double = FOOD_FACTOR_LOW_DAMAGE
-
   override def factorType: FactorKind = FoodFactorKind
+
+  val lowDamage: Double = FOOD_FACTOR_LOW_DAMAGE
 
   def combineWith(foodFactor: FoodFactor): FoodFactor
   def isCombined: Boolean
   def removeSubFactor(foodFactor: FoodFactor): FoodFactor
 }
 
-case class LimitedFoodFactor(override val isCombined: Boolean = false) extends BasicFactor with FoodFactor {
+abstract class SingleFoodFactor(override val isCombined: Boolean = false) extends BasicFactor with FoodFactor {
+  abstract val concatFactor: PartialFunction[FoodFactor, FoodFactor]
 
-  override def combineWith(foodFactor: FoodFactor): FoodFactor = foodFactor match {
+  override def combineWith(foodFactor: FoodFactor): FoodFactor = concatFactor applyOrElse(foodFactor, throw new InvalidFoodFactor())
+  override def removeSubFactor(foodFactor: FoodFactor): FoodFactor = throw new UnsupportedOperationException()
+}
+
+case class LimitedFoodFactor(override val isCombined: Boolean = false) extends SingleFoodFactor {
+
+  override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = {
     case _: HighFoodFactor  => LimitedHighFoodFactor()
     case _: ToughFoodFactor => LimitedToughFoodFactor()
-    case _                  => throw new InvalidFoodFactor()
   }
-
-  override def removeSubFactor(foodFactor: FoodFactor): FoodFactor = throw new UnsupportedOperationException()
 }
 
-case class HighFoodFactor(override val afflictedGene: GeneKind = Genes.JUMP, override val isCombined: Boolean = false)
-    extends BasicFactor
-    with FoodFactor
-    with FactorWithOneGene {
+case class HighFoodFactor(override val affectedGene: GeneKind = Genes.JUMP)
+    extends SingleFoodFactor with FactorWithOneGene {
 
-  override def combineWith(foodFactor: FoodFactor): FoodFactor = foodFactor match {
+  override def applyDamage(bunnies: Population, climate: Climate): Population = {
+    super.applyDamage(Bunny.splitBunniesByGene(affectedGene, bunnies)._1, climate)
+    bunnies
+  }
+
+  override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = {
     case _: LimitedFoodFactor => LimitedHighFoodFactor()
     case _: ToughFoodFactor   => LimitedToughFoodFactor()
-    case _                    => throw new InvalidFoodFactor()
   }
-
-  override def applyDamage(bunnies: Population, climate: Climate): Population = {
-    super.applyDamage(Bunny.splitBunniesByGene(afflictedGene, bunnies)._1, climate)
-    bunnies
-  }
-
-  override def removeSubFactor(foodFactor: FoodFactor): FoodFactor = throw new UnsupportedOperationException()
-
 }
 
-case class ToughFoodFactor(override val afflictedGene: GeneKind = Genes.TEETH, override val isCombined: Boolean = false)
-    extends BasicFactor
-    with FoodFactor
+case class ToughFoodFactor(override val affectedGene: GeneKind = Genes.TEETH)
+    extends SingleFoodFactor
     with FactorWithOneGene {
 
-  override def combineWith(foodFactor: FoodFactor): FoodFactor = foodFactor match {
-    case _: LimitedFoodFactor => LimitedToughFoodFactor()
-    case _: HighFoodFactor    => HighToughFoodFactor()
-    case _                    => throw new InvalidFoodFactor()
-  }
-
   override def applyDamage(bunnies: Population, climate: Climate): Population = {
-    super.applyDamage(Bunny.splitBunniesByGene(afflictedGene, bunnies)._1, climate)
+    super.applyDamage(Bunny.splitBunniesByGene(affectedGene, bunnies)._1, climate)
     bunnies
   }
 
-  override def removeSubFactor(foodFactor: FoodFactor): FoodFactor = throw new UnsupportedOperationException()
-
+  override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = {
+    case _: LimitedFoodFactor => LimitedToughFoodFactor()
+    case _: HighFoodFactor    => HighToughFoodFactor()
+  }
 }
 
 case class LimitedHighFoodFactor(
-    override val afflictedGene: GeneKind = Genes.JUMP,
+    override val affectedGene: GeneKind = Genes.JUMP,
     override val isCombined: Boolean = true
 ) extends BasicFactor
     with FoodFactor
@@ -130,8 +125,7 @@ case class LimitedHighFoodFactor(
   }
 
   override def applyDamage(bunnies: Population, climate: Climate): Population = {
-    val bunniesSplitByHighFoodGene = Bunny.splitBunniesByGene(afflictedGene, bunnies)
-
+    val bunniesSplitByHighFoodGene = Bunny.splitBunniesByGene(affectedGene, bunnies)
     super.applyDamage(bunniesSplitByHighFoodGene._1, climate)
     applyCustomDamage(bunniesSplitByHighFoodGene._2, lowDamage)
     bunnies
@@ -146,7 +140,7 @@ case class LimitedHighFoodFactor(
 }
 
 case class LimitedToughFoodFactor(
-    override val afflictedGene: GeneKind = Genes.TEETH,
+    override val affectedGene: GeneKind = Genes.TEETH,
     override val isCombined: Boolean = true
 ) extends BasicFactor
     with FoodFactor
@@ -158,7 +152,7 @@ case class LimitedToughFoodFactor(
   }
 
   override def applyDamage(bunnies: Population, climate: Climate): Population = {
-    val bunniesSplitByToughFoodGene = Bunny.splitBunniesByGene(afflictedGene, bunnies)
+    val bunniesSplitByToughFoodGene = Bunny.splitBunniesByGene(affectedGene, bunnies)
 
     super.applyDamage(bunniesSplitByToughFoodGene._1, climate)
     applyCustomDamage(bunniesSplitByToughFoodGene._2, lowDamage)
@@ -174,13 +168,13 @@ case class LimitedToughFoodFactor(
 
 }
 
-case class HighToughFoodFactor(override val isCombined: Boolean = true) extends BasicFactor with FoodFactor {
-
-  /** @return The GeneKind afflicted by HighFood */
-  val highFoodDamagedGene: GeneKind = Genes.JUMP
-
-  /** @return The GeneKind afflicted by ToughFood */
-  val toughFoodDamagedGene: GeneKind = Genes.TEETH
+case class HighToughFoodFactor(
+    override val isCombined: Boolean = true,
+    override val firstGeneAffected: GeneKind = Genes.JUMP,
+    override val secondGeneAffected: GeneKind = Genes.TEETH
+) extends BasicFactor
+    with FactorWithTwoGenes
+    with FoodFactor {
 
   override def combineWith(foodFactor: FoodFactor): FoodFactor = foodFactor match {
     case _: LimitedFoodFactor => LimitedHighToughFoodFactor()
@@ -188,10 +182,10 @@ case class HighToughFoodFactor(override val isCombined: Boolean = true) extends 
   }
 
   override def applyDamage(bunnies: Population, climate: Climate): Population = {
-    val bunniesSplitByHighFoodGene = Bunny.splitBunniesByGene(highFoodDamagedGene, bunnies)
+    val bunniesSplitByHighFoodGene = Bunny.splitBunniesByGene(firstGeneAffected, bunnies)
     super.applyDamage(bunniesSplitByHighFoodGene._1, climate)
     applyCustomDamage(
-      filterBunniesWithAlleles(bunnies, highFoodDamagedGene.mutated, toughFoodDamagedGene.base),
+      filterBunniesWithAlleles(bunnies, firstGeneAffected.mutated, secondGeneAffected.base),
       lowDamage
     )
     bunnies
@@ -205,25 +199,25 @@ case class HighToughFoodFactor(override val isCombined: Boolean = true) extends 
 
 }
 
-case class LimitedHighToughFoodFactor(override val isCombined: Boolean = true) extends BasicFactor with FoodFactor {
-
-  /** @return The GeneKind afflicted by HighFood */
-  val highFoodDamagedGene: GeneKind = Genes.JUMP
-
-  /** @return The GeneKind afflicted by ToughFood */
-  val toughFoodDamagedGene: GeneKind = Genes.TEETH
+case class LimitedHighToughFoodFactor(
+    override val isCombined: Boolean = true,
+    override val firstGeneAffected: GeneKind = Genes.JUMP,
+    override val secondGeneAffected: GeneKind = Genes.TEETH
+) extends BasicFactor
+    with FactorWithTwoGenes
+    with FoodFactor {
 
   override def combineWith(foodFactor: FoodFactor): FoodFactor = throw new InvalidFoodFactor()
 
   override def applyDamage(bunnies: Population, climate: Climate): Population = {
-    val bunniesSplitByHighFoodGene = Bunny.splitBunniesByGene(highFoodDamagedGene, bunnies)
+    val bunniesSplitByHighFoodGene = Bunny.splitBunniesByGene(firstGeneAffected, bunnies)
     super.applyDamage(bunniesSplitByHighFoodGene._1, climate)
     super.applyDamage(
-      filterBunniesWithAlleles(bunnies, highFoodDamagedGene.mutated, toughFoodDamagedGene.base),
+      filterBunniesWithAlleles(bunnies, firstGeneAffected.mutated, secondGeneAffected.base),
       climate
     )
     applyCustomDamage(
-      filterBunniesWithAlleles(bunnies, highFoodDamagedGene.mutated, toughFoodDamagedGene.mutated),
+      filterBunniesWithAlleles(bunnies, firstGeneAffected.mutated, secondGeneAffected.mutated),
       lowDamage
     )
     bunnies
@@ -239,6 +233,7 @@ case class LimitedHighToughFoodFactor(override val isCombined: Boolean = true) e
 }
 
 object Factor {
+  import model.world.FactorsUtils.FactorTypes._
 
   abstract class BasicFactor extends Factor {
 
@@ -272,22 +267,20 @@ object Factor {
 
   }
 
-  import model.world.FactorsUtils.FactorTypes._
-
   case class UnfriendlyClimate(
       override val normalDamage: Double = UNFRIENDLY_CLIMATE_DAMAGE,
       override val factorType: FactorKind = UnfriendlyClimateFactorKind,
-      afflictedGene: GeneKind = Genes.FUR_LENGTH
+      override val affectedGene: GeneKind = Genes.FUR_LENGTH
   ) extends ClimateFactor
       with FactorWithOneGene {
 
     override protected def summerAction(bunnies: Population): Population = {
-      val splitBunnies = Bunny.splitBunniesByGene(afflictedGene, bunnies)
+      val splitBunnies = Bunny.splitBunniesByGene(affectedGene, bunnies)
       applyCustomDamage(splitBunnies._2, normalDamage) ++ splitBunnies._1
     }
 
     override protected def winterAction(bunnies: Population): Population = {
-      val splitBunnies = Bunny.splitBunniesByGene(afflictedGene, bunnies)
+      val splitBunnies = Bunny.splitBunniesByGene(affectedGene, bunnies)
       applyCustomDamage(splitBunnies._1, normalDamage) ++ splitBunnies._2
     }
 
@@ -297,12 +290,12 @@ object Factor {
       override val normalDamage: Double = WOLF_MEDIUM_DAMAGE,
       override val lowDamage: Double = WOLF_LOW_DAMAGE,
       override val highDamage: Double = WOLF_HIGH_DAMAGE,
-      override val factorType: FactorKind = WolvesFactorKind
+      override val factorType: FactorKind = WolvesFactorKind,
+      override val firstGeneAffected: GeneKind = Genes.FUR_COLOR,
+      override val secondGeneAffected: GeneKind = Genes.EARS
   ) extends ClimateFactor
-      with PredatorFactor {
-
-    private val firstGeneAffected: GeneKind = Genes.FUR_COLOR
-    private val secondGeneAffected: GeneKind = Genes.EARS
+      with PredatorFactor
+      with FactorWithTwoGenes {
 
     override def summerAction(bunnies: Population): Population = killBunnies(
       bunnies,
