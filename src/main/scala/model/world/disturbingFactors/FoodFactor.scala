@@ -1,14 +1,13 @@
 package model.world.disturbingFactors
 
-import engine.SimulationConstants.{ FOOD_FACTOR_LOW_DAMAGE, FOOD_FACTOR_NORMAL_DAMAGE }
+import engine.SimulationConstants._
 import model.{ Bunny, InvalidFoodFactor }
 import model.genome.Genes
 import model.genome.Genes.GeneKind
 import model.world.Climate
 import model.world.Generation.Population
-import model.world.disturbingFactors.BasicFactor
 import model.world.disturbingFactors.FactorTypes._
-import model.world.disturbingFactors.FactorsUtils.{ applyCustomDamage, filterBunniesWithAlleles }
+import model.world.disturbingFactors.FactorsUtils._
 
 sealed trait FoodFactor extends Factor {
 
@@ -23,15 +22,32 @@ sealed trait FoodFactor extends Factor {
 }
 
 abstract class SingleFoodFactor(override val isCombined: Boolean = false) extends BasicFactor with FoodFactor {
+
   val concatFactor: PartialFunction[FoodFactor, FoodFactor]
 
-  override def combineWith(foodFactor: FoodFactor): FoodFactor =
-    concatFactor applyOrElse (foodFactor, throw new InvalidFoodFactor())
+  override def combineWith(foodFactor: FoodFactor): FoodFactor = {
+    //concatFactor applyOrElse (foodFactor, throw new InvalidFoodFactor())
+    if (concatFactor isDefinedAt foodFactor) concatFactor(foodFactor) else throw new InvalidFoodFactor()
+  }
 
   override def removeSubFactor(foodFactor: FoodFactor): FoodFactor = throw new UnsupportedOperationException()
 }
 
-case class LimitedFoodFactor(override val isCombined: Boolean = false) extends SingleFoodFactor {
+abstract class DoubleFoodFactor(override val isCombined: Boolean = true) extends SingleFoodFactor {
+  val decoupleFactor: PartialFunction[FoodFactor, FoodFactor]
+
+  override def removeSubFactor(foodFactor: FoodFactor): FoodFactor =
+    decoupleFactor applyOrElse (foodFactor, throw new InvalidFoodFactor())
+
+}
+
+abstract class TripleFoodFactor() extends DoubleFoodFactor {
+  override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = PartialFunction.empty
+
+  override def combineWith(foodFactor: FoodFactor): FoodFactor = throw new UnsupportedOperationException()
+}
+
+case class LimitedFoodFactor() extends SingleFoodFactor {
 
   override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = {
     case _: HighFoodFactor  => LimitedHighFoodFactor()
@@ -72,17 +88,9 @@ case class ToughFoodFactor(override val affectedGene: GeneKind = Genes.TEETH)
 
 }
 
-case class LimitedHighFoodFactor(
-    override val affectedGene: GeneKind = Genes.JUMP,
-    override val isCombined: Boolean = true
-) extends BasicFactor
-    with FoodFactor
+case class LimitedHighFoodFactor(override val affectedGene: GeneKind = Genes.JUMP)
+    extends DoubleFoodFactor
     with FactorWithOneGene {
-
-  override def combineWith(foodFactor: FoodFactor): FoodFactor = foodFactor match {
-    case _: ToughFoodFactor => LimitedHighToughFoodFactor()
-    case _                  => throw new InvalidFoodFactor()
-  }
 
   override def applyDamage(bunnies: Population, climate: Climate): Population = {
     val bunniesSplitByHighFoodGene = Bunny.splitBunniesByGene(affectedGene, bunnies)
@@ -91,25 +99,20 @@ case class LimitedHighFoodFactor(
     bunnies
   }
 
-  override def removeSubFactor(foodFactor: FoodFactor): FoodFactor = foodFactor match {
+  override val decoupleFactor: PartialFunction[FoodFactor, FoodFactor] = {
     case _: LimitedFoodFactor => HighFoodFactor()
     case _: HighFoodFactor    => LimitedFoodFactor()
-    case _                    => throw new InvalidFoodFactor()
+  }
+
+  override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = { case _: ToughFoodFactor =>
+    LimitedHighToughFoodFactor()
   }
 
 }
 
-case class LimitedToughFoodFactor(
-    override val affectedGene: GeneKind = Genes.TEETH,
-    override val isCombined: Boolean = true
-) extends BasicFactor
-    with FoodFactor
+case class LimitedToughFoodFactor(override val affectedGene: GeneKind = Genes.TEETH)
+    extends DoubleFoodFactor
     with FactorWithOneGene {
-
-  override def combineWith(foodFactor: FoodFactor): FoodFactor = foodFactor match {
-    case _: HighFoodFactor => LimitedHighToughFoodFactor()
-    case _                 => throw new InvalidFoodFactor()
-  }
 
   override def applyDamage(bunnies: Population, climate: Climate): Population = {
     val bunniesSplitByToughFoodGene = Bunny.splitBunniesByGene(affectedGene, bunnies)
@@ -120,26 +123,22 @@ case class LimitedToughFoodFactor(
     bunnies
   }
 
-  override def removeSubFactor(foodFactor: FoodFactor): FoodFactor = foodFactor match {
+  override val decoupleFactor: PartialFunction[FoodFactor, FoodFactor] = {
     case _: LimitedFoodFactor => ToughFoodFactor()
     case _: ToughFoodFactor   => LimitedFoodFactor()
-    case _                    => throw new InvalidFoodFactor()
+  }
+
+  override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = { case _: HighFoodFactor =>
+    LimitedHighToughFoodFactor()
   }
 
 }
 
 case class HighToughFoodFactor(
-    override val isCombined: Boolean = true,
     override val firstGeneAffected: GeneKind = Genes.JUMP,
     override val secondGeneAffected: GeneKind = Genes.TEETH
-) extends BasicFactor
-    with FactorWithTwoGenes
-    with FoodFactor {
-
-  override def combineWith(foodFactor: FoodFactor): FoodFactor = foodFactor match {
-    case _: LimitedFoodFactor => LimitedHighToughFoodFactor()
-    case _                    => throw new InvalidFoodFactor()
-  }
+) extends DoubleFoodFactor
+    with FactorWithTwoGenes {
 
   override def applyDamage(bunnies: Population, climate: Climate): Population = {
     val bunniesSplitByHighFoodGene = Bunny.splitBunniesByGene(firstGeneAffected, bunnies)
@@ -151,23 +150,22 @@ case class HighToughFoodFactor(
     bunnies
   }
 
-  override def removeSubFactor(foodFactor: FoodFactor): FoodFactor = foodFactor match {
+  override val decoupleFactor: PartialFunction[FoodFactor, FoodFactor] = {
     case _: HighFoodFactor  => ToughFoodFactor()
     case _: ToughFoodFactor => HighFoodFactor()
-    case _                  => throw new InvalidFoodFactor()
+  }
+
+  override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = { case _: LimitedFoodFactor =>
+    LimitedHighToughFoodFactor()
   }
 
 }
 
 case class LimitedHighToughFoodFactor(
-    override val isCombined: Boolean = true,
     override val firstGeneAffected: GeneKind = Genes.JUMP,
     override val secondGeneAffected: GeneKind = Genes.TEETH
-) extends BasicFactor
-    with FactorWithTwoGenes
-    with FoodFactor {
-
-  override def combineWith(foodFactor: FoodFactor): FoodFactor = throw new InvalidFoodFactor()
+) extends TripleFoodFactor
+    with FactorWithTwoGenes {
 
   override def applyDamage(bunnies: Population, climate: Climate): Population = {
     val bunniesSplitByHighFoodGene = Bunny.splitBunniesByGene(firstGeneAffected, bunnies)
@@ -183,11 +181,10 @@ case class LimitedHighToughFoodFactor(
     bunnies
   }
 
-  override def removeSubFactor(foodFactor: FoodFactor): FoodFactor = foodFactor match {
+  override val decoupleFactor: PartialFunction[FoodFactor, FoodFactor] = {
     case _: LimitedFoodFactor => HighToughFoodFactor()
     case _: ToughFoodFactor   => LimitedHighFoodFactor()
     case _: HighFoodFactor    => LimitedToughFoodFactor()
-    case _                    => throw new InvalidFoodFactor()
   }
 
 }
