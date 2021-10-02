@@ -61,9 +61,9 @@ object Environment {
       override var mutations: Mutations = List()
   ) extends Environment {
 
-    override def introduceFactor(factor: Factor): Unit = factors addFactor factor
+    override def introduceFactor(factor: Factor): Unit = factors add factor
 
-    override def removeFactor(factor: Factor): Unit = factors removeFactor factor
+    override def removeFactor(factor: Factor): Unit = factors remove factor
 
     /** Introduce a new mutation */
     def introduceMutation(mutation: Mutation): Unit = {

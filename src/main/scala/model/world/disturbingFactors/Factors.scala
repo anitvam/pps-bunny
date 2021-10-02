@@ -17,12 +17,12 @@ case class Factors(private var factors: List[Factor] = List()) {
 
   def getFactor(factorKind: FactorKind): Option[Factor] = factors.find(_.factorType == factorKind)
 
-  def addFactor(factor: Factor): Unit = factor.factorType match {
+  def add(factor: Factor): Unit = factor.factorType match {
     case FoodFactorKind if foodFactorIsPresent => factors = combineFoodFactor(factor.asInstanceOf[FoodFactor])
     case _                                     => factors = factor :: factors
   }
 
-  def removeFactor(factor: Factor): Unit = factor.factorType match {
+  def remove(factor: Factor): Unit = factor.factorType match {
     case FoodFactorKind if foodFactorIsPresent && getFoodFactor.isCombined =>
       factors = updateFoodFactor(factor.asInstanceOf[FoodFactor])
     case _ => factors = factors -? (_.factorType == factor.factorType)
