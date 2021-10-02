@@ -36,8 +36,9 @@ object Simulation {
 
   private def applyFactorDamage(factorKind: FactorKind): Unit = getActualGeneration.environment.factors
     .filter(_.factorType == factorKind)
-    .foreach(factor =>
+    .foreach(factor => {
+      println("APPLICO: " + factor.getClass)
       getActualGeneration.population = factor.applyDamage(getActualPopulation, getActualGeneration.environment.climate)
-    )
+    })
 
 }

@@ -1,13 +1,10 @@
 package model.world
 
-import engine.SimulationHistory.getActualGeneration
 import model.genome.KindsUtils
 import model.mutation.Mutation
 import model.world.Environment.{ Factors, Mutations }
-import model.world.Factor._
 import model.world.FactorsUtils.FactorTypes._
-
-import scala.::
+import util.PimpScala._
 
 /** Environment of a Generation */
 trait Environment {
@@ -64,29 +61,32 @@ object Environment {
       override var mutations: Mutations = List()
   ) extends Environment {
 
-    override def introduceFactor(factor: Factor): Unit = factor.factorType match {
-      case FoodFactorKind if factors.exists(_.factorType == FoodFactorKind) =>
-        val previous: FoodFactor = factors.filter(_.factorType == FoodFactorKind).head.asInstanceOf[FoodFactor]
-        factors = factors.filter(_.factorType != factor.factorType)
-        factors = previous.combineWith(factor.asInstanceOf[FoodFactor]) :: factors
-      case _ => factors = factor :: factors
+    override def introduceFactor(factor: Factor): Unit = factors = managedFactor(factor)(
+      factors.foodFactorIsPresent,
+      factors.combineFoodFactor(_),
+      _ :: factors
+    )
 
-    }
+    override def removeFactor(factor: Factor): Unit = factors = managedFactor(factor)(
+      factors.foodFactorIsPresent && factors.getFoodFactor.isCombined,
+      factors.updateFoodFactor(_),
+      f => factors -? (_.factorType == f.factorType)
+    )
 
-    override def removeFactor(factor: Factor): Unit = factor.factorType match {
-      case FoodFactorKind if factor.asInstanceOf[FoodFactor].isCombined =>
-        val previous: FoodFactor = factors.filter(_.factorType == FoodFactorKind).head.asInstanceOf[FoodFactor]
-        factors = factors.filter(_.factorType != factor.factorType)
-        factors = previous.removeSubFactor(factor.asInstanceOf[FoodFactor]) :: factors
-      case _ => factors = factors.filter(_.factorType != factor.factorType)
+    private def managedFactor(factor: Factor)(
+        foodFactorCondition: Boolean,
+        foodFactorOp: FoodFactor => Factors,
+        otherFactorOp: Factor => Factors
+    ): Factors = factor.factorType match {
+      case FoodFactorKind if foodFactorCondition => foodFactorOp(factor.asInstanceOf[FoodFactor])
+      case _                                     => otherFactorOp(factor)
     }
 
     /** Introduce a new mutation */
     def introduceMutation(mutation: Mutation): Unit = {
-      mutations = mutation :: mutations
-
       if (mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
       else KindsUtils.setAlleleDominance(mutation.geneKind.base)
+      mutations = mutation :: mutations
     }
 
   }
