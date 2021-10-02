@@ -8,7 +8,7 @@ import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
 import scalafx.scene.control.{ Button, Label }
-import scalafx.scene.layout.AnchorPane
+import scalafx.scene.layout.{ AnchorPane, Background }
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
@@ -53,7 +53,7 @@ sealed trait BaseAppControllerInterface {
    * @param background
    *   the current background
    */
-  def changeBackgroundEnvironment(background: JavaBackground): Unit
+  def changeBackgroundEnvironment(background: Background): Unit
 }
 
 @sfxml
@@ -203,6 +203,6 @@ class BaseAppController(
     chartSelectionPanelController --> { _.handleBunnyClick() }
   }
 
-  override def changeBackgroundEnvironment(background: JavaBackground): Unit = simulationPane.background = background
+  override def changeBackgroundEnvironment(background: Background): Unit = simulationPane.background = background
 
 }

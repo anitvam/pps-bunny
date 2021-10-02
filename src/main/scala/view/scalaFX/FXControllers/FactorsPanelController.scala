@@ -60,7 +60,6 @@ class FactorsPanelController(
     import view.scalaFX.utilities.EnvironmentImageUtils._
     baseAppController --> { b =>
       b.changeBackgroundEnvironment(
-        getImageBackgroundCorrespondingToClimate(
           (toughFoodCheckBox.isSelected, highFoodCheckBox.isSelected, limitedFoodCheckBox.isSelected) match {
             case (false, false, false) => (SummerImage(), WinterImage())
             case (true, false, false)  => (SummerImageToughFood(), WinterImageToughFood())

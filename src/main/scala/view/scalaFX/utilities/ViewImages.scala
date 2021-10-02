@@ -129,7 +129,7 @@ object BunnyImageUtils {
 
 }
 
-/** Representation of the Environment Type */
+/** Representation of the Environment Climate */
 trait ClimateImage {
   val image: Image
 }
@@ -215,7 +215,7 @@ object EnvironmentImageUtils {
     )
   )
 
-  implicit def getImageBackgroundCorrespondingToClimate(
+  implicit def getBackgroundCorrespondingToClimate(
       climateImages: (ClimateImage, ClimateImage)
   ): Background = SimulationHistory.getActualGeneration.environment.climate match {
     case Winter() => climateImages._2
