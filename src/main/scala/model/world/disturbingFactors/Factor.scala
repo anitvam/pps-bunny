@@ -1,6 +1,5 @@
 package model.world.disturbingFactors
 
-import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
 import model.world.Climate
 import model.world.Generation.Population
@@ -28,19 +27,31 @@ trait Factor {
   def factorType: FactorKind
 }
 
-trait FactorWithOneGene extends BasicFactor {
+trait FactorOnSingleGene extends BasicFactor {
 
   /**
    * The afflicted Gene of this Factor
    * @return
-   *   a Option[GeneKind]
+   *   a GeneKind
    */
   val affectedGene: GeneKind
 
 }
 
-trait FactorWithTwoGenes extends BasicFactor {
+trait FactorOnDoubleGene extends BasicFactor {
+
+  /**
+   * The first afflicted Gene of this Factor
+   * @return
+   *   a GeneKind
+   */
   val firstGeneAffected: GeneKind
+
+  /**
+   * The second afflicted Gene of this Factor
+   * @return
+   *   a GeneKind
+   */
   val secondGeneAffected: GeneKind
 }
 
@@ -59,23 +70,6 @@ object FactorsUtils {
     Random.shuffle(bunnies) take (bunnies.length * percentage).round.toInt foreach { _.alive = false }
     bunnies
   }
-
-  /**
-   * Method that filter a population of bunnies with two AlleleKinds together
-   * @param bunnies
-   *   the bunny population
-   * @param allele1
-   *   the first allele filtered on the population
-   * @param allele2
-   *   the second allele filtered in population
-   * @return
-   *   Population the population with the specified AlleleKinds together
-   */
-  def filterBunniesWithAlleles(bunnies: Population, allele1: AlleleKind, allele2: AlleleKind): Population =
-    bunnies filter { bunny =>
-      bunny.genotype.phenotype.values.exists(_ == allele1) &&
-      bunny.genotype.phenotype.values.exists(_ == allele2)
-    }
 
 }
 

@@ -1,6 +1,7 @@
 package model.world.disturbingFactors
 
-import engine.SimulationConstants._
+import engine.SimulationConstants.FactorsConstants._
+import model.Bunny.filterBunniesWithAlleles
 import model.{ Bunny, InvalidFoodFactor }
 import model.genome.Genes
 import model.genome.Genes.GeneKind
@@ -21,13 +22,13 @@ sealed trait FoodFactor extends BasicFactor {
   def removeSubFactor(foodFactor: FoodFactor): FoodFactor
 }
 
-sealed trait FoodFactorWithOneGene extends FactorWithOneGene with FoodFactor {
+sealed trait FoodFactorOnSingleGene extends FactorOnSingleGene with FoodFactor {
 
-  def applyToBothSplitBunnies: Boolean
+  def applyToAllBunnies: Boolean
 
   override def applyDamage(bunnies: Population, climate: Climate): Population = {
     val split = Bunny.splitBunniesByGene(affectedGene, bunnies)
-    if (!applyToBothSplitBunnies) super.applyDamage(split._1, climate)
+    if (!applyToAllBunnies) super.applyDamage(split._1, climate)
     else {
       super.applyDamage(split._1, climate)
       applyCustomDamage(split._2, lowDamage)
@@ -42,7 +43,6 @@ abstract class SingleFoodFactor(override val isCombined: Boolean = false) extend
   val concatFactor: PartialFunction[FoodFactor, FoodFactor]
 
   override def combineWith(foodFactor: FoodFactor): FoodFactor = {
-    //concatFactor applyOrElse (foodFactor, throw new InvalidFoodFactor())
     if (concatFactor isDefinedAt foodFactor) concatFactor(foodFactor) else throw new InvalidFoodFactor()
   }
 
@@ -53,7 +53,6 @@ abstract class DoubleFoodFactor(override val isCombined: Boolean = true) extends
   val decoupleFactor: PartialFunction[FoodFactor, FoodFactor]
 
   override def removeSubFactor(foodFactor: FoodFactor): FoodFactor = {
-    //decoupleFactor applyOrElse (foodFactor, throw new InvalidFoodFactor())
     if (decoupleFactor isDefinedAt foodFactor) decoupleFactor(foodFactor) else throw new InvalidFoodFactor()
   }
 
@@ -76,9 +75,9 @@ case class LimitedFoodFactor() extends SingleFoodFactor {
 
 case class HighFoodFactor(
     override val affectedGene: GeneKind = Genes.JUMP,
-    override val applyToBothSplitBunnies: Boolean = false
+    override val applyToAllBunnies: Boolean = false
 ) extends SingleFoodFactor
-    with FoodFactorWithOneGene {
+    with FoodFactorOnSingleGene {
 
   override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = {
     case _: LimitedFoodFactor => LimitedHighFoodFactor()
@@ -89,9 +88,9 @@ case class HighFoodFactor(
 
 case class ToughFoodFactor(
     override val affectedGene: GeneKind = Genes.TEETH,
-    override val applyToBothSplitBunnies: Boolean = false
+    override val applyToAllBunnies: Boolean = false
 ) extends SingleFoodFactor
-    with FoodFactorWithOneGene {
+    with FoodFactorOnSingleGene {
 
   override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = {
     case _: LimitedFoodFactor => LimitedToughFoodFactor()
@@ -102,9 +101,9 @@ case class ToughFoodFactor(
 
 case class LimitedHighFoodFactor(
     override val affectedGene: GeneKind = Genes.JUMP,
-    override val applyToBothSplitBunnies: Boolean = true
+    override val applyToAllBunnies: Boolean = true
 ) extends DoubleFoodFactor
-    with FoodFactorWithOneGene {
+    with FoodFactorOnSingleGene {
 
   override val decoupleFactor: PartialFunction[FoodFactor, FoodFactor] = {
     case _: LimitedFoodFactor => HighFoodFactor()
@@ -119,9 +118,9 @@ case class LimitedHighFoodFactor(
 
 case class LimitedToughFoodFactor(
     override val affectedGene: GeneKind = Genes.TEETH,
-    override val applyToBothSplitBunnies: Boolean = true
+    override val applyToAllBunnies: Boolean = true
 ) extends DoubleFoodFactor
-    with FoodFactorWithOneGene {
+    with FoodFactorOnSingleGene {
 
   override val decoupleFactor: PartialFunction[FoodFactor, FoodFactor] = {
     case _: LimitedFoodFactor => ToughFoodFactor()
@@ -138,7 +137,7 @@ case class HighToughFoodFactor(
     override val firstGeneAffected: GeneKind = Genes.JUMP,
     override val secondGeneAffected: GeneKind = Genes.TEETH
 ) extends DoubleFoodFactor
-    with FactorWithTwoGenes {
+    with FactorOnDoubleGene {
 
   override val decoupleFactor: PartialFunction[FoodFactor, FoodFactor] = {
     case _: HighFoodFactor  => ToughFoodFactor()
@@ -164,7 +163,7 @@ case class LimitedHighToughFoodFactor(
     override val firstGeneAffected: GeneKind = Genes.JUMP,
     override val secondGeneAffected: GeneKind = Genes.TEETH
 ) extends TripleFoodFactor
-    with FactorWithTwoGenes {
+    with FactorOnDoubleGene {
 
   override def applyDamage(bunnies: Population, climate: Climate): Population = {
     super.applyDamage(Bunny.splitBunniesByGene(firstGeneAffected, bunnies)._1, climate)

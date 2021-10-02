@@ -1,11 +1,10 @@
 package model
 
-import engine.SimulationConstants
-import model.Bunny.{ generateRandomFirstBunny, splitBunniesByGene }
+import engine.SimulationConstants.FactorsConstants._
+import model.Bunny.{ filterBunniesWithAlleles, generateRandomFirstBunny, splitBunniesByGene }
 import model.genome.Genes.GeneKind
 import model.genome.{ Alleles, Genes }
 import model.world.disturbingFactors._
-import model.world.disturbingFactors.FactorsUtils.filterBunniesWithAlleles
 import model.world.Generation.Population
 import model.world.disturbingFactors.{
   HighFoodFactor, HighToughFoodFactor, LimitedFoodFactor, LimitedHighFoodFactor, LimitedHighToughFoodFactor,
@@ -34,7 +33,7 @@ class TestFactors extends FlatSpec with Matchers {
 
     unfriendlyClimateFactor.applyDamage(bunnies, Summer())
     assert(
-      bunnies.count(!_.alive) == (splitBunnies._2.length * SimulationConstants.UNFRIENDLY_CLIMATE_DAMAGE).round.toInt
+      bunnies.count(!_.alive) == (splitBunnies._2.length * UNFRIENDLY_CLIMATE_DAMAGE).round.toInt
     )
   }
 
@@ -45,7 +44,7 @@ class TestFactors extends FlatSpec with Matchers {
 
     factor.applyDamage(bunnies, Winter())
     assert(
-      bunnies.count(!_.alive) == (splitBunnies._1.length * SimulationConstants.UNFRIENDLY_CLIMATE_DAMAGE).round.toInt
+      bunnies.count(!_.alive) == (splitBunnies._1.length * UNFRIENDLY_CLIMATE_DAMAGE).round.toInt
     )
   }
 
@@ -53,11 +52,11 @@ class TestFactors extends FlatSpec with Matchers {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
     val factor = Wolves()
     val lowAffectedBunnies = filterBunniesWithAlleles(bunnies, Alleles.BROWN_FUR, Alleles.HIGH_EARS)
-    val lowAffectedNumber = (lowAffectedBunnies.length * SimulationConstants.WOLF_LOW_DAMAGE).round.toInt
+    val lowAffectedNumber = (lowAffectedBunnies.length * WOLF_LOW_DAMAGE).round.toInt
     val highAffectedBunnies = filterBunniesWithAlleles(bunnies, Alleles.WHITE_FUR, Alleles.LOW_EARS)
-    val highAffectedNumber = (highAffectedBunnies.length * SimulationConstants.WOLF_HIGH_DAMAGE).round.toInt
+    val highAffectedNumber = (highAffectedBunnies.length * WOLF_HIGH_DAMAGE).round.toInt
     val otherAffected =
-      ((bunnies.length - lowAffectedBunnies.length - highAffectedBunnies.length) * SimulationConstants.WOLF_MEDIUM_DAMAGE).round.toInt
+      ((bunnies.length - lowAffectedBunnies.length - highAffectedBunnies.length) * WOLF_MEDIUM_DAMAGE).round.toInt
 
     factor.applyDamage(bunnies, Summer())
     assert(bunnies.count(!_.alive) == lowAffectedNumber + highAffectedNumber + otherAffected)
@@ -67,11 +66,11 @@ class TestFactors extends FlatSpec with Matchers {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
     val factor = Wolves()
     val lowAffectedBunnies = filterBunniesWithAlleles(bunnies, Alleles.WHITE_FUR, Alleles.HIGH_EARS)
-    val lowAffectedNumber = (lowAffectedBunnies.length * SimulationConstants.WOLF_LOW_DAMAGE).round.toInt
+    val lowAffectedNumber = (lowAffectedBunnies.length * WOLF_LOW_DAMAGE).round.toInt
     val highAffectedBunnies = filterBunniesWithAlleles(bunnies, Alleles.BROWN_FUR, Alleles.LOW_EARS)
-    val highAffectedNumber = (highAffectedBunnies.length * SimulationConstants.WOLF_HIGH_DAMAGE).round.toInt
+    val highAffectedNumber = (highAffectedBunnies.length * WOLF_HIGH_DAMAGE).round.toInt
     val otherAffected =
-      ((bunnies.length - lowAffectedBunnies.length - highAffectedBunnies.length) * SimulationConstants.WOLF_MEDIUM_DAMAGE).round.toInt
+      ((bunnies.length - lowAffectedBunnies.length - highAffectedBunnies.length) * WOLF_MEDIUM_DAMAGE).round.toInt
 
     factor.applyDamage(bunnies, Winter())
     assert(bunnies.count(!_.alive) == lowAffectedNumber + highAffectedNumber + otherAffected)
@@ -86,7 +85,7 @@ class TestFactors extends FlatSpec with Matchers {
     assert(
       factor
         .applyDamage(bunnies, Winter())
-        .count(!_.alive) == (affectedBunnies.length * SimulationConstants.FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
+        .count(!_.alive) == (affectedBunnies.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
     )
   }
 
@@ -99,7 +98,7 @@ class TestFactors extends FlatSpec with Matchers {
     assert(
       factor
         .applyDamage(bunnies, Summer())
-        .count(!_.alive) == (affectedBunnies.length * SimulationConstants.FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
+        .count(!_.alive) == (affectedBunnies.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
     )
   }
 
@@ -108,9 +107,7 @@ class TestFactors extends FlatSpec with Matchers {
     val factor = LimitedFoodFactor()
 
     assert(
-      factor
-        .applyDamage(bunnies, Winter())
-        .count(!_.alive) == (bunnies.length * SimulationConstants.FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
+      factor.applyDamage(bunnies, Winter()).count(!_.alive) == (bunnies.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
     )
   }
 
@@ -118,7 +115,7 @@ class TestFactors extends FlatSpec with Matchers {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
     val factor = LimitedFoodFactor()
 
-    val affectedNumber = (bunnies.length * SimulationConstants.FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
+    val affectedNumber = (bunnies.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
 
     factor.applyDamage(bunnies, Summer())
     assert(bunnies.count(!_.alive) == affectedNumber)
@@ -129,7 +126,7 @@ class TestFactors extends FlatSpec with Matchers {
     val factor = ToughFoodFactor()
 
     val affectedBunnies = splitBunniesByGene(Genes.TEETH, bunnies)._1
-    val affectedNumber = (affectedBunnies.length * SimulationConstants.FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
+    val affectedNumber = (affectedBunnies.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
 
     factor.applyDamage(bunnies, Winter())
     assert(bunnies.count(!_.alive) == affectedNumber)
@@ -140,7 +137,7 @@ class TestFactors extends FlatSpec with Matchers {
     val factor = ToughFoodFactor()
 
     val affectedBunnies = splitBunniesByGene(Genes.TEETH, bunnies)._1
-    val affectedNumber = (affectedBunnies.length * SimulationConstants.FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
+    val affectedNumber = (affectedBunnies.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
 
     factor.applyDamage(bunnies, Summer())
     assert(bunnies.count(!_.alive) == affectedNumber)
@@ -149,8 +146,8 @@ class TestFactors extends FlatSpec with Matchers {
   private def countHighLimitedFoodDamage(bunnies: Population): Int = {
     val affectedBunnies = splitBunniesByGene(Genes.JUMP, bunnies)
 
-    (affectedBunnies._1.length * SimulationConstants.FOOD_FACTOR_NORMAL_DAMAGE).round.toInt +
-      (affectedBunnies._2.length * SimulationConstants.FOOD_FACTOR_LOW_DAMAGE).round.toInt
+    (affectedBunnies._1.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt +
+      (affectedBunnies._2.length * FOOD_FACTOR_LOW_DAMAGE).round.toInt
   }
 
   "HighFood and LimitedFood Factors" should "kill some bunnies on Summer" in {
@@ -171,8 +168,8 @@ class TestFactors extends FlatSpec with Matchers {
     val bunniesLowJump = splitBunniesByGene(Genes.JUMP, bunnies)._1
     val bunniesHighJumpNormalTeeth = filterBunniesWithAlleles(bunnies, Alleles.HIGH_JUMP, Alleles.SHORT_TEETH)
 
-    (bunniesLowJump.length * SimulationConstants.FOOD_FACTOR_NORMAL_DAMAGE).round.toInt +
-      (bunniesHighJumpNormalTeeth.length * SimulationConstants.FOOD_FACTOR_LOW_DAMAGE).round.toInt
+    (bunniesLowJump.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt +
+      (bunniesHighJumpNormalTeeth.length * FOOD_FACTOR_LOW_DAMAGE).round.toInt
   }
 
   "HighFood and ToughFood Factors" should "kill some bunnies on Summer" in {
@@ -192,8 +189,8 @@ class TestFactors extends FlatSpec with Matchers {
   private def countLimitedToughFoodDamage(bunnies: Population): Int = {
     val affectedBunnies = splitBunniesByGene(Genes.TEETH, bunnies)
 
-    (affectedBunnies._1.length * SimulationConstants.FOOD_FACTOR_NORMAL_DAMAGE).round.toInt +
-      (affectedBunnies._2.length * SimulationConstants.FOOD_FACTOR_LOW_DAMAGE).round.toInt
+    (affectedBunnies._1.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt +
+      (affectedBunnies._2.length * FOOD_FACTOR_LOW_DAMAGE).round.toInt
   }
 
   "ToughFood and LimitedFood Factors" should "kill some bunnies on Summer" in {
@@ -215,9 +212,9 @@ class TestFactors extends FlatSpec with Matchers {
     val bunniesHighJumpNormalTeeth = filterBunniesWithAlleles(bunnies, Alleles.HIGH_JUMP, Alleles.SHORT_TEETH)
     val bunniesHighJumpLongTeeth = filterBunniesWithAlleles(bunnies, Alleles.HIGH_JUMP, Alleles.LONG_TEETH)
 
-    (bunniesLowJump.length * SimulationConstants.FOOD_FACTOR_NORMAL_DAMAGE).round.toInt +
-      (bunniesHighJumpNormalTeeth.length * SimulationConstants.FOOD_FACTOR_NORMAL_DAMAGE).round.toInt +
-      (bunniesHighJumpLongTeeth.length * SimulationConstants.FOOD_FACTOR_LOW_DAMAGE).round.toInt
+    (bunniesLowJump.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt +
+      (bunniesHighJumpNormalTeeth.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt +
+      (bunniesHighJumpLongTeeth.length * FOOD_FACTOR_LOW_DAMAGE).round.toInt
   }
 
   "LimitedFood, HighFood and ToughFood" should "kill some bunnies on Summer" in {

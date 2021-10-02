@@ -1,12 +1,13 @@
 package model.world.disturbingFactors
 
-import engine.SimulationConstants.{ WOLF_HIGH_DAMAGE, WOLF_LOW_DAMAGE, WOLF_MEDIUM_DAMAGE }
+import engine.SimulationConstants.FactorsConstants.{ WOLF_HIGH_DAMAGE, WOLF_LOW_DAMAGE, WOLF_MEDIUM_DAMAGE }
+import model.Bunny.filterBunniesWithAlleles
 import model.genome.Genes
 import model.genome.Genes.GeneKind
 import model.world.Climate
 import model.world.Generation.Population
 import model.world.disturbingFactors.FactorTypes.{ FactorKind, WolvesFactorKind }
-import model.world.disturbingFactors.FactorsUtils.{ applyCustomDamage, filterBunniesWithAlleles }
+import model.world.disturbingFactors.FactorsUtils.applyCustomDamage
 
 sealed trait PredatorFactor extends Factor {
 
@@ -32,7 +33,7 @@ case class Wolves(
     override val secondGeneAffected: GeneKind = Genes.EARS
 ) extends ClimateFactor
     with PredatorFactor
-    with FactorWithTwoGenes {
+    with FactorOnDoubleGene {
 
   override def summerAction(bunnies: Population): Population = killBunnies(
     bunnies,

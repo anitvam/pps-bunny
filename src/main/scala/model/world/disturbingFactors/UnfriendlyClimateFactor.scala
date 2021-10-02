@@ -1,6 +1,6 @@
 package model.world.disturbingFactors
 
-import engine.SimulationConstants.UNFRIENDLY_CLIMATE_DAMAGE
+import engine.SimulationConstants.FactorsConstants.UNFRIENDLY_CLIMATE_DAMAGE
 import model.Bunny
 import model.genome.Genes
 import model.genome.Genes.GeneKind
@@ -39,7 +39,7 @@ case class UnfriendlyClimate(
     override val factorType: FactorKind = UnfriendlyClimateFactorKind,
     override val affectedGene: GeneKind = Genes.FUR_LENGTH
 ) extends ClimateFactor
-    with FactorWithOneGene {
+    with FactorOnSingleGene {
 
   override protected def summerAction(bunnies: Population): Population = {
     val splitBunnies = Bunny.splitBunniesByGene(affectedGene, bunnies)
