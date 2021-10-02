@@ -1,10 +1,8 @@
 package view.scalaFX.components
 
-import scalafx.animation.{ AnimationTimer, KeyFrame }
-import scalafx.scene.image.{ Image, ImageView }
-import view.scalaFX.ScalaFxViewConstants.{
-  PANEL_SKY_ZONE, PREFERRED_BUNNY_PANEL_HEIGHT, PREFERRED_SIMULATION_PANEL_WIDTH, PREFERRED_WOLF_PANEL_HEIGHT
-}
+import scalafx.animation.{AnimationTimer, KeyFrame}
+import scalafx.scene.image.{Image, ImageView}
+import view.scalaFX.ScalaFXConstants.{PANEL_SKY_ZONE, PREFERRED_SIMULATION_PANEL_WIDTH, PREFERRED_WOLF_PANEL_HEIGHT}
 import view.scalaFX.utilities.Direction
 import view.scalaFX.utilities.Direction._
 
@@ -17,11 +15,10 @@ trait WolfView {
   /** Reference to the model disturbing factor entity */
 //  val wolf: DisturbingFactor
 
-  /** The image of the disturbing factor displayed on the GUI */
-  val imageView: ImageView
-
   /** Type annotation for a Seq of KeyFrames */
   type AnimationFrames = Seq[KeyFrame]
+  /** The image of the disturbing factor displayed on the GUI */
+  val imageView: ImageView
 
   /** Starts the disturbing factor animation */
   def play(): Unit
@@ -55,8 +52,6 @@ object WolfView {
   ) extends WolfView {
     private val SPEED = 200
     private val movingSpace = PREFERRED_SIMULATION_PANEL_WIDTH / SPEED
-    private var lastTime = 0L
-
     private val timer: AnimationTimer = AnimationTimer(t => {
       if (lastTime > 0) {
         checkDirection()
@@ -65,6 +60,7 @@ object WolfView {
       }
       lastTime = t
     })
+    private var lastTime = 0L
 
     override def play(): Unit = timer.start()
 

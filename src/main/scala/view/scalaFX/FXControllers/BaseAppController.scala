@@ -1,27 +1,24 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-import engine.SimulationConstants.{ FOOD_PHASE, START_PHASE, WOLVES_PHASE }
+import engine.SimulationConstants.{FOOD_PHASE, START_PHASE, WOLVES_PHASE}
 import javafx.fxml.FXML
-import javafx.scene.{ layout => jfxs }
+import javafx.scene.{layout => jfxs}
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
-import scalafx.collections.ObservableBuffer
-import scalafx.scene.control.{ Button, Label }
+import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout.AnchorPane
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
-import view.scalaFX.ScalaFxViewConstants
-import view.scalaFX.ScalaFxViewConstants.WOLVES_NUMBER
+import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
+import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
-import view.scalaFX.components.{ BunnyView, WolfView }
 import view.scalaFX.utilities.EnvironmentImageUtils._
-import view.scalaFX.utilities.{SummerImage }
-import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
-import view.scalaFX.utilities._
+import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
+import view.scalaFX.utilities.{SummerImage, _}
 
 import scala.language.postfixOps
 
@@ -108,18 +105,8 @@ class BaseAppController(
   private def initializeView(): Unit = {
     // Load the default environment background
     simulationPane.background = SummerImage()
-    populationChart =
-      Some(PopulationChart(ScalaFxViewConstants.PREFERRED_CHART_HEIGHT, ScalaFxViewConstants.PREFERRED_CHART_WIDTH))
+    populationChart = Some(PopulationChart(PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH))
     showPopulationChart()
-
-//    chartsPane.children =  PopulationChart.chart(325, 500)
-  }
-
-  private def resetSimulationPanel(): Unit = {
-    bunnyViews = Seq.empty
-    simulationPane.children = Seq.empty
-    generationLabel.text = ""
-    startButton.setVisible(true)
   }
 
   def reset(): Unit = {
@@ -134,6 +121,13 @@ class BaseAppController(
       startSimulation()
     }
     startButton.text = "RESTART"
+    startButton.setVisible(true)
+  }
+
+  private def resetSimulationPanel(): Unit = {
+    bunnyViews = Seq.empty
+    simulationPane.children = Seq.empty
+    generationLabel.text = ""
     startButton.setVisible(true)
   }
 
@@ -192,8 +186,8 @@ class BaseAppController(
     if (selectedBunny ?) {
       val pedigreeChart = PedigreeChart(
         selectedBunny.get.bunny,
-        ScalaFxViewConstants.PREFERRED_CHART_WIDTH,
-        ScalaFxViewConstants.PREFERRED_CHART_HEIGHT
+        PREFERRED_CHART_WIDTH,
+        PREFERRED_CHART_HEIGHT
       ).chartPane
       setFitParent(pedigreeChart)
       chartsPane.children = pedigreeChart

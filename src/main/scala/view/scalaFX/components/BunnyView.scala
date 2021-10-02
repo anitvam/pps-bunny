@@ -2,16 +2,16 @@ package view.scalaFX.components
 
 import model.Bunny
 import model.genome.Alleles
-import scalafx.Includes.{ at, double2DurationHelper }
-import scalafx.animation.{ KeyFrame, Timeline }
+import scalafx.Includes.{at, double2DurationHelper}
+import scalafx.animation.{KeyFrame, Timeline}
 import scalafx.scene.effect.DropShadow
-import scalafx.scene.image.{ Image, ImageView }
+import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.paint.Color
 import scalafx.util.Duration
+import view.scalaFX.ScalaFXConstants._
 import view.scalaFX.ScalaFXView
-import view.scalaFX.ScalaFxViewConstants._
 import view.scalaFX.utilities.Direction._
-import view.scalaFX.utilities.{ BunnyImageUtils, Direction, ImageType }
+import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
 
 import scala.language.postfixOps
 import scala.util.Random
