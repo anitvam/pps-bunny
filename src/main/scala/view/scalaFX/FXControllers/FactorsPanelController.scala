@@ -58,8 +58,8 @@ class FactorsPanelController(
 
   override def manageEnvironmentBackgroundChange(): Unit = {
     import view.scalaFX.utilities.EnvironmentImageUtils._
-    baseAppController --> { b =>
-      b.changeBackgroundEnvironment(
+    baseAppController --> {
+      _.changeBackgroundEnvironment(
         (toughFoodCheckBox.isSelected, highFoodCheckBox.isSelected, limitedFoodCheckBox.isSelected) match {
           case (false, false, false) => (SummerImage(), WinterImage())
           case (true, false, false)  => (SummerImageToughFood(), WinterImageToughFood())
