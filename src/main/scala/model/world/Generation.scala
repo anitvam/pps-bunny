@@ -1,7 +1,8 @@
 package model.world
 
 import engine.SimulationConstants.{
-  FOOD_INSTANT, FOOD_PHASE, GENERATION_END, START_PHASE, TEMPERATURE_PHASE, TEMP_INSTANT, WOLVES_INSTANT, WOLVES_PHASE
+  FOOD_INSTANT, FOOD_PHASE, GENERATION_END, REPRODUCTION_PHASE, TEMPERATURE_PHASE, TEMP_INSTANT, WOLVES_INSTANT,
+  WOLVES_PHASE
 }
 import model.Bunny
 import model.world.Generation.Population
@@ -64,9 +65,9 @@ object GenerationsUtils {
     def instant: Double
   }
 
-  case class StartPhase(
+  case class ReproductionPhase(
       override val generationNumber: Int,
-      override val phase: Double = START_PHASE,
+      override val phase: Double = REPRODUCTION_PHASE,
       override val instant: Double = GENERATION_END
   ) extends GenerationPhase
 

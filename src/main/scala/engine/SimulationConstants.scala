@@ -24,7 +24,7 @@ object SimulationConstants {
   val FOUR_PER_SPEED: Double = 0.25
 
   /** Double value associated to generation initial phase */
-  val START_PHASE: Double = 0.0
+  val REPRODUCTION_PHASE: Double = 0.0
 
   /** Double value associated to generation wolf phase */
   val WOLVES_PHASE: Double = 0.25

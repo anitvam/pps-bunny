@@ -41,8 +41,8 @@ object Controller {
     SimulationHistory.getActualGeneration.environment introduceMutation mutation
 
   /** Method that shows the end of the simulation on the Application GUI */
-  def showEnd(generationPhase: GenerationPhase): Unit = Platform runLater {
-    ScalaFXView.showEnd(generationPhase)
+  def showEnd(isOverpopulation: Boolean): Unit = Platform runLater {
+    ScalaFXView.showEnd(isOverpopulation)
   }
 
   /** Resets the simulation model to its initial state */

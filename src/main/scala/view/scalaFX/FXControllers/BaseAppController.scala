@@ -1,8 +1,9 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-import engine.SimulationConstants.{ FOOD_PHASE, START_PHASE, WOLVES_PHASE }
+import engine.SimulationConstants.{ FOOD_PHASE, WOLVES_PHASE }
 import javafx.fxml.FXML
+import engine.SimulationConstants.REPRODUCTION_PHASE
 import javafx.scene.{ layout => jfxs }
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
@@ -164,7 +165,7 @@ class BaseAppController(
     bunnyViews = bunnyViews.filter(_.bunny.alive)
 
     // Bunny visualization inside simulationPane
-    if (generationPhase.phase == START_PHASE) {
+    if (generationPhase.phase == REPRODUCTION_PHASE) {
       val newBunnyViews = bunnies filter { _.age == 0 } map { BunnyView(_) }
       bunnyViews = bunnyViews ++ newBunnyViews
 

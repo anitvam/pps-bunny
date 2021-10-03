@@ -1,7 +1,7 @@
 package view.scalaFX
 
 import controller.ScalaFXLauncher.stage
-import engine.SimulationConstants.START_PHASE
+import engine.SimulationConstants.REPRODUCTION_PHASE
 import javafx.{ scene => jfxs }
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
@@ -40,8 +40,8 @@ object ScalaFXView extends View {
     baseAppController --> { _.updateView(bunnies, generationPhase) }
   }
 
-  override def showEnd(generationPhase: GenerationPhase): Unit = {
-    if (generationPhase.phase == START_PHASE) {
+  override def showEnd(isOverpopulation: Boolean): Unit = {
+    if (isOverpopulation) {
       val endStage = new Stage {
         title = "Fine simulazione"
         scene = new Scene(new AnchorPane {
@@ -54,6 +54,8 @@ object ScalaFXView extends View {
         resizable = false
       }
       endStage.show()
+    } else {
+      println("FINE CAUSATA DA ESTINZIONE")
     }
     Platform.runLater { baseAppController --> { _.reset() } }
   }

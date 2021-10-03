@@ -20,7 +20,7 @@ trait View {
   def updateView(generationNumber: GenerationPhase, bunnies: Population): Unit
 
   /** Method that shows the end of the simulation to the user */
-  def showEnd(generationPhase: GenerationPhase): Unit
+  def showEnd(isOverpopulation: Boolean): Unit
 
   /**
    * Method that handle the click of a bunny

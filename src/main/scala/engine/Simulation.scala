@@ -2,7 +2,7 @@ package engine
 
 import cats.effect.IO
 import controller.Controller
-import engine.SimulationConstants.START_PHASE
+import engine.SimulationConstants.REPRODUCTION_PHASE
 import engine.SimulationHistory._
 import model.world.disturbingFactors.FactorTypes._
 import model.world.GenerationsUtils.GenerationPhase
@@ -22,13 +22,15 @@ object Simulation {
   def updateView(generationPhase: GenerationPhase): IO[Unit] =
     ScalaFXView.updateView(generationPhase, getActualPopulation)
 
-  def showEnd(generationPhase: GenerationPhase): IO[Unit] = {
-    if (generationPhase.phase == START_PHASE) ScalaFXView.updateView(generationPhase, getActualPopulation)
-    Controller.showEnd(generationPhase)
+  def overpopulation(): IO[Unit] = {
+    Controller.showEnd(true)
+  }
+
+  def extinction(): IO[Unit] = {
+    Controller.showEnd(false)
   }
 
   def startNewGeneration: IO[Unit] = {
-    println("INIZIA NUOVA GENERAZIONE")
     SimulationHistory.startNextGeneration()
   }
 
