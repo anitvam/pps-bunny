@@ -1,6 +1,6 @@
 package model
 
-import engine.SimulationHistory.introduceMutation
+import controller.Controller
 import model.Bunny.generateBaseFirstBunny
 import model.genome.Genes
 import model.genome.KindsUtils.resetDominance
@@ -19,7 +19,7 @@ class TestMutations extends FlatSpec with Matchers {
 
   "When introducing a Mutation" should "compare to the utmost only half population" in {
     resetDominance()
-    introduceMutation(mutationFurColor)
+    Controller.insertMutation(mutationFurColor)
 
     val nextGeneration = nextGenerationBunnies(children, List(mutationFurColor))
     val bunnyWithMutation = nextGeneration filter (_.genotype.phenotype(Genes.FUR_COLOR) == Genes.FUR_COLOR.mutated)
@@ -31,7 +31,7 @@ class TestMutations extends FlatSpec with Matchers {
   "When introducing more than one Mutations" should "compare only a Mutation for Bunny" in {
     resetDominance()
     val mutations = List(mutationFurColor, mutationFurLength, mutationTeeth)
-    mutations.foreach(introduceMutation)
+    mutations.foreach(Controller.insertMutation)
 
     val nextGeneration = nextGenerationBunnies(children, mutations)
     val bunnyWithMutation = nextGeneration filter (b =>
@@ -48,7 +48,7 @@ class TestMutations extends FlatSpec with Matchers {
   "When introducing more mutations than children" should "compare two mutations in some bunnies" in {
     resetDominance()
     val mutations = List(mutationFurColor, mutationFurLength, mutationTeeth, mutationEars, mutationJump)
-    mutations.foreach(introduceMutation)
+    mutations.foreach(Controller.insertMutation)
 
     val brothers: Population = generateChildren(generateBaseFirstBunny, generateBaseFirstBunny, mutations)
     val mutationsEachBunny: Seq[Int] = brothers map (b => b.genotype.mutatedAllelesQuantity)

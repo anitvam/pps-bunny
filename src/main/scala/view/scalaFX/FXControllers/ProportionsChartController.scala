@@ -2,7 +2,7 @@ package view.scalaFX.FXControllers
 
 import controller.Controller
 import engine.SimulationConstants.START_PHASE
-import javafx.scene.{ control => jfxc }
+import javafx.scene.{control => jfxc}
 import model.Bunny
 import model.genome.Genes
 import model.genome.Genes.GeneKind
@@ -12,6 +12,7 @@ import scalafx.scene.chart.PieChart
 import scalafx.scene.control.ToggleGroup
 import scalafx.scene.layout.AnchorPane
 import scalafxml.core.macros.sfxml
+import util.PimpScala.RichList
 import view.scalaFX.FXControllers.PieChartConverters._
 import view.scalaFX.FXControllers.PieChartFactory.createEmptyPieChart
 import view.scalaFX.utilities.PimpScalaFXChartLibrary._
@@ -64,7 +65,7 @@ class ProportionsChartController(
 }
 
 object PieChartConverters {
-  implicit def fromStringToGeneKind(geneName: String): GeneKind = Genes.values.filter(_.prettyName == geneName).head
+  implicit def fromStringToGeneKind(geneName: String): GeneKind = Genes.values.toList.any(_.prettyName == geneName).get
 
   implicit def percentage(d: (Int, Int)): Double = (d._1.toDouble * 100 / d._2.toDouble).round.toDouble
 

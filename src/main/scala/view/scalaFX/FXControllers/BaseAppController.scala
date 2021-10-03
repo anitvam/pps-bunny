@@ -8,7 +8,7 @@ import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
 import scalafx.scene.control.{Button, Label}
-import scalafx.scene.layout.AnchorPane
+import scalafx.scene.layout.{AnchorPane, Background}
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
@@ -16,9 +16,8 @@ import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WI
 import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
-import view.scalaFX.utilities.EnvironmentImageUtils._
 import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
-import view.scalaFX.utilities.{SummerImage, _}
+import view.scalaFX.utilities._
 
 import scala.language.postfixOps
 
@@ -52,7 +51,7 @@ sealed trait BaseAppControllerInterface {
    * @param background
    *   the current background
    */
-  def changeBackgroundEnvironment(background: JavaBackground): Unit
+  def changeBackgroundEnvironment(background: Background): Unit
 }
 
 @sfxml
@@ -104,7 +103,7 @@ class BaseAppController(
 
   private def initializeView(): Unit = {
     // Load the default environment background
-    simulationPane.background = SummerImage()
+    factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
     populationChart = Some(PopulationChart(PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH))
     showPopulationChart()
   }
@@ -134,7 +133,7 @@ class BaseAppController(
   /** Handler of Start button click */
   def startSimulation(): Unit = {
     startButton.setVisible(false)
-    Controller.startSimulation(simulationPane.background, List.empty)
+    Controller.startSimulation()
   }
 
   /** Handler of Summer button click */
@@ -202,6 +201,6 @@ class BaseAppController(
     chartSelectionPanelController --> { _.handleBunnyClick() }
   }
 
-  override def changeBackgroundEnvironment(background: JavaBackground): Unit = simulationPane.background = background
+  override def changeBackgroundEnvironment(background: Background): Unit = simulationPane.background = background
 
 }
