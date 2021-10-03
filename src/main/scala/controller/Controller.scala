@@ -4,10 +4,9 @@ import engine.SimulationEngine.simulationLoop
 import engine.SimulationHistory
 import engine.SimulationHistory.resetHistory
 import model.genome.KindsUtils.resetDominance
-import model.mutation.Mutation
 import model.world.Generation.Population
 import model.world.disturbingFactors.Factor
-import model.world.{ Summer, Winter }
+import model.world.{Mutation, Summer, Winter}
 import scalafx.application.Platform
 import view.scalaFX.ScalaFXView
 

@@ -1,10 +1,9 @@
 package model.world
 
 import model.genome.KindsUtils
-import model.mutation.Mutation
 import model.world.Environment.Mutations
 import model.world.disturbingFactors.FactorTypes._
-import model.world.disturbingFactors.{ Factor, Factors, FoodFactor }
+import model.world.disturbingFactors.{Factor, Factors, FoodFactor}
 import util.PimpScala._
 
 /** Environment of a Generation */

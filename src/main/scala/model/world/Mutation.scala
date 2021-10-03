@@ -1,4 +1,4 @@
-package model.mutation
+package model.world
 
 import model.genome.Genes.GeneKind
 

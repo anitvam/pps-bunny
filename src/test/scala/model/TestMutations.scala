@@ -4,8 +4,8 @@ import controller.Controller
 import model.Bunny.generateBaseFirstBunny
 import model.genome.Genes
 import model.genome.KindsUtils.resetDominance
-import model.mutation.Mutation
 import model.world.Generation.Population
+import model.world.Mutation
 import model.world.Reproduction.{generateChildren, nextGenerationBunnies}
 import org.scalatest.{FlatSpec, Matchers}
 
