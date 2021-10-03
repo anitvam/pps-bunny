@@ -27,9 +27,25 @@ sealed trait Genotype {
   val phenotype: Phenotype = Phenotype(genes.map(entry => (entry._1, entry._2.getVisibleTrait)))
   def apply(gk: GeneKind): Gene = genes(gk)
 
-  def isJustMutated: Boolean = genes.values.count(g =>
+  /**
+   * @return the number of mutated alleles in the genotype
+   */
+  def mutatedAllelesQuantity: Int = genes.values.count(g =>
     g.dadAllele.isInstanceOf[JustMutatedAllele] || g.momAllele.isInstanceOf[JustMutatedAllele]
-  ) > 0
+  )
+
+  /**
+   * @return true if there are mutated allels, false if not
+   */
+  def isJustMutated: Boolean = mutatedAllelesQuantity > 0
+
+  /**
+   * @param geneKind the kind of genes for which the alleles are required
+   * @return a sequence of standard alleles with the parents kind, useful during the generation of children
+   */
+  def getStandardAlleles(geneKind: GeneKind): (Allele, Allele) = {
+    (StandardAllele(genes(geneKind).momAllele.kind), StandardAllele(genes(geneKind).dadAllele.kind))
+  }
 
   if (genes.count(g => g._1 != g._2.kind) > 0) throw new InconsistentGenotypeException(genes)
 }

@@ -7,6 +7,7 @@ import model.genome._
 import model.world.Environment.Mutations
 import model.world.Generation.Population
 import util.PimpScala._
+import scala.language.postfixOps
 
 import scala.util.Random
 
@@ -34,21 +35,28 @@ object Reproduction {
   def generateChildren(mom: Bunny, dad: Bunny, mutations: Mutations = List()): Population = {
     var childrenGenotypes = List.fill(CHILDREN_FOR_EACH_COUPLE)(PartialGenotype(Map()))
 
+    // For each kind of gene
     Genes.values.foreach(gk => {
+
+      // Create 4 new genes from the parents alleles
       var childrenGenes: List[Gene] =
         Random.shuffle(
-          (for {momAllele <- mom.getStandardAlleles(gk).toSeq
-                dadAllele <- dad.getStandardAlleles(gk).toSeq
+          (for {momAllele <- mom.genotype.getStandardAlleles(gk).toSeq
+                dadAllele <- dad.genotype.getStandardAlleles(gk).toSeq
                 } yield Gene(gk, momAllele, dadAllele)).toList)
 
-      if (mutations.get(_.geneKind == gk) ?)
+      // Check if there is a mutation for this kind of gene and substitute one of the genes with the mutated one
+      if (mutations.any(_.geneKind == gk)?)
         childrenGenes = Gene(gk, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenes.take(CHILDREN_FOR_EACH_COUPLE - 1)
 
+      // Add the 4 new genes to the children genotypes and put the genotype with no mutations at the beginning of the list
       childrenGenotypes =
         (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE)
           yield childrenGenotypes(i) + childrenGenes(i)).toList
+          .sortBy(_.mutatedAllelesQuantity)
     })
 
+    // Creates the bunnies with the completed genotypes
     childrenGenotypes.map(cg => new ChildBunny(CompletedGenotype(cg.genes), Option(mom), Option(dad)))
   }
 

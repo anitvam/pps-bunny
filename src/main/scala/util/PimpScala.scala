@@ -13,10 +13,6 @@ object PimpScala {
 
   implicit class RichList[A](list: List[A]) {
     def -? (pred: A => Boolean): List[A] = list.filterNot(pred)
-    def get (pred: A => Boolean): Option[A] = {
-      val filteredList = list filter pred
-      if (filteredList.isEmpty) Option.empty else Option(filteredList.head)
-    }
+    def any(pred: A => Boolean): Option[A] = if (list.exists(pred)) Option(list.filter(pred).head) else Option.empty
   }
-
 }

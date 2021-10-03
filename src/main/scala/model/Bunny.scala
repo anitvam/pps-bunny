@@ -23,14 +23,6 @@ sealed trait Bunny {
   }
 
   /**
-   * @param geneKind the kind of genes for which the alleles are required
-   * @return a sequence of standard alleles with the parents kind, useful during the generation of children
-   */
-  def getStandardAlleles(geneKind: GeneKind): (Allele, Allele) = {
-    (StandardAllele(genotype(geneKind).momAllele.kind), StandardAllele(genotype(geneKind).dadAllele.kind))
-  }
-
-  /**
    * Updates the bunny instance for the next generation, increasing the age and setting the right alive value.
    */
   def updateBunny(): Unit = {
