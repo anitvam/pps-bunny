@@ -2,6 +2,7 @@ package view.scalaFX.components.charts
 
 import model.genome.Alleles
 import model.genome.Alleles.AlleleKind
+import model.genome.KindsUtils.getGeneKind
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
@@ -13,6 +14,7 @@ import view.scalaFX.components.charts.LineChartComponentFactory.{createEmptySeri
 import view.scalaFX.components.charts.PopulationChartDataType._
 import view.scalaFX.utilities.PimpScalaFXChartLibrary._
 
+import scala.collection.immutable.ListMap
 import scala.language.implicitConversions
 
 object PopulationChartDataType {
@@ -35,6 +37,8 @@ object PopulationChartDataType {
       case _                      => println(data)
     }
 
+    def reset(): Unit = data = Seq()
+
   }
 
   /** A wrapper for a sequence of points and the graphic element that displays them */
@@ -43,6 +47,11 @@ object PopulationChartDataType {
     def +(p: Point): Unit = {
       seriesData ^ p
       seriesData.data takeRight 2 foreach { xySeries += createXYChartData(_, xySeries) }
+    }
+
+    def reset(): Unit = {
+      seriesData.reset()
+      xySeries.getData.clear()
     }
 
   }
@@ -54,12 +63,16 @@ object PopulationChartDataType {
       mutationMap = mutationMap + (ak -> ChartSeries(SeriesData(), createEmptySeries(ak.prettyName)))
     }
 
+    mutationMap = ListMap(mutationMap.toSeq.sortBy(entry => getGeneKind(entry._1)): _*)
+
     def seriesData: Seq[SeriesData] = mutationMap.values.map(_.seriesData).toSeq
     def xySeries: List[XYSeries] = mutationMap.values.map(_.xySeries).toList
 
     def +(ak: AlleleKind, p: Point): Unit = {
       mutationMap(ak) + p
     }
+
+    def reset(): Unit = mutationMap.values foreach { _.reset() }
 
   }
 
@@ -70,18 +83,15 @@ object PopulationChartDataType {
 
 }
 
-/** A singleton to managed the chart */
-object PopulationChart {
+case class PopulationChart(height: Double, width: Double) {
   import LineChartComponentFactory._
 
   val xAxis: NumberAxis = createNumberAxis("Generation Axis", 0, 6, 1)
   val yAxis: NumberAxis = createNumberAxis("Population Axis", 0, 30, 5)
-
-  val chart: (Double, Double) => LineChart[Number, Number] =
-    createLineChart(xAxis, yAxis, _, _, total.xySeries :: mutations.xySeries)
-
   var mutations: MutationsChartSeries = MutationsChartSeries()
   var total: ChartSeries = ChartSeries(SeriesData(), createEmptySeries("Total"))
+  val chart: LineChart[Number, Number] =
+    createLineChart(xAxis, yAxis, height, width, total.xySeries :: mutations.xySeries)
 
   def updateChart(generationPhase: GenerationPhase, population: Population): Unit = {
     import ChartConverters._
@@ -93,8 +103,8 @@ object PopulationChart {
   }
 
   def updateChartBound(x: Double, size: Int): Unit = {
-    if (x > xAxis.upperBound.toDouble) xAxis.upperBound = x + 2
-    if (size > yAxis.upperBound.toInt) yAxis.upperBound = size + 10
+    if (x >= xAxis.upperBound.toDouble) xAxis.upperBound = x + 2
+    if (size >= yAxis.upperBound.toInt) yAxis.upperBound = size + 10
   }
 
 }
@@ -210,6 +220,7 @@ object LineChartComponentFactory {
 
     chart.legend.getLabels.foreach(li => {
       seriesData.getSeries(li.text.value) --> { s =>
+        s.addStyle("population-chart-legend-item")
         li.onMouseClicked = _ =>
           s.getName match {
             case "Total" =>
