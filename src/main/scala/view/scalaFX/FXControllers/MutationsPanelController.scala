@@ -53,13 +53,10 @@ class MutationsPanelController(
     MutationButton(furColorDominantChoiceButton, "Marrone"),
   )
 
-  def furColorDominantChoiceClick(): Unit = manageChoiceClick(
-    FUR_COLOR,
-    isDominant = true,
-    "Bianco",
-    buttonClicked = furColorDominantChoiceButton,
-    otherButton = furColorRecessiveChoiceButton
-  )
+  def reset(): Unit = {
+    hideMutationIncoming()
+    buttons.foreach(_.reset())
+  }
 
   private def manageChoiceClick(
       geneKind: GeneKind,
@@ -75,6 +72,8 @@ class MutationsPanelController(
     disableButtons(buttonClicked, otherButton)
   }
 
+  def hideMutationIncoming(): Unit = mutationIncomingLabel.visible = false
+
   private def disableButtons(firstButton: Button, secondButton: Button): Unit = {
     firstButton.disable = true
     secondButton.disable = true
@@ -86,6 +85,14 @@ class MutationsPanelController(
   }
 
   private def showMutationIncoming(): Unit = mutationIncomingLabel.visible = true
+
+  def furColorDominantChoiceClick(): Unit = manageChoiceClick(
+    FUR_COLOR,
+    isDominant = true,
+    "Bianco",
+    buttonClicked = furColorDominantChoiceButton,
+    otherButton = furColorRecessiveChoiceButton
+  )
 
   def furColorRecessiveChoiceClick(): Unit = manageChoiceClick(
     FUR_COLOR,
@@ -158,11 +165,4 @@ class MutationsPanelController(
     buttonClicked = jumpRecessiveChoiceButton,
     otherButton = jumpDominantChoiceButton
   )
-
-  def reset(): Unit = {
-    hideMutationIncoming()
-    buttons.foreach(_.reset())
-  }
-
-  def hideMutationIncoming(): Unit = mutationIncomingLabel.visible = false
 }
