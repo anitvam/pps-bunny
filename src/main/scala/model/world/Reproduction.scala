@@ -7,8 +7,8 @@ import model.genome._
 import model.world.Environment.Mutations
 import model.world.Generation.Population
 import util.PimpScala._
-import scala.language.postfixOps
 
+import scala.language.postfixOps
 import scala.util.Random
 
 object Reproduction {
@@ -49,7 +49,7 @@ object Reproduction {
       if (mutations.any(_.geneKind == gk)?)
         childrenGenes = Gene(gk, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenes.take(CHILDREN_FOR_EACH_COUPLE - 1)
 
-      // Add the 4 new genes to the children genotypes and put the genotype with no mutations at the beginning of the list
+      // Add the 4 new genes to the children genotypes and put the genotype with less mutations at the beginning of the list, so it will include the next mutated gene
       childrenGenotypes =
         (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE)
           yield childrenGenotypes(i) + childrenGenes(i)).toList
