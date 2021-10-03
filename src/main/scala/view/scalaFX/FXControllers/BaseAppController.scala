@@ -17,6 +17,8 @@ import view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT, PREFERRED_CHART_W
 import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
+import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
+
 import view.scalaFX.utilities._
 import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
 

@@ -23,6 +23,10 @@ trait Generation {
   /** @return the alive [[Population]] */
   def livingPopulation: Population = population.filter(_.alive)
 
+  def populationAtTheEnd: Population
+
+  def populationAtTheEnd_=(population: Population)
+
   def isEnded: Boolean
 
   /** Sets this Generation as ended */
@@ -30,7 +34,7 @@ trait Generation {
 
   def terminate(): Unit = {
     this.isEnded = true
-    population = this.population.map(b => new ChildBunny(b.genotype, b.mom, b.dad, b.age))
+    populationAtTheEnd = this.population.map(b => new ChildBunny(b.genotype, b.mom, b.dad, b.age, b.alive))
   }
 
   /** @return the current number of alive bunnies */
@@ -47,6 +51,7 @@ object Generation {
   private class GenerationImpl(
       override val environment: Environment,
       override var population: Population,
+      override var populationAtTheEnd: Population = Seq(),
       override var isEnded: Boolean = false
   ) extends Generation
 
