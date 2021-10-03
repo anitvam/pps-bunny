@@ -13,7 +13,7 @@ sealed trait MutationsPanelControllerInterface {
   def hideMutationIncoming(): Unit
 
   /** Reset all the buttons to their original state */
-  def resetMutationsPanel(): Unit
+  def reset(): Unit
 }
 
 @sfxml
@@ -30,6 +30,28 @@ class MutationsPanelController(
     private val furColorDominantChoiceButton: Button,
     private val mutationIncomingLabel: Label
 ) extends MutationsPanelControllerInterface {
+
+  case class MutationButton(button: Button, originalText: String) {
+    def reset(): Unit = {
+      button.styleClass -= CHOSEN_BUTTON_STYLE
+      button.styleClass -= OTHER_BUTTON_STYLE
+      button.disable = false
+      button.text = originalText
+    }
+  }
+
+  val buttons: Seq[MutationButton] = Seq(
+    MutationButton(jumpRecessiveChoiceButton, "Alto"),
+    MutationButton(jumpDominantChoiceButton, "Alto"),
+    MutationButton(teethRecessiveChoiceButton, "Lunghi"),
+    MutationButton(teethDominantChoiceButton, "Lunghi"),
+    MutationButton(earsRecessiveChoiceButton, "Basse"),
+    MutationButton(earsDominantChoiceButton, "Basse"),
+    MutationButton( furLengthRecessiveChoiceButton, "Lungo"),
+    MutationButton( furLengthDominantChoiceButton, "Lungo"),
+    MutationButton(furColorRecessiveChoiceButton, "Marrone"),
+    MutationButton(furColorDominantChoiceButton, "Marrone"),
+  )
 
   def furColorDominantChoiceClick(): Unit = manageChoiceClick(
     FUR_COLOR,
@@ -137,32 +159,10 @@ class MutationsPanelController(
     otherButton = jumpDominantChoiceButton
   )
 
-  def resetMutationsPanel(): Unit = {
+  def reset(): Unit = {
     hideMutationIncoming()
-    resetButtons(
-      Seq(
-        jumpRecessiveChoiceButton,
-        jumpDominantChoiceButton,
-        teethRecessiveChoiceButton,
-        teethDominantChoiceButton,
-        earsRecessiveChoiceButton,
-        earsDominantChoiceButton,
-        furLengthRecessiveChoiceButton,
-        furLengthDominantChoiceButton,
-        furColorRecessiveChoiceButton,
-        furColorDominantChoiceButton
-      )
-    )
+    buttons.foreach(_.reset())
   }
 
   def hideMutationIncoming(): Unit = mutationIncomingLabel.visible = false
-
-  private def resetButtons(btns: Seq[Button]): Unit = {
-    btns.foreach(btn => {
-      btn.styleClass -= CHOSEN_BUTTON_STYLE
-      btn.styleClass -= OTHER_BUTTON_STYLE
-      btn.disable = false
-    })
-  }
-
 }
