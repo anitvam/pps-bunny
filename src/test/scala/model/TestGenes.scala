@@ -94,7 +94,7 @@ class TestGenes extends FlatSpec with Matchers {
 
   "Any completed Genotype" should "throw an Exception if does not contain kind of Genes" in {
     assertThrows[IllegalGenotypeBuildException] {
-      CompletedGenotype(
+      CompleteGenotype(
         Map(
           FUR_COLOR -> Gene(Genes.FUR_COLOR, StandardAllele(Alleles.WHITE_FUR), StandardAllele(Alleles.BROWN_FUR)),
           FUR_LENGTH -> Gene(Genes.FUR_LENGTH, StandardAllele(Alleles.SHORT_FUR), StandardAllele(Alleles.SHORT_FUR))

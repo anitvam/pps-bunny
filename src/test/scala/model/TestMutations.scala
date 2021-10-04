@@ -4,18 +4,21 @@ import controller.Controller
 import model.Bunny.generateBaseFirstBunny
 import model.genome.Genes
 import model.genome.KindsUtils.resetDominance
-import model.mutation.Mutation
-import model.world.Reproduction.{ generateChildren, nextGenerationBunnies }
-import org.scalatest.{ FlatSpec, Matchers }
+import model.world.Generation.Population
+import model.world.Mutation
+import model.world.Reproduction.{generateChildren, nextGenerationBunnies}
+import org.scalatest.{FlatSpec, Matchers}
 
 class TestMutations extends FlatSpec with Matchers {
-  resetDominance()
   val children: Seq[Bunny] = generateChildren(generateBaseFirstBunny, generateBaseFirstBunny)
   val mutationFurColor: Mutation = Mutation(Genes.FUR_COLOR, isDominant = true)
   val mutationFurLength: Mutation = Mutation(Genes.FUR_LENGTH, isDominant = false)
   val mutationTeeth: Mutation = Mutation(Genes.TEETH, isDominant = false)
+  val mutationEars: Mutation = Mutation(Genes.EARS, isDominant = true)
+  val mutationJump: Mutation = Mutation(Genes.JUMP, isDominant = false)
 
   "When introducing a Mutation" should "compare to the utmost only half population" in {
+    resetDominance()
     Controller.insertMutation(mutationFurColor)
 
     val nextGeneration = nextGenerationBunnies(children, List(mutationFurColor))
@@ -26,13 +29,9 @@ class TestMutations extends FlatSpec with Matchers {
   }
 
   "When introducing more than one Mutations" should "compare only a Mutation for Bunny" in {
+    resetDominance()
     val mutations = List(mutationFurColor, mutationFurLength, mutationTeeth)
-    try {
-      mutations.foreach(Controller.insertMutation)
-    } catch {
-      case _: MultipleDominanceAssignmentException =>
-        println("Allele corresponding to the Mutation set before. Ignoring this method")
-    }
+    mutations.foreach(Controller.insertMutation)
 
     val nextGeneration = nextGenerationBunnies(children, mutations)
     val bunnyWithMutation = nextGeneration filter (b =>
@@ -46,4 +45,15 @@ class TestMutations extends FlatSpec with Matchers {
     assert(bunnyWithMutation.length <= (nextGeneration.length - children.length))
   }
 
+  "When introducing more mutations than children" should "compare two mutations in some bunnies" in {
+    resetDominance()
+    val mutations = List(mutationFurColor, mutationFurLength, mutationTeeth, mutationEars, mutationJump)
+    mutations.foreach(Controller.insertMutation)
+
+    val brothers: Population = generateChildren(generateBaseFirstBunny, generateBaseFirstBunny, mutations)
+    val mutationsEachBunny: Seq[Int] = brothers map (b => b.genotype.mutatedAllelesQuantity)
+
+    assert(mutationsEachBunny.count(_ == 1) == 3)
+    assert(mutationsEachBunny.count(_ == 2) == 1)
+  }
 }

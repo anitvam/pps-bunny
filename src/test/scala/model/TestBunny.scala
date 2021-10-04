@@ -1,9 +1,7 @@
 package model
-import engine.SimulationConstants.MAX_BUNNY_AGE
-import model.Bunny.{ generateBaseFirstBunny, generateRandomFirstBunny, splitBunniesByGene }
-import model.genome.{ Gene, Genes, StandardAllele }
-import model.world.Reproduction._
-import org.scalatest.{ FlatSpec, Matchers }
+import model.Bunny.{generateBaseFirstBunny, generateRandomFirstBunny}
+import model.genome.Genes
+import org.scalatest.{FlatSpec, Matchers}
 
 class TestBunny extends FlatSpec with Matchers {
 

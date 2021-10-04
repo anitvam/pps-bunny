@@ -4,6 +4,7 @@ import model.MultipleDominanceAssignmentException
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
 import util.PimpScala.RichOption
+
 import scala.language.{implicitConversions, postfixOps}
 import scala.util.Random
 
@@ -85,14 +86,21 @@ object Genes extends Enumeration {
 
 object KindsUtils {
 
+  /**d
+   * @param geneKind the gene kind of which the allele must be associated with
+   * @return a random AlleleKind for the specified GeneKind
+   */
+  def getRandomAlleleKind(geneKind: GeneKind): AlleleKind = Seq(geneKind.base, geneKind.mutated)(Random.nextInt(2))
+
   /**
    * Randomly chooses one AlleleKind as Dominant for each GeneKind
    */
   def assignRandomDominance(): Unit =
-    Genes.values.foreach(gk => setAlleleDominance(List(gk.base, gk.mutated)(Random.nextInt(2))))
+    Genes.values.foreach(gk => setAlleleDominance(getRandomAlleleKind(gk)))
 
   /**
    * Sets an AlleleKind as dominant for a specific GeneKind.
+   *
    * @param alleleKind
    *   the AlleleKind that has to be set as dominant
    */
@@ -103,23 +111,23 @@ object KindsUtils {
 
   /**
    * @param alleleKind
-   *   the AlleleKind of which alternative AlleleKind is needed
-   * @return
-   *   the AlleleKind uniquely associated with the specified AlleleKind
-   */
-  def getAlternativeAlleleKind(alleleKind: AlleleKind): AlleleKind = {
-    val geneKind = getGeneKind(alleleKind)
-    if (getGeneKind(alleleKind).base == alleleKind) geneKind.mutated else geneKind.base
-  }
-
-  /**
-   * @param alleleKind
    *   the AlleleKind of which the GeneKind is needed
    * @return
    *   the GeneKind uniquely associated with this AlleleKind
    */
   def getGeneKind(alleleKind: AlleleKind): GeneKind =
     Genes.values.filter(gk => gk.base == alleleKind || gk.mutated == alleleKind).firstKey
+
+  /**
+   * @param alleleKind
+   *   the AlleleKind of which alternative AlleleKind is needed
+   * @return
+   *   the AlleleKind uniquely associated with the specified AlleleKind
+   */
+  def getAlternativeAlleleKind(alleleKind: AlleleKind): AlleleKind = {
+    val geneKind = getGeneKind(alleleKind)
+    if (geneKind.base == alleleKind) geneKind.mutated else geneKind.base
+  }
 
   /**
    * Reset dominance of all Alleles.

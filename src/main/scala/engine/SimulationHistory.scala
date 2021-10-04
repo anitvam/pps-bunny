@@ -1,12 +1,10 @@
 package engine
 
-import model.genome.KindsUtils
-import model.mutation.Mutation
 import model.world.Generation.Population
-import util.PimpScala.RichTuple2
-import model.world.Reproduction.{ generateInitialCouple, nextGenerationBunnies }
+import model.world.Reproduction.{generateInitialCouple, nextGenerationBunnies}
 import model.world._
 import model.world.disturbingFactors.Factors
+import util.PimpScala.RichTuple2
 
 import scala.language.implicitConversions
 
