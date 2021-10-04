@@ -5,7 +5,7 @@ import engine.SimulationConstants.PhasesConstants._
 import javafx.fxml.FXML
 import javafx.scene.{ layout => jfxs }
 import model.world.Generation.Population
-import model.world.GenerationsUtils.GenerationPhase
+import model.world.GenerationsUtils.{FoodPhase, GenerationPhase, HighTemperaturePhase, ReproductionPhase, WolvesPhase}
 import scalafx.Includes._
 import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout.{AnchorPane, Background}
@@ -55,13 +55,6 @@ sealed trait BaseAppControllerInterface {
   def changeBackgroundEnvironment(background: Background): Unit
 
   def addSpeedUp(): Unit
-
-  /**
-   * Method that update clock's hand corresponding to the current phase and show the name of the current phase
-   * @param label
-   *    the name of the current phase
-   */
-  def updateClock(label: String): Unit
 }
 
 @sfxml
@@ -201,6 +194,7 @@ class BaseAppController(
       simulationPane.children ++= newBunnyViews.map(_.imageView)
       // Start movement of the new bunnies
       newBunnyViews foreach { _.play() }
+      updateClock(ReproductionPhase(4).name)
     }
 
     if (generationPhase.phase == WOLVES_PHASE) {
@@ -245,7 +239,12 @@ class BaseAppController(
     }
   }
 
-  override def updateClock(label: String): Unit = {
+  /**
+   * Method that update clock's hand corresponding to the current phase and show the name of the current phase
+   * @param label
+   *    the name of the current phase
+   */
+  private def updateClock(label: String): Unit = {
     clockController.rotateClockHand()
     clockController.updateLabel(label)
   }

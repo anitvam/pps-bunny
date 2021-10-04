@@ -3,7 +3,7 @@ package engine
 import cats.effect.IO
 import controller.Controller
 import engine.SimulationHistory._
-import model.world.GenerationsUtils.{FoodPhase, GenerationPhase, HighTemperaturePhase, WolvesPhase}
+import model.world.GenerationsUtils.GenerationPhase
 import model.world.disturbingFactors.FactorTypes._
 import util.PimpScala.RichOption
 import model.world.disturbingFactors.PimpFactors._
@@ -13,20 +13,15 @@ import scala.language.implicitConversions
 
 object Simulation {
 
-  def wolvesEat: IO[Unit] = {
-    ScalaFXView.updateClock(WolvesPhase(1).name)
-    applyFactorDamage(WolvesFactorKind)
-  }
 
-  def bunniesEat: IO[Unit] = {
-    ScalaFXView.updateClock(FoodPhase(2).name)
-    applyFactorDamage(FoodFactorKind)
-  }
+  def wolvesEat: IO[Unit] = applyFactorDamage(WolvesFactorKind)
 
-  def applyTemperatureDamage: IO[Unit] = {
-    ScalaFXView.updateClock(HighTemperaturePhase(3).name)
-    applyFactorDamage(UnfriendlyClimateFactorKind)
-  }
+
+  def bunniesEat: IO[Unit] = applyFactorDamage(FoodFactorKind)
+
+
+  def applyTemperatureDamage: IO[Unit] = applyFactorDamage(UnfriendlyClimateFactorKind)
+
 
   def updateView(generationPhase: GenerationPhase): IO[Unit] =
     ScalaFXView.updateView(generationPhase, getActualPopulation)
@@ -43,10 +38,7 @@ object Simulation {
     Controller.showEnd(GenerationsOverload)
   }
 
-  def startNewGeneration: IO[Unit] = {
-    ScalaFXView.updateClock("New Gen")
-    SimulationHistory.startNextGeneration()
-  }
+  def startNewGeneration: IO[Unit] = SimulationHistory.startNextGeneration()
 
   implicit def unitToIO(exp: => Unit): IO[Unit] = IO { exp }
 

@@ -64,10 +64,6 @@ object ScalaFXView extends View {
     Platform.runLater { baseAppController --> { _.reset() } }
   }
 
-  def updateClock(label: String): Unit = Platform.runLater {
-        baseAppController --> { _.updateClock(label) }
-  }
-
   override def handleBunnyClick(bunny: BunnyView): Unit = baseAppController --> { _.handleBunnyClick(bunny) }
 
   implicit private def simulationEndTypeImage(endType: SimulationEndType): Image = endType match {
