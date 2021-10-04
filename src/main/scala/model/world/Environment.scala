@@ -2,9 +2,7 @@ package model.world
 
 import model.genome.KindsUtils
 import model.world.Environment.Mutations
-import model.world.disturbingFactors.FactorTypes._
-import model.world.disturbingFactors.{Factor, Factors, FoodFactor}
-import util.PimpScala._
+import model.world.disturbingFactors.{Factor, Factors}
 
 /** Environment of a Generation */
 trait Environment {
@@ -36,8 +34,13 @@ trait Environment {
   /** @return the Environment Factors */
   var factors: Factors
 
+  /** Introduce a new factor */
   def introduceFactor(factor: Factor): Unit
+
+  /** Removes an active factor */
   def removeFactor(factor: Factor): Unit
+
+  /** Introduce a new mutation */
   def introduceMutation(mutation: Mutation): Unit
 }
 
@@ -64,8 +67,7 @@ object Environment {
 
     override def removeFactor(factor: Factor): Unit = factors remove factor
 
-    /** Introduce a new mutation */
-    def introduceMutation(mutation: Mutation): Unit = {
+    override def introduceMutation(mutation: Mutation): Unit = {
       if (mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
       else KindsUtils.setAlleleDominance(mutation.geneKind.base)
       mutations = mutation :: mutations

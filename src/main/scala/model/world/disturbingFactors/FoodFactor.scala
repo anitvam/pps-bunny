@@ -13,7 +13,7 @@ import model.world.disturbingFactors.FactorsUtils._
 sealed trait FoodFactor extends BasicFactor {
 
   override val normalDamage: Double = FOOD_FACTOR_NORMAL_DAMAGE
-  override def factorType: FactorKind = FoodFactorKind
+  override def factorKind: FactorKind = FoodFactorKind
 
   val lowDamage: Double = FOOD_FACTOR_LOW_DAMAGE
 

@@ -24,7 +24,7 @@ trait Factor {
   def applyDamage(bunnies: Population, climate: Climate): Population
 
   /** @return the FactorType of this Factor */
-  def factorType: FactorKind
+  def factorKind: FactorKind
 }
 
 trait FactorOnSingleGene extends BasicFactor {
