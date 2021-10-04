@@ -1,8 +1,8 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-import engine.SimulationConstants.START_PHASE
-import javafx.scene.{control => jfxc}
+import engine.SimulationConstants.REPRODUCTION_PHASE
+import javafx.scene.{ control => jfxc }
 import model.Bunny
 import model.genome.Genes
 import model.genome.Genes.GeneKind
@@ -47,7 +47,7 @@ class ProportionsChartController(
   }
 
   override def updateChart(generationPhase: GenerationPhase, population: Population): Unit = {
-    if (generationPhase.phase == START_PHASE) fillPieCharts(population, getSelectedGeneKind)
+    if (generationPhase.phase == REPRODUCTION_PHASE) fillPieCharts(population, getSelectedGeneKind)
     else currentPie += (getSelectedGeneKind, population.filter(_.alive))
   }
 

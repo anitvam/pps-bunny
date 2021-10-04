@@ -15,6 +15,7 @@ sealed trait FactorsPanelControllerInterface {
 
   /** initialize all the component inside the panel */
   def initialize(baseAppController: BaseAppControllerInterface): Unit
+  def reset(): Unit
   def manageEnvironmentBackgroundChange(): Unit
   def showWolvesEating(): Unit
   def removeWolves(): Unit
@@ -42,6 +43,14 @@ class FactorsPanelController(
     val factorsImageViews: List[ImageView] = List(wolf, tough_food, high_food, limited_food, hostile_temperature)
     wolvesView = (1 to WOLVES_NUMBER) map (_ => WolfView())
     factorsImageViews foreach (i => insertFactorImage(i, i.getId))
+  }
+
+  override def reset(): Unit = {
+    wolfCheckBox.selected = false
+    toughFoodCheckBox.selected = false
+    highFoodCheckBox.selected = false
+    limitedFoodCheckBox.selected = false
+    hostileTemperatureCheckBox.selected = false
   }
 
   private def insertFactorImage(image: ImageView, id: String): Unit =
