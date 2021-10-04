@@ -17,7 +17,6 @@ import view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT, PREFERRED_CHART_W
 import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
-import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
 
 import view.scalaFX.utilities._
 import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
@@ -189,9 +188,13 @@ class BaseAppController(
     }
   }
 
-  override def showPopulationChart(): Unit = populationChart --> { c => chartsPane.children = c.chart }
+  override def showPopulationChart(): Unit = {
+    println("setto il charts pane")
+    populationChart --> { c => chartsPane.children = c.chart }
+  }
 
-  override def showPedigreeChart(): Unit =
+  override def showPedigreeChart(): Unit = {
+    println("Mostro pedigree")
     if (selectedBunny ?) {
       val pedigreeChart = PedigreeChart(
         selectedBunny.get.bunny,
@@ -201,6 +204,7 @@ class BaseAppController(
       setFitParent(pedigreeChart)
       chartsPane.children = pedigreeChart
     } else chartsPane.children = pedigreeText
+  }
 
   override def showProportionsChart(): Unit = chartsPane.children = proportionsChartPane.get
 
