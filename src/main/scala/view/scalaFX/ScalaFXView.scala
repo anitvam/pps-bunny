@@ -66,7 +66,6 @@ object ScalaFXView extends View {
   override def showEnd(endType: SimulationEndType): Unit = {
     endStage(endType).show()
     Platform.runLater { baseAppController --> { _.reset() } }
-
   }
 
   override def handleBunnyClick(bunny: BunnyView): Unit = baseAppController --> { _.handleBunnyClick(bunny) }
