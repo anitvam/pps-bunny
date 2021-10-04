@@ -18,7 +18,7 @@ name := "pps-bunny"
 // Add dependency on ScalaFX library
 libraryDependencies ++= Seq(
   "org.scalafx" %% "scalafx"             % "16.0.0-R24",
-  "org.scalafx" %% "scalafxml-core-sfx8" % "0.5"
+  "org.scalafx" %% "scalafxml-core-sfx8" % "0.5",
 )
 
 // Add JavaFX dependencies
@@ -40,6 +40,9 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % "test"
 //Add Cats dependencies
 libraryDependencies += "org.typelevel" %% "cats-core" % "2.0.0"
 libraryDependencies += "org.typelevel" %% "cats-effect" % "2.2.0"
+
+//Add tuProlog dependencies
+libraryDependencies += "it.unibo.alice.tuprolog" % "tuprolog" % "3.3.0"
 
 // Fork a new JVM for 'run' and 'test:run', to avoid JavaFX double initialization problems
 fork := true

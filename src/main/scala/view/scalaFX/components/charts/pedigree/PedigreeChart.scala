@@ -70,9 +70,15 @@ object PedigreeChart {
   }
 
   private def maxBunnyIconsSizeInPanel(chartWidth: Int, chartHeight: Int, tree: BinaryTree[Bunny]): Int = {
+    val maxBunniesInLine =  pow(2, tree.generations - 1)
     val maxBunnySizeForWidth: Int = ((chartWidth * BUNNY_PLUS_PROPORTION) /
-      (pow(BUNNY_PLUS_PROPORTION + 1, tree.generations - 1) - 1)).toInt
+      (maxBunniesInLine * BUNNY_PLUS_PROPORTION + maxBunniesInLine - 1)).toInt
+
     val maxBunnySizeForHeight: Int = maxHeight(chartHeight, tree.generations)
+
+    println(chartWidth)
+    println(maxBunnySizeForWidth)
+    println(maxBunnySizeForHeight)
 
     Seq(maxBunnySizeForHeight, maxBunnySizeForWidth, MAX_TREE_BUNNY_SIZE).min
   }
