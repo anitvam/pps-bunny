@@ -56,6 +56,11 @@ sealed trait BaseAppControllerInterface {
 
   def addSpeedUp(): Unit
 
+  /**
+   * Method that update clock's hand corresponding to the current phase and show the name of the current phase
+   * @param label
+   *    the name of the current phase
+   */
   def updateClock(label: String): Unit
 }
 
@@ -121,8 +126,6 @@ class BaseAppController(
     populationChart =
       Some(PopulationChart(PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH))
     showPopulationChart()
-
-//    chartsPane.children =  PopulationChart.chart(325, 500)
   }
 
   private def resetSimulationPanel(): Unit = {
@@ -242,7 +245,7 @@ class BaseAppController(
     }
   }
 
-  def updateClock(label: String): Unit = {
+  override def updateClock(label: String): Unit = {
     clockController.rotateClockHand()
     clockController.updateLabel(label)
   }

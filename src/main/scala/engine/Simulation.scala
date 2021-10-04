@@ -3,7 +3,7 @@ package engine
 import cats.effect.IO
 import controller.Controller
 import engine.SimulationHistory._
-import model.world.GenerationsUtils.GenerationPhase
+import model.world.GenerationsUtils.{FoodPhase, GenerationPhase, HighTemperaturePhase, WolvesPhase}
 import model.world.disturbingFactors.FactorTypes._
 import util.PimpScala.RichOption
 import model.world.disturbingFactors.PimpFactors._
@@ -14,17 +14,17 @@ import scala.language.implicitConversions
 object Simulation {
 
   def wolvesEat: IO[Unit] = {
-    ScalaFXView.updateClock("Wolf")
+    ScalaFXView.updateClock(WolvesPhase(1).name)
     applyFactorDamage(WolvesFactorKind)
   }
 
   def bunniesEat: IO[Unit] = {
-    ScalaFXView.updateClock("Food")
+    ScalaFXView.updateClock(FoodPhase(2).name)
     applyFactorDamage(FoodFactorKind)
   }
 
   def applyTemperatureDamage: IO[Unit] = {
-    ScalaFXView.updateClock("Temperature")
+    ScalaFXView.updateClock(HighTemperaturePhase(3).name)
     applyFactorDamage(UnfriendlyClimateFactorKind)
   }
 

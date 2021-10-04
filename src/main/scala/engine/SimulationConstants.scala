@@ -1,9 +1,9 @@
 package engine
 
-import scala.concurrent.duration.{ DurationDouble, DurationInt, FiniteDuration }
 import scala.language.postfixOps
 
 object SimulationConstants {
+
 
   val DEFAULT_SPEED: Double = 1
 
