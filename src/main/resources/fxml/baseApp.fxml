@@ -213,7 +213,7 @@
                                         </Button>
                                     </children>
                                 </HBox>
-                        <AnchorPane fx:id="clock" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+                        <AnchorPane fx:id="clock" prefHeight="200.0" prefWidth="200.0" />
                             </children>
                             <GridPane.margin>
                                 <Insets />

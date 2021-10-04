@@ -22,7 +22,7 @@ trait ClockControllerInterface {
 
 class ClockController extends ClockControllerInterface {
   private var analogueClock: Group = new Group()
-  private val clockRadius = 35
+  private val clockRadius = 30
   private val hourHand = Line(0, 0, 0, -clockRadius)
   private val labelClock = Label("")
 
@@ -31,7 +31,7 @@ class ClockController extends ClockControllerInterface {
     face.id = "face"
     labelClock.id = "labelClock"
     labelClock.layoutXProperty().bind(face.centerXProperty().subtract(labelClock.widthProperty().divide(2)))
-    labelClock.layoutYProperty().bind(face.centerYProperty().add(face.radiusProperty().divide(2)))
+    labelClock.layoutYProperty().bind(face.centerYProperty().add(face.radiusProperty()))
     hourHand.setTranslateX(clockRadius)
     hourHand.setTranslateY(clockRadius)
     hourHand.id = "hourHand"
@@ -49,6 +49,7 @@ class ClockController extends ClockControllerInterface {
 
     analogueClock = new Group(face, labelClock, ticks, spindle, hourHand)
     analogueClock.setTranslateX(40)
+    analogueClock.setTranslateY(30)
     analogueClock.getStylesheets.add("/fxml/stylesheets/clock.css")
 
     analogueClock
