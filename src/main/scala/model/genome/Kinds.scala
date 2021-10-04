@@ -13,9 +13,9 @@ import scala.util.Random
  */
 object Alleles extends Enumeration {
   type AlleleKind = Value
-  val WHITE_FUR: AllelesVal = AllelesVal("Pelo Bianco")
-
   implicit def valueToAllelesVal(x: Value): AllelesVal = x.asInstanceOf[AllelesVal]
+
+  val WHITE_FUR: AllelesVal = AllelesVal("Pelo Bianco")
   val BROWN_FUR: AllelesVal = AllelesVal("Pelo Marrone")
   val LONG_FUR: AllelesVal = AllelesVal("Pelo Lungo")
   val SHORT_FUR: AllelesVal = AllelesVal("Pelo Corto")
