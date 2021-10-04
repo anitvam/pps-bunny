@@ -6,19 +6,22 @@ import view.scalaFX.utilities.Direction.{Direction, Left, Right, scaleXValue}
 
 abstract class AnimalView {
 
-  /** Type annotation for a Seq of KeyFrames */
-  type AnimationFrames = Seq[KeyFrame]
-
   /** Starts the animation */
   def play(): Unit
 
   /** Stops the animation */
   def stop(): Unit
 
+  /** Type annotation for a Seq of KeyFrames */
+  type AnimationFrames = Seq[KeyFrame]
+
   /** The image of the animal displayed on the GUI */
   val imageView: ImageView
 
+  /** The direction the animal move on */
   protected var direction: Direction
+
+  /** The position (X,Y) in which the animal move to */
   protected var positionX: Double
   protected var positionY: Double
 

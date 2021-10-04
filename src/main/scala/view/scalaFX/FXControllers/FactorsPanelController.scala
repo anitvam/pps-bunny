@@ -7,7 +7,7 @@ import scalafx.scene.control.CheckBox
 import scalafx.scene.image.{Image, ImageView}
 import scalafxml.core.macros.sfxml
 import util.PimpScala._
-import view.scalaFX.ScalaFXConstants.WOLVES_NUMBER
+import view.scalaFX.ScalaFXConstants.Wolf.WOLVES_NUMBER
 import view.scalaFX.components.WolfView
 import view.scalaFX.utilities._
 

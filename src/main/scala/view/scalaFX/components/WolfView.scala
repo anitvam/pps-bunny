@@ -3,15 +3,16 @@ package view.scalaFX.components
 import engine.SimulationConstants.PhasesConstants.WOLVES_PHASE
 import scalafx.animation.{AnimationTimer, KeyFrame}
 import scalafx.scene.image.{Image, ImageView}
-import view.scalaFX.ScalaFXConstants.{PANEL_SKY_ZONE, PREFERRED_SIMULATION_PANEL_BORDER, PREFERRED_SIMULATION_PANEL_WIDTH, PREFERRED_WOLF_PANEL_HEIGHT}
 import view.scalaFX.FXControllers.FactorsPanelControllerInterface
+import view.scalaFX.ScalaFXConstants.Wolf.{PREFERRED_WOLF_PANEL_HEIGHT, WOLVES_MOVING_SPACE}
+import view.scalaFX.ScalaFXConstants.{PANEL_SKY_ZONE, PREFERRED_SIMULATION_PANEL_BORDER, PREFERRED_SIMULATION_PANEL_WIDTH}
 import view.scalaFX.utilities.Direction
 import view.scalaFX.utilities.Direction._
 
 import scala.language.postfixOps
 import scala.util.Random
 
-/** Bunny wrapper in order to manage its movement inside of the GUI */
+/** Wolf wrapper in order to manage its movement inside of the GUI */
 trait WolfView extends AnimalView {
 
   /** Reference to the factor panel controller entity */
@@ -46,8 +47,6 @@ object WolfView {
       var positionX: Double,
       var positionY: Double
   ) extends WolfView {
-    private val SPEED = 200
-    private val movingSpace = PREFERRED_SIMULATION_PANEL_WIDTH / SPEED
 
     private var lastTime = 0L
 
@@ -58,7 +57,7 @@ object WolfView {
           positionX - imageView.getFitWidth/2 < 0
         )
         moveHorizontally(
-          movingSpace
+          WOLVES_MOVING_SPACE
         )
         imageView.x = positionX
         lastTime += 1

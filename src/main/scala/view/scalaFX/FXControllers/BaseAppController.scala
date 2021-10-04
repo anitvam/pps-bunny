@@ -117,15 +117,8 @@ class BaseAppController(
     showPopulationChart()
   }
 
-  private def resetSimulationPanel(): Unit = {
-    bunnyViews = Seq.empty
-    simulationPane.children = Seq.empty
-    generationLabel.text = ""
-    startButton.setVisible(true)
-  }
-
-  override def reset(): Unit = {
-    startButton.onAction = _ => {
+  def reset(): Unit = {
+    speedButton.onAction = _ => {
       Controller.reset()
       this.resetSimulationPanel()
       selectedBunny = Option.empty
@@ -142,6 +135,13 @@ class BaseAppController(
     }
     speedButton.text = ""
     speedButton.styleClass += "restart-button"
+  }
+
+  private def resetSimulationPanel(): Unit = {
+    bunnyViews = Seq.empty
+    simulationPane.children = Seq.empty
+    generationLabel.text = ""
+    startButton.setVisible(true)
   }
 
   /** Handler of Start button click */

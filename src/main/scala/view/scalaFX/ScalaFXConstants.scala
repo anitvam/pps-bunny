@@ -18,9 +18,6 @@ object ScalaFXConstants {
   /** High Jump height */
   val HIGH_JUMP_HEIGHT = 80
 
-  /** Number of wolves to show */
-  val WOLVES_NUMBER = 5
-
   /** Random bound on jump delay */
   val RANDOM_BUNNY_JUMP_DELAY = 5000
 
@@ -43,9 +40,7 @@ object ScalaFXConstants {
   /** Bunny panel inside application window height */
   val PREFERRED_BUNNY_PANEL_HEIGHT: Int = (SCENE_HEIGHT * BUNNY_PANEL_PERCENTUAL_HEIGTH).toInt
 
-  /** Wolf panel zone inside application window height */
-  val PREFERRED_WOLF_PANEL_HEIGHT: Int = PREFERRED_BUNNY_PANEL_HEIGHT - 100
-
+  /** Bunny panel border */
   val PREFERRED_SIMULATION_PANEL_BORDER: Int = 70
 
   /** Bunny panel bound for the sky zone */
@@ -55,7 +50,7 @@ object ScalaFXConstants {
 
   val PREFERRED_CHART_HEIGHT: Int = (SCENE_HEIGHT * 0.45).toInt
 
-  /** Constants for the tree visualizaiton */
+  /** Constants for the tree visualization */
   object GenealogicalTree {
 
     /** Max size of the bunny picture in the tree */
@@ -105,4 +100,14 @@ object ScalaFXConstants {
 
   }
 
+  object Wolf {
+    /** Wolf panel zone inside application window height */
+    val PREFERRED_WOLF_PANEL_HEIGHT: Int = PREFERRED_BUNNY_PANEL_HEIGHT - 100
+
+    /** Number of wolves to show */
+    val WOLVES_NUMBER: Int = 5
+
+    val WOLVES_SPEED: Int = 200
+    val WOLVES_MOVING_SPACE: Int = PREFERRED_SIMULATION_PANEL_WIDTH / WOLVES_SPEED
+  }
 }
