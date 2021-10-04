@@ -55,6 +55,9 @@ object SimulationConstants {
     /** Duration in milliseconds of a generation */
     val GENERATION_END: Double = 12000
   }
+  
+  /** Number of phases in the loop of simulation */
+  val NUMBER_OF_PHASE = 4
 
   object FactorsConstants {
 

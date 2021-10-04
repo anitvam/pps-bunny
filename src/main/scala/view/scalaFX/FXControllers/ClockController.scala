@@ -1,5 +1,6 @@
 package view.scalaFX.FXControllers
 
+import engine.SimulationConstants.NUMBER_OF_PHASE
 import javafx.scene.Group
 import scalafx.scene.control.Label
 import scalafx.scene.shape.{Circle, Line}
@@ -37,12 +38,12 @@ class ClockController extends ClockControllerInterface {
     val spindle = Circle(clockRadius, clockRadius, 5)
     spindle.setId("spindle")
     val ticks = new Group()
-    for (i <- 0 to 3) {
+    for (i <- 0 to NUMBER_OF_PHASE) {
       val tick = Line(0, -23, 0, -33)
       tick.setTranslateX(clockRadius)
       tick.setTranslateY(clockRadius)
       tick.getStyleClass.add("tick")
-      tick.getTransforms.add(new Rotate(i * (360 / 4)))
+      tick.getTransforms.add(new Rotate(i * (360 / NUMBER_OF_PHASE)))
       ticks.getChildren.add(tick)
     }
 
