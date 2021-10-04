@@ -5,7 +5,7 @@ import scalafx.geometry.Insets
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
-import view.scalaFX.ScalaFXConstants.GenealogicalTree.{BUNNY_ALLELE_PADDING, FONT_INFO_PERCENT, TREE_INFO_PROPORTION}
+import view.scalaFX.ScalaFXConstants.GenealogicalTree.{BUNNY_ALLELE_PADDING, FONT_INFO_PERCENT, BUNNY_INFO_PROPORTION}
 import view.scalaFX.components.charts.pedigree.PedigreeChart.{bunnyIconSize, spacingRegion}
 import view.scalaFX.utilities.Direction.Right
 import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
@@ -50,7 +50,7 @@ object BunnyPedigreeView {
 
       style = "-fx-font-family: \"Helvetica\"; " +
         "-fx-font-weight: bold; " +
-        "-fx-font-size: " + bunnyIconSize / TREE_INFO_PROPORTION * FONT_INFO_PERCENT + "px"
+        "-fx-font-size: " + bunnyIconSize / BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT + "px"
 
     },
     spacingRegion
@@ -69,8 +69,8 @@ object BunnyPedigreeView {
 
   private def infoImageView(path: String): ImageView = new ImageView {
     image = new Image(path)
-    fitWidth = bunnyIconSize / TREE_INFO_PROPORTION
-    fitHeight = bunnyIconSize / TREE_INFO_PROPORTION
+    fitWidth = bunnyIconSize / BUNNY_INFO_PROPORTION
+    fitHeight = bunnyIconSize / BUNNY_INFO_PROPORTION
   }
 
   private case class BunnyPedigreeViewImpl(override val bunny: Bunny) extends BunnyPedigreeView {

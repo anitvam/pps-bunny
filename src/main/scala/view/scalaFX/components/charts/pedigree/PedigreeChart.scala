@@ -12,6 +12,7 @@ import view.scalaFX.ScalaFXConstants.GenealogicalTree._
 import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
 
 import scala.language.postfixOps
+import scala.math.{log10, pow, min}
 
 trait PedigreeChart {
 
@@ -55,14 +56,37 @@ object PedigreeChart {
    * the pedigree chart
    */
   def apply(bunny: Bunny, chartWidth: Int, chartHeight: Int): PedigreeChart = {
-    val tree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
-    val maxBunnySizeForWidth: Int = ((chartWidth * TREE_PLUS_PROPORTION) /
-      (Math.pow(TREE_PLUS_PROPORTION + 1, tree.generations - 1) - 1)).toInt
-    val maxBunnySizeForHeight: Int = ((chartHeight * TREE_INFO_PROPORTION * FONT_INFO_PERCENT) /
-      ((TREE_INFO_PROPORTION * FONT_INFO_PERCENT + 1 + FONT_INFO_PERCENT) * tree.generations)).toInt
-    bunnyIconSize = Seq(maxBunnySizeForHeight, maxBunnySizeForWidth, MAX_TREE_BUNNY_SIZE).min
+    var tree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
+    bunnyIconSize = maxBunnyIconsSizeInPanel(chartWidth, chartHeight, tree)
+
+    // Cuts on generations number if the screen is not big enough
+    if (bunnyIconSize < MIN_TREE_BUNNY_SIZE) {
+      bunnyIconSize = MIN_TREE_BUNNY_SIZE
+      val maxGenerations = maxGenerationsInPanel(chartWidth, chartHeight)
+      tree = generateTree(maxGenerations, bunny)
+    }
+
     PedigreeChartImpl(bunny, tree)
   }
+
+  private def maxBunnyIconsSizeInPanel(chartWidth: Int, chartHeight: Int, tree: BinaryTree[Bunny]): Int = {
+    val maxBunnySizeForWidth: Int = ((chartWidth * BUNNY_PLUS_PROPORTION) /
+      (pow(BUNNY_PLUS_PROPORTION + 1, tree.generations - 1) - 1)).toInt
+    val maxBunnySizeForHeight: Int = maxHeight(chartHeight, tree.generations)
+
+    Seq(maxBunnySizeForHeight, maxBunnySizeForWidth, MAX_TREE_BUNNY_SIZE).min
+  }
+
+  private def maxGenerationsInPanel(chartWidth: Int, chartHeight: Int): Int = {
+    val maxGenerationsForWidth: Int =
+      (1 + log10(1 + (chartWidth + BUNNY_PLUS_PROPORTION) / bunnyIconSize) / log10(BUNNY_PLUS_PROPORTION + 1)).ceil.toInt
+    val maxGenerationsForHeight: Int = maxHeight(chartHeight, bunnyIconSize)
+
+    min(maxGenerationsForWidth, maxGenerationsForHeight)
+  }
+
+  private def maxHeight(height: Int, parameter: Int): Int = ((height * BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT) /
+    ((BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT + 1 + FONT_INFO_PERCENT) * parameter)).toInt
 
   /**
    * @param trees
@@ -122,7 +146,7 @@ object PedigreeChart {
   /** Creates a view of the plus between couples of bunnies */
   def plusView: Text = new Text {
     text = "+"
-    style = "-fx-font-weight: bold; -fx-font-size: " + bunnyIconSize / TREE_PLUS_PROPORTION + ";"
+    style = "-fx-font-weight: bold; -fx-font-size: " + bunnyIconSize / BUNNY_PLUS_PROPORTION + ";"
     hgrow = Priority.Always
   }
 
