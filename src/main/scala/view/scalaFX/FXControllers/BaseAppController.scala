@@ -2,6 +2,7 @@ package view.scalaFX.FXControllers
 
 import controller.Controller
 import engine.SimulationConstants.PhasesConstants._
+import engine.SimulationHistory.getGenerationNumber
 import javafx.fxml.FXML
 import javafx.scene.{ layout => jfxs }
 import model.world.Generation.Population
@@ -194,16 +195,19 @@ class BaseAppController(
       simulationPane.children ++= newBunnyViews.map(_.imageView)
       // Start movement of the new bunnies
       newBunnyViews foreach { _.play() }
-      updateClock(ReproductionPhase(4).name)
+
+      updateClock(ReproductionPhase(getGenerationNumber).name)
     }
 
     if (generationPhase.phase == WOLVES_PHASE) {
+      updateClock(WolvesPhase(getGenerationNumber).name)
       factorsPanelController --> { _.showWolvesEating() }
     }
 
-    if (generationPhase.phase == FOOD_PHASE) {
-      factorsPanelController --> { _.removeWolves() }
-    }
+    if(generationPhase.phase == FOOD_PHASE) updateClock(FoodPhase(getGenerationNumber).name)
+
+    if(generationPhase.phase == TEMPERATURE_PHASE) updateClock(HighTemperaturePhase(getGenerationNumber).name)
+
   }
 
   override def showPopulationChart(): Unit = populationChart --> { c => chartsPane.children = c.chart }
