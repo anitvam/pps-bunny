@@ -62,7 +62,7 @@ case class PartialGenotype(genes: Map[GeneKind, Gene]) extends Genotype {
  * Represents a Genotype which for sure contains all the Genes of the world.
  * @param genes the Genes of the Genotype
  */
-case class CompletedGenotype(genes: Map[GeneKind, Gene]) extends Genotype {
-  def +(gene: Gene): CompletedGenotype = CompletedGenotype(genes + (gene.kind -> gene))
+case class CompleteGenotype(genes: Map[GeneKind, Gene]) extends Genotype {
+  def +(gene: Gene): CompleteGenotype = CompleteGenotype(genes + (gene.kind -> gene))
   if (Genes.values.count(!genes.keySet.contains(_)) > 0) throw new IllegalGenotypeBuildException
 }

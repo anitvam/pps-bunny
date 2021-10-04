@@ -38,7 +38,7 @@ object Reproduction {
     // For each kind of gene
     Genes.values.foreach(gk => {
 
-      // Create 4 new genes from the parents alleles
+      // Create 4 new genes from the parents alleles, in random order
       var childrenGenes: List[Gene] =
         Random.shuffle(
           (for {momAllele <- mom.genotype.getStandardAlleles(gk).toSeq
@@ -46,18 +46,19 @@ object Reproduction {
                 } yield Gene(gk, momAllele, dadAllele)).toList)
 
       // Check if there is a mutation for this kind of gene and substitute one of the genes with the mutated one
-      if (mutations.any(_.geneKind == gk)?)
+      if (mutations.find(_.geneKind == gk)?)
         childrenGenes = Gene(gk, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenes.take(CHILDREN_FOR_EACH_COUPLE - 1)
 
-      // Add the 4 new genes to the children genotypes and put the genotype with less mutations at the beginning of the list, so it will include the next mutated gene
+      // Add the 4 new genes to the children genotypes and put the genotype with less mutations at the beginning of the list,
+      // so it will include the next mutated gene if there is one
       childrenGenotypes =
         (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE)
           yield childrenGenotypes(i) + childrenGenes(i)).toList
           .sortBy(_.mutatedAllelesQuantity)
     })
 
-    // Creates the bunnies with the completed genotypes
-    childrenGenotypes.map(cg => new ChildBunny(CompletedGenotype(cg.genes), Option(mom), Option(dad)))
+    // Creates the bunnies with the complete genotypes
+    childrenGenotypes.map(cg => new ChildBunny(CompleteGenotype(cg.genes), Option(mom), Option(dad)))
   }
 
   /**
@@ -81,7 +82,7 @@ object Reproduction {
    * @return        the new bunnies, adding the children and removing the ones who are dead
    */
   def nextGenerationBunnies(bunnies: Population, mutations: Mutations = List()): Population = {
-    bunnies.foreach(_.updateBunny())
+    bunnies.foreach(_.agingBunny())
     generateAllChildren(bunnies, mutations) ++ bunnies.filter(_.alive)
   }
 }
