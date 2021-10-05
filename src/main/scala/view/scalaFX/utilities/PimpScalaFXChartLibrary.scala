@@ -92,13 +92,9 @@ object PimpScalaFXChartLibrary {
     }.toSeq
 
     /** Set the specified label as clicked by adding a specific style */
-    def setLabelAsClicked(value: String): Unit = {
-      label(value) --> { _.styleClass += CLICKED_ITEM_STYLE }
-    }
+    def setLabelAsClicked(value: String): Unit = label(value) --> { _.styleClass += CLICKED_ITEM_STYLE }
 
-    def setLabelAsUnClicked(value: String): Unit = {
-      label(value) --> { _.styleClass -= CLICKED_ITEM_STYLE }
-    }
+    def setLabelAsUnClicked(value: String): Unit = label(value) --> { _.styleClass -= CLICKED_ITEM_STYLE }
 
   }
 
