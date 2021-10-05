@@ -1,4 +1,4 @@
-package model.mutation
+package model.world
 
 import model.genome.Genes.GeneKind
 
@@ -12,7 +12,5 @@ trait Mutation {
 
 object Mutation {
   def apply(geneKind: GeneKind, isDominant: Boolean): Mutation = MutationImpl(geneKind, isDominant)
-
-  private case class MutationImpl( override val geneKind: GeneKind,
-                                  override val isDominant: Boolean ) extends Mutation
+  private case class MutationImpl(override val geneKind: GeneKind, override val isDominant: Boolean) extends Mutation
 }

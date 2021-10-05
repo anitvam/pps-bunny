@@ -1,32 +1,18 @@
 package model.genome
 
-import scala.language.postfixOps
 import model.MultipleDominanceAssignmentException
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
 import util.PimpScala.RichOption
 
-import scala.language.implicitConversions
+import scala.language.{implicitConversions, postfixOps}
 import scala.util.Random
 
 /**
  * An Enumeration for all the Alleles present in the World.
  */
-object Alleles extends Enumeration{
+object Alleles extends Enumeration {
   type AlleleKind = Value
-
-  /**
-   * The information each AlleleKind must have
-   * @param dominant specifies if it's dominant or not, it could be empty if not chosen yet
-   */
-
-  protected case class AllelesVal(prettyName: String) extends super.Val {
-    private var dominant: Option[Boolean] = Option.empty
-    def resetDominance: Unit = dominant = Option.empty
-    def setDominance(cond: Boolean): Unit =
-      if(dominant?) throw new MultipleDominanceAssignmentException else dominant = Option(cond)
-    def isDominant: Option[Boolean] = dominant
-  }
   implicit def valueToAllelesVal(x: Value): AllelesVal = x.asInstanceOf[AllelesVal]
 
   val WHITE_FUR: AllelesVal = AllelesVal("Pelo Bianco")
@@ -39,6 +25,21 @@ object Alleles extends Enumeration{
   val LOW_EARS: AllelesVal = AllelesVal("Orecchie Basse")
   val HIGH_JUMP: AllelesVal = AllelesVal("Salto Alto")
   val LOW_JUMP: AllelesVal = AllelesVal("Salto Basso")
+
+  /**
+   * The information each AlleleKind must have
+   * @param prettyName the name of each allele, that will be shown to the user
+   */
+  protected case class AllelesVal(prettyName: String) extends super.Val {
+    private var dominant: Option[Boolean] = Option.empty
+    def resetDominance: Unit = dominant = Option.empty
+
+    def setDominance(cond: Boolean): Unit =
+      if (dominant ?) throw new MultipleDominanceAssignmentException else dominant = Option(cond)
+
+    def isDominant: Option[Boolean] = dominant
+  }
+
 }
 
 /**
@@ -50,53 +51,58 @@ object Genes extends Enumeration {
 
   /**
    * The information each GeneKind must have.
-   * @param base    the base Allele of the gene
+   * @param base the base Allele of the gene
    * @param mutated the mutated Allele of the gene
-   * @param letter  the letter which corresponds to this gene
+   * @param letter the letter which corresponds to this gene
    */
   protected case class GenesVal(base: AlleleKind,
                                 mutated: AlleleKind,
-                                letter: String) extends super.Val
+                                letter: String,
+                                prettyName: String) extends super.Val
   import scala.language.implicitConversions
   implicit def valueToGenesVal(x: Value): GenesVal = x.asInstanceOf[GenesVal]
 
   val FUR_COLOR: GenesVal =  GenesVal(base = Alleles.WHITE_FUR,
                                 mutated = Alleles.BROWN_FUR,
-                                letter = "f")
+                                letter = "f",
+                                prettyName = "Colore pelliccia")
   val FUR_LENGTH: GenesVal = GenesVal(base = Alleles.SHORT_FUR,
                                 mutated = Alleles.LONG_FUR,
-                                letter = "l")
+                                letter = "l",
+                                prettyName = "Lunghezza pelo")
   val TEETH: GenesVal =      GenesVal(base = Alleles.SHORT_TEETH,
                                 mutated = Alleles.LONG_TEETH,
-                                letter = "t")
+                                letter = "t",
+                                prettyName = "Lunghezza denti")
   val EARS: GenesVal =       GenesVal(base = Alleles.HIGH_EARS,
                                 mutated = Alleles.LOW_EARS,
-                                letter = "e")
+                                letter = "e" ,
+                                prettyName = "Orecchie")
   val JUMP: GenesVal =       GenesVal(base = Alleles.LOW_JUMP,
                                 mutated = Alleles.HIGH_JUMP,
-                                letter = "j")
+                                letter = "j",
+                                prettyName = "Altezza salto")
 }
 
 object KindsUtils {
-  /**
-   * @param alleleKind  the AlleleKind of which the GeneKind is needed
-   * @return            the GeneKind uniquely associated with this AlleleKind
+
+  /**d
+   * @param geneKind the gene kind of which the allele must be associated with
+   * @return a random AlleleKind for the specified GeneKind
    */
-  def getGeneKind(alleleKind:AlleleKind): GeneKind =
-    Genes.values.filter(gk => gk.base == alleleKind || gk.mutated == alleleKind).firstKey
+  def getRandomAlleleKind(geneKind: GeneKind): AlleleKind = Seq(geneKind.base, geneKind.mutated)(Random.nextInt(2))
 
   /**
-   * @param alleleKind  the AlleleKind of which alternative AlleleKind is needed
-   * @return            the AlleleKind uniquely associated with the specified AlleleKind
+   * Randomly chooses one AlleleKind as Dominant for each GeneKind
    */
-  def getAlternativeAlleleKind(alleleKind:AlleleKind): AlleleKind = {
-    val geneKind = getGeneKind(alleleKind)
-    if (getGeneKind(alleleKind).base == alleleKind) geneKind.mutated else geneKind.base
-  }
+  def assignRandomDominance(): Unit =
+    Genes.values.foreach(gk => setAlleleDominance(getRandomAlleleKind(gk)))
 
   /**
    * Sets an AlleleKind as dominant for a specific GeneKind.
-   * @param alleleKind the AlleleKind that has to be set as dominant
+   *
+   * @param alleleKind
+   *   the AlleleKind that has to be set as dominant
    */
   def setAlleleDominance(alleleKind: AlleleKind): Unit = {
     alleleKind.setDominance(true)
@@ -104,15 +110,27 @@ object KindsUtils {
   }
 
   /**
-   * Randomly chooses one AlleleKind as Dominant for each GeneKind
+   * @param alleleKind
+   *   the AlleleKind of which the GeneKind is needed
+   * @return
+   *   the GeneKind uniquely associated with this AlleleKind
    */
-  def assignRandomDominance(): Unit =
-    Genes.values.foreach(gk => setAlleleDominance(List(gk.base, gk.mutated)(Random.nextInt(2))))
+  def getGeneKind(alleleKind: AlleleKind): GeneKind =
+    Genes.values.filter(gk => gk.base == alleleKind || gk.mutated == alleleKind).firstKey
+
+  /**
+   * @param alleleKind
+   *   the AlleleKind of which alternative AlleleKind is needed
+   * @return
+   *   the AlleleKind uniquely associated with the specified AlleleKind
+   */
+  def getAlternativeAlleleKind(alleleKind: AlleleKind): AlleleKind = {
+    val geneKind = getGeneKind(alleleKind)
+    if (geneKind.base == alleleKind) geneKind.mutated else geneKind.base
+  }
 
   /**
    * Reset dominance of all Alleles.
    */
   def resetDominance(): Unit = Alleles.values.foreach(_.resetDominance)
 }
-
-

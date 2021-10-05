@@ -23,7 +23,7 @@
     -fx-border-color: #8093f1;
     -fx-border-width: 5;
     -fx-border-radius: 1em;
-    -fx-border-style: segments(10, 15, 15, 15)  line-cap round;
+    -fx-border-style: segments(10, 15, 15, 15) line-cap round;
 }
 
 .panel {
@@ -45,19 +45,36 @@
     -fx-background-position: center;
 }
 
+
+.speedup-button {
+    -fx-background-size: 3em 3em;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.restart-button{
+    -fx-background-image: url("/img/restart.png");
+    -fx-background-size: 2em 2em;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
 .chart-line-mySymbol {
     -fx-scale-x: 0.7;
     -fx-scale-y: 0.7;
 }
 
-
 .Total {
     -fx-stroke: black;
-    -fx-background-color : black;
+    -fx-background-color: black;
 }
 
-.chart-legend-item-clicked {
-    -fx-background-color : lightgray;
+.population-chart-legend-item {
+    -fx-padding: 2px;
+}
+
+.population-chart-legend-item-clicked {
+    -fx-background-color: lightgray;
     -fx-background-radius: 5px;
     -fx-padding: 2px;
 }
@@ -68,28 +85,28 @@
 
 .Pelo_Bianco, .Pelo_Marrone {
     -fx-stroke: #80cbc4;
-    -fx-background-color : #80cbc4;
+    -fx-background-color: #80cbc4;
 }
 
 
 .Pelo_Corto, .Pelo_Lungo {
     -fx-stroke: #ffab91;
-    -fx-background-color : #ffab91;
+    -fx-background-color: #ffab91;
 }
 
 .Denti_Corti, .Denti_Lunghi {
     -fx-stroke: #90caf9;
-    -fx-background-color : #90caf9;
+    -fx-background-color: #90caf9;
 }
 
 .Orecchie_Basse, .Orecchie_Alte {
     -fx-stroke: #ce93d8;
-    -fx-background-color : #ce93d8;
+    -fx-background-color: #ce93d8;
 }
 
 .Salto_Alto, .Salto_Basso {
     -fx-stroke: #c5e1a5;
-    -fx-background-color : #c5e1a5;
+    -fx-background-color: #c5e1a5;
 }
 
 .Pelo_Bianco_Pie {
@@ -117,15 +134,15 @@
 }
 
 .Salto_Alto_Pie {
-    -fx-pie-color : #94af76;
+    -fx-pie-color: #94af76;
 }
 
 .Salto_Basso_Pie {
-    -fx-pie-color : #c5e1a5;
+    -fx-pie-color: #c5e1a5;
 }
 
 .Denti_Corti_Pie {
-    -fx-pie-color : #90caf9;
+    -fx-pie-color: #90caf9;
 }
 
 .Denti_Lunghi_Pie {

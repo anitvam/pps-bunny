@@ -1,23 +1,29 @@
 package controller
 
-import engine.{SimulationEngine, SimulationHistory}
-import engine.SimulationEngine.simulationLoop
-import model.mutation.Mutation
-import model.world.{Climate, Environment, Summer, Winter}
-import model.world.Environment.Factors
+import engine.SimulationEngine.{ resetEngine, simulationLoop }
+import engine.SimulationHistory.resetHistory
+import model.genome.KindsUtils.resetDominance
+import engine.{ SimulationEngine, SimulationHistory }
 import model.world.Generation.Population
+import model.world.GenerationsUtils.GenerationPhase
+import model.world.disturbingFactors.Factor
+import model.world.{ Mutation, Summer, Winter }
 import scalafx.application.Platform
 import view.scalaFX.ScalaFXView
 
-
 object Controller {
 
-  /** Method that starts the simulation
-   * @param climate the Environment Climate
-   * @param factors the Environment Factors*/
-  def startSimulation(climate: Climate, factors: Factors): Unit = {
-    SimulationHistory changeEnvironmentClimate climate
-    simulationLoop().unsafeRunAsyncAndForget()
+  /**
+   * Method that starts the simulation
+   * @param climate
+   *   the Environment Climate
+   * @param factors
+   *   the Environment Factors
+   */
+  def startSimulation(): Unit = simulationLoop().unsafeRunAsyncAndForget()
+
+  def incrementSimulationSpeed(): Unit = {
+    SimulationEngine.incrementSpeed()
   }
 
   /** Method that sets the Summer Climate inside Environment */
@@ -26,13 +32,29 @@ object Controller {
   /** Method that sets the Winter Climate inside Environment */
   def setWinterClimate(): Unit = SimulationHistory changeEnvironmentClimate Winter()
 
-  /** Method that insert a mutation inside the simulation
-   * @param mutation the Mutation */
-  def insertMutation(mutation: Mutation): Unit = SimulationHistory introduceMutation mutation
+  /**
+   * Method that insert a mutation inside the simulation
+   * @param mutation
+   *   the Mutation to insert
+   */
+  def insertMutation(mutation: Mutation): Unit =
+    SimulationHistory.getActualGeneration.environment introduceMutation mutation
 
   /** Method that shows the end of the simulation on the Application GUI */
-  def showEnd(): Unit = Platform runLater { ScalaFXView.showEnd() }
+  def showEnd(isOverpopulation: Boolean): Unit = Platform runLater {
+    ScalaFXView.showEnd(isOverpopulation)
+  }
 
-  def population: Population = SimulationHistory.getActualPopulation
+  /** Resets the simulation model to its initial state */
+  def reset(): Unit = {
+    resetDominance()
+    resetHistory()
+    resetEngine()
+  }
 
+  def population: Population = SimulationHistory.getActualGeneration.population
+
+  def introduceFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment introduceFactor factor
+
+  def removeFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment removeFactor factor
 }
