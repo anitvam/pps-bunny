@@ -1,0 +1,51 @@
+package bunny.controller
+
+import bunny.engine.SimulationEngine.simulationLoop
+import bunny.engine.SimulationHistory
+import bunny.engine.SimulationHistory.resetHistory
+import bunny.model.genome.KindsUtils.resetDominance
+import bunny.model.mutation.Mutation
+import bunny.model.world.Generation.Population
+import bunny.model.world.disturbingFactors.Factor
+import bunny.model.world.{ Summer, Winter }
+import scalafx.application.Platform
+import bunny.view.scalaFX.ScalaFXView
+
+object Controller {
+
+  /**
+   * Method that starts the simulation
+   */
+  def startSimulation(): Unit = simulationLoop().unsafeRunAsyncAndForget()
+
+  /** Method that sets the Summer Climate inside Environment */
+  def setSummerClimate(): Unit = SimulationHistory changeEnvironmentClimate Summer()
+
+  /** Method that sets the Winter Climate inside Environment */
+  def setWinterClimate(): Unit = SimulationHistory changeEnvironmentClimate Winter()
+
+  /**
+   * Method that insert a mutation inside the simulation
+   * @param mutation
+   *   the Mutation to insert
+   */
+  def insertMutation(mutation: Mutation): Unit =
+    SimulationHistory.getActualGeneration.environment introduceMutation mutation
+
+  /** Method that shows the end of the simulation on the Application GUI */
+  def showEnd(): Unit = Platform runLater {
+    ScalaFXView.showEnd()
+  }
+
+  /** Resets the simulation bunny.model to its initial state */
+  def reset(): Unit = {
+    resetDominance()
+    resetHistory()
+  }
+
+  def population: Population = SimulationHistory.getActualPopulation
+
+  def introduceFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment introduceFactor factor
+
+  def removeFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment removeFactor factor
+}
