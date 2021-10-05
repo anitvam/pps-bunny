@@ -4,87 +4,91 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scalaFX.FXControllers.ChartChoiceController">
-   <children>
-      <VBox layoutX="422.0" layoutY="-43.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label text="Scegli il grafico da visualizzare" textAlignment="LEFT" textOverrun="CENTER_ELLIPSIS" wrapText="true">
-               <padding>
-                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </Label>
-            <RadioButton fx:id="populationRadioButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showPopulationChart" selected="true" text="Popolazione" textOverrun="CENTER_ELLIPSIS" wrapText="true">
-               <toggleGroup>
-                  <ToggleGroup fx:id="chartChoice" />
-               </toggleGroup>
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="15.0" right="5.0" top="10.0" />
-               </VBox.margin>
-            </RadioButton>
-            <RadioButton mnemonicParsing="false" onAction="#showProportionsChart" text="Proporzioni" toggleGroup="$chartChoice" wrapText="true">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="15.0" right="5.0" top="10.0" />
-               </VBox.margin>
-            </RadioButton>
-            <RadioButton mnemonicParsing="false" fx:id="pedigreeRadioButton" onAction="#showPedigreeChart" text="Albero Genealogico" textOverrun="CENTER_ELLIPSIS" toggleGroup="$chartChoice" wrapText="true">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="15.0" right="5.0" top="10.0" />
-               </VBox.margin>
-            </RadioButton>
-            <VBox fx:id="legendBox">
-               <padding>
-                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-               </padding>
-               <Label text="Legenda" textAlignment="LEFT" wrapText="true">
-                  <padding>
-                     <Insets bottom="5.0"/>
-                  </padding>
-                  <font>
-                     <Font name="System Bold" size="17.0" />
-                  </font>
-               </Label>
-               <Label text="F = Colore pelliccia" textOverrun="CENTER_ELLIPSIS" wrapText="true">
-                  <padding>
-                     <Insets bottom="2.0"/>
-                  </padding>
-               </Label>
-               <Label text="L = Lunghezza pelo" textOverrun="CENTER_ELLIPSIS" wrapText="true">
-                  <padding>
-                     <Insets bottom="2.0"/>
-                  </padding>
-               </Label>
-               <Label text="T = Lunghezza denti" textOverrun="CENTER_ELLIPSIS" wrapText="true">
-                  <padding>
-                     <Insets bottom="2.0"/>
-                  </padding>
-               </Label>
-               <Label text="E = Orecchie" textOverrun="CENTER_ELLIPSIS" wrapText="true">
-                  <padding>
-                     <Insets bottom="2.0"/>
-                  </padding>
-               </Label>
-               <Label text="J = Altezza salto" textOverrun="CENTER_ELLIPSIS" wrapText="true">
-                  <padding>
-                     <Insets bottom="2.0"/>
-                  </padding>
-               </Label>
-            </VBox>
-         </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scalaFX.FXControllers.ChartChoiceController">
+   <VBox layoutX="422.0" layoutY="-43.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Label text="Scegli il grafico da visualizzare" textOverrun="CENTER_ELLIPSIS"
+             wrapText="true">
+         <padding>
+            <Insets bottom="5.0" left="10.0" right="10.0" top="5.0"/>
+         </padding>
+         <font>
+            <Font name="System Bold" size="17.0"/>
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0"/>
+         </VBox.margin>
+      </Label>
+      <RadioButton fx:id="populationRadioButton" contentDisplay="CENTER" mnemonicParsing="false"
+                   onAction="#showPopulationChart" selected="true" text="Popolazione" textOverrun="CENTER_ELLIPSIS"
+                   wrapText="true">
+         <toggleGroup>
+            <ToggleGroup fx:id="chartChoice"/>
+         </toggleGroup>
+         <font>
+            <Font size="16.0"/>
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" left="15.0" right="5.0" top="10.0"/>
+         </VBox.margin>
+      </RadioButton>
+      <RadioButton mnemonicParsing="false" onAction="#showProportionsChart" text="Proporzioni"
+                   toggleGroup="$chartChoice" wrapText="true">
+         <font>
+            <Font size="16.0"/>
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" left="15.0" right="5.0" top="10.0"/>
+         </VBox.margin>
+      </RadioButton>
+      <RadioButton mnemonicParsing="false" fx:id="pedigreeRadioButton" onAction="#showPedigreeChart"
+                   text="Albero Genealogico" textOverrun="CENTER_ELLIPSIS" toggleGroup="$chartChoice"
+                   wrapText="true">
+         <font>
+            <Font size="16.0"/>
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" left="15.0" right="5.0" top="10.0"/>
+         </VBox.margin>
+      </RadioButton>
+      <VBox fx:id="legendBox">
+         <padding>
+            <Insets bottom="5.0" left="10.0" right="10.0" top="5.0"/>
+         </padding>
+         <Label text="Legenda" wrapText="true">
+            <padding>
+               <Insets bottom="5.0"/>
+            </padding>
+            <font>
+               <Font name="System Bold" size="17.0"/>
+            </font>
+         </Label>
+         <Label text="F = Colore pelliccia" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+            <padding>
+               <Insets bottom="2.0"/>
+            </padding>
+         </Label>
+         <Label text="L = Lunghezza pelo" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+            <padding>
+               <Insets bottom="2.0"/>
+            </padding>
+         </Label>
+         <Label text="T = Lunghezza denti" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+            <padding>
+               <Insets bottom="2.0"/>
+            </padding>
+         </Label>
+         <Label text="E = Orecchie" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+            <padding>
+               <Insets bottom="2.0"/>
+            </padding>
+         </Label>
+         <Label text="J = Altezza salto" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+            <padding>
+               <Insets bottom="2.0"/>
+            </padding>
+         </Label>
       </VBox>
-   </children>
+   </VBox>
 </AnchorPane>
