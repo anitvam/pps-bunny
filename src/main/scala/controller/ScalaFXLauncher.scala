@@ -8,8 +8,6 @@ object ScalaFXLauncher extends JFXApp3 {
   System.setProperty("prism.order", "sw")
   System.setProperty("prism.forceGPU", "true")
 
-  override def start(): Unit = {
-    ScalaFXView.start()
-  }
+  override def start(): Unit = ScalaFXView.start()
 
 }
