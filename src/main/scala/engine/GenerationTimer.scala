@@ -19,8 +19,10 @@ object GenerationTimer {
   /**
    * Returns a [[IO]] description that when evaluated will create an async task that will wait until the time specified
    *
-   * @param to  the moment until when the timer sleep
-   * @return the IO monad describing the operation
+   * @param to
+   *   the moment until when the timer sleep
+   * @return
+   *   the IO monad describing the operation
    */
   def waitFor(to: FiniteDuration): IO[Unit] = waitUntil(getTime - start, to)
 
@@ -31,9 +33,12 @@ object GenerationTimer {
    * Returns a [[IO]] description that when evaluated will create an async task that will wait for the interval
    * specified.
    *
-   * @param from the lower bound for of the time interval to be slept
-   * @param to the upper bound of the time interval until when sleep.
-   * @return the IO monad describing the sleeping operation.
+   * @param from
+   *   the lower bound for of the time interval to be slept
+   * @param to
+   *   the upper bound of the time interval until when sleep.
+   * @return
+   *   the IO monad describing the sleeping operation.
    */
   def waitUntil(from: FiniteDuration, to: FiniteDuration): IO[Unit] = if (from < to) IO.sleep(to - from) else unit
 }
