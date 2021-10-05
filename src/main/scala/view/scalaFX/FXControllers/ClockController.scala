@@ -52,7 +52,7 @@ class ClockController extends ClockControllerInterface {
 
     analogueClock = new Group(face, labelClock, ticks, spindle, hourHand)
     analogueClock.setTranslateX(40)
-    analogueClock.setTranslateY(30)
+    analogueClock.setTranslateY(40)
     analogueClock.getStylesheets.add("/fxml/stylesheets/clock.css")
 
     analogueClock

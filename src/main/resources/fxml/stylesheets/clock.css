@@ -10,7 +10,7 @@
   -fx-fill: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));
   -fx-stroke: derive(burlywood, -45%);
   -fx-stroke-width: 5;
-  -fx-effect: dropshadow(three-pass-box, grey, 10, 0, 4, 4);
+
 }
 
 #brand {
