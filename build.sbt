@@ -1,10 +1,10 @@
 import sbt.Keys.libraryDependencies
 
 ThisBuild / version := "0.2.0"
-ThisBuild / organization := "bunny"
+ThisBuild / organization := "it.unibo.pps.bunny"
 scalaVersion := "2.13.6"
 
-assembly / mainClass := Some("bunny.controller.ScalaFXLauncher")
+assembly / mainClass := Some("it.unibo.pps.bunny.controller.ScalaFXLauncher")
 
 ThisBuild / assemblyMergeStrategy := {
   case PathList("META-INF", _*) => MergeStrategy.discard
@@ -13,7 +13,7 @@ ThisBuild / assemblyMergeStrategy := {
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-feature", "-Ymacro-annotations")
 
-name := "bunny"
+name := "pps-bunny"
 
 // Add dependency on ScalaFX library
 libraryDependencies ++= Seq(

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity"
-            xmlns="http://javafx.com/javafx/8.0.171" fx:controller="bunny.view.scalaFX.FXControllers.MutationsPanelController">
+            xmlns="http://javafx.com/javafx/8.0.171" fx:controller="it.unibo.pps.bunny.view.scalaFX.FXControllers.MutationsPanelController">
     <children>
         <GridPane layoutX="108.0" layoutY="148.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" >
