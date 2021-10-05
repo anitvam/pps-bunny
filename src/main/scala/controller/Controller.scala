@@ -52,7 +52,7 @@ object Controller {
     resetEngine()
   }
 
-  def population: Population = SimulationHistory.getActualPopulation
+  def population: Population = SimulationHistory.getActualGeneration.population
 
   def introduceFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment introduceFactor factor
 

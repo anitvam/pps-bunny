@@ -188,13 +188,9 @@ class BaseAppController(
     }
   }
 
-  override def showPopulationChart(): Unit = {
-    println("setto il charts pane")
-    populationChart --> { c => chartsPane.children = c.chart }
-  }
+  override def showPopulationChart(): Unit = populationChart --> { c => chartsPane.children = c.chart }
 
-  override def showPedigreeChart(): Unit = {
-    println("Mostro pedigree")
+  override def showPedigreeChart(): Unit =
     if (selectedBunny ?) {
       val pedigreeChart = PedigreeChart(
         selectedBunny.get.bunny,
@@ -204,7 +200,6 @@ class BaseAppController(
       setFitParent(pedigreeChart)
       chartsPane.children = pedigreeChart
     } else chartsPane.children = pedigreeText
-  }
 
   override def showProportionsChart(): Unit = chartsPane.children = proportionsChartPane.get
 

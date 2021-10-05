@@ -71,19 +71,22 @@ class ProportionsChartController(
       if (generationPhase.phase == REPRODUCTION_PHASE) {
         fillPieCharts(population, getSelectedGeneKind)
         displayedGenerationNumber = generationPhase.generationNumber
-        println("Generazione: " + displayedGenerationNumber)
         genText.text = s"Generazione $displayedGenerationNumber"
         if (generationPhase.generationNumber > 0) backBtn.disable = false
-      } else currentPie += (getSelectedGeneKind, population.filter(_.alive))
+      } else fillCurrentPieChart(population, getSelectedGeneKind)
     }
   }
 
   private def getSelectedGeneKind: GeneKind = pieChart.selectedToggle.value.asInstanceOf[jfxc.RadioButton].getText
 
   private def fillPieCharts(population: Population, gkSelected: GeneKind): Unit = {
-    startPie += (gkSelected, population)
-    currentPie += (gkSelected, population.filter(_.alive))
+    val p = if (population.nonEmpty) population else SimulationHistory.getActualGeneration.population
+    startPie += (gkSelected, p)
+    fillCurrentPieChart(p, gkSelected)
   }
+
+  private def fillCurrentPieChart(population: Population, gkSelected: GeneKind): Unit =
+    currentPie += (gkSelected, population.filter(_.alive))
 
   def onRadioButtonClick(): Unit = fillPieCharts(Controller.population, getSelectedGeneKind)
 
