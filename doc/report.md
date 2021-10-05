@@ -57,6 +57,13 @@ Quando un membro ha completato il suo task, effettua una `pull request` che sott
 degli altri membri del team. Nel momento in cui viene fatta questa richiesta viene anche associata la `issue` relativa alla
 risoluzione del task, questa operazione facilita l'individuazione di task che non sono stati svolti.
 
+### Scelta degli strumenti
+- sbt
+- ScalaTest
+- Trello
+- ScalaFMT
+- ScalaFX
+
 ### Strumenti di test, build e Continuous Integration
 Il processo di sviluppo adottato richiede che le feature sviluppate dai vari membri del team siano a ogni pull request
 integrate con quelle già presenti nel branch develop, dunque per rendere il processo di integrazione più fluido,
@@ -132,20 +139,37 @@ Di seguito sono riportati i requisiti visti nell'ottica di cosa può fare l'uten
   * Per ogni generazione, un grafico contenente la proporzione fra coniglietti con i due fenotipi disponibili per ogni gene.
 
 ### Requisiti Funzionali 
+// simulazione in generazioni
+
 ### Requisiti non Funzionali 
+// Interfaccia utente responsive (?)
+
 ### Requisiti di Implementazione 
 * La JVM >= v1.11 è richiesta per la nostra implementazione in ScalaFX
+// Model con ScalaTest, GUI manualmente (?)
+// Cats
+// ScalaFMT?
 
 ## Design architetturale
 // Architettura complessiva
+Diagramma UML ad alto livello (MVC)
 // Descrizione di pattern architetturali usati
+MVC
 // Scelte tecnologiche cruciali a fini architetturali
+Cats, Monadi
 
 ## Design di dettaglio
+Diagramma UML di più basso livello (Sprint 1 e definitivi con confronto)
 
 ## Implementazione
+
 ### Baiardi
 ### Lucchi
+// For comprension, prolog, pimp, enumeration, pattern (higher order, strategy), TDD, ricorsive
 ### Spadoni 
 ### Rocco
+
+###Testing
+- Coverage
+
 ## Retrospettiva
