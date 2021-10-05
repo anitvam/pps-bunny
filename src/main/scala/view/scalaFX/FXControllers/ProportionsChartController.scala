@@ -88,9 +88,13 @@ class ProportionsChartController(
   private def fillCurrentPieChart(population: Population, gkSelected: GeneKind): Unit =
     currentPie += (gkSelected, population.filter(_.alive))
 
-  def onRadioButtonClick(): Unit = fillPieCharts(Controller.population, getSelectedGeneKind)
+  def onRadioButtonClick(): Unit = changeGeneration(displayedGenerationNumber)
 
-  override def resetChart(): Unit = this.onRadioButtonClick()
+  override def resetChart(): Unit = {
+    isInHistoryMode = false
+    displayedGenerationNumber = 0
+    changeGeneration(displayedGenerationNumber)
+  }
 
   private def changeGeneration(generationNumber: Int): Unit = {
     val generation = SimulationHistory.history(SimulationHistory.getGenerationNumber - generationNumber)
