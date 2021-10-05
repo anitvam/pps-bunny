@@ -1,10 +1,7 @@
 package model.world
 
-import engine.SimulationConstants.{
-  FOOD_INSTANT, FOOD_PHASE, GENERATION_END, REPRODUCTION_PHASE, TEMPERATURE_PHASE, TEMP_INSTANT, WOLVES_INSTANT,
-  WOLVES_PHASE
-}
-import model.Bunny
+import engine.SimulationConstants._
+import model.{ Bunny, ChildBunny }
 import model.world.Generation.Population
 
 /** The unit of time of the simulation and wraps its properties */
@@ -26,10 +23,19 @@ trait Generation {
   /** @return the alive [[Population]] */
   def livingPopulation: Population = population.filter(_.alive)
 
+  def populationAtTheEnd: Population
+
+  def populationAtTheEnd_=(population: Population)
+
   def isEnded: Boolean
 
   /** Sets this Generation as ended */
   def isEnded_=(isEnded: Boolean): Unit
+
+  def terminate(): Unit = {
+    this.isEnded = true
+    populationAtTheEnd = this.population.map(b => new ChildBunny(b.genotype, b.mom, b.dad, b.age, b.alive))
+  }
 
   /** @return the current number of alive bunnies */
   def getAliveBunniesNumber: Int = livingPopulation.size
@@ -45,6 +51,7 @@ object Generation {
   private class GenerationImpl(
       override val environment: Environment,
       override var population: Population,
+      override var populationAtTheEnd: Population = Seq(),
       override var isEnded: Boolean = false
   ) extends Generation
 

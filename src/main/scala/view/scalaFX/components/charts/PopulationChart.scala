@@ -8,9 +8,11 @@ import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
 import scalafx.geometry.Side
-import scalafx.scene.chart.{LineChart, NumberAxis, XYChart}
+import scalafx.scene.chart.{ LineChart, NumberAxis, XYChart }
 import util.PimpScala.RichOption
-import view.scalaFX.components.charts.LineChartComponentFactory.{createEmptySeries, createXYChartData}
+import view.scalaFX.ScalaFXConstants.PopulationChart._
+import view.scalaFX.ScalaFXConstants.Style.PopulationLegend.ITEM_STYLE
+import view.scalaFX.components.charts.LineChartComponentFactory.{ createEmptySeries, createXYChartData }
 import view.scalaFX.components.charts.PopulationChartDataType._
 import view.scalaFX.utilities.PimpScalaFXChartLibrary._
 
@@ -86,10 +88,12 @@ object PopulationChartDataType {
 case class PopulationChart(height: Double, width: Double) {
   import LineChartComponentFactory._
 
-  val xAxis: NumberAxis = createNumberAxis("Generation Axis", 0, 6, 1)
-  val yAxis: NumberAxis = createNumberAxis("Population Axis", 0, 30, 5)
+  val xAxis: NumberAxis = createNumberAxis("Generazioni", AXIS_LOWER_BOUND, X_AXIS_UPPER_BOUND, X_AXIS_TICK)
+  val yAxis: NumberAxis = createNumberAxis("Popolazione", AXIS_LOWER_BOUND, Y_AXIS_UPPER_BOUND, Y_AXIS_TICK)
+
   var mutations: MutationsChartSeries = MutationsChartSeries()
   var total: ChartSeries = ChartSeries(SeriesData(), createEmptySeries("Total"))
+
   val chart: LineChart[Number, Number] =
     createLineChart(xAxis, yAxis, height, width, total.xySeries :: mutations.xySeries)
 
@@ -126,6 +130,7 @@ object ChartConverters {
 
 /** A factory for all the components of a LineChart */
 object LineChartComponentFactory {
+  val fromNameToStyle: String => String = _.replace(" ", "_")
 
   /**
    * Creates a [[NumberAxis]]
@@ -182,7 +187,7 @@ object LineChartComponentFactory {
       point
         .nodeProperty()
         .addListener(_ => {
-          point.getNode.styleClass ++= Seq("chart-line-mySymbol", series.getName.replace(" ", "_"))
+          point.getNode.styleClass ++= Seq("chart-line-mySymbol", fromNameToStyle(series.getName))
           point.setExtraValue(v)
           point.getNode.visible = if (v) series.enabled else false
         })
@@ -212,34 +217,21 @@ object LineChartComponentFactory {
       legendSide = Side.Right
     }
     chart ++= seriesData
-    seriesData.foreach(s => s.addStyle(s.getName.replace(" ", "_")))
-    chart.legend.getItems.foreach(i => i.getSymbol.styleClass += i.getText.replace(" ", "_"))
+    seriesData.foreach(s => s.addStyle(fromNameToStyle(s.getName)))
+    chart.legend.getItems.foreach(i => i.getSymbol.styleClass += fromNameToStyle(i.getText))
     //At the beginning only the series "Total" is shown
     chart.legend.setLabelAsClicked("Total")
     seriesData.filterAndForeach(_.getName != "Total", _.enabled = false)
 
     chart.legend.getLabels.foreach(li => {
+      li.styleClass += ITEM_STYLE
       seriesData.getSeries(li.text.value) --> { s =>
         s.addStyle("population-chart-legend-item")
-        li.onMouseClicked = _ =>
-          s.getName match {
-            case "Total" =>
-              s.enabled = true
-              seriesData filterAndForeach (_.getName != "Total", _.enabled = false)
-              chart.legend.setLabelAsClicked("Total")
-            case _ =>
-              //toggle series visibility
-              s.enabled = !s.getNode.isVisible
-              if (s.getNode.isVisible) {
-                chart.legend.setLabelAsClicked(s.getName)
-                seriesData filterAndForeach (_.getName != s.getName, _.enabled = false)
-              } else {
-                seriesData.getSeries("Total") --> {
-                  _.enabled = true
-                }
-                chart.legend.setLabelAsClicked("Total")
-              }
-          }
+        li.onMouseClicked = _ => {
+          s.enabled = !s.getNode.isVisible
+          if (s.getNode.isVisible) chart.legend.setLabelAsClicked(s.getName)
+          else chart.legend.setLabelAsUnClicked(s.getName)
+        }
       }
     })
     chart

@@ -7,14 +7,16 @@ import model.Bunny
 import model.genome.Genes
 import model.genome.Genes.GeneKind
 import model.world.Generation.Population
-import model.world.GenerationsUtils.GenerationPhase
 import scalafx.scene.chart.PieChart
-import scalafx.scene.control.ToggleGroup
+import scalafx.scene.control.{ Button, ToggleGroup }
 import scalafx.scene.layout.AnchorPane
 import scalafxml.core.macros.sfxml
-import view.scalaFX.FXControllers.PieChartConverters._
-import view.scalaFX.FXControllers.PieChartFactory.createEmptyPieChart
 import view.scalaFX.utilities.PimpScalaFXChartLibrary._
+import engine.SimulationHistory
+import model.world.GenerationsUtils.GenerationPhase
+import scalafx.scene.text.Text
+import PieChartConverters._
+import view.scalaFX.FXControllers.PieChartFactory.createEmptyPieChart
 
 import scala.language.implicitConversions
 
@@ -28,11 +30,16 @@ trait ChartController {
 class ProportionsChartController(
     val startPiePane: AnchorPane,
     val currentPiePane: AnchorPane,
-    val pieChart: ToggleGroup
+    val pieChart: ToggleGroup,
+    val nextBtn: Button,
+    val backBtn: Button,
+    val genText: Text
 ) extends ChartController {
 
   private var startPie: PieChart = createEmptyPieChart("Inizio Generazione")
   private var currentPie: PieChart = createEmptyPieChart("Attualmente")
+  private var displayedGenerationNumber: Int = 0
+  private var isInHistoryMode: Boolean = false
 
   override def initialize(): Unit = {
 
@@ -44,23 +51,66 @@ class ProportionsChartController(
 
     fillPieCharts(Controller.population, getSelectedGeneKind)
 
+    nextBtn.disable = true
+    nextBtn.onAction = _ => {
+      backBtn.disable = false
+      changeGeneration(displayedGenerationNumber + 1)
+    }
+
+    backBtn.onAction = _ => {
+      isInHistoryMode = true
+      changeGeneration(displayedGenerationNumber - 1)
+      nextBtn.disable = false
+    }
+    backBtn.disable = true
+
   }
 
   override def updateChart(generationPhase: GenerationPhase, population: Population): Unit = {
-    if (generationPhase.phase == REPRODUCTION_PHASE) fillPieCharts(population, getSelectedGeneKind)
-    else currentPie += (getSelectedGeneKind, population.filter(_.alive))
+    if (!isInHistoryMode) {
+      if (generationPhase.phase == REPRODUCTION_PHASE) {
+        fillPieCharts(population, getSelectedGeneKind)
+        displayedGenerationNumber = generationPhase.generationNumber
+        genText.text = s"Generazione $displayedGenerationNumber"
+        if (generationPhase.generationNumber > 0) backBtn.disable = false
+      } else fillCurrentPieChart(population, getSelectedGeneKind)
+    }
   }
 
   private def getSelectedGeneKind: GeneKind = pieChart.selectedToggle.value.asInstanceOf[jfxc.RadioButton].getText
 
   private def fillPieCharts(population: Population, gkSelected: GeneKind): Unit = {
-    startPie += (gkSelected, population)
-    currentPie += (gkSelected, population.filter(_.alive))
+    val p = if (population.nonEmpty) population else SimulationHistory.getActualGeneration.population
+    startPie += (gkSelected, p)
+    fillCurrentPieChart(p, gkSelected)
   }
 
-  def onRadioButtonClick(): Unit = fillPieCharts(Controller.population, getSelectedGeneKind)
+  private def fillCurrentPieChart(population: Population, gkSelected: GeneKind): Unit =
+    currentPie += (gkSelected, population.filter(_.alive))
 
-  override def resetChart(): Unit = this.onRadioButtonClick()
+  def onRadioButtonClick(): Unit = changeGeneration(displayedGenerationNumber)
+
+  override def resetChart(): Unit = {
+    isInHistoryMode = false
+    displayedGenerationNumber = 0
+    changeGeneration(displayedGenerationNumber)
+  }
+
+  private def changeGeneration(generationNumber: Int): Unit = {
+    val generation = SimulationHistory.history(SimulationHistory.getGenerationNumber - generationNumber)
+    displayedGenerationNumber = generationNumber
+    genText.text = s"Generazione $displayedGenerationNumber"
+    currentPie.title = "Fine Generazione"
+    fillPieCharts(if (generation.isEnded) generation.populationAtTheEnd else generation.population, getSelectedGeneKind)
+    if (displayedGenerationNumber == 0) backBtn.disable = true
+    if (displayedGenerationNumber == SimulationHistory.getGenerationNumber) {
+      isInHistoryMode = false
+      nextBtn.disable = true
+      currentPie.title = "Attualmente"
+
+    }
+  }
+
 }
 
 object PieChartConverters {

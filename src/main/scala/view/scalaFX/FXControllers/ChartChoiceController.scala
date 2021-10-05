@@ -42,7 +42,10 @@ class ChartChoiceController(
     baseAppController = Some(controller)
   }
 
-  override def reset(): Unit = populationRadioButton.selected = true
+  override def reset(): Unit = {
+    activeChart = ChartType.Population
+    populationRadioButton.selected = true
+  }
 
   override def handleBunnyClick(): Unit =
     if (pedigreeRadioButton.selected.value) baseAppController --> { _.showPedigreeChart() }
