@@ -26,7 +26,7 @@ abstract class BasicFactor extends Factor {
 
 }
 
-case class Wolves(
+case class WolvesFactor(
     override val normalDamage: Double = WOLF_MEDIUM_DAMAGE,
     override val lowDamage: Double = WOLF_LOW_DAMAGE,
     override val highDamage: Double = WOLF_HIGH_DAMAGE,

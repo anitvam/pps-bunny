@@ -34,7 +34,7 @@ abstract class ClimateFactor() extends BasicFactor {
 
 }
 
-case class UnfriendlyClimate(
+case class UnfriendlyClimateFactor(
     override val normalDamage: Double = UNFRIENDLY_CLIMATE_DAMAGE,
     override val factorType: FactorKind = UnfriendlyClimateFactorKind,
     override val affectedGene: GeneKind = Genes.FUR_LENGTH

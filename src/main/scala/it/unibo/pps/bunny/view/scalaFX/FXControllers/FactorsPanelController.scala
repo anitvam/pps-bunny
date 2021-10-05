@@ -71,7 +71,7 @@ class FactorsPanelController(
     }
   }
 
-  def onWolfClick(): Unit = onFactorClick(wolfCheckBox, Wolves())
+  def onWolfClick(): Unit = onFactorClick(wolfCheckBox, WolvesFactor())
 
   def onToughFoodClick(): Unit = {
     onFactorClick(
@@ -97,7 +97,7 @@ class FactorsPanelController(
     manageEnvironmentBackgroundChange()
   }
 
-  def onHostileTemperatureClick(): Unit = onFactorClick(hostileTemperatureCheckBox, UnfriendlyClimate())
+  def onHostileTemperatureClick(): Unit = onFactorClick(hostileTemperatureCheckBox, UnfriendlyClimateFactor())
 
   override def showWolvesEating(): Unit = {
     if (wolfCheckBox.isSelected) wolvesView foreach (w => {

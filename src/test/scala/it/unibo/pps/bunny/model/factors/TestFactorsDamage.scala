@@ -28,7 +28,7 @@ class TestFactorsDamage extends FlatSpec with Matchers {
 
   "UnfriendlyClimate Factor" should "kill 20% of bunnies with Long Fur on Summer" in {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
-    val unfriendlyClimateFactor = UnfriendlyClimate()
+    val unfriendlyClimateFactor = UnfriendlyClimateFactor()
     val splitBunnies = splitBunniesByGene(Genes.FUR_LENGTH, bunnies)
 
     unfriendlyClimateFactor.applyDamage(bunnies, Summer())
@@ -39,7 +39,7 @@ class TestFactorsDamage extends FlatSpec with Matchers {
 
   it should "kill 20% of bunnies with ShortFur on Winter" in {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
-    val factor = UnfriendlyClimate()
+    val factor = UnfriendlyClimateFactor()
     val splitBunnies = splitBunniesByGene(Genes.FUR_LENGTH, bunnies)
 
     factor.applyDamage(bunnies, Winter())
@@ -50,7 +50,7 @@ class TestFactorsDamage extends FlatSpec with Matchers {
 
   "Wolf Factor" should "kill some bunnies on Summer" in {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
-    val factor = Wolves()
+    val factor = WolvesFactor()
     val lowAffectedBunnies = filterBunniesWithAlleles(bunnies, Alleles.BROWN_FUR, Alleles.HIGH_EARS)
     val lowAffectedNumber = (lowAffectedBunnies.length * WOLF_LOW_DAMAGE).round.toInt
     val highAffectedBunnies = filterBunniesWithAlleles(bunnies, Alleles.WHITE_FUR, Alleles.LOW_EARS)
@@ -64,7 +64,7 @@ class TestFactorsDamage extends FlatSpec with Matchers {
 
   it should "kill some bunnies on Winter" in {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
-    val factor = Wolves()
+    val factor = WolvesFactor()
     val lowAffectedBunnies = filterBunniesWithAlleles(bunnies, Alleles.WHITE_FUR, Alleles.HIGH_EARS)
     val lowAffectedNumber = (lowAffectedBunnies.length * WOLF_LOW_DAMAGE).round.toInt
     val highAffectedBunnies = filterBunniesWithAlleles(bunnies, Alleles.BROWN_FUR, Alleles.LOW_EARS)
