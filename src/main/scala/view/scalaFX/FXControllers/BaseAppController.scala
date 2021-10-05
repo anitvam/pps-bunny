@@ -250,6 +250,6 @@ class BaseAppController(
    */
   private def updateClock(label: String): Unit = {
     clockController.rotateClockHand()
-    clockController.updateLabel(label)
+    clockController.updateClockLabel(label)
   }
 }

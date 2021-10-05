@@ -6,7 +6,7 @@
   -fx-effect: dropshadow(three-pass-box, wheat, 10, 0, 0, 0);
 }
 
-#face {
+#clock {
   -fx-fill: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));
   -fx-stroke: derive(burlywood, -45%);
   -fx-stroke-width: 5;
@@ -17,7 +17,7 @@
   -fx-font-size: 14px;
 }
 
-#hourHand {
+#clockHand {
   -fx-stroke: darkslategray;
   -fx-stroke-width: 4;
   -fx-stroke-line-cap: round;
