@@ -4,9 +4,9 @@ import com.sun.javafx.charts.Legend
 import javafx.scene.control.Label
 import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
-import scalafx.scene.chart.{ LineChart, PieChart, XYChart }
+import scalafx.scene.chart.{LineChart, PieChart, XYChart}
 import util.PimpScala._
-import view.scalaFX.ScalaFXConstants.Style.PopulationLegend.{ CLICKED_ITEM_STYLE, ITEM_STYLE }
+import view.scalaFX.ScalaFXConstants.Style.PopulationLegend.CLICKED_ITEM_STYLE
 
 object PimpScalaFXChartLibrary {
 

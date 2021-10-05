@@ -37,8 +37,8 @@ class ProportionsChartController(
     val genText: Text
 ) extends ChartController {
 
-  private var startPie: PieChart = createEmptyPieChart("Inizio Generazione")
-  private var currentPie: PieChart = createEmptyPieChart("Attualmente")
+  private val startPie: PieChart = createEmptyPieChart("Inizio Generazione")
+  private val currentPie: PieChart = createEmptyPieChart("Attualmente")
   private var displayedGenerationNumber: Int = 0
   private var isInHistoryMode: Boolean = false
 
