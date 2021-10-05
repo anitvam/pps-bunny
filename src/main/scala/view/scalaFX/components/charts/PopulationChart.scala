@@ -10,6 +10,7 @@ import scalafx.collections.ObservableBuffer
 import scalafx.geometry.Side
 import scalafx.scene.chart.{ LineChart, NumberAxis, XYChart }
 import util.PimpScala.RichOption
+import view.scalaFX.ScalaFXConstants.PopulationChart._
 import view.scalaFX.ScalaFXConstants.Style.PopulationLegend.ITEM_STYLE
 import view.scalaFX.components.charts.LineChartComponentFactory.{ createEmptySeries, createXYChartData }
 import view.scalaFX.components.charts.PopulationChartDataType._
@@ -87,8 +88,8 @@ object PopulationChartDataType {
 case class PopulationChart(height: Double, width: Double) {
   import LineChartComponentFactory._
 
-  val xAxis: NumberAxis = createNumberAxis("Generazioni", 0, 6, 1)
-  val yAxis: NumberAxis = createNumberAxis("Popolazione", 0, 30, 5)
+  val xAxis: NumberAxis = createNumberAxis("Generazioni", AXIS_LOWER_BOUND, X_AXIS_UPPER_BOUND, X_AXIS_TICK)
+  val yAxis: NumberAxis = createNumberAxis("Popolazione", AXIS_LOWER_BOUND, Y_AXIS_UPPER_BOUND, Y_AXIS_TICK)
 
   var mutations: MutationsChartSeries = MutationsChartSeries()
   var total: ChartSeries = ChartSeries(SeriesData(), createEmptySeries("Total"))
