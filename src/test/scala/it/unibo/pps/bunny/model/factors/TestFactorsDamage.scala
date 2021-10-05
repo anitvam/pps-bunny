@@ -1,20 +1,19 @@
-package it.unibo.pps.bunny.model
+package it.unibo.pps.bunny.model.factors
 
 import it.unibo.pps.bunny.engine.SimulationConstants.FactorsConstants._
+import it.unibo.pps.bunny.model.Bunny
 import it.unibo.pps.bunny.model.Bunny.{ filterBunniesWithAlleles, generateRandomFirstBunny, splitBunniesByGene }
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.genome.{ Alleles, Genes }
-import it.unibo.pps.bunny.model.world.disturbingFactors._
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.disturbingFactors.{
   HighFoodFactor, HighToughFoodFactor, LimitedFoodFactor, LimitedHighFoodFactor, LimitedHighToughFoodFactor,
-  LimitedToughFoodFactor, ToughFoodFactor
+  LimitedToughFoodFactor, ToughFoodFactor, _
 }
 import it.unibo.pps.bunny.model.world.{ Summer, Winter }
 import org.scalatest.{ FlatSpec, Matchers }
 
 class TestFactorsDamage extends FlatSpec with Matchers {
-  import TestFactorsDamageUtils._
 
   "A population of bunnies" should "be filtered by alleles" in {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
@@ -144,6 +143,13 @@ class TestFactorsDamage extends FlatSpec with Matchers {
     assert(bunnies.count(!_.alive) == affectedNumber)
   }
 
+  private def countHighLimitedFoodDamage(bunnies: Population): Int = {
+    val affectedBunnies = splitBunniesByGene(Genes.JUMP, bunnies)
+
+    (affectedBunnies._1.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt +
+      (affectedBunnies._2.length * FOOD_FACTOR_LOW_DAMAGE).round.toInt
+  }
+
   "HighFood and LimitedFood Factors" should "kill some bunnies on Summer" in {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
     val factor = LimitedHighFoodFactor()
@@ -223,17 +229,6 @@ class TestFactorsDamage extends FlatSpec with Matchers {
     val factor = LimitedHighToughFoodFactor()
 
     assert(factor.applyDamage(bunnies, Winter()).count(!_.alive) == countLimitedHighToughFoodDamage(bunnies))
-  }
-
-}
-
-object TestFactorsDamageUtils {
-
-  def countHighLimitedFoodDamage(bunnies: Population): Int = {
-    val affectedBunnies = splitBunniesByGene(Genes.JUMP, bunnies)
-
-    (affectedBunnies._1.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt +
-      (affectedBunnies._2.length * FOOD_FACTOR_LOW_DAMAGE).round.toInt
   }
 
 }

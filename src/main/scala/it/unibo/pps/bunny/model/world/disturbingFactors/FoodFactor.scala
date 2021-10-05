@@ -39,36 +39,37 @@ sealed trait FoodFactorOnSingleGene extends FactorOnSingleGene with FoodFactor {
 }
 
 abstract class SingleFoodFactor(override val isCombined: Boolean = false) extends FoodFactor {
-
-  val concatFactor: PartialFunction[FoodFactor, FoodFactor]
+  protected val concatFunction: PartialFunction[FoodFactor, FoodFactor]
 
   override def combineWith(foodFactor: FoodFactor): FoodFactor = {
-    if (concatFactor isDefinedAt foodFactor) concatFactor(foodFactor) else throw new InvalidFoodFactor()
+    println(foodFactor)
+    println(concatFunction isDefinedAt (foodFactor))
+    if (concatFunction isDefinedAt foodFactor) concatFunction(foodFactor) else throw new InvalidFoodFactor()
   }
 
   override def removeSubFactor(foodFactor: FoodFactor): FoodFactor = throw new UnsupportedOperationException()
 }
 
 abstract class DoubleFoodFactor(override val isCombined: Boolean = true) extends SingleFoodFactor {
-  val decoupleFactor: PartialFunction[FoodFactor, FoodFactor]
+  protected val splitFunction: PartialFunction[FoodFactor, FoodFactor]
 
-  override def removeSubFactor(foodFactor: FoodFactor): FoodFactor = {
-    if (decoupleFactor isDefinedAt foodFactor) decoupleFactor(foodFactor) else throw new InvalidFoodFactor()
-  }
+  override def removeSubFactor(foodFactor: FoodFactor): FoodFactor =
+    if (splitFunction isDefinedAt foodFactor) splitFunction(foodFactor) else throw new InvalidFoodFactor()
 
 }
 
 abstract class TripleFoodFactor() extends DoubleFoodFactor {
-  override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = PartialFunction.empty
+  override protected val concatFunction: PartialFunction[FoodFactor, FoodFactor] = PartialFunction.empty
 
   override def combineWith(foodFactor: FoodFactor): FoodFactor = throw new UnsupportedOperationException()
 }
 
 case class LimitedFoodFactor() extends SingleFoodFactor {
 
-  override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = {
-    case _: HighFoodFactor  => LimitedHighFoodFactor()
-    case _: ToughFoodFactor => LimitedToughFoodFactor()
+  override protected val concatFunction: PartialFunction[FoodFactor, FoodFactor] = {
+    case _: HighFoodFactor      => LimitedHighFoodFactor()
+    case _: ToughFoodFactor     => LimitedToughFoodFactor()
+    case _: HighToughFoodFactor => LimitedHighToughFoodFactor()
   }
 
 }
@@ -79,9 +80,10 @@ case class HighFoodFactor(
 ) extends SingleFoodFactor
     with FoodFactorOnSingleGene {
 
-  override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = {
-    case _: LimitedFoodFactor => LimitedHighFoodFactor()
-    case _: ToughFoodFactor   => LimitedToughFoodFactor()
+  override protected val concatFunction: PartialFunction[FoodFactor, FoodFactor] = {
+    case _: LimitedFoodFactor      => LimitedHighFoodFactor()
+    case _: ToughFoodFactor        => LimitedToughFoodFactor()
+    case _: LimitedToughFoodFactor => LimitedHighToughFoodFactor()
   }
 
 }
@@ -92,9 +94,10 @@ case class ToughFoodFactor(
 ) extends SingleFoodFactor
     with FoodFactorOnSingleGene {
 
-  override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = {
-    case _: LimitedFoodFactor => LimitedToughFoodFactor()
-    case _: HighFoodFactor    => HighToughFoodFactor()
+  override protected val concatFunction: PartialFunction[FoodFactor, FoodFactor] = {
+    case _: LimitedFoodFactor     => LimitedToughFoodFactor()
+    case _: HighFoodFactor        => HighToughFoodFactor()
+    case _: LimitedHighFoodFactor => LimitedHighToughFoodFactor()
   }
 
 }
@@ -105,12 +108,12 @@ case class LimitedHighFoodFactor(
 ) extends DoubleFoodFactor
     with FoodFactorOnSingleGene {
 
-  override val decoupleFactor: PartialFunction[FoodFactor, FoodFactor] = {
+  override protected val splitFunction: PartialFunction[FoodFactor, FoodFactor] = {
     case _: LimitedFoodFactor => HighFoodFactor()
     case _: HighFoodFactor    => LimitedFoodFactor()
   }
 
-  override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = { case _: ToughFoodFactor =>
+  override protected val concatFunction: PartialFunction[FoodFactor, FoodFactor] = { case _: ToughFoodFactor =>
     LimitedHighToughFoodFactor()
   }
 
@@ -122,12 +125,12 @@ case class LimitedToughFoodFactor(
 ) extends DoubleFoodFactor
     with FoodFactorOnSingleGene {
 
-  override val decoupleFactor: PartialFunction[FoodFactor, FoodFactor] = {
+  override protected val splitFunction: PartialFunction[FoodFactor, FoodFactor] = {
     case _: LimitedFoodFactor => ToughFoodFactor()
     case _: ToughFoodFactor   => LimitedFoodFactor()
   }
 
-  override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = { case _: HighFoodFactor =>
+  override protected val concatFunction: PartialFunction[FoodFactor, FoodFactor] = { case _: HighFoodFactor =>
     LimitedHighToughFoodFactor()
   }
 
@@ -139,12 +142,12 @@ case class HighToughFoodFactor(
 ) extends DoubleFoodFactor
     with FactorOnDoubleGene {
 
-  override val decoupleFactor: PartialFunction[FoodFactor, FoodFactor] = {
+  override protected val splitFunction: PartialFunction[FoodFactor, FoodFactor] = {
     case _: HighFoodFactor  => ToughFoodFactor()
     case _: ToughFoodFactor => HighFoodFactor()
   }
 
-  override val concatFactor: PartialFunction[FoodFactor, FoodFactor] = { case _: LimitedFoodFactor =>
+  override protected val concatFunction: PartialFunction[FoodFactor, FoodFactor] = { case _: LimitedFoodFactor =>
     LimitedHighToughFoodFactor()
   }
 
@@ -175,7 +178,7 @@ case class LimitedHighToughFoodFactor(
     bunnies
   }
 
-  override val decoupleFactor: PartialFunction[FoodFactor, FoodFactor] = {
+  override protected val splitFunction: PartialFunction[FoodFactor, FoodFactor] = {
     case _: LimitedFoodFactor => HighToughFoodFactor()
     case _: ToughFoodFactor   => LimitedHighFoodFactor()
     case _: HighFoodFactor    => LimitedToughFoodFactor()
