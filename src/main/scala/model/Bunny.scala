@@ -40,13 +40,12 @@ sealed trait Bunny {
  * Represents a Bunny that as just been created.
  */
 class ChildBunny(
-                  override val genotype: CompleteGenotype,
-                  override val mom: Option[Bunny],
-                  override val dad: Option[Bunny]
-) extends Bunny {
-  override var age: Int = 0
-  override var alive: Boolean = true
-}
+    override val genotype: CompleteGenotype,
+    override val mom: Option[Bunny],
+    override val dad: Option[Bunny],
+    override var age: Int = 0,
+    override var alive: Boolean = true
+) extends Bunny
 
 /**
  * Represents the first Bunny which appears in the world, so it does not have a mom and a dad.
@@ -77,7 +76,8 @@ object Bunny {
         Genes.values.unsorted
           .map(gk => {
             (gk, Gene(gk, StandardAllele(getRandomAlleleKind(gk)), StandardAllele(getRandomAlleleKind(gk))))
-          }).toMap
+          })
+          .toMap
       )
     )
   }

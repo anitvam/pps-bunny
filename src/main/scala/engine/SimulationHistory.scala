@@ -55,12 +55,9 @@ object SimulationHistory {
 
   /** Terminate the actual [[Generation]] and start the next one */
   def startNextGeneration(): Unit = {
-    endActualGeneration()
+    getActualGeneration.terminate()
     history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history
   }
-
-  /** Terminate the actual [[Generation]] */
-  def endActualGeneration(): Unit = getActualGeneration.isEnded = true
 
   /**
    * Change the Environment of the actual generation

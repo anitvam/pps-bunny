@@ -75,6 +75,20 @@ object ScalaFXConstants {
     val BUNNY_ALLELE_PADDING = 3
   }
 
+  object PopulationChart {
+
+    val AXIS_LOWER_BOUND: Int = 0
+
+    val X_AXIS_UPPER_BOUND: Int = 6
+
+    val Y_AXIS_UPPER_BOUND: Int = 30
+
+    val X_AXIS_TICK: Int = 1
+
+    val Y_AXIS_TICK: Int = 5
+
+  }
+
   object Style {
 
     object PopulationLegend {
@@ -86,5 +100,7 @@ object ScalaFXConstants {
       val CHOSEN_BUTTON_STYLE: String = "chosen-button"
       val OTHER_BUTTON_STYLE: String = "dashed-button"
     }
+
   }
+
 }
