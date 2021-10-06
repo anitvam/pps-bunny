@@ -6,6 +6,7 @@ import engine.SimulationHistory._
 import model.world.disturbingFactors.FactorTypes._
 import model.world.GenerationsUtils.GenerationPhase
 import util.PimpScala.RichOption
+import model.world.disturbingFactors.PimpFactors._
 import view.scalaFX.ScalaFXView
 
 import scala.language.implicitConversions
