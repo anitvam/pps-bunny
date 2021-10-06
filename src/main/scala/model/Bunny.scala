@@ -37,20 +37,35 @@ sealed trait Bunny {
 }
 
 /**
- * Represents a Bunny that as just been created.
+ * Represents a Bunny that will evolve during simulation.
  */
 class ChildBunny(
     override val genotype: CompleteGenotype,
     override val mom: Option[Bunny],
-    override val dad: Option[Bunny],
-    override var age: Int = 0,
-    override var alive: Boolean = true
-) extends Bunny
+    override val dad: Option[Bunny]
+) extends Bunny {
+  override var age: Int = 0
+  override var alive: Boolean = true
+}
 
 /**
  * Represents the first Bunny which appears in the world, so it does not have a mom and a dad.
  */
 class FirstBunny(genotype: CompleteGenotype) extends ChildBunny(genotype, Option.empty, Option.empty)
+
+/**
+ * Represents a Bunny in a defined moment in history and is immutable.
+ */
+class HistoryBunny(bunny: Bunny) extends Bunny {
+  override val genotype: CompleteGenotype = bunny.genotype
+  override val mom: Option[Bunny] = bunny.mom
+  override val dad: Option[Bunny] = bunny.dad
+  override val age: Int = bunny.age
+  override val alive: Boolean = bunny.alive
+
+  def age_=(age: Int): Unit = throw new HistoryBunnyUpdateException
+  def alive_=(alive: Boolean): Unit = throw new HistoryBunnyUpdateException
+}
 
 object Bunny {
   type baseBunnies = Seq[Bunny]

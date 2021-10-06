@@ -33,3 +33,7 @@ class InconsistentMutatedAlleleException
     )
 
 class InvalidFoodFactor extends ExplainedException("The specified Food Factor is invalid for this operation")
+
+class HistoryBunnyUpdateException extends ExplainedException("" +
+  "History Bunny Update EXCEPTION: variables of an HistoryBunny cannot be updated ad it is an immutable bunny"
+)
