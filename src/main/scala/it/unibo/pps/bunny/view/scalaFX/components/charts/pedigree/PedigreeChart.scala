@@ -16,13 +16,13 @@ import scala.math.{ log10, min, pow }
 
 trait PedigreeChart {
 
-  /** Reference to the it.unibo.pps.bunny.model ibunny entity */
+  /** Reference to the model bunny entity */
   val bunny: Bunny
 
-  /** Reference to the it.unibo.pps.bunny.model tree entity created from the bunny */
+  /** Reference to the model tree entity created from the bunny */
   val tree: BinaryTree[Bunny]
 
-  /** The pane with the it.unibo.pps.bunny.view of the tree */
+  /** The pane with the view of the tree */
   val chartPane: Pane
 }
 
@@ -93,7 +93,7 @@ object PedigreeChart {
    * @param trees
    *   The tree with the elems that need to be in this row
    * @return
-   *   The it.unibo.pps.bunny.view of a row and the trees which needs to be inserted in the next one
+   *   The view of a row and the trees which needs to be inserted in the next one
    */
   private def createRow(trees: Seq[Option[BinaryTree[Bunny]]]): (HBox, Seq[Option[BinaryTree[Bunny]]]) = {
     var nextTrees: Seq[Option[BinaryTree[Bunny]]] = Seq()

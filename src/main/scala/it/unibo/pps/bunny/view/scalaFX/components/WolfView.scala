@@ -14,9 +14,6 @@ import scala.util.Random
 /** Bunny wrapper in order to manage its movement inside of the GUI */
 trait WolfView {
 
-  /** Reference to the it.unibo.pps.bunny.model disturbing factor entity */
-//  val wolf: DisturbingFactor
-
   /** Type annotation for a Seq of KeyFrames */
   type AnimationFrames = Seq[KeyFrame]
 

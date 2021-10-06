@@ -22,7 +22,7 @@ class TestSimulation extends FlatSpec with Matchers {
     assert(SimulationHistory.history.last.getAliveBunniesNumber == 1)
   }
 
-  "If there is only one alive bunny the population for the next generation" should "be only the alive it.unibo.pps.bunny" in {
+  "If there is only one alive bunny the population for the next generation" should "be only the alive bunny" in {
     SimulationHistory.startNextGeneration()
     assert(SimulationHistory.history.head.getAliveBunniesNumber == 1)
   }
