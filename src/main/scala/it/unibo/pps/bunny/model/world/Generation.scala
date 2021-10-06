@@ -23,6 +23,7 @@ trait Generation {
   /** @return the alive [[Population]] */
   def livingPopulation: Population = population.filter(_.alive)
 
+  /** @return true if the population isEnded, otherwise false */
   def isEnded: Boolean
 
   /** Sets this Generation as ended */

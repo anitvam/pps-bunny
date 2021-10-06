@@ -37,8 +37,25 @@ trait Environment {
   /** @return the Environment Factors */
   var factors: Factors
 
+  /**
+   * Introduce the specified Factor inside the environment
+   * @param factor
+   *   the factor to introduce
+   */
   def introduceFactor(factor: Factor): Unit
+
+  /**
+   * Remove the specified factor from the Environment
+   * @param factor
+   *   the factor to remove
+   */
   def removeFactor(factor: Factor): Unit
+
+  /**
+   * Introduce the specified mutations inside the Environment
+   * @param mutation
+   *   the mutation to insert
+   */
   def introduceMutation(mutation: Mutation): Unit
 }
 
@@ -65,7 +82,6 @@ object Environment {
 
     override def removeFactor(factor: Factor): Unit = factors remove factor
 
-    /** Introduce a new mutation */
     def introduceMutation(mutation: Mutation): Unit = {
       if (mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
       else KindsUtils.setAlleleDominance(mutation.geneKind.base)
