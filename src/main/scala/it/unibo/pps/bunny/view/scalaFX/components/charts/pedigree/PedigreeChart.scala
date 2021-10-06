@@ -133,7 +133,7 @@ object PedigreeChart {
   }
 
   /**
-   * Creates an empty ImageView with the same size of the it.unibo.pps.bunny, for the bunnies with no ancient relatives
+   * Creates an empty ImageView with the same size of the bunny, for the bunnies with no ancient relatives
    */
   def emptyImageView: ImageView = new ImageView {
     fitWidth = bunnyIconSize
@@ -146,7 +146,7 @@ object PedigreeChart {
     txt
   }
 
-  /** Creates a it.unibo.pps.bunny.view of the plus between couples of bunnies */
+  /** Creates a view of the plus between couples of bunnies */
   def plusView: Text = new Text {
     text = "+"
     style = "-fx-font-weight: bold; -fx-font-size: " + bunnyIconSize / BUNNY_PLUS_PROPORTION + ";"
