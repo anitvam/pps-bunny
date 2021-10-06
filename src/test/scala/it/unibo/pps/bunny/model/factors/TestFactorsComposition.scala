@@ -29,36 +29,36 @@ class TestFactorsComposition extends FlatSpec with Matchers {
 
   "A LimitedFoodFactor" should "not be concatenated to a LimitedFoodFactor" in
     assertThrows[InvalidFoodFactor] {
-      LimitedFoodFactor() combineWith LimitedFoodFactor()
+      LimitedFoodFactor() + LimitedFoodFactor()
     }
 
   "A ToughFoodFactor" should "not be concatenated to a ToughFoodFactor" in
     assertThrows[InvalidFoodFactor] {
-      ToughFoodFactor() combineWith ToughFoodFactor()
+      ToughFoodFactor() + ToughFoodFactor()
     }
 
   "A HighFoodFactor" should "not be concatenated to a HighFoodFactor" in
     assertThrows[InvalidFoodFactor] {
-      HighFoodFactor() combineWith HighFoodFactor()
+      HighFoodFactor() + HighFoodFactor()
     }
 
   private def checkCombinationOf[T](firstFactor: FoodFactor, secondFactor: FoodFactor): Unit = {
-    val combined = firstFactor combineWith secondFactor
-    val combinedReverse = secondFactor combineWith firstFactor
+    val combined = firstFactor + secondFactor
+    val combinedReverse = secondFactor + firstFactor
 
     assert(combined.isInstanceOf[T])
     assert(combinedReverse.isInstanceOf[T])
     assertThrows[InvalidFoodFactor] {
-      firstFactor combineWith LimitedHighToughFoodFactor()
+      firstFactor + LimitedHighToughFoodFactor()
     }
     assertThrows[InvalidFoodFactor] {
-      secondFactor combineWith LimitedHighToughFoodFactor()
+      secondFactor + LimitedHighToughFoodFactor()
     }
     assertThrows[UnsupportedOperationException] {
-      LimitedHighToughFoodFactor() combineWith firstFactor
+      LimitedHighToughFoodFactor() + firstFactor
     }
     assertThrows[UnsupportedOperationException] {
-      LimitedHighToughFoodFactor() combineWith secondFactor
+      LimitedHighToughFoodFactor() + secondFactor
     }
   }
 

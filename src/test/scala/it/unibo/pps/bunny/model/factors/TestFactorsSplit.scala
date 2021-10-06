@@ -37,7 +37,7 @@ class TestFactorsSplit extends FlatSpec with Matchers {
     checkRemoveSubFactorOf[LimitedHighToughFoodFactor](LimitedHighToughFoodFactor(), LimitedFoodFactor())
 
   private def checkRemoveSubFactorOf[T](firstFactor: FoodFactor, secondFactor: FoodFactor): Unit = {
-    val resFactor = firstFactor removeSubFactor secondFactor
+    val resFactor = firstFactor - secondFactor
     assert(resFactor.isInstanceOf[T])
     shouldRaiseInvalidFoodFactor(firstFactor, firstFactor)
     if (secondFactor.isInstanceOf[SingleFoodFactor]) {
@@ -52,12 +52,12 @@ class TestFactorsSplit extends FlatSpec with Matchers {
 
   private def shouldRaiseUnsupportedOperationException(firstFactor: FoodFactor, secondFactor: FoodFactor): Unit =
     assertThrows[UnsupportedOperationException] {
-      firstFactor removeSubFactor secondFactor
+      firstFactor - secondFactor
     }
 
   private def shouldRaiseInvalidFoodFactor(firstFactor: FoodFactor, secondFactor: FoodFactor): Unit =
     assertThrows[InvalidFoodFactor] {
-      firstFactor removeSubFactor secondFactor
+      firstFactor - secondFactor
     }
 
 }

@@ -17,9 +17,9 @@ sealed trait FoodFactor extends BasicFactor {
 
   val lowDamage: Double = FOOD_FACTOR_LOW_DAMAGE
 
-  def combineWith(foodFactor: FoodFactor): FoodFactor
   def isCombined: Boolean
-  def removeSubFactor(foodFactor: FoodFactor): FoodFactor
+  def +(foodFactor: FoodFactor): FoodFactor
+  def -(foodFactor: FoodFactor): FoodFactor
 }
 
 sealed trait FoodFactorOnSingleGene extends FactorOnSingleGene with FoodFactor {
@@ -41,19 +41,19 @@ sealed trait FoodFactorOnSingleGene extends FactorOnSingleGene with FoodFactor {
 abstract class SingleFoodFactor(override val isCombined: Boolean = false) extends FoodFactor {
   protected val concatFunction: PartialFunction[FoodFactor, FoodFactor]
 
-  override def combineWith(foodFactor: FoodFactor): FoodFactor = {
+  override def +(foodFactor: FoodFactor): FoodFactor = {
     println(foodFactor)
     println(concatFunction isDefinedAt (foodFactor))
     if (concatFunction isDefinedAt foodFactor) concatFunction(foodFactor) else throw new InvalidFoodFactor()
   }
 
-  override def removeSubFactor(foodFactor: FoodFactor): FoodFactor = throw new UnsupportedOperationException()
+  override def -(foodFactor: FoodFactor): FoodFactor = throw new UnsupportedOperationException()
 }
 
 abstract class DoubleFoodFactor(override val isCombined: Boolean = true) extends SingleFoodFactor {
   protected val splitFunction: PartialFunction[FoodFactor, FoodFactor]
 
-  override def removeSubFactor(foodFactor: FoodFactor): FoodFactor =
+  override def -(foodFactor: FoodFactor): FoodFactor =
     if (splitFunction isDefinedAt foodFactor) splitFunction(foodFactor) else throw new InvalidFoodFactor()
 
 }
@@ -61,7 +61,7 @@ abstract class DoubleFoodFactor(override val isCombined: Boolean = true) extends
 abstract class TripleFoodFactor() extends DoubleFoodFactor {
   override protected val concatFunction: PartialFunction[FoodFactor, FoodFactor] = PartialFunction.empty
 
-  override def combineWith(foodFactor: FoodFactor): FoodFactor = throw new UnsupportedOperationException()
+  override def +(foodFactor: FoodFactor): FoodFactor = throw new UnsupportedOperationException()
 }
 
 case class LimitedFoodFactor() extends SingleFoodFactor {
@@ -179,9 +179,12 @@ case class LimitedHighToughFoodFactor(
   }
 
   override protected val splitFunction: PartialFunction[FoodFactor, FoodFactor] = {
-    case _: LimitedFoodFactor => HighToughFoodFactor()
-    case _: ToughFoodFactor   => LimitedHighFoodFactor()
-    case _: HighFoodFactor    => LimitedToughFoodFactor()
+    case _: LimitedFoodFactor      => HighToughFoodFactor()
+    case _: ToughFoodFactor        => LimitedHighFoodFactor()
+    case _: HighFoodFactor         => LimitedToughFoodFactor()
+    case _: LimitedHighFoodFactor  => ToughFoodFactor()
+    case _: HighToughFoodFactor    => LimitedFoodFactor()
+    case _: LimitedToughFoodFactor => HighFoodFactor()
   }
 
 }

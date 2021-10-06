@@ -37,13 +37,13 @@ case class WolvesFactor(
     with PredatorFactor
     with FactorOnDoubleGene {
 
-  override def summerAction(bunnies: Population): Population = killBunnies(
+  override protected def summerAction(bunnies: Population): Population = killBunnies(
     bunnies,
     filterBunniesWithAlleles(bunnies, firstGeneAffected.mutated, secondGeneAffected.base),
     filterBunniesWithAlleles(bunnies, firstGeneAffected.base, secondGeneAffected.mutated)
   )
 
-  override def winterAction(bunnies: Population): Population = killBunnies(
+  override protected def winterAction(bunnies: Population): Population = killBunnies(
     bunnies,
     filterBunniesWithAlleles(bunnies, firstGeneAffected.base, secondGeneAffected.base),
     filterBunniesWithAlleles(bunnies, firstGeneAffected.mutated, secondGeneAffected.mutated)

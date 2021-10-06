@@ -10,10 +10,10 @@ case class Factors(private var factors: List[Factor] = List()) {
   private def getFoodFactor: FoodFactor = getFactor(FoodFactorKind).map(_.asInstanceOf[FoodFactor]).get
 
   private def combineFoodFactor(newFoodFactor: FoodFactor): List[Factor] =
-    getFoodFactor.combineWith(newFoodFactor) :: factors -? (_.factorType == FoodFactorKind)
+    getFoodFactor + newFoodFactor :: factors -? (_.factorType == FoodFactorKind)
 
   private def updateFoodFactor(subFactor: FoodFactor): List[Factor] =
-    (getFoodFactor removeSubFactor subFactor) :: factors -? (_.factorType == FoodFactorKind)
+    (getFoodFactor - subFactor) :: factors -? (_.factorType == FoodFactorKind)
 
   def getFactor(factorKind: FactorKind): Option[Factor] = factors.find(_.factorType == factorKind)
 
