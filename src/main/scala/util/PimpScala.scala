@@ -1,5 +1,7 @@
 package util
 
+import scala.util.Random
+
 object PimpScala {
 
   implicit class RichOption[A](option: Option[A]) {
@@ -13,5 +15,9 @@ object PimpScala {
 
   implicit class RichList[A](list: List[A]) {
     def -? (pred: A => Boolean): List[A] = list.filterNot(pred)
+  }
+
+  implicit class RichSeq[A](seq: Seq[A]){
+    def shuffle: Seq[A] = Random.shuffle(seq)
   }
 }

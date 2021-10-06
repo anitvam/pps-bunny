@@ -1,6 +1,6 @@
 package view.scalaFX.components
 
-import model.Bunny
+import model.bunny.Bunny
 import model.genome.Alleles
 import scalafx.Includes.{at, double2DurationHelper}
 import scalafx.animation.{KeyFrame, Timeline}

@@ -1,10 +1,12 @@
 package model
 
-import model.Bunny.generateBaseFirstBunny
-import model.genome.Genes.{ EARS, FUR_COLOR, FUR_LENGTH, GeneKind }
-import model.genome.KindsUtils.{ assignRandomDominance, getGeneKind, resetDominance }
+import model.bunny.Bunny.generateBaseFirstBunny
+import model.bunny.FirstBunny
+import model.bunny.Gender.randomGender
+import model.genome.Genes.{EARS, FUR_COLOR, FUR_LENGTH, GeneKind}
+import model.genome.KindsUtils.{assignRandomDominance, getGeneKind, resetDominance}
 import model.genome._
-import org.scalatest.{ FlatSpec, Matchers }
+import org.scalatest.{FlatSpec, Matchers}
 
 class TestGenes extends FlatSpec with Matchers {
 
@@ -107,8 +109,8 @@ class TestGenes extends FlatSpec with Matchers {
     val geneKind = Genes.FUR_COLOR
     val standardGene = Gene(geneKind, StandardAllele(geneKind.base), StandardAllele(geneKind.base))
     val updatedGene = Gene(geneKind, StandardAllele(geneKind.base), StandardAllele(geneKind.mutated))
-    val standardBunny = generateBaseFirstBunny
-    val updatedBunny = new FirstBunny(standardBunny.genotype + updatedGene)
+    val standardBunny = generateBaseFirstBunny(randomGender())
+    val updatedBunny = new FirstBunny(standardBunny.genotype + updatedGene, standardBunny.gender)
 
     println(standardBunny.genotype(geneKind))
     println(standardGene)

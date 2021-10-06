@@ -1,4 +1,4 @@
-package model
+package model.bunny
 
 /**
  * Represents a Tree.

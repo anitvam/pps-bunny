@@ -2,13 +2,12 @@ package view.scalaFX.FXControllers
 
 import controller.Controller
 import engine.SimulationConstants.REPRODUCTION_PHASE
-import javafx.scene.{ control => jfxc }
-import model.Bunny
+import javafx.scene.{control => jfxc}
 import model.genome.Genes
 import model.genome.Genes.GeneKind
 import model.world.Generation.Population
 import scalafx.scene.chart.PieChart
-import scalafx.scene.control.{ Button, ToggleGroup }
+import scalafx.scene.control.{Button, ToggleGroup}
 import scalafx.scene.layout.AnchorPane
 import scalafxml.core.macros.sfxml
 import view.scalaFX.utilities.PimpScalaFXChartLibrary._
@@ -16,6 +15,7 @@ import engine.SimulationHistory
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.scene.text.Text
 import PieChartConverters._
+import model.bunny.Bunny
 import view.scalaFX.FXControllers.PieChartFactory.createEmptyPieChart
 
 import scala.language.implicitConversions

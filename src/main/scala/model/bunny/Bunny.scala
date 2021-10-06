@@ -1,6 +1,7 @@
-package model
+package model.bunny
 
 import engine.SimulationConstants.MAX_BUNNY_AGE
+import model.bunny.Gender.{Gender, randomGender}
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
 import model.genome.KindsUtils.getRandomAlleleKind
@@ -14,14 +15,16 @@ sealed trait Bunny {
   val genotype: CompleteGenotype
   val mom: Option[Bunny]
   val dad: Option[Bunny]
+  val gender: Gender
   var age: Int
   var alive: Boolean
 
   override def toString: String = {
-    super.toString + "\n alive:" + alive + " \n age: " + age + "\n" + genotype.genes
-      .map(g => "\t" + g._1 + ": " + g._2.getVisibleTrait.toString.toLowerCase + " (" + g._2.getLetters + ")")
-      .reduce(_ + "\n" + _)
-      .replace("_", " ") + "\n"
+    super.toString + "\n gender: " + gender + "\n alive:" + alive + " \n age: " + age + "\n" +
+      genotype.genes
+        .map(g => "\t" + g._1 + ": " + g._2.getVisibleTrait.toString.toLowerCase + " (" + g._2.getLetters + ")")
+        .reduce(_ + "\n" + _)
+        .replace("_", " ") + "\n"
   }
 
   /**
@@ -43,6 +46,7 @@ class ChildBunny(
     override val genotype: CompleteGenotype,
     override val mom: Option[Bunny],
     override val dad: Option[Bunny],
+    override val gender: Gender,
     override var age: Int = 0,
     override var alive: Boolean = true
 ) extends Bunny
@@ -50,7 +54,7 @@ class ChildBunny(
 /**
  * Represents the first Bunny which appears in the world, so it does not have a mom and a dad.
  */
-class FirstBunny(genotype: CompleteGenotype) extends ChildBunny(genotype, Option.empty, Option.empty)
+class FirstBunny(genotype: CompleteGenotype, gender: Gender) extends ChildBunny(genotype, Option.empty, Option.empty, gender)
 
 object Bunny {
   type baseBunnies = Seq[Bunny]
@@ -60,17 +64,16 @@ object Bunny {
    * @return
    *   a FirstBunny with the "base" allele for each gene
    */
-  def generateBaseFirstBunny: FirstBunny = new FirstBunny(
+  val generateBaseFirstBunny: (Gender) =>  FirstBunny = gender => new FirstBunny(
     CompleteGenotype(
       Genes.values.unsorted.map(gk => (gk, Gene(gk, StandardAllele(gk.base), StandardAllele(gk.base)))).toMap
-    )
-  )
+    ), gender)
 
   /**
    * @return
    *   a FirstBunny with a random allele for each gene
    */
-  def generateRandomFirstBunny: FirstBunny = {
+  val generateRandomFirstBunny: () => FirstBunny = () => {
     new FirstBunny(
       CompleteGenotype(
         Genes.values.unsorted
@@ -78,7 +81,7 @@ object Bunny {
             (gk, Gene(gk, StandardAllele(getRandomAlleleKind(gk)), StandardAllele(getRandomAlleleKind(gk))))
           })
           .toMap
-      )
+      ), randomGender()
     )
   }
 
@@ -109,5 +112,4 @@ object Bunny {
       bunny.genotype.phenotype.values.exists(_ == allele1) &&
       bunny.genotype.phenotype.values.exists(_ == allele2)
     }
-
 }

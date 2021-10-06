@@ -1,7 +1,7 @@
 package model.world
 
 import engine.SimulationConstants._
-import model.{ Bunny, ChildBunny }
+import model.bunny.{Bunny, ChildBunny}
 import model.world.Generation.Population
 
 /** The unit of time of the simulation and wraps its properties */
@@ -34,7 +34,7 @@ trait Generation {
 
   def terminate(): Unit = {
     this.isEnded = true
-    populationAtTheEnd = this.population.map(b => new ChildBunny(b.genotype, b.mom, b.dad, b.age, b.alive))
+    populationAtTheEnd = this.population.map(b => new ChildBunny(b.genotype, b.mom, b.dad, b.gender, b.age, b.alive))
   }
 
   /** @return the current number of alive bunnies */

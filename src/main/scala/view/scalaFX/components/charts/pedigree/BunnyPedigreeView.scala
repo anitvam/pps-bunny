@@ -1,11 +1,11 @@
 package view.scalaFX.components.charts.pedigree
 
-import model.Bunny
+import model.bunny.Bunny
 import scalafx.geometry.Insets
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
-import view.scalaFX.ScalaFXConstants.GenealogicalTree.{BUNNY_ALLELE_PADDING, FONT_INFO_PERCENT, BUNNY_INFO_PROPORTION}
+import view.scalaFX.ScalaFXConstants.GenealogicalTree.{BUNNY_ALLELE_PADDING, BUNNY_INFO_PROPORTION, FONT_INFO_PERCENT}
 import view.scalaFX.components.charts.pedigree.PedigreeChart.{bunnyIconSize, spacingRegion}
 import view.scalaFX.utilities.Direction.Right
 import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
