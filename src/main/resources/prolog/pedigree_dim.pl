@@ -36,7 +36,7 @@ max_generations_for_width(W, BP, BS, G) :-
 G is 1 + (log(1 + ((W + BP) / BS)) / log(BP + 1)).
 
 % max_generations_for_height(+Height, +BunnyInfoProportion, +FontInfoPercent, +BunnySize, -Generations)
-% Calculates the maximum generations that can fit in the width with a specific bunny size.
+% Calculates the maximum generations that can fit in the height with a specific bunny size.
 max_generations_for_height(H, BI, FI, BS, G) :- 
 G is (H * BI * FI) / ((BI * FI + 1 + FI) * BS).
 
