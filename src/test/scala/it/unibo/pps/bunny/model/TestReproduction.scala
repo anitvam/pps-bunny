@@ -1,18 +1,11 @@
 package it.unibo.pps.bunny.model
 
-<<<<<<< HEAD:src/test/scala/it/unibo/pps/bunny/model/TestReproduction.scala
 import it.unibo.pps.bunny.engine.SimulationConstants.MAX_BUNNY_AGE
 import it.unibo.pps.bunny.model.Bunny.{ generateRandomFirstBunny, splitBunniesByGene }
 import it.unibo.pps.bunny.model.genome.{ Gene, Genes, StandardAllele }
 import it.unibo.pps.bunny.model.world.Reproduction.{
   combineCouples, generateAllChildren, generateChildren, nextGenerationBunnies
 }
-=======
-import engine.SimulationConstants.MAX_BUNNY_AGE
-import model.Bunny.{ generateRandomFirstBunny, splitBunniesByGene }
-import model.genome.{ Gene, Genes, StandardAllele }
-import model.world.Reproduction.{ combineCouples, generateAllChildren, generateChildren, nextGenerationBunnies }
->>>>>>> develop:src/test/scala/model/TestReproduction.scala
 import org.scalatest.{ FlatSpec, Matchers }
 
 class TestReproduction extends FlatSpec with Matchers {

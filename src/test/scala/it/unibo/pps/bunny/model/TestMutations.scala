@@ -1,4 +1,3 @@
-<<<<<<< HEAD:src/test/scala/it/unibo/pps/bunny/model/TestMutations.scala
 package it.unibo.pps.bunny.model
 
 import it.unibo.pps.bunny.controller.Controller
@@ -6,20 +5,9 @@ import it.unibo.pps.bunny.model.Bunny.generateBaseFirstBunny
 import it.unibo.pps.bunny.model.genome.Genes
 import it.unibo.pps.bunny.model.genome.KindsUtils.resetDominance
 import it.unibo.pps.bunny.model.mutation.Mutation
+import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.Reproduction.{ generateChildren, nextGenerationBunnies }
 import org.scalatest.{ FlatSpec, Matchers }
-=======
-package model
-
-import controller.Controller
-import model.Bunny.generateBaseFirstBunny
-import model.genome.Genes
-import model.genome.KindsUtils.resetDominance
-import model.world.Generation.Population
-import model.world.Mutation
-import model.world.Reproduction.{generateChildren, nextGenerationBunnies}
-import org.scalatest.{FlatSpec, Matchers}
->>>>>>> develop:src/test/scala/model/TestMutations.scala
 
 class TestMutations extends FlatSpec with Matchers {
   val children: Seq[Bunny] = generateChildren(generateBaseFirstBunny, generateBaseFirstBunny)
@@ -68,4 +56,5 @@ class TestMutations extends FlatSpec with Matchers {
     assert(mutationsEachBunny.count(_ == 1) == 3)
     assert(mutationsEachBunny.count(_ == 2) == 1)
   }
+
 }

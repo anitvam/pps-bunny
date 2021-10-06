@@ -1,4 +1,3 @@
-<<<<<<< HEAD:src/test/scala/it/unibo/pps/bunny/model/TestBunny.scala
 package it.unibo.pps.bunny.model
 
 import it.unibo.pps.bunny.engine.SimulationConstants.MAX_BUNNY_AGE
@@ -6,12 +5,6 @@ import it.unibo.pps.bunny.model.Bunny.{ generateBaseFirstBunny, generateRandomFi
 import it.unibo.pps.bunny.model.genome.{ Gene, Genes, StandardAllele }
 import it.unibo.pps.bunny.model.world.Reproduction._
 import org.scalatest.{ FlatSpec, Matchers }
-=======
-package model
-import model.Bunny.{generateBaseFirstBunny, generateRandomFirstBunny}
-import model.genome.Genes
-import org.scalatest.{FlatSpec, Matchers}
->>>>>>> develop:src/test/scala/model/TestBunny.scala
 
 class TestBunny extends FlatSpec with Matchers {
 
