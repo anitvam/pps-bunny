@@ -14,6 +14,7 @@ import scala.util.Random
 object Alleles extends Enumeration {
   type AlleleKind = Value
   implicit def valueToAllelesVal(x: Value): AllelesVal = x.asInstanceOf[AllelesVal]
+  implicit def valueToString(x: Value): String = x.prettyName
 
   val WHITE_FUR: AllelesVal = AllelesVal("Pelo Bianco")
   val BROWN_FUR: AllelesVal = AllelesVal("Pelo Marrone")
@@ -61,6 +62,7 @@ object Genes extends Enumeration {
                                 prettyName: String) extends super.Val
   import scala.language.implicitConversions
   implicit def valueToGenesVal(x: Value): GenesVal = x.asInstanceOf[GenesVal]
+  implicit def valueToString(x: Value): String = x.prettyName
 
   val FUR_COLOR: GenesVal =  GenesVal(base = Alleles.WHITE_FUR,
                                 mutated = Alleles.BROWN_FUR,

@@ -9,6 +9,7 @@ import view.scalaFX.ScalaFXConstants.GenealogicalTree.{BUNNY_ALLELE_PADDING, BUN
 import view.scalaFX.components.charts.pedigree.PedigreeChart.{bunnyIconSize, spacingRegion}
 import view.scalaFX.utilities.Direction.Right
 import view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
+import scala.language.implicitConversions
 
 /**
  * Represents the view on the Bunny in a tree.
@@ -43,15 +44,24 @@ object BunnyPedigreeView {
     padding = Insets(top = 0, left = 0, bottom = BUNNY_ALLELE_PADDING, right = 0)
   }
 
+  private def genderView(bunny: Bunny): HBox = new HBox(
+    spacingRegion,
+    new Text {
+      text = bunny.gender
+      style = "-fx-font-family: \"Helvetica\"; " +
+        "-fx-font-weight: bold; " +
+        "-fx-font-size: " + bunnyIconSize / BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT + "px"
+    },
+    spacingRegion
+  )
+
   private def allelesView(bunny: Bunny): HBox = new HBox(
     spacingRegion,
     new Text {
       text = bunny.genotype.genes.values.map(g => g.momAllele.getLetter + g.dadAllele.getLetter + " ").reduce(_ + _)
-
       style = "-fx-font-family: \"Helvetica\"; " +
         "-fx-font-weight: bold; " +
         "-fx-font-size: " + bunnyIconSize / BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT + "px"
-
     },
     spacingRegion
   )
@@ -74,7 +84,7 @@ object BunnyPedigreeView {
   }
 
   private case class BunnyPedigreeViewImpl(override val bunny: Bunny) extends BunnyPedigreeView {
-    override val pane: Pane = new VBox(bunnyView(bunny), allelesView(bunny), infoView(bunny))
+    override val pane: Pane = new VBox(bunnyView(bunny), genderView(bunny), allelesView(bunny), infoView(bunny))
   }
 
 }
