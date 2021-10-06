@@ -1,13 +1,12 @@
 package it.unibo.pps.bunny.model.factors
 
-import it.unibo.pps.bunny.model.world.GenerationsUtils.WolvesPhase
 import it.unibo.pps.bunny.model.world.disturbingFactors.{
-  FactorTypes, FactorsUtils, HighFoodFactor, HighToughFoodFactor, LimitedFoodFactor, LimitedHighFoodFactor,
+  FactorTypes, HighFoodFactor, HighToughFoodFactor, LimitedFoodFactor, LimitedHighFoodFactor,
   LimitedHighToughFoodFactor, LimitedToughFoodFactor, ToughFoodFactor, UnfriendlyClimateFactor, WolvesFactor
 }
 import org.scalatest.{ FlatSpec, Matchers }
 
-class TestFactorsTypes extends FlatSpec with Matchers {
+class TestFactors extends FlatSpec with Matchers {
 
   "A LimitedFoodFactor" should "have FoodFactor type" in assert(
     LimitedFoodFactor().factorType == FactorTypes.FoodFactorKind

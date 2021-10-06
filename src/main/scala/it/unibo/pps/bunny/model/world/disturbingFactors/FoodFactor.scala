@@ -67,8 +67,6 @@ abstract class SingleFoodFactor(override val isCombined: Boolean = false) extend
   protected val concatFunction: PartialFunction[FoodFactor, FoodFactor]
 
   override def +(foodFactor: FoodFactor): FoodFactor = {
-    println(foodFactor)
-    println(concatFunction isDefinedAt foodFactor)
     if (concatFunction isDefinedAt foodFactor) concatFunction(foodFactor) else throw new InvalidFoodFactor()
   }
 
@@ -107,7 +105,7 @@ case class HighFoodFactor(
 
   override protected val concatFunction: PartialFunction[FoodFactor, FoodFactor] = {
     case _: LimitedFoodFactor      => LimitedHighFoodFactor()
-    case _: ToughFoodFactor        => LimitedToughFoodFactor()
+    case _: ToughFoodFactor        => HighToughFoodFactor()
     case _: LimitedToughFoodFactor => LimitedHighToughFoodFactor()
   }
 

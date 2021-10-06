@@ -9,23 +9,41 @@ import org.scalatest.{ FlatSpec, Matchers }
 
 class TestFactorsComposition extends FlatSpec with Matchers {
 
-  "A HighFoodFactor" should "be concatenated to a LimitedFoodFactor" in
-    checkCombinationOf[LimitedHighFoodFactor](HighFoodFactor(), LimitedFoodFactor())
+  "A HighFoodFactor" should "be concatenated to a LimitedFoodFactor" in {
+    val res = checkCombinationOf(HighFoodFactor(), LimitedFoodFactor())
+    assert(res._1.isInstanceOf[LimitedHighFoodFactor])
+    assert(res._2.isInstanceOf[LimitedHighFoodFactor])
+  }
 
-  it should "be concatenated to a LimitedToughFoodFactor" in
-    checkCombinationOf[LimitedHighToughFoodFactor](HighFoodFactor(), LimitedToughFoodFactor())
+  it should "be concatenated to a LimitedToughFoodFactor" in {
+    val res = checkCombinationOf(HighFoodFactor(), LimitedToughFoodFactor())
+    assert(res._1.isInstanceOf[LimitedHighToughFoodFactor])
+    assert(res._2.isInstanceOf[LimitedHighToughFoodFactor])
+  }
 
-  "A ToughFoodFactor" should "be concatenated to a LimitedFoodFactor" in
-    checkCombinationOf[LimitedToughFoodFactor](ToughFoodFactor(), LimitedFoodFactor())
+  "A ToughFoodFactor" should "be concatenated to a LimitedFoodFactor" in {
+    val res = checkCombinationOf(ToughFoodFactor(), LimitedFoodFactor())
+    assert(res._1.isInstanceOf[LimitedToughFoodFactor])
+    assert(res._2.isInstanceOf[LimitedToughFoodFactor])
+  }
 
-  it should "be concatenated to a HighFoodFactor" in
-    checkCombinationOf[HighToughFoodFactor](ToughFoodFactor(), HighFoodFactor())
+  it should "be concatenated to a HighFoodFactor" in {
+    val res = checkCombinationOf(ToughFoodFactor(), HighFoodFactor())
+    assert(res._1.isInstanceOf[HighToughFoodFactor])
+    assert(res._2.isInstanceOf[HighToughFoodFactor])
+  }
 
-  it should "be concatenated to a LimitedHighFoodFactor" in
-    checkCombinationOf[LimitedHighToughFoodFactor](ToughFoodFactor(), LimitedHighFoodFactor())
+  it should "be concatenated to a LimitedHighFoodFactor" in {
+    val res = checkCombinationOf(ToughFoodFactor(), LimitedHighFoodFactor())
+    assert(res._1.isInstanceOf[LimitedHighToughFoodFactor])
+    assert(res._2.isInstanceOf[LimitedHighToughFoodFactor])
+  }
 
-  "A LimitedFoodFactor" should "be concatenated to a HighToughFoodFactor" in
-    checkCombinationOf[LimitedHighToughFoodFactor](LimitedFoodFactor(), HighToughFoodFactor())
+  "A LimitedFoodFactor" should "be concatenated to a HighToughFoodFactor" in {
+    val res = checkCombinationOf(LimitedFoodFactor(), HighToughFoodFactor())
+    assert(res._1.isInstanceOf[LimitedHighToughFoodFactor])
+    assert(res._2.isInstanceOf[LimitedHighToughFoodFactor])
+  }
 
   "A LimitedFoodFactor" should "not be concatenated to a LimitedFoodFactor" in
     assertThrows[InvalidFoodFactor] {
@@ -42,12 +60,8 @@ class TestFactorsComposition extends FlatSpec with Matchers {
       HighFoodFactor() + HighFoodFactor()
     }
 
-  private def checkCombinationOf[T](firstFactor: FoodFactor, secondFactor: FoodFactor): Unit = {
-    val combined = firstFactor + secondFactor
-    val combinedReverse = secondFactor + firstFactor
+  private def checkCombinationOf(firstFactor: FoodFactor, secondFactor: FoodFactor): (FoodFactor, FoodFactor) = {
 
-    assert(combined.isInstanceOf[T])
-    assert(combinedReverse.isInstanceOf[T])
     assertThrows[InvalidFoodFactor] {
       firstFactor + LimitedHighToughFoodFactor()
     }
@@ -60,6 +74,10 @@ class TestFactorsComposition extends FlatSpec with Matchers {
     assertThrows[UnsupportedOperationException] {
       LimitedHighToughFoodFactor() + secondFactor
     }
+
+    println(firstFactor)
+    println(secondFactor)
+    (firstFactor + secondFactor, secondFactor + firstFactor)
   }
 
 }

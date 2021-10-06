@@ -9,36 +9,55 @@ import org.scalatest.{ FlatSpec, Matchers }
 
 class TestFactorsSplit extends FlatSpec with Matchers {
 
-  "A HighFoodFactor" should "be split from a LimitedHighFoodFactor" in
-    checkRemoveSubFactorOf[LimitedFoodFactor](LimitedHighFoodFactor(), HighFoodFactor())
+  "A HighFoodFactor" should "be split from a LimitedHighFoodFactor" in {
+    val res = checkRemoveSubFactorOf(LimitedHighFoodFactor(), HighFoodFactor())
+    assert(res.isInstanceOf[LimitedFoodFactor])
 
-  it should "be split from a HighToughFoodFactor" in
-    checkRemoveSubFactorOf[LimitedFoodFactor](HighToughFoodFactor(), HighFoodFactor())
+  }
 
-  it should "be split from a LimitedHighToughFoodFactor" in
-    checkRemoveSubFactorOf[LimitedToughFoodFactor](LimitedHighToughFoodFactor(), HighFoodFactor())
+  it should "be split from a HighToughFoodFactor" in {
+    val res = checkRemoveSubFactorOf(HighToughFoodFactor(), HighFoodFactor())
+    assert(res.isInstanceOf[ToughFoodFactor])
 
-  "A ToughFoodFactor" should "be split from aLimitedToughFoodFactor" in
-    checkRemoveSubFactorOf[LimitedFoodFactor](LimitedToughFoodFactor(), ToughFoodFactor())
+  }
 
-  it should "be split from a HighToughFoodFactor" in
-    checkRemoveSubFactorOf[HighFoodFactor](HighToughFoodFactor(), ToughFoodFactor())
+  it should "be split from a LimitedHighToughFoodFactor" in {
+    val res = checkRemoveSubFactorOf(LimitedHighToughFoodFactor(), HighFoodFactor())
+    assert(res.isInstanceOf[LimitedToughFoodFactor])
+  }
 
-  it should "be split from a LimitedHighToughFoodFactor" in
-    checkRemoveSubFactorOf[LimitedToughFoodFactor](LimitedHighToughFoodFactor(), ToughFoodFactor())
+  "A ToughFoodFactor" should "be split from aLimitedToughFoodFactor" in {
+    val res = checkRemoveSubFactorOf(LimitedToughFoodFactor(), ToughFoodFactor())
+    assert(res.isInstanceOf[LimitedFoodFactor])
+  }
 
-  "A LimitedFoodFactor" should "be split from a LimitedToughFoodFactor" in
-    checkRemoveSubFactorOf[ToughFoodFactor](LimitedToughFoodFactor(), LimitedFoodFactor())
+  it should "be split from a HighToughFoodFactor" in {
+    val res = checkRemoveSubFactorOf(HighToughFoodFactor(), ToughFoodFactor())
+    assert(res.isInstanceOf[HighFoodFactor])
+  }
 
-  it should "be split from a LimitedHighFoodFactor" in
-    checkRemoveSubFactorOf[HighFoodFactor](LimitedHighFoodFactor(), LimitedFoodFactor())
+  it should "be split from a LimitedHighToughFoodFactor" in {
+    val res = checkRemoveSubFactorOf(LimitedHighToughFoodFactor(), ToughFoodFactor())
+    assert(res.isInstanceOf[LimitedHighFoodFactor])
+  }
 
-  it should "be split from a LimitedHighToughFoodFactor" in
-    checkRemoveSubFactorOf[LimitedHighToughFoodFactor](LimitedHighToughFoodFactor(), LimitedFoodFactor())
+  "A LimitedFoodFactor" should "be split from a LimitedToughFoodFactor" in {
+    val res = checkRemoveSubFactorOf(LimitedToughFoodFactor(), LimitedFoodFactor())
+    assert(res.isInstanceOf[ToughFoodFactor])
+  }
 
-  private def checkRemoveSubFactorOf[T](firstFactor: FoodFactor, secondFactor: FoodFactor): Unit = {
-    val resFactor = firstFactor - secondFactor
-    assert(resFactor.isInstanceOf[T])
+  it should "be split from a LimitedHighFoodFactor" in {
+    val res = checkRemoveSubFactorOf(LimitedHighFoodFactor(), LimitedFoodFactor())
+    assert(res.isInstanceOf[HighFoodFactor])
+  }
+
+  it should "be split from a LimitedHighToughFoodFactor" in {
+    val res = checkRemoveSubFactorOf(LimitedHighToughFoodFactor(), LimitedFoodFactor())
+    assert(res.isInstanceOf[HighToughFoodFactor])
+  }
+
+  private def checkRemoveSubFactorOf(firstFactor: FoodFactor, secondFactor: FoodFactor): FoodFactor = {
+
     shouldRaiseInvalidFoodFactor(firstFactor, firstFactor)
     if (secondFactor.isInstanceOf[SingleFoodFactor]) {
       shouldRaiseUnsupportedOperationException(secondFactor, firstFactor)
@@ -47,7 +66,7 @@ class TestFactorsSplit extends FlatSpec with Matchers {
       shouldRaiseInvalidFoodFactor(secondFactor, secondFactor)
       shouldRaiseInvalidFoodFactor(secondFactor, firstFactor)
     }
-
+    firstFactor - secondFactor
   }
 
   private def shouldRaiseUnsupportedOperationException(firstFactor: FoodFactor, secondFactor: FoodFactor): Unit =
