@@ -49,6 +49,15 @@ case class WolvesFactor(
     filterBunniesWithAlleles(bunnies, firstGeneAffected.mutated, secondGeneAffected.mutated)
   )
 
+  /**
+   * Kills the specified bunnies on different percentage
+   * @param bunnies
+   *   the population used to find bunnies on which apply NORMAL DAMAGE
+   * @param bunniesWithLowDamage
+   *   the population on which apply LOW DAMAGE
+   * @param bunniesWithHighDamage
+   *   the population on which apply HIGH DAMAGE
+   */
   private def killBunnies(
       bunnies: Population,
       bunniesWithLowDamage: Population,

@@ -11,14 +11,39 @@ import it.unibo.pps.bunny.model.world.disturbingFactors.FactorTypes._
 import it.unibo.pps.bunny.model.world.disturbingFactors.FactorsUtils._
 
 sealed trait FoodFactor extends BasicFactor {
-
   override val normalDamage: Double = FOOD_FACTOR_NORMAL_DAMAGE
   override def factorType: FactorKind = FoodFactorKind
 
+  /** @return the LOW DAMAGE value for this Food */
   val lowDamage: Double = FOOD_FACTOR_LOW_DAMAGE
 
+  /** @return true if this FoodFactor is combined with another one, otherwise false */
   def isCombined: Boolean
+
+  /**
+   * Concat two FoodFactors
+   * @param foodFactor
+   *   the FoodFactor to be concat
+   * @return
+   *   the new instance of the combined FoodFactor
+   * @throws InvalidFoodFactor
+   *   if the specified FoodFactor could not be concat
+   * @throws UnsupportedOperationException
+   *   if the operation is not supported on this FoodFactor
+   */
   def +(foodFactor: FoodFactor): FoodFactor
+
+  /**
+   * Split two FoodFactors
+   * @param foodFactor
+   *   the FoodFactor to be split
+   * @return
+   *   the new instance of the combined FoodFactor
+   * @throws InvalidFoodFactor
+   *   if the specified FoodFactor could not be split
+   * @throws UnsupportedOperationException
+   *   if the operation is not supported on this FoodFactor
+   */
   def -(foodFactor: FoodFactor): FoodFactor
 }
 
@@ -43,7 +68,7 @@ abstract class SingleFoodFactor(override val isCombined: Boolean = false) extend
 
   override def +(foodFactor: FoodFactor): FoodFactor = {
     println(foodFactor)
-    println(concatFunction isDefinedAt (foodFactor))
+    println(concatFunction isDefinedAt foodFactor)
     if (concatFunction isDefinedAt foodFactor) concatFunction(foodFactor) else throw new InvalidFoodFactor()
   }
 
