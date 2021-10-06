@@ -4,6 +4,8 @@ import it.unibo.pps.bunny.model.MultipleDominanceAssignmentException
 import it.unibo.pps.bunny.model.genome.Alleles.AlleleKind
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.util.PimpScala.RichOption
+import scala.language.postfixOps
+import scala.language.implicitConversions
 
 import scala.util.Random
 

@@ -7,6 +7,7 @@ import it.unibo.pps.bunny.model.genome._
 import it.unibo.pps.bunny.model.world.Environment.Mutations
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.util.PimpScala.{ RichOption, RichTuple2 }
+import scala.language.postfixOps
 
 import scala.util.Random
 
