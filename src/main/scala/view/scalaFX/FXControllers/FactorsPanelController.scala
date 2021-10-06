@@ -83,11 +83,20 @@ class FactorsPanelController(
 
   def onWolfClick(): Unit = onFactorClick(wolfCheckBox, Wolves())
 
-  def onToughFoodClick(): Unit = onFactorClick(toughFoodCheckBox, ToughFoodFactor())
+  def onToughFoodClick(): Unit = {
+    manageEnvironmentBackgroundChange()
+    onFactorClick(toughFoodCheckBox, ToughFoodFactor())
+  }
 
-  def onHighFoodClick(): Unit = onFactorClick(highFoodCheckBox, HighFoodFactor())
+  def onHighFoodClick(): Unit = {
+    manageEnvironmentBackgroundChange()
+    onFactorClick(highFoodCheckBox, HighFoodFactor())
+  }
 
-  def onLimitedFoodClick(): Unit = onFactorClick(limitedFoodCheckBox, LimitedFoodFactor())
+  def onLimitedFoodClick(): Unit = {
+    manageEnvironmentBackgroundChange()
+    onFactorClick(limitedFoodCheckBox, LimitedFoodFactor())
+  }
 
   def onHostileTemperatureClick(): Unit = onFactorClick(hostileTemperatureCheckBox, UnfriendlyClimate())
 
@@ -97,9 +106,7 @@ class FactorsPanelController(
       case _: IllegalArgumentException =>
     }
 
-  private def onFactorClick(checkBox: CheckBox, factor: Factor): Unit = {
-    manageEnvironmentBackgroundChange()
+  private def onFactorClick(checkBox: CheckBox, factor: Factor): Unit =
     if (checkBox.selected.value) Controller.introduceFactor(factor) else Controller.removeFactor(factor)
-  }
 
 }

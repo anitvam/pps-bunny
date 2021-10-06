@@ -11,7 +11,7 @@ import view.scalaFX.ScalaFXConstants.{
 }
 import view.scalaFX.utilities.Direction
 import view.scalaFX.utilities.Direction._
-
+import util.PimpScala.RichOption
 import scala.language.postfixOps
 import scala.util.Random
 
@@ -75,7 +75,7 @@ object WolfView {
     override def stop(): Unit = {
       timer.stop()
       lastTime = 0L
-      factorsPanelController.get.removeWolf(imageView)
+      factorsPanelController --> {_.removeWolf(imageView)}
     }
 
   }
