@@ -47,8 +47,5 @@ object Tree {
    * @param bunny the subject bunny
    * @return the max number of generations present in the tree (the real one or maximum if there are more)
    */
-  def actualGenerations(bunny: Bunny): Int = {
-    generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny).generations
-  }
-
+  def actualGenerations(bunny: Bunny): Int = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny).generations
 }

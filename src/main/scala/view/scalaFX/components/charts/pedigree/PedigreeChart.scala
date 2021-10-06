@@ -66,12 +66,12 @@ object PedigreeChart {
 
   private val dimensions: (Int, Int, Int) => (IconSize, Generations) = (chartWidth, chartHeight, treeGenerations) => {
     val BunnySizeIndex = 8
-    val Generations_Index = 9
+    val GenerationsIndex = 9
     val engine: Term => Option[Term] = SingleSolutionPrologEngine("prolog/pedigree_dim.pl")
     val goal: String = s"pedigree_dimensions($chartHeight, $chartWidth, $BUNNY_PLUS_PROPORTION, $BUNNY_INFO_PROPORTION," +
       s"$FONT_INFO_PERCENT, $MAX_TREE_BUNNY_SIZE, $MIN_TREE_BUNNY_SIZE, $treeGenerations, BSF, G)"
     val solution = engine(goal)
-    if (solution?) (extractTerm(solution.get, BunnySizeIndex), extractTerm(solution.get, Generations_Index))
+    if (solution?) (extractTerm(solution.get, BunnySizeIndex), extractTerm(solution.get, GenerationsIndex))
     else throw new PrologCalculationException
   }
 
