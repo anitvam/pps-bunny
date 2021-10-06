@@ -126,7 +126,7 @@ object BunnyView {
     }
 
     /**
-     * Method that moves that update the bunny position according to bunny actual Direction
+     * Method that updates the bunny position according to bunny actual Direction
      */
     private def moveHorizontally(): Unit = direction match {
       case Right => positionX += jumpingValue
