@@ -1,13 +1,12 @@
 package view.scalaFX.components
 
+import controller.Controller
 import engine.SimulationConstants.PhasesConstants.WOLVES_PHASE
-import scalafx.animation.{AnimationTimer, KeyFrame}
+import scalafx.animation.AnimationTimer
 import scalafx.scene.image.{Image, ImageView}
 import view.scalaFX.FXControllers.FactorsPanelControllerInterface
-import view.scalaFX.ScalaFXConstants.Wolf.{ PREFERRED_WOLF_PANEL_HEIGHT, WOLVES_MOVING_SPACE }
-import view.scalaFX.ScalaFXConstants.{
-  PANEL_SKY_ZONE, PREFERRED_SIMULATION_PANEL_BORDER, PREFERRED_SIMULATION_PANEL_WIDTH
-}
+import view.scalaFX.ScalaFXConstants.Wolf.{PREFERRED_WOLF_PANEL_HEIGHT, WOLVES_MOVING_SPACE}
+import view.scalaFX.ScalaFXConstants.{PANEL_SKY_ZONE, PREFERRED_SIMULATION_PANEL_BORDER, PREFERRED_SIMULATION_PANEL_WIDTH}
 import view.scalaFX.utilities.Direction
 import view.scalaFX.utilities.Direction._
 
@@ -53,7 +52,7 @@ object WolfView {
     private var lastTime = 0L
 
     private val timer: AnimationTimer = AnimationTimer(_ => {
-      if (lastTime <= WOLVES_PHASE * 1000) {
+      if (lastTime <= WOLVES_PHASE * 1000 * Controller.getCurrentSimulationSpeed()) {
         checkDirection(
           positionX + imageView.getFitWidth / 2 >= PREFERRED_SIMULATION_PANEL_WIDTH - PREFERRED_SIMULATION_PANEL_BORDER,
           positionX - imageView.getFitWidth / 2 < 0
@@ -71,7 +70,7 @@ object WolfView {
     override def stop(): Unit = {
       timer.stop()
       lastTime = 0L
-      factorsPanelController.get.notifyEndOfAnimationWolves()
+      factorsPanelController.get.removeWolf(imageView)
     }
 
   }
