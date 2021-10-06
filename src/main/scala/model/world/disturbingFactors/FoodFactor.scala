@@ -2,7 +2,7 @@ package model.world.disturbingFactors
 
 import engine.SimulationConstants.FactorsConstants._
 import model.Bunny.filterBunniesWithAlleles
-import model.{ Bunny, InvalidFoodFactor }
+import model.{Bunny, InvalidFoodFactor}
 import model.genome.Genes
 import model.genome.Genes.GeneKind
 import model.world.Climate

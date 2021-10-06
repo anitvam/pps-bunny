@@ -2,10 +2,7 @@ package model
 
 import model.genome.Gene
 import model.genome.Genes.GeneKind
-
-class ExplainedException(exp: String) extends Exception {
-  print(exp + "\n")
-}
+import util.ExplainedException
 
 class InconsistentAlleleException
     extends ExplainedException(

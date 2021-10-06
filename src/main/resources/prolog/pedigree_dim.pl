@@ -1,6 +1,8 @@
-max_bunny_size_for_width(W, BP, G, BS) :- 
+% commento
+max_bunny_size_for_width(W, BP, G, BS) :-
 BS is (W + BP) / ((BP + 1) ** (G - 1) - 1).
 
+% commento
 max_bunny_size_for_height(H, BI, FI, G, BS) :- 
 BS is (H * BI * FI) / ((BI * FI + 1 + FI) * G).
 

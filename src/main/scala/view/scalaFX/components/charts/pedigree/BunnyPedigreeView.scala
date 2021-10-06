@@ -26,10 +26,9 @@ object BunnyPedigreeView {
 
   def apply(bunny: Bunny): BunnyPedigreeView = BunnyPedigreeViewImpl(bunny)
 
-  private def bunnyView(bunny: Bunny): HBox = new HBox {
-
+  private val bunnyView: Bunny => HBox = bunny => new HBox {
     children = Seq(
-      spacingRegion,
+      spacingRegion(),
       new ImageView {
         image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
         fitWidth = bunnyIconSize
@@ -37,41 +36,39 @@ object BunnyPedigreeView {
         preserveRatio = true
         scaleX = Direction.scaleXValue(Right)
       },
-      spacingRegion
+      spacingRegion()
     )
-
     padding = Insets(top = 0, left = 0, bottom = BUNNY_ALLELE_PADDING, right = 0)
   }
 
-  private def allelesView(bunny: Bunny): HBox = new HBox(
-    spacingRegion,
+  private val allelesView: Bunny => HBox = bunny => new HBox(
+    spacingRegion(),
     new Text {
       text = bunny.genotype.genes.values.map(g => g.momAllele.getLetter + g.dadAllele.getLetter + " ").reduce(_ + _)
-
       style = "-fx-font-family: \"Helvetica\"; " +
         "-fx-font-weight: bold; " +
         "-fx-font-size: " + bunnyIconSize / BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT + "px"
 
     },
-    spacingRegion
+    spacingRegion()
   )
 
-  private def infoView(bunny: Bunny): HBox = new HBox(
-    spacingRegion,
-    if (bunny.alive) new Region() else deadImageView,
-    if (bunny.genotype.isJustMutated) mutationImageView else new Region(),
-    spacingRegion
-  )
-
-  private def deadImageView: ImageView = infoImageView("/img/death.png")
-
-  private def mutationImageView: ImageView = infoImageView("/img/mutation.png")
-
-  private def infoImageView(path: String): ImageView = new ImageView {
+  private val infoImageView: String => ImageView = path => new ImageView {
     image = new Image(path)
     fitWidth = bunnyIconSize / BUNNY_INFO_PROPORTION
     fitHeight = bunnyIconSize / BUNNY_INFO_PROPORTION
   }
+
+  private val deadImageView: ImageView = infoImageView("/img/death.png")
+
+  private val mutationImageView: ImageView = infoImageView("/img/mutation.png")
+
+  private val infoView: Bunny => HBox = bunny => new HBox(
+    spacingRegion(),
+    if (bunny.alive) new Region() else deadImageView,
+    if (bunny.genotype.isJustMutated) mutationImageView else new Region(),
+    spacingRegion()
+  )
 
   private case class BunnyPedigreeViewImpl(override val bunny: Bunny) extends BunnyPedigreeView {
     override val pane: Pane = new VBox(bunnyView(bunny), allelesView(bunny), infoView(bunny))

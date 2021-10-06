@@ -3,7 +3,7 @@ package model.genome
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
 import model.genome.KindsUtils.getGeneKind
-import model.{ InconsistentAlleleException, InconsistentMutatedAlleleException }
+import model.{InconsistentAlleleException, InconsistentMutatedAlleleException}
 import util.PimpScala.RichOption
 
 import scala.language.postfixOps

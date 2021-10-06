@@ -1,10 +1,10 @@
 package model
 
 import model.Bunny.generateBaseFirstBunny
-import model.genome.Genes.{ EARS, FUR_COLOR, FUR_LENGTH, GeneKind }
-import model.genome.KindsUtils.{ assignRandomDominance, getGeneKind, resetDominance }
+import model.genome.Genes.{EARS, FUR_COLOR, FUR_LENGTH, GeneKind}
+import model.genome.KindsUtils.{assignRandomDominance, getGeneKind, resetDominance}
 import model.genome._
-import org.scalatest.{ FlatSpec, Matchers }
+import org.scalatest.{FlatSpec, Matchers}
 
 class TestGenes extends FlatSpec with Matchers {
 
