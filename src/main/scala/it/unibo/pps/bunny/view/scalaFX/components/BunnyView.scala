@@ -22,19 +22,19 @@ trait BunnyView {
   /** Type annotation for a Seq of KeyFrames */
   type AnimationFrames = Seq[KeyFrame]
 
-  /** Reference to the it.unibo.pps.bunny.model it.unibo.pps.bunny entity */
+  /** Reference to the model bunny entity */
   val bunny: Bunny
 
-  /** The image of the it.unibo.pps.bunny displayed on the GUI */
+  /** The image of the bunny displayed on the GUI */
   val imageView: ImageView
 
-  /** Starts the it.unibo.pps.bunny animation */
+  /** Starts the bunny animation */
   def play(): Unit
 
-  /** Add clicked effect to this it.unibo.pps.bunny */
+  /** Add clicked effect to this bunny */
   def addClickedEffect(): Unit
 
-  /** Remove clicked effect from this it.unibo.pps.bunny */
+  /** Remove clicked effect from this bunny */
   def removeClickedEffect(): Unit
 }
 
@@ -55,11 +55,11 @@ object BunnyView {
   }
 
   private case class BunnyViewImpl(
-                                    imageView: ImageView,
-                                    bunny: Bunny,
-                                    private var direction: Direction,
-                                    private var positionX: Double,
-                                    private var positionY: Double
+      imageView: ImageView,
+      bunny: Bunny,
+      private var direction: Direction,
+      private var positionX: Double,
+      private var positionY: Double
   ) extends BunnyView {
 
     private val normalImage: Image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
@@ -115,7 +115,7 @@ object BunnyView {
       )
     }
 
-    /** Method that checks the actual direction of the it.unibo.pps.bunny and update the orientation of its image */
+    /** Method that checks the actual direction of the bunny and update the orientation of its image */
     private def checkDirection(): Unit = {
       if ((positionX + (2 * jumpingValue)) >= PREFERRED_SIMULATION_PANEL_WIDTH) {
         direction = Left
@@ -126,7 +126,7 @@ object BunnyView {
     }
 
     /**
-     * Method that moves that update the it.unibo.pps.bunny position according to it.unibo.pps.bunny actual Direction
+     * Method that moves that update the bunny position according to bunny actual Direction
      */
     private def moveHorizontally(): Unit = direction match {
       case Right => positionX += jumpingValue

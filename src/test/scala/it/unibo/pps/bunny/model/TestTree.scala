@@ -11,7 +11,7 @@ import scala.language.postfixOps
 
 class TestTree extends FlatSpec with Matchers {
 
-  "A genealogical tree " should "contain just the it.unibo.pps.bunny as a Leaf, if he has no parents" in {
+  "A genealogical tree " should "contain just the bunny as a Leaf, if he has no parents" in {
     val bunny = generateRandomFirstBunny
     val tree = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
     assert(tree.isInstanceOf[Leaf[Bunny]])
@@ -41,7 +41,7 @@ class TestTree extends FlatSpec with Matchers {
     assert(fullTree.generations == MAX_GENEALOGICAL_TREE_GENERATIONS)
   }
 
-  it should "contain the right bunnies as parents of the first it.unibo.pps.bunny " in {
+  it should "contain the right bunnies as parents of the first bunny " in {
     assert(fullTree.asInstanceOf[Node[Bunny]].momTree.elem == bunny.mom.get)
     assert(fullTree.asInstanceOf[Node[Bunny]].dadTree.elem == bunny.dad.get)
   }

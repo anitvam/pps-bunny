@@ -41,9 +41,9 @@ object Tree {
    * @param generations
    *   the number of older generations to retrieve
    * @param bunny
-   *   the subject it.unibo.pps.bunny
+   *   the subject bunny
    * @return
-   *   the genealogical tree of the it.unibo.pps.bunny for the specified generations
+   *   the genealogical tree of the bunny for the specified generations
    */
   def generateTree(generations: Int, bunny: Bunny): BinaryTree[Bunny] = {
     if (generations == 1 || bunny.mom.isEmpty) Leaf(bunny)

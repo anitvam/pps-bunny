@@ -86,7 +86,7 @@ class TestReproduction extends FlatSpec with Matchers {
     assert(nextGenBunnies.size == (bunniesNum / 2) * 4 + bunniesNum)
   }
 
-  it should "contain just one it.unibo.pps.bunny if there was only one" in {
+  it should "contain just one bunny if there was only one" in {
     assert(nextGenerationBunnies(Seq(generateRandomFirstBunny)).size == 1)
   }
 

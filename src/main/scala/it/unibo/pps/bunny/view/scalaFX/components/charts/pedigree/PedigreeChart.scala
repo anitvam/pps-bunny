@@ -12,14 +12,14 @@ import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.GenealogicalTree._
 import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH }
 
 import scala.language.postfixOps
-import scala.math.{log10, pow, min}
+import scala.math.{ log10, min, pow }
 
 trait PedigreeChart {
 
-  /** Reference to the it.unibo.pps.bunny.model it.unibo.pps.bunny entity */
+  /** Reference to the it.unibo.pps.bunny.model ibunny entity */
   val bunny: Bunny
 
-  /** Reference to the it.unibo.pps.bunny.model tree entity created from the it.unibo.pps.bunny */
+  /** Reference to the it.unibo.pps.bunny.model tree entity created from the bunny */
   val tree: BinaryTree[Bunny]
 
   /** The pane with the it.unibo.pps.bunny.view of the tree */
@@ -28,14 +28,14 @@ trait PedigreeChart {
 
 object PedigreeChart {
 
-  /** The size required for the it.unibo.pps.bunny icons */
+  /** The size required for the bunny icons */
   var bunnyIconSize: Int = MAX_TREE_BUNNY_SIZE
 
   /**
    * To create a chart with the standard panel size
    *
    * @param bunny
-   *   the it.unibo.pps.bunny that is the subject of the tree
+   *   the bunny that is the subject of the tree
    * @return
    *   the pedigree chart
    */
@@ -47,7 +47,7 @@ object PedigreeChart {
    * To create a chart with
    *
    * @param bunny
-   *   the it.unibo.pps.bunny that is the subject of the tree
+   *   the bunny that is the subject of the tree
    * @param chartWidth
    *   the width of the panel and maximum width of the tree
    * @param chartHeight
@@ -78,8 +78,9 @@ object PedigreeChart {
   }
 
   private def maxGenerationsInPanel(chartWidth: Int, chartHeight: Int): Int = {
-    val maxGenerationsForWidth: Int =
-      (1 + log10(1 + (chartWidth + BUNNY_PLUS_PROPORTION) / bunnyIconSize) / log10(BUNNY_PLUS_PROPORTION + 1)).ceil.toInt
+    val maxGenerationsForWidth: Int = (1 + log10(1 + (chartWidth + BUNNY_PLUS_PROPORTION) / bunnyIconSize) / log10(
+      BUNNY_PLUS_PROPORTION + 1
+    )).ceil.toInt
     val maxGenerationsForHeight: Int = maxHeight(chartHeight, bunnyIconSize)
 
     min(maxGenerationsForWidth, maxGenerationsForHeight)

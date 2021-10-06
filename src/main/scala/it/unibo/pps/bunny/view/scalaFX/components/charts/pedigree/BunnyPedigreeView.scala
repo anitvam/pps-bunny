@@ -15,10 +15,10 @@ import it.unibo.pps.bunny.view.scalaFX.utilities.{ BunnyImageUtils, Direction, I
  */
 trait BunnyPedigreeView {
 
-  /** Reference to the it.unibo.pps.bunny.model it.unibo.pps.bunny entity */
+  /** Reference to the it.unibo.pps.bunny.model bunny entity */
   val bunny: Bunny
 
-  /** Pane with actual it.unibo.pps.bunny.view of the it.unibo.pps.bunny */
+  /** Pane with actual it.unibo.pps.bunny.view of the bunny */
   val pane: Pane
 }
 

@@ -8,7 +8,7 @@ import it.unibo.pps.bunny.model.genome.{ Genes, Phenotype }
 import scalafx.scene.image.Image
 import it.unibo.pps.bunny.view.scalaFX.utilities.ImageType.{ ImageType, Jumping, Normal }
 
-/** Enumeration for all the it.unibo.pps.bunny images */
+/** Enumeration for all the bunny images */
 object BunnyImage extends Enumeration {
 
   case class BunnyImage(normalImage: Image, jumpingImage: Image, phenotype: Phenotype) extends super.Val
@@ -124,11 +124,11 @@ object BunnyImageUtils {
   /**
    * Method that retrieves the image associated to a Bunny
    * @param bunny
-   *   the it.unibo.pps.bunny on which the image will be computed
+   *   the bunny on which the image will be computed
    * @param imageType
    *   the type of the image needed
    * @return
-   *   the scalafx.scene.image.Image of the it.unibo.pps.bunny with the specified state
+   *   the scalafx.scene.image.Image of the bunny with the specified state
    */
   def bunnyToImage(bunny: Bunny, imageType: ImageType): Image = {
     val filterMap = bunny.genotype.phenotype.visibleTraits - Genes.JUMP

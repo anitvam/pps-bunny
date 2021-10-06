@@ -24,7 +24,7 @@ object ScalaFXConstants {
   /** Random bound on jump delay */
   val RANDOM_BUNNY_JUMP_DELAY = 5000
 
-  /** Standard delay on each it.unibo.pps.bunny jump */
+  /** Standard delay on each bunny jump */
   val STANDARD_BUNNY_JUMP_DURATION = 1000
 
   /** Application window width */

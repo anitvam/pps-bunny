@@ -96,7 +96,7 @@ object Bunny {
   /**
    * Method that filter a population of bunnies with two AlleleKinds together
    * @param bunnies
-   *   the it.unibo.pps.bunny population
+   *   the bunny population
    * @param allele1
    *   the first allele filtered on the population
    * @param allele2

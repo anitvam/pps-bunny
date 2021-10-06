@@ -69,7 +69,7 @@ object WolfView {
 
     override def play(): Unit = timer.start()
 
-    /** Method that checks the actual direction of the it.unibo.pps.bunny and update the orientation of its image */
+    /** Method that checks the actual direction of the bunny and update the orientation of its image */
     private def checkDirection(): Unit = {
       if (positionX + 40 >= PREFERRED_SIMULATION_PANEL_WIDTH) {
         direction = Left
@@ -80,7 +80,7 @@ object WolfView {
     }
 
     /**
-     * Method that moves that update the it.unibo.pps.bunny position according to it.unibo.pps.bunny actual Direction
+     * Method that moves that update the bunny position according to bunny actual Direction
      */
     private def moveHorizontally(): Unit = direction match {
       case Right => positionX = positionX + movingSpace

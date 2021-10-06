@@ -17,12 +17,12 @@ class TestSimulation extends FlatSpec with Matchers {
     assert(SimulationHistory.history.last.getAliveBunniesNumber == 2)
   }
 
-  it should "have only 1 alive it.unibo.pps.bunny if the other one is died" in {
+  it should "have only 1 alive bunny if the other one is died" in {
     SimulationHistory.history.last.population.head.alive = false
     assert(SimulationHistory.history.last.getAliveBunniesNumber == 1)
   }
 
-  "If there is only one alive it.unibo.pps.bunny the population for the next generation" should "be only the alive it.unibo.pps.bunny" in {
+  "If there is only one alive bunny the population for the next generation" should "be only the alive it.unibo.pps.bunny" in {
     SimulationHistory.startNextGeneration()
     assert(SimulationHistory.history.head.getAliveBunniesNumber == 1)
   }
