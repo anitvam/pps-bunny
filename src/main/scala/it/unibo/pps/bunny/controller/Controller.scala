@@ -45,7 +45,7 @@ object Controller {
     ScalaFXView.showEnd(isOverpopulation)
   }
 
-  /** Resets the simulation it.unibo.pps.bunny.model to its initial state */
+  /** Resets the simulation model to its initial state */
   def reset(): Unit = {
     resetDominance()
     resetHistory()

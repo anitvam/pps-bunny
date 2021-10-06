@@ -58,7 +58,7 @@ object PopulationChartDataType {
 
   }
 
-  /** A map to manged the [[ChartSeries]] for each [[it.unibo.pps.bunny.model.genome.Alleles.AlleleKind]] */
+  /** A map to mange the [[ChartSeries]] for each [[AlleleKind]] */
   case class MutationsChartSeries(var mutationMap: Map[AlleleKind, ChartSeries] = Map()) {
 
     Alleles.values.foreach { ak =>
