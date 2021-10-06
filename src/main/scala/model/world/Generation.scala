@@ -1,7 +1,7 @@
 package model.world
 
-import engine.SimulationConstants.{FOOD_PHASE, START_PHASE, TEMPERATURE_PHASE, WOLVES_PHASE}
-import model.Bunny
+import engine.SimulationConstants._
+import model.{ Bunny, ChildBunny }
 import model.world.Generation.Population
 
 /** The unit of time of the simulation and wraps its properties */
@@ -10,23 +10,35 @@ trait Generation {
   /** @return the current [[Environment]] */
   def environment: Environment
 
-  /**@return the [[Population]] with both alive and dead bunny*/
+  /** @return the [[Population]] with both alive and dead bunny */
   def population: Population
 
-  /**Updates the population
-   * @param bunnies the new set of bunnies*/
-  def population_=(bunnies:Population): Unit
+  /**
+   * Updates the population
+   * @param bunnies
+   *   the new set of bunnies
+   */
+  def population_=(bunnies: Population): Unit
 
-  /**@return the alive [[Population]] */
-  def livingPopulation : Population = population.filter(_.alive)
+  /** @return the alive [[Population]] */
+  def livingPopulation: Population = population.filter(_.alive)
+
+  def populationAtTheEnd: Population
+
+  def populationAtTheEnd_=(population: Population)
 
   def isEnded: Boolean
 
   /** Sets this Generation as ended */
   def isEnded_=(isEnded: Boolean): Unit
-  
-  /**@return the current number of alive bunnies*/
-  def getAliveBunniesNumber:Int = livingPopulation.size
+
+  def terminate(): Unit = {
+    this.isEnded = true
+    populationAtTheEnd = this.population.map(b => new ChildBunny(b.genotype, b.mom, b.dad, b.age, b.alive))
+  }
+
+  /** @return the current number of alive bunnies */
+  def getAliveBunniesNumber: Int = livingPopulation.size
 }
 
 object Generation {
@@ -39,6 +51,7 @@ object Generation {
   private class GenerationImpl(
       override val environment: Environment,
       override var population: Population,
+      override var populationAtTheEnd: Population = Seq(),
       override var isEnded: Boolean = false
   ) extends Generation
 
@@ -54,18 +67,33 @@ object GenerationsUtils {
 
     /** @return the phase of the generation */
     def phase: Double
+
+    /** @return after how many milliseconds from the start of generation there is the phase istant */
+    def instant: Double
   }
 
-  case class StartPhase(override val generationNumber: Int, override val phase: Double = START_PHASE)
-      extends GenerationPhase
+  case class ReproductionPhase(
+      override val generationNumber: Int,
+      override val phase: Double = REPRODUCTION_PHASE,
+      override val instant: Double = GENERATION_END
+  ) extends GenerationPhase
 
-  case class WolvesPhase(override val generationNumber: Int, override val phase: Double = WOLVES_PHASE)
-      extends GenerationPhase
+  case class WolvesPhase(
+      override val generationNumber: Int,
+      override val phase: Double = WOLVES_PHASE,
+      override val instant: Double = WOLVES_INSTANT
+  ) extends GenerationPhase
 
-  case class FoodPhase(override val generationNumber: Int, override val phase: Double = FOOD_PHASE)
-      extends GenerationPhase
+  case class FoodPhase(
+      override val generationNumber: Int,
+      override val phase: Double = FOOD_PHASE,
+      override val instant: Double = FOOD_INSTANT
+  ) extends GenerationPhase
 
-  case class HighTemperaturePhase(override val generationNumber: Int, override val phase: Double = TEMPERATURE_PHASE)
-      extends GenerationPhase
+  case class HighTemperaturePhase(
+      override val generationNumber: Int,
+      override val phase: Double = TEMPERATURE_PHASE,
+      override val instant: Double = TEMP_INSTANT
+  ) extends GenerationPhase
 
 }

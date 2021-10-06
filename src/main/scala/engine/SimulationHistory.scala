@@ -1,7 +1,8 @@
 package engine
 
+import engine.SimulationConstants._
 import model.world.Generation.Population
-import model.world.Reproduction.{generateInitialCouple, nextGenerationBunnies}
+import model.world.Reproduction.{ generateInitialCouple, nextGenerationBunnies }
 import model.world._
 import model.world.disturbingFactors.Factors
 import util.PimpScala.RichTuple2
@@ -19,11 +20,11 @@ object SimulationHistory {
   /** Resets history to the initial value */
   def resetHistory(): Unit = history = historyInit()
 
-  /** @return the actual [[Generation]] */
-  def getActualGeneration: Generation = history.head
-
   /** Reset all the mutations added */
   def resetMutations(): Unit = getActualGeneration.environment.mutations = List()
+
+  /** @return the actual [[Generation]] */
+  def getActualGeneration: Generation = history.head
 
   /** @return how many generation have been lived */
   def getGenerationNumber: Int = history.length - 1
@@ -34,6 +35,17 @@ object SimulationHistory {
   /** @return the [[Population]] of the actual generation */
   def getActualPopulation: Population = getActualGeneration.livingPopulation
 
+  /**
+   * Determines if there is a next generation
+   */
+  def existNextGeneration: Boolean =
+    getGenerationNumber < MAX_GENERATIONS_NUMBER && getBunniesNumber < MAX_ALIVE_BUNNIES && getBunniesNumber >= MIN_ALIVE_BUNNIES
+
+  /**
+   * Determines if the wold is overpopulated by the bunnies
+   */
+  def isOverpopulated: Boolean = getBunniesNumber >= MAX_ALIVE_BUNNIES
+
   /** @return the [[Population]]  for the next [[Generation]] */
   def getPopulationForNextGeneration: Population =
     nextGenerationBunnies(getActualPopulation, getActualGeneration.environment.mutations)
@@ -43,12 +55,9 @@ object SimulationHistory {
 
   /** Terminate the actual [[Generation]] and start the next one */
   def startNextGeneration(): Unit = {
-    endActualGeneration()
+    getActualGeneration.terminate()
     history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history
   }
-
-  /** Terminate the actual [[Generation]] */
-  def endActualGeneration(): Unit = getActualGeneration.isEnded = true
 
   /**
    * Change the Environment of the actual generation

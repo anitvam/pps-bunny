@@ -1,12 +1,13 @@
 package controller
 
-import engine.SimulationEngine.simulationLoop
-import engine.SimulationHistory
+import engine.SimulationEngine.{ resetEngine, simulationLoop }
 import engine.SimulationHistory.resetHistory
 import model.genome.KindsUtils.resetDominance
+import engine.{ SimulationEngine, SimulationHistory }
 import model.world.Generation.Population
+import model.world.GenerationsUtils.GenerationPhase
 import model.world.disturbingFactors.Factor
-import model.world.{Mutation, Summer, Winter}
+import model.world.{ Mutation, Summer, Winter }
 import scalafx.application.Platform
 import view.scalaFX.ScalaFXView
 
@@ -14,8 +15,16 @@ object Controller {
 
   /**
    * Method that starts the simulation
+   * @param climate
+   *   the Environment Climate
+   * @param factors
+   *   the Environment Factors
    */
   def startSimulation(): Unit = simulationLoop().unsafeRunAsyncAndForget()
+
+  def incrementSimulationSpeed(): Unit = {
+    SimulationEngine.incrementSpeed()
+  }
 
   /** Method that sets the Summer Climate inside Environment */
   def setSummerClimate(): Unit = SimulationHistory changeEnvironmentClimate Summer()
@@ -32,17 +41,18 @@ object Controller {
     SimulationHistory.getActualGeneration.environment introduceMutation mutation
 
   /** Method that shows the end of the simulation on the Application GUI */
-  def showEnd(): Unit = Platform runLater {
-    ScalaFXView.showEnd()
+  def showEnd(isOverpopulation: Boolean): Unit = Platform runLater {
+    ScalaFXView.showEnd(isOverpopulation)
   }
 
   /** Resets the simulation model to its initial state */
   def reset(): Unit = {
     resetDominance()
     resetHistory()
+    resetEngine()
   }
 
-  def population: Population = SimulationHistory.getActualPopulation
+  def population: Population = SimulationHistory.getActualGeneration.population
 
   def introduceFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment introduceFactor factor
 

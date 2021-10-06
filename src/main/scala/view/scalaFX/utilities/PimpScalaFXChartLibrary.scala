@@ -4,9 +4,9 @@ import com.sun.javafx.charts.Legend
 import javafx.scene.control.Label
 import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
-import scalafx.scene.chart.{LineChart, PieChart, XYChart}
+import scalafx.scene.chart.{ LineChart, PieChart, XYChart }
 import util.PimpScala._
-import view.scalaFX.ScalaFXConstants.Style.PopulationLegend.{CLICKED_ITEM_STYLE, ITEM_STYLE}
+import view.scalaFX.ScalaFXConstants.Style.PopulationLegend.{ CLICKED_ITEM_STYLE, ITEM_STYLE }
 
 object PimpScalaFXChartLibrary {
 
@@ -75,18 +75,6 @@ object PimpScalaFXChartLibrary {
   /** A richer version of [[Legend]] */
   implicit class RichChartLegend(legend: Legend) {
 
-    /** Set the specified label as clicked by adding a specific style */
-    def setLabelAsClicked(value: String): Unit = {
-      getLabels.foreach({ l =>
-        l.styleClass -= CLICKED_ITEM_STYLE
-        l.styleClass += ITEM_STYLE
-      })
-      label(value) --> { l =>
-        l.styleClass -= ITEM_STYLE
-        l.styleClass += CLICKED_ITEM_STYLE
-      }
-    }
-
     /**
      * A getter for easier access to the label of the specified value
      *
@@ -102,6 +90,11 @@ object PimpScalaFXChartLibrary {
     def getLabels: Seq[Label] = legend.getChildrenUnmodifiable.collect {
       case l if l.isInstanceOf[Label] => l.asInstanceOf[Label]
     }.toSeq
+
+    /** Set the specified label as clicked by adding a specific style */
+    def setLabelAsClicked(value: String): Unit = label(value) --> { _.styleClass += CLICKED_ITEM_STYLE }
+
+    def setLabelAsUnClicked(value: String): Unit = label(value) --> { _.styleClass -= CLICKED_ITEM_STYLE }
 
   }
 

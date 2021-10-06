@@ -2,6 +2,7 @@ package engine
 
 import cats.effect.IO
 import controller.Controller
+import engine.SimulationConstants.REPRODUCTION_PHASE
 import engine.SimulationHistory._
 import model.world.disturbingFactors.FactorTypes._
 import model.world.GenerationsUtils.GenerationPhase
@@ -18,13 +19,15 @@ object Simulation {
 
   def applyTemperatureDamage: IO[Unit] = applyFactorDamage(UnfriendlyClimateFactorKind)
 
-  def updateView(generationPhase: GenerationPhase): IO[Unit] = {
+  def updateView(generationPhase: GenerationPhase): IO[Unit] =
     ScalaFXView.updateView(generationPhase, getActualPopulation)
+
+  def overpopulation(): IO[Unit] = {
+    Controller.showEnd(true)
   }
 
-  def showEnd(generationPhase: GenerationPhase): IO[Unit] = {
-    ScalaFXView.updateView(generationPhase, getActualPopulation)
-    Controller.showEnd()
+  def extinction(): IO[Unit] = {
+    Controller.showEnd(false)
   }
 
   def startNewGeneration: IO[Unit] = {
