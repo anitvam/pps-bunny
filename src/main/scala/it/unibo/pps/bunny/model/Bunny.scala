@@ -1,17 +1,17 @@
 package it.unibo.pps.bunny.model
 
+import it.unibo.pps.bunny.engine.SimulationConstants.MAX_BUNNY_AGE
 import it.unibo.pps.bunny.model.genome.Alleles.AlleleKind
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
+import it.unibo.pps.bunny.model.genome.KindsUtils.getRandomAlleleKind
 import it.unibo.pps.bunny.model.genome._
 import it.unibo.pps.bunny.model.world.Generation.Population
-
-import scala.util.Random
 
 /**
  * Represents a Bunny.
  */
 sealed trait Bunny {
-  val genotype: CompletedGenotype
+  val genotype: CompleteGenotype
   val mom: Option[Bunny]
   val dad: Option[Bunny]
   var age: Int
@@ -25,13 +25,13 @@ sealed trait Bunny {
   }
 
   /**
-   * @param geneKind
-   *   the kind of genes for which the alleles are required
+   * Updates the bunny instance for the next generation, increasing the age and setting the right alive value.
    * @return
    *   a sequence of standard alleles with the parents kind, useful during the generation of children
    */
-  def getStandardAlleles(geneKind: GeneKind): (Allele, Allele) = {
-    (StandardAllele(genotype(geneKind).momAllele.kind), StandardAllele(genotype(geneKind).dadAllele.kind))
+  def agingBunny(): Unit = {
+    age += 1
+    if (age >= MAX_BUNNY_AGE) alive = false
   }
 
 }
@@ -40,21 +40,19 @@ sealed trait Bunny {
  * Represents a Bunny that as just been created.
  */
 class ChildBunny(
-    override val genotype: CompletedGenotype,
+    override val genotype: CompleteGenotype,
     override val mom: Option[Bunny],
-    override val dad: Option[Bunny]
-) extends Bunny {
-  override var age: Int = 0
-  override var alive: Boolean = true
-}
+    override val dad: Option[Bunny],
+    override var age: Int = 0,
+    override var alive: Boolean = true
+) extends Bunny
 
 /**
  * Represents the first Bunny which appears in the world, so it does not have a mom and a dad.
  */
-class FirstBunny(genotype: CompletedGenotype) extends ChildBunny(genotype, Option.empty, Option.empty)
+class FirstBunny(genotype: CompleteGenotype) extends ChildBunny(genotype, Option.empty, Option.empty)
 
 object Bunny {
-
   type baseBunnies = Seq[Bunny]
   type mutatedBunnies = Seq[Bunny]
 
@@ -63,7 +61,7 @@ object Bunny {
    *   a FirstBunny with the "base" allele for each gene
    */
   def generateBaseFirstBunny: FirstBunny = new FirstBunny(
-    CompletedGenotype(
+    CompleteGenotype(
       Genes.values.unsorted.map(gk => (gk, Gene(gk, StandardAllele(gk.base), StandardAllele(gk.base)))).toMap
     )
   )
@@ -74,17 +72,10 @@ object Bunny {
    */
   def generateRandomFirstBunny: FirstBunny = {
     new FirstBunny(
-      CompletedGenotype(
+      CompleteGenotype(
         Genes.values.unsorted
           .map(gk => {
-            (
-              gk,
-              Gene(
-                gk,
-                StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2))),
-                StandardAllele(List(gk.base, gk.mutated)(Random.nextInt(2)))
-              )
-            )
+            (gk, Gene(gk, StandardAllele(getRandomAlleleKind(gk)), StandardAllele(getRandomAlleleKind(gk))))
           })
           .toMap
       )

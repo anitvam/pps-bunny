@@ -4,7 +4,7 @@ import it.unibo.pps.bunny.model.MultipleDominanceAssignmentException
 import it.unibo.pps.bunny.model.genome.Alleles.AlleleKind
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.util.PimpScala.RichOption
-import scala.language.{ implicitConversions, postfixOps }
+
 import scala.util.Random
 
 /**
@@ -12,9 +12,9 @@ import scala.util.Random
  */
 object Alleles extends Enumeration {
   type AlleleKind = Value
-  val WHITE_FUR: AllelesVal = AllelesVal("Pelo Bianco")
-
   implicit def valueToAllelesVal(x: Value): AllelesVal = x.asInstanceOf[AllelesVal]
+
+  val WHITE_FUR: AllelesVal = AllelesVal("Pelo Bianco")
   val BROWN_FUR: AllelesVal = AllelesVal("Pelo Marrone")
   val LONG_FUR: AllelesVal = AllelesVal("Pelo Lungo")
   val SHORT_FUR: AllelesVal = AllelesVal("Pelo Corto")
@@ -84,13 +84,22 @@ object Genes extends Enumeration {
 object KindsUtils {
 
   /**
+   * d
+   * @param geneKind
+   *   the gene kind of which the allele must be associated with
+   * @return
+   *   a random AlleleKind for the specified GeneKind
+   */
+  def getRandomAlleleKind(geneKind: GeneKind): AlleleKind = Seq(geneKind.base, geneKind.mutated)(Random.nextInt(2))
+
+  /**
    * Randomly chooses one AlleleKind as Dominant for each GeneKind
    */
-  def assignRandomDominance(): Unit =
-    Genes.values.foreach(gk => setAlleleDominance(List(gk.base, gk.mutated)(Random.nextInt(2))))
+  def assignRandomDominance(): Unit = Genes.values.foreach(gk => setAlleleDominance(getRandomAlleleKind(gk)))
 
   /**
    * Sets an AlleleKind as dominant for a specific GeneKind.
+   *
    * @param alleleKind
    *   the AlleleKind that has to be set as dominant
    */
@@ -101,23 +110,23 @@ object KindsUtils {
 
   /**
    * @param alleleKind
-   *   the AlleleKind of which alternative AlleleKind is needed
-   * @return
-   *   the AlleleKind uniquely associated with the specified AlleleKind
-   */
-  def getAlternativeAlleleKind(alleleKind: AlleleKind): AlleleKind = {
-    val geneKind = getGeneKind(alleleKind)
-    if (getGeneKind(alleleKind).base == alleleKind) geneKind.mutated else geneKind.base
-  }
-
-  /**
-   * @param alleleKind
    *   the AlleleKind of which the GeneKind is needed
    * @return
    *   the GeneKind uniquely associated with this AlleleKind
    */
   def getGeneKind(alleleKind: AlleleKind): GeneKind =
     Genes.values.filter(gk => gk.base == alleleKind || gk.mutated == alleleKind).firstKey
+
+  /**
+   * @param alleleKind
+   *   the AlleleKind of which alternative AlleleKind is needed
+   * @return
+   *   the AlleleKind uniquely associated with the specified AlleleKind
+   */
+  def getAlternativeAlleleKind(alleleKind: AlleleKind): AlleleKind = {
+    val geneKind = getGeneKind(alleleKind)
+    if (geneKind.base == alleleKind) geneKind.mutated else geneKind.base
+  }
 
   /**
    * Reset dominance of all Alleles.

@@ -3,7 +3,7 @@ package it.unibo.pps.bunny.util
 object PimpScala {
 
   implicit class RichOption[A](option: Option[A]) {
-    def -->(consumer: A => Unit): Unit = option.foreach(consumer)
+    def --> (consumer: A => Unit): Unit = option.foreach(consumer)
     def ? : Boolean = option.isDefined
   }
 
@@ -12,7 +12,6 @@ object PimpScala {
   }
 
   implicit class RichList[A](list: List[A]) {
-    def -?(pred: A => Boolean): List[A] = list.filterNot(pred)
+    def -? (pred: A => Boolean): List[A] = list.filterNot(pred)
   }
-
 }

@@ -1,12 +1,13 @@
 package it.unibo.pps.bunny.model.world
 
-import it.unibo.pps.bunny.engine.SimulationConstants.{ CHILDREN_FOR_EACH_COUPLE, MAX_BUNNY_AGE }
+import it.unibo.pps.bunny.engine.SimulationConstants._
 import it.unibo.pps.bunny.model.Bunny.generateBaseFirstBunny
 import it.unibo.pps.bunny.model._
 import it.unibo.pps.bunny.model.genome._
 import it.unibo.pps.bunny.model.world.Environment.Mutations
 import it.unibo.pps.bunny.model.world.Generation.Population
-import it.unibo.pps.bunny.util.PimpScala.RichTuple2
+import it.unibo.pps.bunny.util.PimpScala.{ RichOption, RichTuple2 }
+
 import scala.util.Random
 
 object Reproduction {
@@ -27,36 +28,36 @@ object Reproduction {
 
   /**
    * @param mom
-   *   a it.unibo.pps.bunny
+   *   a bunny
    * @param dad
-   *   another it.unibo.pps.bunny
+   *   another bunny
    * @return
    *   the 4 children of the couple, one for each cell of the Punnett's square
    */
   def generateChildren(mom: Bunny, dad: Bunny, mutations: Mutations = List()): Population = {
     var childrenGenotypes = List.fill(CHILDREN_FOR_EACH_COUPLE)(PartialGenotype(Map()))
 
+    // For each kind of gene
     Genes.values.foreach(gk => {
-      val genesOfReproduction: List[Gene] = (for {
-        momAllele <- mom.getStandardAlleles(gk).toSeq
-        dadAllele <- dad.getStandardAlleles(gk).toSeq
-      } yield Gene(gk, momAllele, dadAllele)).toList
-      val shufflesGenes = Random.shuffle(genesOfReproduction)
+      // Create 4 new genes from the parents alleles, in random order
+      var childrenGenes: List[Gene] = Random.shuffle((for {
+        momAllele <- mom.genotype.getStandardAlleles(gk).toSeq
+        dadAllele <- dad.genotype.getStandardAlleles(gk).toSeq
+      } yield Gene(gk, momAllele, dadAllele)).toList)
 
-      childrenGenotypes =
-        (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE) yield childrenGenotypes(i) + shufflesGenes(i)).toList
-
-      mutations filter { _.geneKind == gk } foreach { _ =>
-        val mutatedGenotype = childrenGenotypes(CHILDREN_FOR_EACH_COUPLE - 1) + Gene(
-          gk,
-          JustMutatedAllele(gk.mutated),
-          JustMutatedAllele(gk.mutated)
+      // Check if there is a mutation for this kind of gene and substitute one of the genes with the mutated one
+      if (mutations.find(_.geneKind == gk) ?)
+        childrenGenes = Gene(gk, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) :: childrenGenes.take(
+          CHILDREN_FOR_EACH_COUPLE - 1
         )
-        childrenGenotypes = mutatedGenotype :: childrenGenotypes.take(CHILDREN_FOR_EACH_COUPLE - 1)
-      }
-    })
 
-    childrenGenotypes.map(cg => new ChildBunny(CompletedGenotype(cg.genes), Option(mom), Option(dad)))
+      // Add the 4 new genes to the children genotypes and put the genotype with less mutations at the beginning of the list,
+      // so it will include the next mutated gene if there is one
+      childrenGenotypes = (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE)
+        yield childrenGenotypes(i) + childrenGenes(i)).toList.sortBy(_.mutatedAllelesQuantity)
+    })
+    // Creates the bunnies with the complete genotypes
+    childrenGenotypes.map(cg => new ChildBunny(CompleteGenotype(cg.genes), Option(mom), Option(dad)))
   }
 
   /**
@@ -85,10 +86,8 @@ object Reproduction {
    *   the new bunnies, adding the children and removing the ones who are dead
    */
   def nextGenerationBunnies(bunnies: Population, mutations: Mutations = List()): Population = {
-    val children = generateAllChildren(bunnies, mutations)
-    bunnies.foreach(_.age += 1)
-    bunnies.foreach(b => if (b.age >= MAX_BUNNY_AGE) b.alive = false)
-    children ++ bunnies.filter(_.alive)
+    bunnies.foreach(_.agingBunny())
+    generateAllChildren(bunnies, mutations) ++ bunnies.filter(_.alive)
   }
 
 }

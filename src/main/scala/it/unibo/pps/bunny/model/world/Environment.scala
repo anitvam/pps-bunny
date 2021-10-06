@@ -3,9 +3,7 @@ package it.unibo.pps.bunny.model.world
 import it.unibo.pps.bunny.model.genome.KindsUtils
 import it.unibo.pps.bunny.model.mutation.Mutation
 import it.unibo.pps.bunny.model.world.Environment.Mutations
-import it.unibo.pps.bunny.model.world.disturbingFactors.FactorTypes._
-import it.unibo.pps.bunny.model.world.disturbingFactors.{ Factor, Factors, FoodFactor }
-import it.unibo.pps.bunny.util.PimpScala._
+import it.unibo.pps.bunny.model.world.disturbingFactors.{ Factor, Factors }
 
 /** Environment of a Generation */
 trait Environment {

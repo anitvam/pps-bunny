@@ -1,6 +1,6 @@
 import sbt.Keys.libraryDependencies
 
-ThisBuild / version := "0.2.0"
+ThisBuild / version := "0.3.0"
 ThisBuild / organization := "it.unibo.pps.bunny"
 scalaVersion := "2.13.6"
 

@@ -1,7 +1,8 @@
 package it.unibo.pps.bunny.view.scalaFX.FXControllers
 
 import it.unibo.pps.bunny.controller.Controller
-import it.unibo.pps.bunny.engine.SimulationConstants.START_PHASE
+import it.unibo.pps.bunny.engine.SimulationConstants._
+import it.unibo.pps.bunny.engine.SimulationHistory
 import javafx.scene.{ control => jfxc }
 import it.unibo.pps.bunny.model.Bunny
 import it.unibo.pps.bunny.model.genome.Genes
@@ -9,12 +10,13 @@ import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.GenerationsUtils.GenerationPhase
 import scalafx.scene.chart.PieChart
-import scalafx.scene.control.ToggleGroup
+import scalafx.scene.control.{ Button, ToggleGroup }
 import scalafx.scene.layout.AnchorPane
 import scalafxml.core.macros.sfxml
 import it.unibo.pps.bunny.view.scalaFX.FXControllers.PieChartConverters._
 import it.unibo.pps.bunny.view.scalaFX.FXControllers.PieChartFactory.createEmptyPieChart
 import it.unibo.pps.bunny.view.scalaFX.utilities.PimpScalaFXChartLibrary._
+import scalafx.scene.text.Text
 
 import scala.language.implicitConversions
 
@@ -28,11 +30,16 @@ trait ChartController {
 class ProportionsChartController(
     val startPiePane: AnchorPane,
     val currentPiePane: AnchorPane,
-    val pieChart: ToggleGroup
+    val pieChart: ToggleGroup,
+    val nextBtn: Button,
+    val backBtn: Button,
+    val genText: Text
 ) extends ChartController {
 
   private var startPie: PieChart = createEmptyPieChart("Inizio Generazione")
   private var currentPie: PieChart = createEmptyPieChart("Attualmente")
+  private var displayedGenerationNumber: Int = 0
+  private var isInHistoryMode: Boolean = false
 
   override def initialize(): Unit = {
 
@@ -44,27 +51,70 @@ class ProportionsChartController(
 
     fillPieCharts(Controller.population, getSelectedGeneKind)
 
+    nextBtn.disable = true
+    nextBtn.onAction = _ => {
+      backBtn.disable = false
+      changeGeneration(displayedGenerationNumber + 1)
+    }
+
+    backBtn.onAction = _ => {
+      isInHistoryMode = true
+      changeGeneration(displayedGenerationNumber - 1)
+      nextBtn.disable = false
+    }
+    backBtn.disable = true
+
   }
 
   override def updateChart(generationPhase: GenerationPhase, population: Population): Unit = {
-    if (generationPhase.phase == START_PHASE) fillPieCharts(population, getSelectedGeneKind)
-    else currentPie += (getSelectedGeneKind, population.filter(_.alive))
+    if (!isInHistoryMode) {
+      if (generationPhase.phase == REPRODUCTION_PHASE) {
+        fillPieCharts(population, getSelectedGeneKind)
+        displayedGenerationNumber = generationPhase.generationNumber
+        genText.text = s"Generazione $displayedGenerationNumber"
+        if (generationPhase.generationNumber > 0) backBtn.disable = false
+      } else fillCurrentPieChart(population, getSelectedGeneKind)
+    }
   }
 
   private def getSelectedGeneKind: GeneKind = pieChart.selectedToggle.value.asInstanceOf[jfxc.RadioButton].getText
 
   private def fillPieCharts(population: Population, gkSelected: GeneKind): Unit = {
-    startPie += (gkSelected, population)
-    currentPie += (gkSelected, population.filter(_.alive))
+    val p = if (population.nonEmpty) population else SimulationHistory.getActualGeneration.population
+    startPie += (gkSelected, p)
+    fillCurrentPieChart(p, gkSelected)
   }
 
-  def onRadioButtonClick(): Unit = fillPieCharts(Controller.population, getSelectedGeneKind)
+  private def fillCurrentPieChart(population: Population, gkSelected: GeneKind): Unit =
+    currentPie += (gkSelected, population.filter(_.alive))
 
-  override def resetChart(): Unit = this.onRadioButtonClick()
+  def onRadioButtonClick(): Unit = changeGeneration(displayedGenerationNumber)
+
+  override def resetChart(): Unit = {
+    isInHistoryMode = false
+    displayedGenerationNumber = 0
+    changeGeneration(displayedGenerationNumber)
+  }
+
+  private def changeGeneration(generationNumber: Int): Unit = {
+    val generation = SimulationHistory.history(SimulationHistory.getGenerationNumber - generationNumber)
+    displayedGenerationNumber = generationNumber
+    genText.text = s"Generazione $displayedGenerationNumber"
+    currentPie.title = "Fine Generazione"
+    fillPieCharts(if (generation.isEnded) generation.populationAtTheEnd else generation.population, getSelectedGeneKind)
+    if (displayedGenerationNumber == 0) backBtn.disable = true
+    if (displayedGenerationNumber == SimulationHistory.getGenerationNumber) {
+      isInHistoryMode = false
+      nextBtn.disable = true
+      currentPie.title = "Attualmente"
+
+    }
+  }
+
 }
 
 object PieChartConverters {
-  implicit def fromStringToGeneKind(geneName: String): GeneKind = Genes.values.filter(_.prettyName == geneName).head
+  implicit def fromStringToGeneKind(geneName: String): GeneKind = Genes.values.find(_.prettyName == geneName).get
 
   implicit def percentage(d: (Int, Int)): Double = (d._1.toDouble * 100 / d._2.toDouble).round.toDouble
 

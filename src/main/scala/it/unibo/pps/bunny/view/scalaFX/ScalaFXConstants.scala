@@ -56,23 +56,37 @@ object ScalaFXConstants {
   /** Constants for the tree visualizaiton */
   object GenealogicalTree {
 
-    /** Size of the it.unibo.pps.bunny picture in the tree */
+    /** Max size of the bunny picture in the tree */
     val MAX_TREE_BUNNY_SIZE: Int = 80
 
-    /**
-     * Proportion constants to resize the it.unibo.pps.bunny.view of the info size in the tree depending on the
-     * it.unibo.pps.bunny size
-     */
-    val TREE_INFO_PROPORTION: Int = 3
+    /** Min size of the bunny picture in the tree */
+    val MIN_TREE_BUNNY_SIZE: Int = 46
 
-    /** Proportion constants to resize the plus size in the tree depending on the it.unibo.pps.bunny size */
-    val TREE_PLUS_PROPORTION: Int = 2
+    /** Proportion constants to resize the view of the info size in the tree depending on the bunny size */
+    val BUNNY_INFO_PROPORTION: Int = 3
+
+    /** Proportion constants to resize the plus size in the tree depending on the bunny size */
+    val BUNNY_PLUS_PROPORTION: Int = 2
 
     /** Percentual constants to resize the font depending on the plus size */
-    val FONT_INFO_PERCENT: Double = 0.8
+    val FONT_INFO_PERCENT: Double = 0.7
 
     /** The padding between the it.unibo.pps.bunny and its alleles */
     val BUNNY_ALLELE_PADDING = 3
+  }
+
+  object PopulationChart {
+
+    val AXIS_LOWER_BOUND: Int = 0
+
+    val X_AXIS_UPPER_BOUND: Int = 6
+
+    val Y_AXIS_UPPER_BOUND: Int = 30
+
+    val X_AXIS_TICK: Int = 1
+
+    val Y_AXIS_TICK: Int = 5
+
   }
 
   object Style {

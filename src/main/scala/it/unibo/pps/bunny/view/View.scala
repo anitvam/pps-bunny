@@ -20,12 +20,12 @@ trait View {
   def updateView(generationNumber: GenerationPhase, bunnies: Population): Unit
 
   /** Method that shows the end of the simulation to the user */
-  def showEnd(): Unit
+  def showEnd(isOverpopulation: Boolean): Unit
 
   /**
-   * Method that handle the click of a it.unibo.pps.bunny
+   * Method that handle the click of a bunny
    * @param bunny
-   *   the clicked it.unibo.pps.bunny
+   *   the clicked bunny
    */
   def handleBunnyClick(bunny: BunnyView): Unit
 }

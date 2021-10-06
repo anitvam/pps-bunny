@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/main/scala/it/unibo/pps/bunny/model/mutation/Mutation.scala
 package it.unibo.pps.bunny.model.mutation
+=======
+package model.world
+>>>>>>> develop:src/main/scala/model/world/Mutation.scala
 
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 

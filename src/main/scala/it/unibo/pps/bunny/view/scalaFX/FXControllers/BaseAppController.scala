@@ -1,12 +1,11 @@
 package it.unibo.pps.bunny.view.scalaFX.FXControllers
 
 import it.unibo.pps.bunny.controller.Controller
-import it.unibo.pps.bunny.engine.SimulationConstants.{ FOOD_PHASE, START_PHASE, WOLVES_PHASE }
+import it.unibo.pps.bunny.engine.SimulationConstants._
 import javafx.fxml.FXML
 import javafx.scene.{ layout => jfxs }
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.GenerationsUtils.GenerationPhase
-import it.unibo.pps.bunny.model.world.disturbingFactors.Factors
 import scalafx.Includes._
 import scalafx.scene.control.{ Button, Label }
 import scalafx.scene.layout.{ AnchorPane, Background }
@@ -17,8 +16,6 @@ import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT
 import it.unibo.pps.bunny.view.scalaFX.components.BunnyView
 import it.unibo.pps.bunny.view.scalaFX.components.charts.PopulationChart
 import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart
-import it.unibo.pps.bunny.view.scalaFX.utilities.EnvironmentImageUtils._
-import it.unibo.pps.bunny.view.scalaFX.utilities.SummerImage
 import it.unibo.pps.bunny.view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
 import it.unibo.pps.bunny.view.scalaFX.utilities._
 
@@ -55,6 +52,8 @@ sealed trait BaseAppControllerInterface {
    *   the current background
    */
   def changeBackgroundEnvironment(background: Background): Unit
+
+  def addSpeedUp(): Unit
 }
 
 @sfxml
@@ -66,7 +65,8 @@ class BaseAppController(
     @FXML private val factorChoicePane: AnchorPane,
     @FXML private val startButton: Button,
     @FXML private val generationLabel: Label,
-    @FXML private val chartChoicePane: AnchorPane
+    @FXML private val chartChoicePane: AnchorPane,
+    @FXML private val speedButton: Button
 ) extends BaseAppControllerInterface {
 
   private var bunnyViews: Seq[BunnyView] = Seq.empty
@@ -112,18 +112,22 @@ class BaseAppController(
   }
 
   def reset(): Unit = {
-    startButton.onAction = _ => {
+    speedButton.onAction = _ => {
       Controller.reset()
       this.resetSimulationPanel()
       selectedBunny = Option.empty
       proportionsChartController --> { _.resetChart() }
-      mutationsPanelController --> { _.resetMutationsPanel() }
+      mutationsPanelController --> { _.reset() }
       chartSelectionPanelController --> { _.reset() }
+      factorsPanelController --> { _.reset() }
       this.initializeView()
+      speedButton.onAction = _ => addSpeedUp()
+      speedButton.text = "2x"
+      speedButton.styleClass -= "restart-button"
       startSimulation()
     }
-    startButton.text = "RESTART"
-    startButton.setVisible(true)
+    speedButton.text = ""
+    speedButton.styleClass += "restart-button"
   }
 
   private def resetSimulationPanel(): Unit = {
@@ -160,7 +164,7 @@ class BaseAppController(
     bunnyViews = bunnyViews.filter(_.bunny.alive)
 
     // Bunny visualization inside simulationPane
-    if (generationPhase.phase == START_PHASE) {
+    if (generationPhase.phase == REPRODUCTION_PHASE) {
       val newBunnyViews = bunnies filter { _.age == 0 } map { BunnyView(_) }
       bunnyViews = bunnyViews ++ newBunnyViews
 
@@ -205,5 +209,14 @@ class BaseAppController(
   }
 
   override def changeBackgroundEnvironment(background: Background): Unit = simulationPane.background = background
+
+  def addSpeedUp(): Unit = {
+    Controller.incrementSimulationSpeed()
+    speedButton.text = speedButton.getText match {
+      case "1x" => "2x"
+      case "2x" => "4x"
+      case "4x" => "1x"
+    }
+  }
 
 }

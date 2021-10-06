@@ -2,9 +2,9 @@ package it.unibo.pps.bunny.engine
 
 import cats.effect.IO
 import it.unibo.pps.bunny.controller.Controller
-import it.unibo.pps.bunny.engine.SimulationHistory._
-import it.unibo.pps.bunny.model.world.disturbingFactors.FactorTypes._
+import it.unibo.pps.bunny.engine.SimulationHistory.{ getActualGeneration, getActualPopulation }
 import it.unibo.pps.bunny.model.world.GenerationsUtils.GenerationPhase
+import it.unibo.pps.bunny.model.world.disturbingFactors.FactorTypes._
 import it.unibo.pps.bunny.util.PimpScala.RichOption
 import it.unibo.pps.bunny.view.scalaFX.ScalaFXView
 
@@ -18,13 +18,15 @@ object Simulation {
 
   def applyTemperatureDamage: IO[Unit] = applyFactorDamage(UnfriendlyClimateFactorKind)
 
-  def updateView(generationPhase: GenerationPhase): IO[Unit] = {
+  def updateView(generationPhase: GenerationPhase): IO[Unit] =
     ScalaFXView.updateView(generationPhase, getActualPopulation)
+
+  def overpopulation(): IO[Unit] = {
+    Controller.showEnd(true)
   }
 
-  def showEnd(generationPhase: GenerationPhase): IO[Unit] = {
-    ScalaFXView.updateView(generationPhase, getActualPopulation)
-    Controller.showEnd()
+  def extinction(): IO[Unit] = {
+    Controller.showEnd(false)
   }
 
   def startNewGeneration: IO[Unit] = {

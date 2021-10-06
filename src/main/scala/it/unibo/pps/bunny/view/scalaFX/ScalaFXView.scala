@@ -39,20 +39,23 @@ object ScalaFXView extends View {
     baseAppController --> { _.updateView(bunnies, generationPhase) }
   }
 
-  override def showEnd(): Unit = {
-    val endStage = new Stage {
-      title = "Fine simulazione"
-      scene = new Scene(new AnchorPane {
-        children = new ImageView {
-          image = new Image("img/world.png")
-          fitHeight = PREFERRED_CHART_HEIGHT
-          preserveRatio = true
-        }
-      })
-      resizable = false
+  override def showEnd(isOverpopulation: Boolean): Unit = {
+    if (isOverpopulation) {
+      val endStage = new Stage {
+        title = "Fine simulazione"
+        scene = new Scene(new AnchorPane {
+          children = new ImageView {
+            image = new Image("img/world.png")
+            fitHeight = PREFERRED_CHART_HEIGHT
+            preserveRatio = true
+          }
+        })
+        resizable = false
+      }
+      endStage.show()
+    } else {
+      println("FINE CAUSATA DA ESTINZIONE")
     }
-    endStage.show()
-
     Platform.runLater { baseAppController --> { _.reset() } }
   }
 
