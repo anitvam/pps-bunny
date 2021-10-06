@@ -47,7 +47,7 @@ object SimulationConstants {
   /** Number of children for each couple of bunnies */
   val CHILDREN_FOR_EACH_COUPLE: Int = 4
 
-  /** Maximum number of generation which each it.unibo.pps.bunny can live */
+  /** Maximum number of generation which each bunny can live */
   val MAX_BUNNY_AGE: Int = 4
 
   /** Number of generations in a genealogical tree */

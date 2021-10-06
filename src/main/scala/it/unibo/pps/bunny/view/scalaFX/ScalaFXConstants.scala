@@ -71,7 +71,7 @@ object ScalaFXConstants {
     /** Percentual constants to resize the font depending on the plus size */
     val FONT_INFO_PERCENT: Double = 0.7
 
-    /** The padding between the it.unibo.pps.bunny and its alleles */
+    /** The padding between the bunny and its alleles */
     val BUNNY_ALLELE_PADDING = 3
   }
 
