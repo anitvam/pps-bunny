@@ -26,11 +26,10 @@ sealed trait FactorsPanelControllerInterface {
   /** Method to show the wolves phase in the principal panel */
   def showWolves(): Unit
 
-  /** Method to remove the wolves when the corresponding phase terminate */
-  def removeWolves(): Unit
-
-  /** Method that consent to be warned when wolves terminate their phase */
-  def notifyEndOfAnimationWolves(): Unit
+  /** Method to remove the wolf when the corresponding phase terminate
+   * @param wolfImage the image of the wolf to be removed from the panel
+   */
+  def removeWolf(wolfImage: ImageView): Unit
 }
 
 @sfxml
@@ -49,7 +48,6 @@ class FactorsPanelController(
 
   private var baseAppController: Option[BaseAppControllerInterface] = None
   private val wolvesView: Seq[WolfView] = (1 to WOLVES_NUMBER) map (_ => WolfView(Some(this)))
-  private var numberOfWolvesFinishAnimation: Int = 0
 
   private val factorsCheckBox: List[CheckBox] =
     List(wolfCheckBox, toughFoodCheckBox, highFoodCheckBox, limitedFoodCheckBox, hostileTemperatureCheckBox)
@@ -81,17 +79,7 @@ class FactorsPanelController(
     w.play()
   })
 
-  override def removeWolves(): Unit = {
-    numberOfWolvesFinishAnimation = 0
-    wolvesView foreach (w => {
-      baseAppController --> { b => b.simulationPane.children.remove(w.imageView) }
-    })
-  }
-
-  override def notifyEndOfAnimationWolves(): Unit = {
-    numberOfWolvesFinishAnimation += 1
-    if (numberOfWolvesFinishAnimation == WOLVES_NUMBER) removeWolves()
-  }
+  override def removeWolf(wolfImage: ImageView): Unit = baseAppController --> {b => b.simulationPane.children.remove(wolfImage)}
 
   def onWolfClick(): Unit = onFactorClick(wolfCheckBox, Wolves())
 

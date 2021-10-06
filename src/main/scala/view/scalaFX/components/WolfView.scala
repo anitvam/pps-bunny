@@ -1,6 +1,7 @@
 package view.scalaFX.components
 
 import engine.SimulationConstants.PhasesConstants.WOLVES_PHASE
+import controller.Controller
 import scalafx.animation.AnimationTimer
 import scalafx.scene.image.{ Image, ImageView }
 import view.scalaFX.FXControllers.FactorsPanelControllerInterface
@@ -55,7 +56,7 @@ object WolfView {
     private var lastTime = 0L
 
     private val timer: AnimationTimer = AnimationTimer(_ => {
-      if (lastTime <= WOLVES_PHASE * 1000) {
+      if (lastTime <= WOLVES_PHASE * 1000 * Controller.getCurrentSimulationSpeed()) {
         checkDirection(
           positionX + imageView.getFitWidth / 2 >= PREFERRED_SIMULATION_PANEL_WIDTH - PREFERRED_SIMULATION_PANEL_BORDER,
           positionX - imageView.getFitWidth / 2 < 0
@@ -74,8 +75,7 @@ object WolfView {
     override def stop(): Unit = {
       timer.stop()
       lastTime = 0L
-
-      factorsPanelController.get.notifyEndOfAnimationWolves()
+      factorsPanelController.get.removeWolf(imageView)
     }
 
   }
