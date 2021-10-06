@@ -12,6 +12,21 @@ delle mutazioni sia dei conigli che dell'ambiente circostante.
 
 La proposta si ispira al seguente gioco: https://phet.colorado.edu/en/simulation/natural-selection.
 
+### Genetica
+Il dominio dell'applicazione riguarda la genetica, perciò si è pensato di fornire una breve introduzione su tale argomento e sulla terminologia utilizzata nella relazione. 
+
+La genetica studia il genoma, formato da cromosomi e geni dai quali dipende il patrimonio genetico della prole che è composto dagli attributi trasmessi dai genitori e determinerà l'aspetto dei figli.  <br /> Ogni gene riguarda una caratteristica, che nell'ambito della riproduzione dei conigli può essere ad esempio il *colore della pelliccia* o la *forma delle orecchie*. Ogni gene è formato da due alleli ed ogni allele che può comparire in due forme, ad esempio per il *colore della pelliccia* possono essere la *pelliccia bianca* o la *pelliccia bruna*. Una delle due forme è dominante e l'altra recessiva, ciò significa che se compaiono entrambe per un certo gene quella dominante prevarrà, sarà visibile sul figlio e di conseguenza farà parte del suo *fenotipo*. <br /> Ogni figlio eredita dai genitori una coppia di alleli, uno dal padre ed uno dalla madre. Tale coppia sarà una delle combinazioni degli alleli dei genitori rappresentata nel  [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett), uno schema che per una qualsiasi coppia di genitori con certi alleli mostra le quattro combinazioni di alleli possibili per formare il gene del figlio. 
+
+#### Glossario
+* **Gene** - Una caratteristica dell'organismo, è composto da due alleli.
+* **Allele** - Componente del gene che può comparire in due forme, una dominante e un recessiva.
+* **Dominante** - Tipo di allele che, se presente, viene mostrato all'esterno.
+* **Recessivo** - Tipo di allele che viene mostrato solamente se non si trova insieme ad un allele di tipo dominante.
+* **Genotipo** - L'intero patrimonio genetico di un organismo.
+* **Fenotipo** - Le caratteristiche effettivamente mostrate dall'organismo.
+* **Omozigote** - Un gene che contiene due alleli dello stesso tipo, siano essi entrambi dominanti o entrambi recessivi.
+* **Eterozigote** - Un gene che contiene alleli di tipo diverso, uno dominante ed uno recessivo.
+
 ## Processo di sviluppo adottato
 Il processo di sviluppo adottato mette in pratica le metodologie previste dalla programmazione Agile, in particolare alcuni aspetti del framework **Scrum**:
 * prevedendo delle riunioni periodiche per organizzare il lavoro, lo Sprint Planning e la Sprint Review,
@@ -81,8 +96,6 @@ di ogni `pull request` è possibile visualizzare se i test passano o meno, mante
 Come libreria di testing è stata utilizzata [ScalaTest](https://www.scalatest.org/).
 
 ## Requisiti
-
-// mini-introduzione sulle regole della genetica utilizzate? (cos'è genotipo, fenotipo, dominante, recessivo, omozigote etc...)
 
 ### Requisiti Business 
 Di seguito sono riportati i requisiti individuati durante lo studio del dominio e le regole scelte per la sua rappresentazione.
