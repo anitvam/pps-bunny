@@ -10,6 +10,8 @@ object SimulationConstants {
   val TWO_PER_SPEED: Double = 0.5
 
   val FOUR_PER_SPEED: Double = 0.25
+  /** Double value associated to the deviation period to show the wolves in the gui */
+  val WOLVES_INSTANT_DEVIATION: Double = 0.15
 
   /** Maximum number of alive bunnies in the world */
   val MAX_ALIVE_BUNNIES: Int = 1000

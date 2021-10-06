@@ -2,16 +2,16 @@ package view.scalaFX.components
 
 import engine.SimulationConstants.PhasesConstants.WOLVES_PHASE
 import controller.Controller
+import engine.SimulationConstants.{WOLVES_INSTANT_DEVIATION}
 import scalafx.animation.AnimationTimer
-import scalafx.scene.image.{ Image, ImageView }
+import scalafx.scene.image.{Image, ImageView}
 import view.scalaFX.FXControllers.FactorsPanelControllerInterface
-import view.scalaFX.ScalaFXConstants.Wolf.{ PREFERRED_WOLF_PANEL_HEIGHT, WOLVES_MOVING_SPACE }
-import view.scalaFX.ScalaFXConstants.{
-  PANEL_SKY_ZONE, PREFERRED_SIMULATION_PANEL_BORDER, PREFERRED_SIMULATION_PANEL_WIDTH
-}
+import view.scalaFX.ScalaFXConstants.Wolf.{PREFERRED_WOLF_PANEL_HEIGHT, WOLVES_MOVING_SPACE}
+import view.scalaFX.ScalaFXConstants.{PANEL_SKY_ZONE, PREFERRED_SIMULATION_PANEL_BORDER, PREFERRED_SIMULATION_PANEL_WIDTH}
 import view.scalaFX.utilities.Direction
 import view.scalaFX.utilities.Direction._
 import util.PimpScala.RichOption
+
 import scala.language.postfixOps
 import scala.util.Random
 
@@ -56,7 +56,10 @@ object WolfView {
     private var lastTime = 0L
 
     private val timer: AnimationTimer = AnimationTimer(_ => {
-      if (lastTime <= WOLVES_PHASE * 1000 * Controller.getCurrentSimulationSpeed()) {
+      if (lastTime < WOLVES_INSTANT_DEVIATION * 1000 * Controller.getCurrentSimulationSpeed()) {
+
+      } else if (lastTime <= WOLVES_PHASE * 1000 * Controller.getCurrentSimulationSpeed()) {
+        imageView.visible = true
         checkDirection(
           positionX + imageView.getFitWidth / 2 >= PREFERRED_SIMULATION_PANEL_WIDTH - PREFERRED_SIMULATION_PANEL_BORDER,
           positionX - imageView.getFitWidth / 2 < 0
@@ -65,12 +68,14 @@ object WolfView {
           WOLVES_MOVING_SPACE
         )
         imageView.x = positionX
-        lastTime += 1
       } else stop()
-
+      lastTime += 1
     })
 
-    override def play(): Unit = timer.start()
+    override def play(): Unit = {
+      imageView.visible = false
+      timer.start()
+    }
 
     override def stop(): Unit = {
       timer.stop()
