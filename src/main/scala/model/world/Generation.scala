@@ -25,7 +25,7 @@ trait Generation {
 
   def populationAtTheEnd: Population
 
-  def populationAtTheEnd_=(population: Population)
+  def populationAtTheEnd_=(population: Population): Unit
 
   def isEnded: Boolean
 
