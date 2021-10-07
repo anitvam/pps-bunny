@@ -1,18 +1,18 @@
 package view.scalaFX.components.charts.pedigree
 
-import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
-import model.bunny.Tree.generateTree
+import model.bunny.Tree.{actualGenerations, generateTree}
 import model.bunny.{BinaryTree, Bunny, Node}
+import alice.tuprolog.Term
 import scalafx.geometry.Pos
 import scalafx.scene.image.ImageView
 import scalafx.scene.layout._
 import scalafx.scene.text.Text
 import util.PimpScala._
+import util.Scala2P._
 import view.scalaFX.ScalaFXConstants.GenealogicalTree._
 import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
 
 import scala.language.postfixOps
-import scala.math.{log10, min, pow}
 
 trait PedigreeChart {
 
@@ -27,6 +27,8 @@ trait PedigreeChart {
 }
 
 object PedigreeChart {
+  type IconSize = Int
+  type Generations = Int
 
   /** The size required for the bunny icons */
   var bunnyIconSize: Int = MAX_TREE_BUNNY_SIZE
@@ -56,37 +58,22 @@ object PedigreeChart {
    * the pedigree chart
    */
   def apply(bunny: Bunny, chartWidth: Int, chartHeight: Int): PedigreeChart = {
-    var tree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
-    bunnyIconSize = maxBunnyIconsSizeInPanel(chartWidth, chartHeight, tree)
-
-    // Cuts on generations number if the screen is not big enough
-    if (bunnyIconSize < MIN_TREE_BUNNY_SIZE) {
-      bunnyIconSize = MIN_TREE_BUNNY_SIZE
-      val maxGenerations = maxGenerationsInPanel(chartWidth, chartHeight)
-      tree = generateTree(maxGenerations, bunny)
-    }
-
-    PedigreeChartImpl(bunny, tree)
+    val dims = dimensions(chartWidth, chartHeight, actualGenerations(bunny))
+    bunnyIconSize = dims._1
+    val tree = generateTree(dims._2, bunny)
+    PedigreeChartImpl(bunny, tree )
   }
 
-  private def maxBunnyIconsSizeInPanel(chartWidth: Int, chartHeight: Int, tree: BinaryTree[Bunny]): Int = {
-    val maxBunnySizeForWidth: Int = ((chartWidth * BUNNY_PLUS_PROPORTION) /
-      (pow(BUNNY_PLUS_PROPORTION + 1, tree.generations - 1) - 1)).toInt
-    val maxBunnySizeForHeight: Int = maxHeight(chartHeight, tree.generations)
-
-    Seq(maxBunnySizeForHeight, maxBunnySizeForWidth, MAX_TREE_BUNNY_SIZE).min
+  private val dimensions: (Int, Int, Int) => (IconSize, Generations) = (chartWidth, chartHeight, treeGenerations) => {
+    val BunnySizeIndex = 8
+    val GenerationsIndex = 9
+    val engine: Term => Option[Term] = SingleSolutionPrologEngine("prolog/pedigree_dim.pl")
+    val goal: String = s"pedigree_dimensions($chartHeight, $chartWidth, $BUNNY_PLUS_PROPORTION, $BUNNY_INFO_PROPORTION," +
+      s"$FONT_INFO_PERCENT, $MAX_TREE_BUNNY_SIZE, $MIN_TREE_BUNNY_SIZE, $treeGenerations, BSF, G)"
+    val solution = engine(goal)
+    if (solution?) (extractTerm(solution.get, BunnySizeIndex), extractTerm(solution.get, GenerationsIndex))
+    else throw new PrologCalculationException
   }
-
-  private def maxGenerationsInPanel(chartWidth: Int, chartHeight: Int): Int = {
-    val maxGenerationsForWidth: Int =
-      (1 + log10(1 + (chartWidth + BUNNY_PLUS_PROPORTION) / bunnyIconSize) / log10(BUNNY_PLUS_PROPORTION + 1)).ceil.toInt
-    val maxGenerationsForHeight: Int = maxHeight(chartHeight, bunnyIconSize)
-
-    min(maxGenerationsForWidth, maxGenerationsForHeight)
-  }
-
-  private def maxHeight(height: Int, parameter: Int): Int = ((height * BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT) /
-    ((BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT + 1 + FONT_INFO_PERCENT) * parameter)).toInt
 
   /**
    * @param trees
@@ -100,19 +87,19 @@ object PedigreeChart {
     val row = new HBox {
       alignment = Pos.Center
       maxHeight = bunnyIconSize
-      children = spacingRegion
+      children = spacingRegion()
     }
 
     trees.foreach(tree => {
       if (tree ?) row.children += BunnyPedigreeView(tree.get.elem).pane
-      else row.children += emptyImageView
+      else row.children += emptyImageView()
 
       index += 1
       if (index < trees.size) {
-        row.children += spacingRegion
-        if (index % 2 == 1 && (tree ?)) row.children += plusView else row.children += emptyPlusView
+        row.children += spacingRegion()
+        if (index % 2 == 1 && (tree ?)) row.children += plusView() else row.children += emptyPlusView()
       }
-      row.children += spacingRegion
+      row.children += spacingRegion()
 
       if ((tree ?) && tree.get.isInstanceOf[Node[Bunny]]) {
         nextTrees ++= Seq(
@@ -127,24 +114,24 @@ object PedigreeChart {
   }
 
   /** Creates a spacing region to justify the rows of bunnies */
-  def spacingRegion: Region = new Region {
+  val spacingRegion: () => Region = () => new Region {
     hgrow = Priority.Always
   }
 
   /** Creates an empty ImageView with the same size of the bunny, for the bunnies with no ancient relatives */
-  def emptyImageView: ImageView = new ImageView {
+  private val emptyImageView: () => ImageView = () => new ImageView {
     fitWidth = bunnyIconSize
   }
 
   /** Creates an empty Text with the same size of the plus, for the bunnies with no ancient relatives */
-  def emptyPlusView: Text = {
-    val txt = plusView
+  private val emptyPlusView: () => Text = () => {
+    val txt = plusView()
     txt setVisible false
     txt
   }
 
   /** Creates a view of the plus between couples of bunnies */
-  def plusView: Text = new Text {
+  private val plusView: () => Text = () => new Text {
     text = "+"
     style = "-fx-font-weight: bold; -fx-font-size: " + bunnyIconSize / BUNNY_PLUS_PROPORTION + ";"
     hgrow = Priority.Always
@@ -162,7 +149,7 @@ object PedigreeChart {
     }
 
     override val chartPane: VBox = new VBox {
-      children = spacingRegion +: rows.reverse :+ spacingRegion
+      children = spacingRegion() +: rows.reverse :+ spacingRegion()
       alignment = Pos.Center
     }
 

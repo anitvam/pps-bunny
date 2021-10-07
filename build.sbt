@@ -42,5 +42,8 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % "test"
 libraryDependencies += "org.typelevel" %% "cats-core" % "2.0.0"
 libraryDependencies += "org.typelevel" %% "cats-effect" % "2.2.0"
 
+//Add Prolog dependencies
+libraryDependencies += "it.unibo.alice.tuprolog" % "tuprolog" % "3.3.0"
+
 // Fork a new JVM for 'run' and 'test:run', to avoid JavaFX double initialization problems
 fork := true
