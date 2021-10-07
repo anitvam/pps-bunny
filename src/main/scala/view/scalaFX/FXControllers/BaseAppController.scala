@@ -3,25 +3,26 @@ package view.scalaFX.FXControllers
 import controller.Controller
 import engine.SimulationConstants.PhasesConstants._
 import engine.SimulationHistory.getGenerationNumber
+
 import javafx.fxml.FXML
 import javafx.scene.{ layout => jfxs }
 import model.world.Generation.Population
-import model.world.GenerationsUtils.{FoodPhase, GenerationPhase, HighTemperaturePhase, ReproductionPhase, WolvesPhase}
+import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
-import scalafx.scene.control.{Button, Label}
-import scalafx.scene.layout.{AnchorPane, Background}
+import scalafx.scene.control.{ Button, Label }
+import scalafx.scene.layout.{ AnchorPane, Background }
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
-import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
+import view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH }
 import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.utilities.EnvironmentImageUtils._
-import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
+import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
 import view.scalaFX.utilities._
 
-import scala.language.{implicitConversions, postfixOps}
+import scala.language.{ implicitConversions, postfixOps }
 
 sealed trait BaseAppControllerInterface {
 
@@ -108,7 +109,7 @@ class BaseAppController(
     setFitParent(proportionsChartPane.get)
     proportionsChartController --> { _.initialize() }
 
-    clock.children = clockController.initialize()
+    clock.children = clockController.initialize
     this.initializeView()
   }
 
@@ -117,8 +118,7 @@ class BaseAppController(
     factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
     populationChart = Some(PopulationChart(PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH))
     simulationPane.background = SummerImage()
-    populationChart =
-      Some(PopulationChart(PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH))
+    populationChart = Some(PopulationChart(PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH))
     showPopulationChart()
   }
 
@@ -196,17 +196,18 @@ class BaseAppController(
       // Start movement of the new bunnies
       newBunnyViews foreach { _.play() }
 
-      updateClock(ReproductionPhase(getGenerationNumber).name)
+      updateClock("REPRODUCTION")
     }
 
     if (generationPhase.phase == WOLVES_PHASE) {
-      updateClock(WolvesPhase(getGenerationNumber).name)
+      updateClock("WOLVES")
       factorsPanelController --> { _.showWolvesEating() }
     }
 
-    if(generationPhase.phase == FOOD_PHASE) updateClock(FoodPhase(getGenerationNumber).name)
+    if (generationPhase.phase == FOOD_PHASE) updateClock("FOOD")
 
-    if(generationPhase.phase == TEMPERATURE_PHASE) updateClock(HighTemperaturePhase(getGenerationNumber).name)
+    if (generationPhase.phase == TEMPERATURE_PHASE)
+      updateClock("HIGH_TEMPERATURE")
 
   }
 
@@ -246,10 +247,11 @@ class BaseAppController(
   /**
    * Method that update clock's hand corresponding to the current phase and show the name of the current phase
    * @param label
-   *    the name of the current phase
+   *   the name of the current phase
    */
   private def updateClock(label: String): Unit = {
     clockController.rotateClockHand()
     clockController.updateClockLabel(label)
   }
+
 }

@@ -70,7 +70,7 @@ object GenerationsUtils {
     /** @return the phase of the generation */
     def phase: Double
 
-    /** @return after how many milliseconds from the start of generation there is the phase istant */
+    /** @return after how many milliseconds from the start of generation there is the phase instant */
     def instant: Double
 
     /** @return the name of the generationsPhase */
@@ -105,6 +105,5 @@ object GenerationsUtils {
       override val instant: Double = TEMP_INSTANT,
       override val name: String = "Temperature"
   ) extends GenerationPhase
-
 
 }

@@ -3,7 +3,7 @@ package view.scalaFX.FXControllers
 import engine.SimulationConstants.NUMBER_OF_PHASE
 import scalafx.scene.Group
 import scalafx.scene.control.Label
-import scalafx.scene.shape.{ Circle, Line }
+import scalafx.scene.shape.{Circle, Line}
 import scalafx.scene.transform.Rotate
 
 trait ClockControllerInterface {
