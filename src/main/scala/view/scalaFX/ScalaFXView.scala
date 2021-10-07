@@ -21,14 +21,17 @@ import view.scalaFX.utilities.FxmlUtils
 
 object ScalaFXView extends View {
   var baseAppController: Option[BaseAppControllerInterface] = Option.empty
+  var OVERPOPULATION_END_IMAGE = new Image("img/world.png")
+  var EXTINCTION_END_IMAGE = new Image("img/extinction.png")
+  var GENERATIONS_OVERLOAD_END_IMAGE = new Image("img/generations_overload.png")
 
-  private val endStage: Stage = new Stage {
+  private def endStage(showingImage: Image): Stage = new Stage {
     title = "Fine simulazione"
 
     scene = new Scene(new AnchorPane {
 
       children = new ImageView {
-        image = new Image("img/world.png")
+        image = showingImage
         fitHeight = PREFERRED_CHART_HEIGHT
         preserveRatio = true
       }
@@ -58,9 +61,9 @@ object ScalaFXView extends View {
 
   override def showEnd(endType: SimulationEndType): Unit = {
     endType match {
-      case Overpopulation      => endStage.show()
-      case Extinction          => println("FINE CAUSATA DA ESTINZIONE")
-      case GenerationsOverload => println("RAGGIUNTO NUMERO MASSIMO DI GENERAZIONI")
+      case Overpopulation      => endStage(OVERPOPULATION_END_IMAGE).show()
+      case Extinction          => endStage(EXTINCTION_END_IMAGE).show()
+      case GenerationsOverload => endStage(GENERATIONS_OVERLOAD_END_IMAGE).show()
     }
     Platform.runLater { baseAppController --> { _.reset() } }
   }
