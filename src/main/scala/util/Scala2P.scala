@@ -1,6 +1,7 @@
 package util
 
 import alice.tuprolog.{Prolog, Struct, Term, Theory}
+import scala.language.implicitConversions
 
 import scala.io.Source
 
@@ -13,7 +14,7 @@ object Scala2P {
   def SingleSolutionPrologEngine(resourcePath: String): Term => Option[Term] = {
      goal => {
        val isComment: String => Boolean = _(0) == "%"(0)
-       val clauses = Source.fromResource(resourcePath).getLines.filter(l => l.nonEmpty && !isComment(l)).mkString(" ")
+       val clauses = Source.fromResource(resourcePath).getLines().filter(l => l.nonEmpty && !isComment(l)).mkString(" ")
        val engine = new Prolog
        engine.setTheory(new Theory(clauses))
        val solution = engine.solve(goal)
