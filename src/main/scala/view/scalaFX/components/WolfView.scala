@@ -57,7 +57,7 @@ object WolfView {
 
     private val timer: AnimationTimer = AnimationTimer(_ => {
       if (lastTime < WOLVES_INSTANT_DEVIATION * 1000 * Controller.getCurrentSimulationSpeed()) {
-
+        imageView.visible = false
       } else if (lastTime <= WOLVES_PHASE * 1000 * Controller.getCurrentSimulationSpeed()) {
         imageView.visible = true
         checkDirection(
