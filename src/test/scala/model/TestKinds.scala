@@ -1,8 +1,8 @@
 package model
 
-import model.genome.KindsUtils.{ resetDominance, setAlleleDominance }
-import model.genome.{ Alleles, Genes }
-import org.scalatest.{ FlatSpec, Matchers }
+import model.genome.KindsUtils.{resetDominance, setAlleleDominance}
+import model.genome.{Alleles, Genes}
+import org.scalatest.{FlatSpec, Matchers}
 
 class TestKinds extends FlatSpec with Matchers {
 
