@@ -2,9 +2,9 @@ package model
 
 import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
 import model.Bunny.generateRandomFirstBunny
-import model.Tree.generateTree
+import model.Tree.{generateTree, treeToNode}
 import model.world.Reproduction.nextGenerationBunnies
-import org.scalatest.{ FlatSpec, Matchers }
+import org.scalatest.{FlatSpec, Matchers}
 import util.PimpScala.RichOption
 
 import scala.language.postfixOps
@@ -25,8 +25,8 @@ class TestTree extends FlatSpec with Matchers {
   val tree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunnyWithParents)
 
   it should "contain his parents, if he has them" in {
-    assert(tree.asInstanceOf[Node[Bunny]].momTree.elem == bunnyWithParents.mom.get)
-    assert(tree.asInstanceOf[Node[Bunny]].dadTree.elem == bunnyWithParents.dad.get)
+    assert(tree.momTree.elem == bunnyWithParents.mom.get)
+    assert(tree.dadTree.elem == bunnyWithParents.dad.get)
     assert(tree.generations == 2)
   }
 
@@ -43,15 +43,15 @@ class TestTree extends FlatSpec with Matchers {
   }
 
   it should "contain the right bunnies as parents of the first bunny " in {
-    assert(fullTree.asInstanceOf[Node[Bunny]].momTree.elem == bunny.mom.get)
-    assert(fullTree.asInstanceOf[Node[Bunny]].dadTree.elem == bunny.dad.get)
+    assert(fullTree.momTree.elem == bunny.mom.get)
+    assert(fullTree.dadTree.elem == bunny.dad.get)
   }
 
   it should "contain the right bunnies in all the generations" in {
     var bunniesToCheck: Seq[(Bunny, BinaryTree[Bunny])] = Seq((bunny, fullTree))
     bunniesToCheck.foreach(bt => {
-      val momTree = bt._2.asInstanceOf[Node[Bunny]].momTree
-      val dadTree = bt._2.asInstanceOf[Node[Bunny]].dadTree
+      val momTree = bt._2.momTree
+      val dadTree = bt._2.dadTree
       val mom = bt._1.mom.get
       val dad = bt._1.dad.get
       assert(momTree.elem == mom)
