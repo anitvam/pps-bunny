@@ -3,7 +3,7 @@ package model.world
 import model.genome.KindsUtils
 import model.world.Environment.Mutations
 import model.world.disturbingFactors.FactorTypes._
-import model.world.disturbingFactors.{Factor, Factors, FoodFactor}
+import model.world.disturbingFactors.{ Factor, Factors, FoodFactor }
 import util.PimpScala._
 
 /** Environment of a Generation */
@@ -79,7 +79,7 @@ object Environment {
 trait Climate
 
 /** Summer Climate */
-case class Summer() extends Climate
+case object Summer extends Climate
 
 /** Winter Climate */
-case class Winter() extends Climate
+case object Winter extends Climate

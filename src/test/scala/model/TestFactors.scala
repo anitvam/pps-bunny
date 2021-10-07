@@ -31,7 +31,7 @@ class TestFactors extends FlatSpec with Matchers {
     val unfriendlyClimateFactor = UnfriendlyClimate()
     val splitBunnies = splitBunniesByGene(Genes.FUR_LENGTH, bunnies)
 
-    unfriendlyClimateFactor.applyDamage(bunnies, Summer())
+    unfriendlyClimateFactor.applyDamage(bunnies, Summer)
     assert(
       bunnies.count(!_.alive) == (splitBunnies._2.length * UNFRIENDLY_CLIMATE_DAMAGE).round.toInt
     )
@@ -42,7 +42,7 @@ class TestFactors extends FlatSpec with Matchers {
     val factor = UnfriendlyClimate()
     val splitBunnies = splitBunniesByGene(Genes.FUR_LENGTH, bunnies)
 
-    factor.applyDamage(bunnies, Winter())
+    factor.applyDamage(bunnies, Winter)
     assert(
       bunnies.count(!_.alive) == (splitBunnies._1.length * UNFRIENDLY_CLIMATE_DAMAGE).round.toInt
     )
@@ -58,7 +58,7 @@ class TestFactors extends FlatSpec with Matchers {
     val otherAffected =
       ((bunnies.length - lowAffectedBunnies.length - highAffectedBunnies.length) * WOLF_MEDIUM_DAMAGE).round.toInt
 
-    factor.applyDamage(bunnies, Summer())
+    factor.applyDamage(bunnies, Summer)
     assert(bunnies.count(!_.alive) == lowAffectedNumber + highAffectedNumber + otherAffected)
   }
 
@@ -72,7 +72,7 @@ class TestFactors extends FlatSpec with Matchers {
     val otherAffected =
       ((bunnies.length - lowAffectedBunnies.length - highAffectedBunnies.length) * WOLF_MEDIUM_DAMAGE).round.toInt
 
-    factor.applyDamage(bunnies, Winter())
+    factor.applyDamage(bunnies, Winter)
     assert(bunnies.count(!_.alive) == lowAffectedNumber + highAffectedNumber + otherAffected)
   }
 
@@ -84,7 +84,7 @@ class TestFactors extends FlatSpec with Matchers {
 
     assert(
       factor
-        .applyDamage(bunnies, Winter())
+        .applyDamage(bunnies, Winter)
         .count(!_.alive) == (affectedBunnies.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
     )
   }
@@ -97,7 +97,7 @@ class TestFactors extends FlatSpec with Matchers {
 
     assert(
       factor
-        .applyDamage(bunnies, Summer())
+        .applyDamage(bunnies, Summer)
         .count(!_.alive) == (affectedBunnies.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
     )
   }
@@ -107,7 +107,7 @@ class TestFactors extends FlatSpec with Matchers {
     val factor = LimitedFoodFactor()
 
     assert(
-      factor.applyDamage(bunnies, Winter()).count(!_.alive) == (bunnies.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
+      factor.applyDamage(bunnies, Winter).count(!_.alive) == (bunnies.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
     )
   }
 
@@ -117,7 +117,7 @@ class TestFactors extends FlatSpec with Matchers {
 
     val affectedNumber = (bunnies.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
 
-    factor.applyDamage(bunnies, Summer())
+    factor.applyDamage(bunnies, Summer)
     assert(bunnies.count(!_.alive) == affectedNumber)
   }
 
@@ -128,7 +128,7 @@ class TestFactors extends FlatSpec with Matchers {
     val affectedBunnies = splitBunniesByGene(Genes.TEETH, bunnies)._1
     val affectedNumber = (affectedBunnies.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
 
-    factor.applyDamage(bunnies, Winter())
+    factor.applyDamage(bunnies, Winter)
     assert(bunnies.count(!_.alive) == affectedNumber)
   }
 
@@ -139,7 +139,7 @@ class TestFactors extends FlatSpec with Matchers {
     val affectedBunnies = splitBunniesByGene(Genes.TEETH, bunnies)._1
     val affectedNumber = (affectedBunnies.length * FOOD_FACTOR_NORMAL_DAMAGE).round.toInt
 
-    factor.applyDamage(bunnies, Summer())
+    factor.applyDamage(bunnies, Summer)
     assert(bunnies.count(!_.alive) == affectedNumber)
   }
 
@@ -154,14 +154,14 @@ class TestFactors extends FlatSpec with Matchers {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
     val factor = LimitedHighFoodFactor()
 
-    assert(factor.applyDamage(bunnies, Summer()).count(!_.alive) == countHighLimitedFoodDamage(bunnies))
+    assert(factor.applyDamage(bunnies, Summer).count(!_.alive) == countHighLimitedFoodDamage(bunnies))
   }
 
   it should "kill some bunnies on Winter" in {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
     val factor = LimitedHighFoodFactor()
 
-    assert(factor.applyDamage(bunnies, Summer()).count(!_.alive) == countHighLimitedFoodDamage(bunnies))
+    assert(factor.applyDamage(bunnies, Summer).count(!_.alive) == countHighLimitedFoodDamage(bunnies))
   }
 
   private def countHighToughFoodDamage(bunnies: Population): Int = {
@@ -176,14 +176,14 @@ class TestFactors extends FlatSpec with Matchers {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
     val factor = HighToughFoodFactor()
 
-    assert(factor.applyDamage(bunnies, Summer()).count(!_.alive) == countHighToughFoodDamage(bunnies))
+    assert(factor.applyDamage(bunnies, Summer).count(!_.alive) == countHighToughFoodDamage(bunnies))
   }
 
   it should "kill some bunnies on Winter" in {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
     val factor = HighToughFoodFactor()
 
-    assert(factor.applyDamage(bunnies, Winter()).count(!_.alive) == countHighToughFoodDamage(bunnies))
+    assert(factor.applyDamage(bunnies, Winter).count(!_.alive) == countHighToughFoodDamage(bunnies))
   }
 
   private def countLimitedToughFoodDamage(bunnies: Population): Int = {
@@ -197,14 +197,14 @@ class TestFactors extends FlatSpec with Matchers {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
     val factor = LimitedToughFoodFactor()
 
-    assert(factor.applyDamage(bunnies, Summer()).count(!_.alive) == countLimitedToughFoodDamage(bunnies))
+    assert(factor.applyDamage(bunnies, Summer).count(!_.alive) == countLimitedToughFoodDamage(bunnies))
   }
 
   it should "kill some bunnies on Winter" in {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
     val factor = LimitedToughFoodFactor()
 
-    assert(factor.applyDamage(bunnies, Winter()).count(!_.alive) == countLimitedToughFoodDamage(bunnies))
+    assert(factor.applyDamage(bunnies, Winter).count(!_.alive) == countLimitedToughFoodDamage(bunnies))
   }
 
   private def countLimitedHighToughFoodDamage(bunnies: Population): Int = {
@@ -221,14 +221,14 @@ class TestFactors extends FlatSpec with Matchers {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
     val factor = LimitedHighToughFoodFactor()
 
-    assert(factor.applyDamage(bunnies, Summer()).count(!_.alive) == countLimitedHighToughFoodDamage(bunnies))
+    assert(factor.applyDamage(bunnies, Summer).count(!_.alive) == countLimitedHighToughFoodDamage(bunnies))
   }
 
   it should "kill some bunnies on Winter" in {
     val bunnies: List[Bunny] = List.fill(50)(generateRandomFirstBunny)
     val factor = LimitedHighToughFoodFactor()
 
-    assert(factor.applyDamage(bunnies, Winter()).count(!_.alive) == countLimitedHighToughFoodDamage(bunnies))
+    assert(factor.applyDamage(bunnies, Winter).count(!_.alive) == countLimitedHighToughFoodDamage(bunnies))
   }
 
 }

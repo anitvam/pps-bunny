@@ -71,7 +71,7 @@ object EnvironmentImageUtils {
   type JavaBackground = javafx.scene.layout.Background
 
   implicit def actualClimate(background: ObjectProperty[JavaBackground]): Climate =
-    if (background.value.getImages.get(0).getImage.getUrl.contains("cold")) Winter() else Summer()
+    if (background.value.getImages.get(0).getImage.getUrl.contains("cold")) Winter else Summer
 
   implicit def getBackgroundConfiguration(environment: ClimateImage): Background = new Background(
     Array(
@@ -95,8 +95,8 @@ object EnvironmentImageUtils {
   implicit def getBackgroundCorrespondingToClimate(
       climateImages: (ClimateImage, ClimateImage)
   ): Background = SimulationHistory.getActualGeneration.environment.climate match {
-    case Winter() => climateImages._2
-    case Summer() => climateImages._1
+    case Winter => climateImages._2
+    case Summer => climateImages._1
   }
 
 }

@@ -13,7 +13,7 @@ object SimulationHistory {
 
   type History = List[Generation]
 
-  val historyInit: () => History = () => List(Generation(Environment(Summer(), Factors()), generateInitialCouple.toSeq))
+  val historyInit: () => History = () => List(Generation(Environment(Summer, Factors()), generateInitialCouple.toSeq))
 
   var history: History = historyInit()
 

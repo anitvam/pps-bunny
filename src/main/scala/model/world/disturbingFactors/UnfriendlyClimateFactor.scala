@@ -30,7 +30,7 @@ abstract class ClimateFactor() extends BasicFactor {
   protected def winterAction(bunnies: Population): Population
 
   override def applyDamage(bunnies: Population, climate: Climate): Population =
-    if (climate == Summer()) summerAction(bunnies) else winterAction(bunnies)
+    if (climate == Summer) summerAction(bunnies) else winterAction(bunnies)
 
 }
 

@@ -1,5 +1,6 @@
 package view
 
+import engine.SimulationEndType
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import view.scalaFX.components.BunnyView
@@ -20,7 +21,7 @@ trait View {
   def updateView(generationNumber: GenerationPhase, bunnies: Population): Unit
 
   /** Method that shows the end of the simulation to the user */
-  def showEnd(isOverpopulation: Boolean): Unit
+  def showEnd(endType: SimulationEndType): Unit
 
   /**
    * Method that handle the click of a bunny
