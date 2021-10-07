@@ -36,7 +36,7 @@ object GenerationTimer {
    * @param from
    *   the lower bound for the sleeping time interval
    * @param to
-   *   the upper bound of the time interval until when sleep.
+   *   the upper bound for the sleeping time interval
    * @return
    *   the IO monad describing the sleeping operation.
    */
