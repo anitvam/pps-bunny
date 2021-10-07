@@ -34,7 +34,7 @@ object GenerationTimer {
    * specified.
    *
    * @param from
-   *   the lower bound for of the time interval to be slept
+   *   the lower bound for the sleeping time interval
    * @param to
    *   the upper bound of the time interval until when sleep.
    * @return
