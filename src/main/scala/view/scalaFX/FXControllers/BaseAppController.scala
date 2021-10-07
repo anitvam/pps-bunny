@@ -2,27 +2,26 @@ package view.scalaFX.FXControllers
 
 import controller.Controller
 import engine.SimulationConstants.PhasesConstants._
-import engine.SimulationHistory.getGenerationNumber
 
 import javafx.fxml.FXML
-import javafx.scene.{ layout => jfxs }
+import javafx.scene.{layout => jfxs}
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
-import scalafx.scene.control.{ Button, Label }
-import scalafx.scene.layout.{ AnchorPane, Background }
+import scalafx.scene.control.{Button, Label}
+import scalafx.scene.layout.{AnchorPane, Background}
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
-import view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH }
-import view.scalaFX.components.BunnyView
+import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
+import view.scalaFX.components.{BunnyView, Clock}
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.utilities.EnvironmentImageUtils._
-import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
+import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
 import view.scalaFX.utilities._
 
-import scala.language.{ implicitConversions, postfixOps }
+import scala.language.{implicitConversions, postfixOps}
 
 sealed trait BaseAppControllerInterface {
 
@@ -84,7 +83,7 @@ class BaseAppController(
   private var proportionsChartController: Option[ChartController] = Option.empty
   private var proportionsChartPane: Option[AnchorPane] = Option.empty
   private var populationChart: Option[PopulationChart] = Option.empty
-  private val clockController: ClockControllerInterface = new ClockController()
+  private val clockController: Clock = Clock()
 
   override def initialize(): Unit = {
 
