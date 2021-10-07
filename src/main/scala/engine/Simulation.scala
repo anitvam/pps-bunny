@@ -3,6 +3,7 @@ package engine
 import cats.effect.IO
 import controller.Controller
 import engine.SimulationConstants.REPRODUCTION_PHASE
+import engine.SimulationEndType.{ Extinction, GenerationsOverload, Overpopulation }
 import engine.SimulationHistory._
 import model.world.disturbingFactors.FactorTypes._
 import model.world.GenerationsUtils.GenerationPhase
@@ -23,11 +24,15 @@ object Simulation {
     ScalaFXView.updateView(generationPhase, getActualPopulation)
 
   def overpopulation(): IO[Unit] = {
-    Controller.showEnd(true)
+    Controller.showEnd(Overpopulation())
   }
 
   def extinction(): IO[Unit] = {
-    Controller.showEnd(false)
+    Controller.showEnd(Extinction())
+  }
+
+  def end(): IO[Unit] = {
+    Controller.showEnd(GenerationsOverload())
   }
 
   def startNewGeneration: IO[Unit] = {
@@ -41,4 +46,12 @@ object Simulation {
       getActualGeneration.population = f applyDamage (getActualPopulation, getActualGeneration.environment.climate)
     }
 
+}
+
+trait SimulationEndType
+
+object SimulationEndType {
+  case class Overpopulation() extends SimulationEndType
+  case class Extinction() extends SimulationEndType
+  case class GenerationsOverload() extends SimulationEndType
 }

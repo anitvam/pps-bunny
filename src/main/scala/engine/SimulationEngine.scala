@@ -38,9 +38,10 @@ object SimulationEngine {
       _ <- generationPhase(HighTemperaturePhase(getGenerationNumber), applyTemperatureDamage)
       _ <- generationPhase(ReproductionPhase(getGenerationNumber + 1), startNewGeneration)
       _ <-
-        if (existNextGeneration) generationLoop()
+        if (getBunniesNumber < MIN_ALIVE_BUNNIES) extinction()
         else if (getBunniesNumber > MAX_ALIVE_BUNNIES) overpopulation()
-        else extinction()
+        else if (getGenerationNumber >= MAX_GENERATIONS_NUMBER) end()
+        else generationLoop()
     } yield ()
   }
 

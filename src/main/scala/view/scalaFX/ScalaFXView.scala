@@ -2,6 +2,8 @@ package view.scalaFX
 
 import controller.ScalaFXLauncher.stage
 import engine.SimulationConstants.REPRODUCTION_PHASE
+import engine.SimulationEndType
+import engine.SimulationEndType.{ Extinction, GenerationsOverload, Overpopulation }
 import javafx.{ scene => jfxs }
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
@@ -22,6 +24,22 @@ import view.scalaFX.utilities.FxmlUtils
 object ScalaFXView extends View {
   var baseAppController: Option[BaseAppControllerInterface] = Option.empty
 
+  private val endStage: Stage = new Stage {
+    title = "Fine simulazione"
+
+    scene = new Scene(new AnchorPane {
+
+      children = new ImageView {
+        image = new Image("img/world.png")
+        fitHeight = PREFERRED_CHART_HEIGHT
+        preserveRatio = true
+      }
+
+    })
+
+    resizable = false
+  }
+
   def start(): Unit = {
     val loadedRootPanel = FxmlUtils.loadFXMLResource[jfxs.Parent]("/fxml/baseApp.fxml")
     baseAppController = Some(loadedRootPanel._2.getController[BaseAppControllerInterface])
@@ -40,22 +58,11 @@ object ScalaFXView extends View {
     baseAppController --> { _.updateView(bunnies, generationPhase) }
   }
 
-  override def showEnd(isOverpopulation: Boolean): Unit = {
-    if (isOverpopulation) {
-      val endStage = new Stage {
-        title = "Fine simulazione"
-        scene = new Scene(new AnchorPane {
-          children = new ImageView {
-            image = new Image("img/world.png")
-            fitHeight = PREFERRED_CHART_HEIGHT
-            preserveRatio = true
-          }
-        })
-        resizable = false
-      }
-      endStage.show()
-    } else {
-      println("FINE CAUSATA DA ESTINZIONE")
+  override def showEnd(endType: SimulationEndType): Unit = {
+    endType match {
+      case Overpopulation()      => endStage.show()
+      case Extinction()          => println("FINE CAUSATA DA ESTINZIONE")
+      case GenerationsOverload() => println("RAGGIUNTO NUMERO MASSIMO DI GENERAZIONI")
     }
     Platform.runLater { baseAppController --> { _.reset() } }
   }
