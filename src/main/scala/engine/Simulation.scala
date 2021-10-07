@@ -2,8 +2,6 @@ package engine
 
 import cats.effect.IO
 import controller.Controller
-import engine.SimulationConstants.REPRODUCTION_PHASE
-import engine.SimulationEndType.{ Extinction, GenerationsOverload, Overpopulation }
 import engine.SimulationHistory._
 import model.world.disturbingFactors.FactorTypes._
 import model.world.GenerationsUtils.GenerationPhase
@@ -24,15 +22,15 @@ object Simulation {
     ScalaFXView.updateView(generationPhase, getActualPopulation)
 
   def overpopulation(): IO[Unit] = {
-    Controller.showEnd(Overpopulation())
+    Controller.showEnd(Overpopulation)
   }
 
   def extinction(): IO[Unit] = {
-    Controller.showEnd(Extinction())
+    Controller.showEnd(Extinction)
   }
 
   def end(): IO[Unit] = {
-    Controller.showEnd(GenerationsOverload())
+    Controller.showEnd(GenerationsOverload)
   }
 
   def startNewGeneration: IO[Unit] = {
@@ -48,10 +46,7 @@ object Simulation {
 
 }
 
-trait SimulationEndType
-
-object SimulationEndType {
-  case class Overpopulation() extends SimulationEndType
-  case class Extinction() extends SimulationEndType
-  case class GenerationsOverload() extends SimulationEndType
-}
+sealed trait SimulationEndType
+case object Overpopulation extends SimulationEndType
+case object Extinction extends SimulationEndType
+case object GenerationsOverload extends SimulationEndType

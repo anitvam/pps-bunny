@@ -1,9 +1,7 @@
 package view.scalaFX
 
 import controller.ScalaFXLauncher.stage
-import engine.SimulationConstants.REPRODUCTION_PHASE
-import engine.SimulationEndType
-import engine.SimulationEndType.{ Extinction, GenerationsOverload, Overpopulation }
+import engine._
 import javafx.{ scene => jfxs }
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
@@ -60,9 +58,9 @@ object ScalaFXView extends View {
 
   override def showEnd(endType: SimulationEndType): Unit = {
     endType match {
-      case Overpopulation()      => endStage.show()
-      case Extinction()          => println("FINE CAUSATA DA ESTINZIONE")
-      case GenerationsOverload() => println("RAGGIUNTO NUMERO MASSIMO DI GENERAZIONI")
+      case Overpopulation      => endStage.show()
+      case Extinction          => println("FINE CAUSATA DA ESTINZIONE")
+      case GenerationsOverload => println("RAGGIUNTO NUMERO MASSIMO DI GENERAZIONI")
     }
     Platform.runLater { baseAppController --> { _.reset() } }
   }
