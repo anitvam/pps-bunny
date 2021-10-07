@@ -3,9 +3,8 @@ package controller
 import engine.SimulationEngine.{ resetEngine, simulationLoop }
 import engine.SimulationHistory.resetHistory
 import model.genome.KindsUtils.resetDominance
-import engine.{ SimulationEngine, SimulationHistory }
+import engine.{ SimulationEndType, SimulationEngine, SimulationHistory }
 import model.world.Generation.Population
-import model.world.GenerationsUtils.GenerationPhase
 import model.world.disturbingFactors.Factor
 import model.world.{ Mutation, Summer, Winter }
 import scalafx.application.Platform
@@ -27,10 +26,10 @@ object Controller {
   }
 
   /** Method that sets the Summer Climate inside Environment */
-  def setSummerClimate(): Unit = SimulationHistory changeEnvironmentClimate Summer()
+  def setSummerClimate(): Unit = SimulationHistory changeEnvironmentClimate Summer
 
   /** Method that sets the Winter Climate inside Environment */
-  def setWinterClimate(): Unit = SimulationHistory changeEnvironmentClimate Winter()
+  def setWinterClimate(): Unit = SimulationHistory changeEnvironmentClimate Winter
 
   /**
    * Method that insert a mutation inside the simulation
@@ -41,8 +40,8 @@ object Controller {
     SimulationHistory.getActualGeneration.environment introduceMutation mutation
 
   /** Method that shows the end of the simulation on the Application GUI */
-  def showEnd(isOverpopulation: Boolean): Unit = Platform runLater {
-    ScalaFXView.showEnd(isOverpopulation)
+  def showEnd(endType: SimulationEndType): Unit = Platform runLater {
+    ScalaFXView.showEnd(endType)
   }
 
   /** Resets the simulation model to its initial state */
