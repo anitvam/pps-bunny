@@ -70,7 +70,8 @@ class BaseAppController(
     @FXML private val chartChoicePane: AnchorPane,
     @FXML private val speedButton: Button,
     @FXML private val summerButton: Button,
-    @FXML private val winterButton: Button
+    @FXML private val winterButton: Button,
+    @FXML private val informationPanel: AnchorPane
 ) extends BaseAppControllerInterface {
 
   private var bunnyViews: Seq[BunnyView] = Seq.empty
@@ -144,6 +145,7 @@ class BaseAppController(
   /** Handler of Start button click */
   def startSimulation(): Unit = {
     startButton.setVisible(false)
+    informationPanel.visible = false
     Controller.startSimulation()
   }
 
