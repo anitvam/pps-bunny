@@ -1,7 +1,7 @@
 package view.scalaFX.components.charts.pedigree
 
 import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
-import model.Tree.generateTree
+import model.Tree.{generateTree, treeToNode}
 import model.{BinaryTree, Bunny, Node}
 import scalafx.geometry.Pos
 import scalafx.scene.image.ImageView
@@ -12,7 +12,8 @@ import view.scalaFX.ScalaFXConstants.GenealogicalTree._
 import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
 
 import scala.language.postfixOps
-import scala.math.{log10, pow, min}
+import scala.language.implicitConversions
+import scala.math.{log10, min, pow}
 
 trait PedigreeChart {
 
@@ -116,8 +117,8 @@ object PedigreeChart {
 
       if ((tree ?) && tree.get.isInstanceOf[Node[Bunny]]) {
         nextTrees ++= Seq(
-          Option(tree.get.asInstanceOf[Node[Bunny]].momTree),
-          Option(tree.get.asInstanceOf[Node[Bunny]].dadTree)
+          Option(tree.get.momTree),
+          Option(tree.get.dadTree)
         )
       } else {
         nextTrees ++= Seq(Option.empty, Option.empty)

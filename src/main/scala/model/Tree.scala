@@ -1,4 +1,5 @@
 package model
+import scala.language.implicitConversions
 
 /**
  * Represents a Tree.
@@ -30,6 +31,7 @@ case class Node[A](override val elem: A, momTree: BinaryTree[A], dadTree: Binary
 }
 
 object Tree {
+  implicit def treeToNode(t: BinaryTree[Bunny]): Node[Bunny] = t.asInstanceOf[Node[Bunny]]
 
   /**
    * @param generations the number of older generations to retrieve
