@@ -1,6 +1,7 @@
 package model.bunny
 
 import scala.util.Random
+import scala.language.implicitConversions
 
 object Gender extends Enumeration {
   type Gender = Value
