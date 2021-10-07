@@ -20,7 +20,7 @@ object GenerationTimer {
    * Returns a [[IO]] description that when evaluated will create an async task that will wait until the time specified
    *
    * @param to
-   *   the moment until when the timer sleep
+   *   the moment in which the sleeping of the timer ends
    * @return
    *   the IO monad describing the operation
    */
