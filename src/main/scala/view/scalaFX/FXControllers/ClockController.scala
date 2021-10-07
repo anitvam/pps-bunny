@@ -1,12 +1,16 @@
 package view.scalaFX.FXControllers
 
 import engine.SimulationConstants.NUMBER_OF_PHASE
+import scalafx.Includes.jfxDoubleProperty2sfx
 import scalafx.scene.Group
 import scalafx.scene.control.Label
 import scalafx.scene.shape.{Circle, Line}
 import scalafx.scene.transform.Rotate
 
 trait ClockControllerInterface {
+
+  /** angle of the clock hand */
+  protected val angle: Double = 360 / NUMBER_OF_PHASE
 
   /**
    * Initialization of the clock element in the GUI
@@ -16,7 +20,7 @@ trait ClockControllerInterface {
   def initialize: Group
 
   /** Rotate the clock hand to show the flow of time */
-  def rotateClockHand(): Unit
+  def rotateClockHand(angle: Double = angle): Unit
 
   /**
    * Update the label of the clock with the name of the current phase
@@ -27,45 +31,43 @@ trait ClockControllerInterface {
 }
 
 class ClockController extends ClockControllerInterface {
-  private val analogueClock: Group = new Group()
-  private val angle: Double = 360 / NUMBER_OF_PHASE
   private val clockRadius: Double = 35
+  private val clock: Circle = Circle(clockRadius, clockRadius, clockRadius)
+  private val spindle = Circle(clockRadius, clockRadius, 5)
+  private val analogueClock: Group = new Group()
+  private val ticks = new Group()
   private val clockHand: Line = Line(0, 0, 0, -clockRadius)
   private val labelClock: Label = Label("")
 
   override def initialize: Group = {
-    val clock: Circle = Circle(clockRadius, clockRadius, clockRadius)
-    val spindle = Circle(clockRadius, clockRadius, 5)
-    val ticks = new Group()
-
     clock.id = "clock"
     labelClock.id = "labelClock"
-    labelClock.layoutXProperty().bind(clock.centerXProperty().subtract(labelClock.widthProperty().divide(2)))
-    labelClock.layoutYProperty().bind(clock.layoutYProperty().subtract(20))
+    clockHand.id = "clockHand"
+    spindle.id = "spindle"
+    labelClock.layoutXProperty() <== clock.centerXProperty().subtract(labelClock.widthProperty().divide(2))
+    labelClock.layoutYProperty() <== clock.layoutYProperty().subtract(20)
     clockHand.translateX = clockRadius
     clockHand.translateY = clockRadius
-    clockHand.getTransforms.add(new Rotate(-angle))
-    clockHand.id = "clockHand"
-    spindle.setId("spindle")
 
     for (i <- 0 to NUMBER_OF_PHASE) {
       val tick = Line(0, -23, 0, -33)
       tick.translateX = clockRadius
       tick.translateY = clockRadius
-      tick.getStyleClass.add("tick")
-      tick.getTransforms.add(new Rotate(i * angle))
-      ticks.getChildren.add(tick)
+      tick.styleClass += "tick"
+      tick.transforms += new Rotate(i * angle)
+      ticks.children += tick
     }
 
     analogueClock.children = List(clock, labelClock, ticks, spindle, clockHand)
     analogueClock.translateX = clockRadius
     analogueClock.translateY = clockRadius
-    analogueClock.getStylesheets.add("/fxml/stylesheets/clock.css")
+    analogueClock.stylesheets += "/fxml/stylesheets/clock.css"
 
+    rotateClockHand(-angle)
     analogueClock
   }
 
-  override def rotateClockHand(): Unit = clockHand.getTransforms.add(new Rotate(angle))
+  override def rotateClockHand(angle: Double = angle): Unit = clockHand.transforms += new Rotate(angle)
 
   override def updateClockLabel(phase: String): Unit = labelClock.text = phase
 }
