@@ -1,6 +1,6 @@
 package model
 
-import engine.SimulationConstants.MAX_BUNNY_AGE
+import engine.SimulationConstants.{CHILDREN_FOR_EACH_COUPLE, MAX_BUNNY_AGE}
 import model.bunny.Bunny
 import model.bunny.Bunny.{generateBaseFirstBunny, generateRandomFirstBunny, splitBunniesByGene}
 import model.bunny.Gender._
@@ -49,8 +49,13 @@ class TestReproduction extends FlatSpec with Matchers {
   val couple: Couple = generateInitialCouple()
   val children: Seq[Bunny] = generateChildren(couple)
 
-  "Children of a couple" should "be 4" in {
-    assert(children.size == 4)
+  "Children of a couple" should "be in the right amount" in {
+    assert(children.size == CHILDREN_FOR_EACH_COUPLE)
+  }
+
+  they should "be 2 males and 2 females" in {
+    assert(children.count(_.gender == Male) == CHILDREN_FOR_EACH_COUPLE/2)
+    assert(children.count(_.gender == Female) == CHILDREN_FOR_EACH_COUPLE/2)
   }
 
   they should "all have age 0" in {
