@@ -6,7 +6,7 @@ import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes.jfxDoubleProperty2sfx
 import scalafx.scene.Group
 import scalafx.scene.control.Label
-import scalafx.scene.shape.{Circle, Line}
+import scalafx.scene.shape.{ Circle, Line }
 import scalafx.scene.transform.Rotate
 
 trait Clock {
@@ -31,7 +31,13 @@ trait Clock {
    *   the angle the clock hand rotate to
    */
   def updateClock(generationPhase: GenerationPhase, angle: Double = angle): Unit
+
+  /**
+   * Reset the clock to its initial status
+   */
+  def reset(): Unit
 }
+
 object Clock {
   def apply(): Clock = ClockImpl()
 
@@ -77,13 +83,24 @@ object Clock {
 
     override def updateClock(phase: GenerationPhase, angle: Double = angle): Unit = {
       labelClock.text = phase.phase match {
-        case WOLVES_PHASE => "WOLVES"
-        case FOOD_PHASE => "FOOD"
-        case TEMPERATURE_PHASE => "TEMPERATURE"
+        case WOLVES_PHASE       => "WOLVES"
+        case FOOD_PHASE         => "FOOD"
+        case TEMPERATURE_PHASE  => "TEMPERATURE"
         case REPRODUCTION_PHASE => "REPRODUCTION"
       }
       rotateClockHand(angle)
     }
+
+    /**
+     * Reset the clock to its initial status
+     */
+    override def reset(): Unit = labelClock.text.value match {
+      case "WOLVES"       => rotateClockHand(2 * angle)
+      case "FOOD"         => rotateClockHand(angle)
+      case "TEMPERATURE"  =>
+      case "REPRODUCTION" => rotateClockHand(3 * angle)
+    }
+
   }
 
 }

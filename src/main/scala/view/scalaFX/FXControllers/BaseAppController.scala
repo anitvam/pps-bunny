@@ -81,7 +81,7 @@ class BaseAppController(
   private var proportionsChartController: Option[ChartController] = Option.empty
   private var proportionsChartPane: Option[AnchorPane] = Option.empty
   private var populationChart: Option[PopulationChart] = Option.empty
-  private val clockController: Clock = Clock()
+  private val clockView: Clock = Clock()
 
   override def initialize(): Unit = {
 
@@ -106,7 +106,7 @@ class BaseAppController(
     setFitParent(proportionsChartPane.get)
     proportionsChartController --> { _.initialize() }
 
-    clock.children = clockController.initialize
+    clock.children = clockView.initialize
     this.initializeView()
   }
 
@@ -133,6 +133,7 @@ class BaseAppController(
       mutationsPanelController --> { _.reset() }
       chartSelectionPanelController --> { _.reset() }
       factorsPanelController --> { _.reset() }
+      clockView.reset()
       this.initializeView()
       speedButton.onAction = _ => addSpeedUp()
       speedButton.text = "2x"
@@ -178,7 +179,7 @@ class BaseAppController(
     bunnyViews.filterNot(_.bunny.alive).foreach(bv => simulationPane.children.remove(bv.imageView))
     bunnyViews = bunnyViews.filter(_.bunny.alive)
 
-    clockController.updateClock(generationPhase)
+    clockView.updateClock(generationPhase)
 
     // Bunny visualization inside simulationPane
     if (generationPhase.phase == REPRODUCTION_PHASE) {
@@ -193,19 +194,20 @@ class BaseAppController(
       // Start movement of the new bunnies
       newBunnyViews foreach { _.play() }
 
-      clockController.updateClock(generationPhase)
+      clockView.updateClock(generationPhase)
     }
 
     if (generationPhase.phase == WOLVES_PHASE) {
-      clockController.updateClock(generationPhase)
+      clockView.updateClock(generationPhase)
       factorsPanelController --> { _.showWolvesEating() }
     }
 
-    if (generationPhase.phase == FOOD_PHASE) clockController.updateClock(generationPhase)
+    if (generationPhase.phase == FOOD_PHASE) clockView.updateClock(generationPhase)
 
     if (generationPhase.phase == TEMPERATURE_PHASE)
-      clockController.updateClock(generationPhase)
+      clockView.updateClock(generationPhase)
 
+//    if (generationPhase.phase == WolfPhaseConstants.WOLVES_PHASE) factorsPanelController --> { _.showWolvesEating() }
 
   }
 
