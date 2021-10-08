@@ -8,6 +8,10 @@ import model.genome._
 import model.world.Generation.Population
 import util.PimpScala.RichSeq
 
+sealed trait Gender
+case object Male extends Gender
+case object Female extends Gender
+
 /**
  * Represents a Bunny.
  */
@@ -32,7 +36,7 @@ sealed trait Bunny {
    * @return
    *   a sequence of standard alleles with the parents kind, useful during the generation of children
    */
-  def agingBunny(): Unit = {
+  def increaseAge(): Unit = {
     age += 1
     if (age >= MAX_BUNNY_AGE) alive = false
   }

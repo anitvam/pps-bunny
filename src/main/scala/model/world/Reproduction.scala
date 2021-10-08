@@ -92,7 +92,7 @@ object Reproduction {
    *   the new bunnies, adding the children and removing the ones who are dead
    */
   def nextGenerationBunnies(bunnies: Population, mutations: Mutations = List()): Population = {
-    bunnies.foreach(_.agingBunny())
+    bunnies.foreach(_.increaseAge())
     generateAllChildren(bunnies, mutations) ++ bunnies.filter(_.alive)
   }
 }
