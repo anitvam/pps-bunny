@@ -1,15 +1,15 @@
 package engine
 
 import cats.effect.IO
-import engine.GenerationTimer.{resetTimer, waitFor}
+import engine.GenerationTimer.{ resetTimer, waitFor }
 import engine.Simulation._
 import engine.SimulationConstants._
-import engine.SimulationHistory.{getBunniesNumber, getGenerationNumber}
+import engine.SimulationHistory.{ getActualBunniesNumber, getGenerationNumber }
 import engine.engineConversions._
 import model.world.GenerationsUtils._
 
-import scala.concurrent.duration.{DurationDouble, FiniteDuration}
-import scala.language.{implicitConversions, postfixOps}
+import scala.concurrent.duration.{ DurationDouble, FiniteDuration }
+import scala.language.{ implicitConversions, postfixOps }
 
 object SimulationEngine {
   var simulationSpeed: Double = 1
@@ -21,7 +21,7 @@ object SimulationEngine {
   }
 
   private def generationPhase(generationPhase: GenerationPhase, action: IO[Unit]): IO[Unit] =
-    if (getBunniesNumber >= MIN_ALIVE_BUNNIES) {
+    if (getActualBunniesNumber >= MIN_ALIVE_BUNNIES) {
       for {
         _ <- waitFor((generationPhase.instant, simulationSpeed))
         _ <- action
@@ -37,8 +37,8 @@ object SimulationEngine {
       _ <- generationPhase(HighTemperaturePhase(getGenerationNumber), applyTemperatureDamage)
       _ <- generationPhase(ReproductionPhase(getGenerationNumber + 1), startNewGeneration)
       _ <-
-        if (getBunniesNumber < MIN_ALIVE_BUNNIES) extinction()
-        else if (getBunniesNumber > MAX_ALIVE_BUNNIES) overpopulation()
+        if (getActualBunniesNumber < MIN_ALIVE_BUNNIES) extinction()
+        else if (getActualBunniesNumber > MAX_ALIVE_BUNNIES) overpopulation()
         else if (getGenerationNumber >= MAX_GENERATIONS_NUMBER) end()
         else generationLoop()
     } yield ()
