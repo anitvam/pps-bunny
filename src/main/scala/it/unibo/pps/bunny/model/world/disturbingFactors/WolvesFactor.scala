@@ -6,9 +6,7 @@ import it.unibo.pps.bunny.engine.SimulationConstants.FactorsConstants.{
 import it.unibo.pps.bunny.model.Bunny.filterBunniesWithAlleles
 import it.unibo.pps.bunny.model.genome.Genes
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
-import it.unibo.pps.bunny.model.world.Climate
 import it.unibo.pps.bunny.model.world.Generation.Population
-import it.unibo.pps.bunny.model.world.disturbingFactors._
 import it.unibo.pps.bunny.model.world.disturbingFactors.FactorsUtils.applyCustomDamage
 
 sealed trait PredatorFactor extends Factor {
@@ -18,12 +16,6 @@ sealed trait PredatorFactor extends Factor {
 
   /** @return the high damage that is applied with this Factor */
   protected def highDamage: Double
-}
-
-abstract class BasicFactor extends Factor {
-
-  override def applyDamage(bunnies: Population, climate: Climate): Population = applyCustomDamage(bunnies, normalDamage)
-
 }
 
 case class WolvesFactor(
