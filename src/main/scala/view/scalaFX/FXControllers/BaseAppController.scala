@@ -144,6 +144,7 @@ class BaseAppController(
     generationLabel.text = ""
     speedButton.styleClass -= "restart-button"
     startButton.setVisible(true)
+    factorsPanelController --> { _.showWolves() }
   }
 
   /** Handler of Start button click */
@@ -185,8 +186,6 @@ class BaseAppController(
 
     // Bunny visualization inside simulationPane
     if (generationPhase.phase == REPRODUCTION_PHASE) {
-      factorsPanelController --> { _.showWolves() }
-
       val newBunnyViews = bunnies filter { _.age == 0 } map { BunnyView(_) }
       bunnyViews = bunnyViews ++ newBunnyViews
 
@@ -198,6 +197,7 @@ class BaseAppController(
       // Start movement of the new bunnies
       newBunnyViews foreach { _.play() }
 
+      factorsPanelController --> { _.showWolves() }
     }
 
   }
