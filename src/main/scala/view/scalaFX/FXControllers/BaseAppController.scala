@@ -14,6 +14,7 @@ import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
 import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
 import view.scalaFX.components.{BunnyView, ClockView}
+import view.scalaFX.components.BunnyView
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
 import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
@@ -141,6 +142,7 @@ class BaseAppController(
     bunnyViews = Seq.empty
     simulationPane.children = Seq.empty
     generationLabel.text = ""
+    speedButton.styleClass -= "restart-button"
     startButton.setVisible(true)
   }
 
@@ -149,7 +151,6 @@ class BaseAppController(
     startButton.setVisible(false)
     informationPanel.visible = false
     Controller.startSimulation()
-    speedButton.styleClass -= "restart-button"
   }
 
   /** Handler of Summer button click */
@@ -184,6 +185,8 @@ class BaseAppController(
 
     // Bunny visualization inside simulationPane
     if (generationPhase.phase == REPRODUCTION_PHASE) {
+      factorsPanelController --> { _.showWolves() }
+
       val newBunnyViews = bunnies filter { _.age == 0 } map { BunnyView(_) }
       bunnyViews = bunnyViews ++ newBunnyViews
 
@@ -196,9 +199,6 @@ class BaseAppController(
       newBunnyViews foreach { _.play() }
 
     }
-
-    if(generationPhase.phase == WOLVES_PHASE) factorsPanelController --> { _.showWolves() }
-
 
   }
 
