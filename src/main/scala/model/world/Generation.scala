@@ -1,8 +1,8 @@
 package model.world
-
-import engine.SimulationConstants._
 import model.bunny.{Bunny, ChildBunny}
+import engine.SimulationConstants.PhasesConstants._
 import model.world.Generation.Population
+import scala.language.implicitConversions
 
 /** The unit of time of the simulation and wraps its properties */
 trait Generation {
@@ -68,32 +68,40 @@ object GenerationsUtils {
     /** @return the phase of the generation */
     def phase: Double
 
-    /** @return after how many milliseconds from the start of generation there is the phase istant */
+    /** @return after how many milliseconds from the start of generation there is the phase instant */
     def instant: Double
+
+    /** @return the name of the generationsPhase */
+    def name: String
+
   }
 
   case class ReproductionPhase(
       override val generationNumber: Int,
       override val phase: Double = REPRODUCTION_PHASE,
-      override val instant: Double = GENERATION_END
+      override val instant: Double = GENERATION_END,
+      override val name: String = "Riproduzione"
   ) extends GenerationPhase
 
   case class WolvesPhase(
       override val generationNumber: Int,
       override val phase: Double = WOLVES_PHASE,
-      override val instant: Double = WOLVES_INSTANT
+      override val instant: Double = WOLVES_INSTANT,
+      override val name: String = "Lupi"
   ) extends GenerationPhase
 
   case class FoodPhase(
       override val generationNumber: Int,
       override val phase: Double = FOOD_PHASE,
-      override val instant: Double = FOOD_INSTANT
+      override val instant: Double = FOOD_INSTANT,
+      override val name: String = "Cibo"
   ) extends GenerationPhase
 
   case class HighTemperaturePhase(
       override val generationNumber: Int,
       override val phase: Double = TEMPERATURE_PHASE,
-      override val instant: Double = TEMP_INSTANT
+      override val instant: Double = TEMP_INSTANT,
+      override val name: String = "Temperature"
   ) extends GenerationPhase
 
 }

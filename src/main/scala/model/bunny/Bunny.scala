@@ -3,11 +3,10 @@ package model.bunny
 import engine.SimulationConstants.MAX_BUNNY_AGE
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
-import model.genome.KindsUtils.randomAlleleKind
+import model.genome.KindsUtils.randomAlleleKindChooser
 import model.genome._
 import model.world.Generation.Population
-
-import scala.util.Random
+import util.PimpScala.RichSeq
 
 /**
  * Represents a Bunny.
@@ -64,13 +63,13 @@ object Bunny {
   /**
    * Function to get a random gender for the Bunny.
    */
-  val randomGender: () => Gender = () => Random.shuffle(List(Male, Female)).head
+  val randomGenderChooser: () => Gender = () => Seq(Male, Female).random
 
   /**
    * @return
    *   a FirstBunny with the "base" allele for each gene
    */
-  val generateBaseFirstBunny: Gender =>  FirstBunny = gender => new FirstBunny(
+  val baseBunnyGenerator: Gender =>  FirstBunny = gender => new FirstBunny(
     CompleteGenotype(
       Genes.values.unsorted.map(gk => (gk, Gene(gk, StandardAllele(gk.base), StandardAllele(gk.base)))).toMap
     ), gender)
@@ -79,15 +78,15 @@ object Bunny {
    * @return
    *   a FirstBunny with a random allele for each gene
    */
-  val generateRandomFirstBunny: () => FirstBunny = () => {
+  val randomBunnyGenerator: () => FirstBunny = () => {
     new FirstBunny(
       CompleteGenotype(
         Genes.values.unsorted
           .map(gk => {
-            (gk, Gene(gk, StandardAllele(randomAlleleKind(gk)), StandardAllele(randomAlleleKind(gk))))
+            (gk, Gene(gk, StandardAllele(randomAlleleKindChooser(gk)), StandardAllele(randomAlleleKindChooser(gk))))
           })
           .toMap
-      ), randomGender()
+      ), randomGenderChooser()
     )
   }
 

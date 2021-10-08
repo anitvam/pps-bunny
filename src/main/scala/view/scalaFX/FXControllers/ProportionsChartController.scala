@@ -1,8 +1,9 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-import engine.SimulationConstants.REPRODUCTION_PHASE
 import javafx.scene.{control => jfxc}
+import engine.SimulationConstants.PhasesConstants._
+import javafx.scene.{ control => jfxc }
 import model.genome.Genes
 import model.genome.Genes.GeneKind
 import model.world.Generation.Population

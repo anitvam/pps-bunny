@@ -1,16 +1,15 @@
 package engine
 
 import cats.effect.IO
-import engine.GenerationTimer.{ resetTimer, waitFor }
-import engine.Simulation.{ extinction, _ }
+import engine.GenerationTimer.{resetTimer, waitFor}
+import engine.Simulation._
 import engine.SimulationConstants._
-import engine.SimulationHistory.{ existNextGeneration, getBunniesNumber, getGenerationNumber }
-import model.world.GenerationsUtils.{ FoodPhase, GenerationPhase, HighTemperaturePhase, ReproductionPhase, WolvesPhase }
+import engine.SimulationHistory.{existNextGeneration, getBunniesNumber, getGenerationNumber}
+import engine.engineConversions._
+import model.world.GenerationsUtils._
 
-import scala.language.{ implicitConversions, postfixOps }
-import engineConversions._
-
-import scala.concurrent.duration.{ DurationDouble, FiniteDuration }
+import scala.concurrent.duration.{DurationDouble, FiniteDuration}
+import scala.language.{implicitConversions, postfixOps}
 
 object SimulationEngine {
   var simulationSpeed: Double = 1

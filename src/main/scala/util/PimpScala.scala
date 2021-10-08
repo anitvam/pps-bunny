@@ -19,5 +19,6 @@ object PimpScala {
 
   implicit class RichSeq[A](seq: Seq[A]){
     def shuffle: Seq[A] = Random.shuffle(seq)
+    def random: A = seq.shuffle.head
   }
 }

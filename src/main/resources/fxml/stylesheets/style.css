@@ -3,7 +3,7 @@
     -fx-background-radius: 1em;
 }
 
-.button:hover {
+.button-clickable:hover {
     -fx-background-color: #e6be9b;
     -fx-scale-y: 1.1;
     -fx-scale-x: 1.01;
@@ -147,6 +147,19 @@
 
 .Denti_Lunghi_Pie {
     -fx-pie-color: #5d99c6;
+}
+
+.bunny-information-panel {
+    -fx-background-color: rgba(252,232,210,0.7);
+    -fx-background-radius: 1em;
+}
+
+.bunny-information-image {
+    -fx-background-image: url("/img/bunnies/white/high_ears/normal_teeth/normal_fur/normal.png");
+    -fx-background-size: 7em 7em;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+
 }
 
 

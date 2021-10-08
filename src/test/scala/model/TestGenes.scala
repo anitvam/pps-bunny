@@ -1,6 +1,6 @@
 package model
 
-import model.bunny.Bunny.{generateBaseFirstBunny, randomGender}
+import model.bunny.Bunny.{baseBunnyGenerator, randomGenderChooser}
 import model.bunny.FirstBunny
 import model.genome.Genes.{EARS, FUR_COLOR, FUR_LENGTH, GeneKind}
 import model.genome.KindsUtils.{assignRandomDominance, getGeneKind, resetDominance}
@@ -108,7 +108,7 @@ class TestGenes extends FlatSpec with Matchers {
     val geneKind = Genes.FUR_COLOR
     val standardGene = Gene(geneKind, StandardAllele(geneKind.base), StandardAllele(geneKind.base))
     val updatedGene = Gene(geneKind, StandardAllele(geneKind.base), StandardAllele(geneKind.mutated))
-    val standardBunny = generateBaseFirstBunny(randomGender())
+    val standardBunny = baseBunnyGenerator(randomGenderChooser())
     val updatedBunny = new FirstBunny(standardBunny.genotype + updatedGene, standardBunny.gender)
 
     println(standardBunny.genotype(geneKind))

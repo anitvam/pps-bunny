@@ -2,7 +2,7 @@ package model
 
 import engine.SimulationConstants.{CHILDREN_FOR_EACH_COUPLE, MAX_BUNNY_AGE}
 import model.bunny.{Bunny, Female, Male}
-import model.bunny.Bunny.{generateBaseFirstBunny, generateRandomFirstBunny, randomGender, splitBunniesByGene}
+import model.bunny.Bunny.{baseBunnyGenerator, randomBunnyGenerator, randomGenderChooser, splitBunniesByGene}
 import model.genome.{Gene, Genes, StandardAllele}
 import model.world.Generation.Population
 import model.world.Reproduction._
@@ -11,7 +11,7 @@ import org.scalatest.{FlatSpec, Matchers}
 class TestReproduction extends FlatSpec with Matchers {
 
   "Couples of bunnies " should "be generable from any group of Bunnies with males and females" in {
-    val someBunnies = Seq.fill(9)(generateRandomFirstBunny())
+    val someBunnies = Seq.fill(9)(randomBunnyGenerator())
     val someCouples = combineCouples(someBunnies)
     if (someBunnies.count(_.gender == Male) > 0 && someBunnies.count(_.gender == Female) > 0){
       assert(someCouples.nonEmpty)
@@ -21,26 +21,26 @@ class TestReproduction extends FlatSpec with Matchers {
   }
 
   they should "contain all the possible couples" in {
-    val someBunnies = Seq.fill(10)(generateRandomFirstBunny())
+    val someBunnies = Seq.fill(10)(randomBunnyGenerator())
     val someCouples = combineCouples(someBunnies)
     assert(someCouples.size == math.min(someBunnies.count(_.gender == Male), someBunnies.count(_.gender == Female)))
   }
 
   they should "only contain bunnies of the original group" in {
-    val someBunnies = Seq.fill(11)(generateRandomFirstBunny())
+    val someBunnies = Seq.fill(11)(randomBunnyGenerator())
     val bunniesInCouples = combineCouples(someBunnies).flatMap(_.toSeq)
     bunniesInCouples.foreach(b => assert(someBunnies.contains(b)))
   }
 
   they should "be empty, if there was only one bunny" in {
-    val oneBunny = Seq(generateRandomFirstBunny())
+    val oneBunny = Seq(randomBunnyGenerator())
     val bunniesInCouples = combineCouples(oneBunny)
     assert(bunniesInCouples.isEmpty)
   }
 
   they should "be empty, if there was bunnies of only one gender" in {
-    val gender = randomGender()
-    val sameGenderBunnies = Seq.fill(5)(generateBaseFirstBunny(gender))
+    val gender = randomGenderChooser()
+    val sameGenderBunnies = Seq.fill(5)(baseBunnyGenerator(gender))
     val bunniesInCouples = combineCouples(sameGenderBunnies)
     assert(bunniesInCouples.isEmpty)
   }
@@ -81,7 +81,7 @@ class TestReproduction extends FlatSpec with Matchers {
   }
 
   val bunniesNum = 20
-  val bunnies: Seq[Bunny] = Seq.fill(bunniesNum)(generateRandomFirstBunny())
+  val bunnies: Seq[Bunny] = Seq.fill(bunniesNum)(randomBunnyGenerator())
   val couplesNum: Int = combineCouples(bunnies).size
 
   "Children of all bunnies" should "be 4 for each couple" in {
@@ -90,7 +90,7 @@ class TestReproduction extends FlatSpec with Matchers {
   }
 
   they should "be zero if there were no couples and just one Bunny" in {
-    val oneBunny = Seq(generateRandomFirstBunny())
+    val oneBunny = Seq(randomBunnyGenerator())
     val children = generateAllChildren(oneBunny)
     assert(children.isEmpty)
   }
@@ -102,7 +102,7 @@ class TestReproduction extends FlatSpec with Matchers {
   }
 
   it should "contain just one bunny if there was only one" in {
-    assert(nextGenerationBunnies(Seq(generateRandomFirstBunny())).size == 1)
+    assert(nextGenerationBunnies(Seq(randomBunnyGenerator())).size == 1)
   }
 
   it should "not contain any of the original bunnies after MAX_AGE generations" in {
@@ -113,7 +113,7 @@ class TestReproduction extends FlatSpec with Matchers {
     bunnies.foreach(b => assert(!nextGen.contains(b)))
   }
 
-  var genBunnies: Seq[Bunny] = List.fill(bunniesNum)(generateRandomFirstBunny())
+  var genBunnies: Seq[Bunny] = List.fill(bunniesNum)(randomBunnyGenerator())
 
   it should "contain the right number of bunnies after many generations and and the right amount should be alive" in {
     val generations = 8
@@ -131,7 +131,7 @@ class TestReproduction extends FlatSpec with Matchers {
   }
 
   "Bunnies " should "be splittable by gene" in {
-    val bunnies: List[Bunny] = List.fill(10)(generateRandomFirstBunny())
+    val bunnies: List[Bunny] = List.fill(10)(randomBunnyGenerator())
     Genes.values.foreach(gk => {
       val baseCount = bunnies.count(_.genotype.phenotype(gk) == gk.base)
       val mutatedCount = bunnies.count(_.genotype.phenotype(gk) == gk.mutated)
@@ -143,7 +143,7 @@ class TestReproduction extends FlatSpec with Matchers {
 
   it should "be possible to create a lot of them " in {
     val totBunnies = 100000
-    noException should be thrownBy List.fill(totBunnies)(generateRandomFirstBunny())
+    noException should be thrownBy List.fill(totBunnies)(randomBunnyGenerator())
   }
 
 }

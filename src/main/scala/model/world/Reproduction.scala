@@ -2,7 +2,7 @@ package model.world
 
 import engine.SimulationConstants.CHILDREN_FOR_EACH_COUPLE
 import model.CoupleGendersException
-import model.bunny.Bunny.generateBaseFirstBunny
+import model.bunny.Bunny.baseBunnyGenerator
 import model.bunny.{Bunny, ChildBunny, Female, Gender, Male}
 import model.genome._
 import model.world.Environment.Mutations
@@ -83,7 +83,7 @@ object Reproduction {
    * @return
    *   the first two bunnies of the simulation
    */
-  val generateInitialCouple: () => Couple = () => Couple(mom = generateBaseFirstBunny(Female), dad = generateBaseFirstBunny(Male))
+  val generateInitialCouple: () => Couple = () => Couple(mom = baseBunnyGenerator(Female), dad = baseBunnyGenerator(Male))
 
   /**
    * @param bunnies

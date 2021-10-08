@@ -1,17 +1,17 @@
 package model
-import model.bunny.Bunny.{generateBaseFirstBunny, generateRandomFirstBunny, randomGender}
+import model.bunny.Bunny.{baseBunnyGenerator, randomBunnyGenerator, randomGenderChooser}
 import model.genome.Genes
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestBunny extends FlatSpec with Matchers {
 
   "Any FirstBunny" should "be instantiated without exceptions" in {
-    noException should be thrownBy generateBaseFirstBunny(randomGender())
-    noException should be thrownBy generateRandomFirstBunny
+    noException should be thrownBy baseBunnyGenerator(randomGenderChooser())
+    noException should be thrownBy randomBunnyGenerator
   }
 
-  val baseBunny = generateBaseFirstBunny(randomGender())
-  val randomBunny = generateRandomFirstBunny()
+  val baseBunny = baseBunnyGenerator(randomGenderChooser())
+  val randomBunny = randomBunnyGenerator()
   it should "have all kind of Genes" in {
     assert(baseBunny.genotype.genes.size == Genes.values.size)
     assert(randomBunny.genotype.genes.size == Genes.values.size)
