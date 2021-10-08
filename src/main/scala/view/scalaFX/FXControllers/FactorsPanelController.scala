@@ -99,6 +99,7 @@ class FactorsPanelController(
   def onWolfClick(): Unit = {
     onFactorClick(wolfCheckBox, Wolves())
     if (areWolvesShown && wolfCheckBox.isSelected) startWolfAnimation(_.playInstantly())
+    else wolvesView.foreach(w => removeWolf(w.imageView))
   }
 
   def onToughFoodClick(): Unit = {
