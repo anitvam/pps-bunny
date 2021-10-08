@@ -14,6 +14,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #d1a29e;" stylesheets="/fxml/stylesheets/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scalaFX.FXControllers.BaseAppController">
+
     <children>
         <GridPane layoutX="222.0" layoutY="99.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
@@ -121,22 +122,6 @@
                                         <Insets />
                                     </GridPane.margin>
                                 </HBox>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
-                           <children>
-                               <Button fx:id="speedButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#addSpeedUp" prefHeight="60.0" prefWidth="60.0" text="2x">
-                                 <HBox.margin>
-                                    <Insets bottom="30.0" left="10.0" right="10.0" top="10.0" />
-                                 </HBox.margin>
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                                 <styleClass>
-                                    <String fx:value="speedup-button" />
-                                    <String fx:value="button-clickable" />
-                                 </styleClass>
-                              </Button>
-                           </children>
-                        </HBox>
                         <AnchorPane fx:id="informationPanel" pickOnBounds="false" styleClass="bunny-information-panel" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="3">
                            <children>
                               <GridPane layoutX="43.0" layoutY="-14.0" pickOnBounds="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -201,10 +186,23 @@
                               <Insets bottom="10.0" />
                            </GridPane.margin>
                         </AnchorPane>
+                                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                                    <children>
+                                        <Button fx:id="speedButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#addSpeedUp" prefHeight="60.0" prefWidth="60.0" styleClass="speedup-button" text="2x">
+                                            <HBox.margin>
+                                                <Insets bottom="30.0" left="10.0" right="10.0" top="10.0" />
+                                            </HBox.margin>
+                                            <font>
+                                                <Font name="System Bold" size="18.0" />
+                                            </font>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                        <AnchorPane fx:id="clock" prefHeight="200.0" prefWidth="200.0" />
                             </children>
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
+                            <GridPane.margin>
+                                <Insets />
+                            </GridPane.margin>
                         </GridPane>
                     </children>
                 </GridPane>

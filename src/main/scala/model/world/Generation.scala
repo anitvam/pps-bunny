@@ -2,6 +2,7 @@ package model.world
 
 import engine.SimulationConstants.PhasesConstants._
 import model.{ Bunny, ChildBunny }
+
 import model.world.Generation.Population
 import scala.language.implicitConversions
 
@@ -69,11 +70,12 @@ object GenerationsUtils {
     /** @return the phase of the generation */
     def phase: Double
 
-    /** @return after how many milliseconds from the start of generation there is the phase istant */
+    /** @return after how many milliseconds from the start of generation there is the phase instant */
     def instant: Double
 
     /** @return the name of the generationsPhase */
     def name: String
+
   }
 
   case class ReproductionPhase(
