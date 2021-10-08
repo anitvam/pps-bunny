@@ -2,7 +2,7 @@ package view.scalaFX.components
 
 import engine.SimulationConstants.PhasesConstants.WOLVES_PHASE
 import controller.Controller
-import engine.SimulationConstants.{ WOLVES_INSTANT_DEVIATION }
+import engine.SimulationConstants.WOLVES_INSTANT_DEVIATION
 import scalafx.animation.AnimationTimer
 import scalafx.scene.image.{ Image, ImageView }
 import view.scalaFX.FXControllers.FactorsPanelControllerInterface
@@ -67,6 +67,7 @@ object WolfView {
       if (!isAnimationDelayed(lastTime) || !isPlayDelayed)
         if (lastTime <= WOLVES_PHASE * 1000 * Controller.getCurrentSimulationSpeed()) {
           imageView.visible = true
+          factorsPanelController --> { _.disableWolfFactor() }
           checkDirection(
             positionX + imageView.getFitWidth / 2 >= PREFERRED_SIMULATION_PANEL_WIDTH - PREFERRED_SIMULATION_PANEL_BORDER,
             positionX - imageView.getFitWidth / 2 < 0
@@ -94,6 +95,7 @@ object WolfView {
       timer.stop()
       lastTime = 0L
       factorsPanelController --> { _.removeWolf(imageView) }
+      factorsPanelController --> { _.enableWolfFactor() }
     }
 
   }

@@ -35,6 +35,9 @@ sealed trait FactorsPanelControllerInterface {
 
   /** @return true if the wolves have to be shown */
   var areWolvesShown: Boolean = false
+
+  def disableWolfFactor(): Unit
+  def enableWolfFactor(): Unit
 }
 
 @sfxml
@@ -128,4 +131,6 @@ class FactorsPanelController(
   private def onFactorClick(checkBox: CheckBox, factor: Factor): Unit =
     if (checkBox.selected.value) Controller.introduceFactor(factor) else Controller.removeFactor(factor)
 
+  def disableWolfFactor(): Unit = wolfCheckBox.disable = true
+  def enableWolfFactor(): Unit = wolfCheckBox.disable = false
 }
