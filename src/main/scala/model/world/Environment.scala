@@ -1,10 +1,9 @@
 package model.world
 
 import model.genome.KindsUtils
-import model.world.Environment.Mutations
-import model.world.disturbingFactors.FactorTypes._
-import model.world.disturbingFactors.{ Factor, Factors, FoodFactor }
-import util.PimpScala._
+import model.world.Environment.{ Factors, Mutations }
+import model.world.disturbingFactors._
+import model.world.disturbingFactors.PimpFactors._
 
 /** Environment of a Generation */
 trait Environment {
@@ -44,6 +43,7 @@ trait Environment {
 object Environment {
 
   type Mutations = List[Mutation]
+  type Factors = List[Factor]
 
   /**
    * Generate an Environment from the previous one
@@ -60,9 +60,9 @@ object Environment {
       override var mutations: Mutations = List()
   ) extends Environment {
 
-    override def introduceFactor(factor: Factor): Unit = factors add factor
+    override def introduceFactor(factor: Factor): Unit = factors = factors + factor
 
-    override def removeFactor(factor: Factor): Unit = factors remove factor
+    override def removeFactor(factor: Factor): Unit = factors = factors - factor
 
     /** Introduce a new mutation */
     def introduceMutation(mutation: Mutation): Unit = {

@@ -4,7 +4,6 @@ import engine.SimulationConstants._
 import model.world.Generation.Population
 import model.world.Reproduction.{ generateInitialCouple, nextGenerationBunnies }
 import model.world._
-import model.world.disturbingFactors.Factors
 import util.PimpScala.RichTuple2
 
 import scala.language.implicitConversions
@@ -13,7 +12,7 @@ object SimulationHistory {
 
   type History = List[Generation]
 
-  val historyInit: () => History = () => List(Generation(Environment(Summer, Factors()), generateInitialCouple.toSeq))
+  val historyInit: () => History = () => List(Generation(Environment(Summer, List()), generateInitialCouple.toSeq))
 
   var history: History = historyInit()
 
