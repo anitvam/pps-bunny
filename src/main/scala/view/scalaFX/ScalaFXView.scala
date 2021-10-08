@@ -60,13 +60,16 @@ object ScalaFXView extends View {
   }
 
   override def showEnd(endType: SimulationEndType): Unit = {
-    endType match {
-      case Overpopulation      => endStage(OVERPOPULATION_END_IMAGE).show()
-      case Extinction          => endStage(EXTINCTION_END_IMAGE).show()
-      case GenerationsOverload => endStage(GENERATIONS_OVERLOAD_END_IMAGE).show()
-    }
+    endStage(endType).show()
     Platform.runLater { baseAppController --> { _.reset() } }
   }
 
   override def handleBunnyClick(bunny: BunnyView): Unit = baseAppController --> { _.handleBunnyClick(bunny) }
+
+  implicit private def simulationEndTypeImage(endType: SimulationEndType): Image = endType match {
+    case Overpopulation      => OVERPOPULATION_END_IMAGE
+    case Extinction          => EXTINCTION_END_IMAGE
+    case GenerationsOverload => GENERATIONS_OVERLOAD_END_IMAGE
+  }
+
 }
