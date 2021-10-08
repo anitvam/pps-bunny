@@ -47,7 +47,7 @@ object BunnyPedigreeView {
   private def genderView(bunny: Bunny): HBox = new HBox(
     spacingRegion(),
     new Text {
-      text = bunny.gender
+      text = bunny.gender.toString
       style = "-fx-font-family: \"Helvetica\"; " +
         "-fx-font-weight: bold; " +
         "-fx-font-size: " + bunnyIconSize / BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT + "px"

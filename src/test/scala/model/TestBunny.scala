@@ -1,6 +1,5 @@
 package model
-import model.bunny.Bunny.{generateBaseFirstBunny, generateRandomFirstBunny}
-import model.bunny.Gender._
+import model.bunny.Bunny.{generateBaseFirstBunny, generateRandomFirstBunny, randomGender}
 import model.genome.Genes
 import org.scalatest.{FlatSpec, Matchers}
 

@@ -1,9 +1,8 @@
 package model
 
 import engine.SimulationConstants.{CHILDREN_FOR_EACH_COUPLE, MAX_BUNNY_AGE}
-import model.bunny.Bunny
-import model.bunny.Bunny.{generateBaseFirstBunny, generateRandomFirstBunny, splitBunniesByGene}
-import model.bunny.Gender._
+import model.bunny.{Bunny, Female, Male}
+import model.bunny.Bunny.{generateBaseFirstBunny, generateRandomFirstBunny, randomGender, splitBunniesByGene}
 import model.genome.{Gene, Genes, StandardAllele}
 import model.world.Generation.Population
 import model.world.Reproduction._

@@ -1,12 +1,13 @@
 package model.bunny
 
 import engine.SimulationConstants.MAX_BUNNY_AGE
-import model.bunny.Gender.{Gender, randomGender}
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
-import model.genome.KindsUtils.getRandomAlleleKind
+import model.genome.KindsUtils.randomAlleleKind
 import model.genome._
 import model.world.Generation.Population
+
+import scala.util.Random
 
 /**
  * Represents a Bunny.
@@ -61,10 +62,15 @@ object Bunny {
   type mutatedBunnies = Seq[Bunny]
 
   /**
+   * Function to get a random gender for the Bunny.
+   */
+  val randomGender: () => Gender = () => Random.shuffle(List(Male, Female)).head
+
+  /**
    * @return
    *   a FirstBunny with the "base" allele for each gene
    */
-  val generateBaseFirstBunny: (Gender) =>  FirstBunny = gender => new FirstBunny(
+  val generateBaseFirstBunny: Gender =>  FirstBunny = gender => new FirstBunny(
     CompleteGenotype(
       Genes.values.unsorted.map(gk => (gk, Gene(gk, StandardAllele(gk.base), StandardAllele(gk.base)))).toMap
     ), gender)
@@ -78,7 +84,7 @@ object Bunny {
       CompleteGenotype(
         Genes.values.unsorted
           .map(gk => {
-            (gk, Gene(gk, StandardAllele(getRandomAlleleKind(gk)), StandardAllele(getRandomAlleleKind(gk))))
+            (gk, Gene(gk, StandardAllele(randomAlleleKind(gk)), StandardAllele(randomAlleleKind(gk))))
           })
           .toMap
       ), randomGender()

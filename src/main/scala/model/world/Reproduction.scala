@@ -3,8 +3,7 @@ package model.world
 import engine.SimulationConstants.CHILDREN_FOR_EACH_COUPLE
 import model.CoupleGendersException
 import model.bunny.Bunny.generateBaseFirstBunny
-import model.bunny.Gender.{Female, Gender, Male}
-import model.bunny.{Bunny, ChildBunny, Gender}
+import model.bunny.{Bunny, ChildBunny, Female, Gender, Male}
 import model.genome._
 import model.world.Environment.Mutations
 import model.world.Generation.Population
@@ -61,10 +60,10 @@ object Reproduction {
       childrenGenotypes = (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE)
         yield childrenGenotypes(i) + childrenGenes(i)).toList.sortBy(_.mutatedAllelesQuantity)
     })
-    // Creates the bunnies with the complete genotypes
-    val genotypesSplit = childrenGenotypes.splitAt(CHILDREN_FOR_EACH_COUPLE/2)
+    // Creates the bunnies with the complete genotypes, half of them are going to be Males and half Females
     val createBunny: (Genotype, Gender) => Bunny = (genotype, gender) => new ChildBunny(CompleteGenotype(genotype.genes), Option(couple.mom), Option(couple.dad), gender)
-    genotypesSplit._1.map(createBunny(_, Gender.Male)) ++ genotypesSplit._2.map(createBunny(_, Gender.Female))
+    val genotypesSplit = childrenGenotypes.splitAt(CHILDREN_FOR_EACH_COUPLE/2)
+    genotypesSplit._1.map(createBunny(_, Male)) ++ genotypesSplit._2.map(createBunny(_, Female))
   }
 
   /**

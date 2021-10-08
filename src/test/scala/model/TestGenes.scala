@@ -1,8 +1,7 @@
 package model
 
-import model.bunny.Bunny.generateBaseFirstBunny
+import model.bunny.Bunny.{generateBaseFirstBunny, randomGender}
 import model.bunny.FirstBunny
-import model.bunny.Gender.randomGender
 import model.genome.Genes.{EARS, FUR_COLOR, FUR_LENGTH, GeneKind}
 import model.genome.KindsUtils.{assignRandomDominance, getGeneKind, resetDominance}
 import model.genome._

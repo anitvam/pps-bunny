@@ -1,8 +1,7 @@
 package view
 
 import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
-import model.bunny.Bunny.generateRandomFirstBunny
-import model.bunny.Gender.randomGender
+import model.bunny.Bunny.{generateRandomFirstBunny, randomGender}
 import model.genome.KindsUtils.{assignRandomDominance, resetDominance}
 import model.genome.{Gene, Genes, JustMutatedAllele}
 import model.world.Reproduction.nextGenerationBunnies

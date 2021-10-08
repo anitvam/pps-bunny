@@ -89,16 +89,15 @@ object Genes extends Enumeration {
 object KindsUtils {
 
   /**d
-   * @param geneKind the gene kind of which the allele must be associated with
-   * @return a random AlleleKind for the specified GeneKind
+   * Function to get a random AlleleKind for the specified GeneKind.
    */
-  def getRandomAlleleKind(geneKind: GeneKind): AlleleKind = Seq(geneKind.base, geneKind.mutated)(Random.nextInt(2))
+  val randomAlleleKind: GeneKind => AlleleKind = geneKind => Random.shuffle(Seq(geneKind.base, geneKind.mutated)).head
 
   /**
    * Randomly chooses one AlleleKind as Dominant for each GeneKind
    */
   def assignRandomDominance(): Unit =
-    Genes.values.foreach(gk => setAlleleDominance(getRandomAlleleKind(gk)))
+    Genes.values.foreach(gk => setAlleleDominance(randomAlleleKind(gk)))
 
   /**
    * Sets an AlleleKind as dominant for a specific GeneKind.
