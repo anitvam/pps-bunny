@@ -1,9 +1,8 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-import engine.SimulationConstants.{ FOOD_PHASE, WOLVES_PHASE }
+import engine.SimulationConstants.PhasesConstants._
 import javafx.fxml.FXML
-import engine.SimulationConstants.REPRODUCTION_PHASE
 import javafx.scene.{ layout => jfxs }
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase

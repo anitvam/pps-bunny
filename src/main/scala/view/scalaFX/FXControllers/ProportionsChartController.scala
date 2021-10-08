@@ -1,7 +1,7 @@
 package view.scalaFX.FXControllers
 
 import controller.Controller
-import engine.SimulationConstants.REPRODUCTION_PHASE
+import engine.SimulationConstants.PhasesConstants._
 import javafx.scene.{ control => jfxc }
 import model.Bunny
 import model.genome.Genes
