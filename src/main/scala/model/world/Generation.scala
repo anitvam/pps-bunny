@@ -83,7 +83,6 @@ object GenerationsUtils {
       override val phase: Double = REPRODUCTION_PHASE,
       override val instant: Double = GENERATION_END,
       override val name: String = "Riproduzione"
-
   ) extends GenerationPhase
 
   case class WolvesPhase(
@@ -105,7 +104,6 @@ object GenerationsUtils {
       override val phase: Double = TEMPERATURE_PHASE,
       override val instant: Double = TEMP_INSTANT,
       override val name: String = "Temperature"
-
   ) extends GenerationPhase
 
 }

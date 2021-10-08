@@ -15,7 +15,7 @@ import util.PimpScala.RichOption
 import view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH }
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
-import view.scalaFX.components.{ BunnyView, Clock }
+import view.scalaFX.components.{ BunnyView, ClockView }
 import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
 import view.scalaFX.utilities._
 
@@ -81,7 +81,7 @@ class BaseAppController(
   private var proportionsChartController: Option[ChartController] = Option.empty
   private var proportionsChartPane: Option[AnchorPane] = Option.empty
   private var populationChart: Option[PopulationChart] = Option.empty
-  private val clockView: Clock = Clock()
+  private val clockView: ClockView = ClockView()
 
   override def initialize(): Unit = {
 
@@ -194,18 +194,7 @@ class BaseAppController(
       // Start movement of the new bunnies
       newBunnyViews foreach { _.play() }
 
-      clockView.updateClock(generationPhase)
     }
-
-    if (generationPhase.phase == WOLVES_PHASE) {
-      clockView.updateClock(generationPhase)
-      factorsPanelController --> { _.showWolvesEating() }
-    }
-
-    if (generationPhase.phase == FOOD_PHASE) clockView.updateClock(generationPhase)
-
-    if (generationPhase.phase == TEMPERATURE_PHASE)
-      clockView.updateClock(generationPhase)
 
 //    if (generationPhase.phase == WolfPhaseConstants.WOLVES_PHASE) factorsPanelController --> { _.showWolvesEating() }
 

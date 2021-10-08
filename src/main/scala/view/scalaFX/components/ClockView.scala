@@ -2,18 +2,17 @@ package view.scalaFX.components
 
 import engine.SimulationConstants.NUMBER_OF_PHASE
 import engine.SimulationConstants.PhasesConstants._
-import model.world.GenerationsUtils.GenerationPhase
+import model.world.GenerationsUtils.{ GenerationPhase, WolvesPhase }
 import scalafx.Includes.jfxDoubleProperty2sfx
 import scalafx.scene.Group
 import scalafx.scene.control.Label
 import scalafx.scene.shape.{ Circle, Line }
 import scalafx.scene.transform.Rotate
 
-trait Clock {
+trait ClockView {
 
   /** angle of the clock hand */
   protected val angle: Double = 360 / NUMBER_OF_PHASE
-
 
   /**
    * Initialization of the clock element in the GUI
@@ -36,10 +35,10 @@ trait Clock {
   def reset(): Unit
 }
 
-object Clock {
-  def apply(): Clock = ClockImpl()
+object ClockView {
+  def apply(): ClockView = ClockImpl()
 
-  private case class ClockImpl() extends Clock {
+  private case class ClockImpl() extends ClockView {
     private val clockRadius: Double = 35
     private val clock: Circle = Circle(clockRadius, clockRadius, clockRadius)
     private val spindle = Circle(clockRadius, clockRadius, 5)
@@ -47,6 +46,7 @@ object Clock {
     private val ticks = new Group()
     private val clockHand: Line = Line(0, 0, 0, -clockRadius)
     private val labelClock: Label = Label("")
+    private var generationPhase: GenerationPhase = WolvesPhase(1)
 
     override def initialize: Group = {
       clock.id = "clock"
@@ -80,23 +80,19 @@ object Clock {
     private def rotateClockHand(angle: Double = angle): Unit = clockHand.transforms += new Rotate(angle)
 
     override def updateClock(phase: GenerationPhase, angle: Double = angle): Unit = {
-      labelClock.text = phase.phase match {
-        case WOLVES_PHASE       => "WOLVES"
-        case FOOD_PHASE         => "FOOD"
-        case TEMPERATURE_PHASE  => "TEMPERATURE"
-        case REPRODUCTION_PHASE => "REPRODUCTION"
-      }
+      this.generationPhase = phase
+      labelClock.text = phase.name
       rotateClockHand(angle)
     }
 
     /**
      * Reset the clock to its initial status
      */
-    override def reset(): Unit = labelClock.text.value match {
-      case "WOLVES"       => rotateClockHand(2 * angle)
-      case "FOOD"         => rotateClockHand(angle)
-      case "TEMPERATURE"  =>
-      case "REPRODUCTION" => rotateClockHand(3 * angle)
+    override def reset(): Unit = generationPhase.phase match {
+      case WOLVES_PHASE       => rotateClockHand(2 * angle)
+      case FOOD_PHASE         => rotateClockHand(angle)
+      case TEMPERATURE_PHASE  =>
+      case REPRODUCTION_PHASE => rotateClockHand(3 * angle)
     }
 
   }
