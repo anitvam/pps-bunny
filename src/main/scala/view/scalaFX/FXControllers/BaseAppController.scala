@@ -2,26 +2,24 @@ package view.scalaFX.FXControllers
 
 import controller.Controller
 import engine.SimulationConstants.PhasesConstants._
-
 import javafx.fxml.FXML
-import javafx.scene.{layout => jfxs}
+import javafx.scene.{ layout => jfxs }
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
-import scalafx.scene.control.{Button, Label}
-import scalafx.scene.layout.{AnchorPane, Background}
+import scalafx.scene.control.{ Button, Label }
+import scalafx.scene.layout.{ AnchorPane, Background }
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 import util.PimpScala.RichOption
-import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
-import view.scalaFX.components.{BunnyView, Clock}
+import view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH }
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
-import view.scalaFX.utilities.EnvironmentImageUtils._
-import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
+import view.scalaFX.components.{ BunnyView, Clock }
+import view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
 import view.scalaFX.utilities._
 
-import scala.language.{implicitConversions, postfixOps}
+import scala.language.{ implicitConversions, postfixOps }
 
 sealed trait BaseAppControllerInterface {
 
@@ -180,7 +178,7 @@ class BaseAppController(
     bunnyViews.filterNot(_.bunny.alive).foreach(bv => simulationPane.children.remove(bv.imageView))
     bunnyViews = bunnyViews.filter(_.bunny.alive)
 
-    updateClock(generationPhase)
+    clockController.updateClock(generationPhase)
 
     // Bunny visualization inside simulationPane
     if (generationPhase.phase == REPRODUCTION_PHASE) {
@@ -195,18 +193,18 @@ class BaseAppController(
       // Start movement of the new bunnies
       newBunnyViews foreach { _.play() }
 
-      updateClock(generationPhase)
+      clockController.updateClock(generationPhase)
     }
 
     if (generationPhase.phase == WOLVES_PHASE) {
-      updateClock(generationPhase)
+      clockController.updateClock(generationPhase)
       factorsPanelController --> { _.showWolvesEating() }
     }
 
-    if (generationPhase.phase == FOOD_PHASE) updateClock(generationPhase)
+    if (generationPhase.phase == FOOD_PHASE) clockController.updateClock(generationPhase)
 
     if (generationPhase.phase == TEMPERATURE_PHASE)
-      updateClock(generationPhase)
+      clockController.updateClock(generationPhase)
 
 
   }
@@ -243,12 +241,5 @@ class BaseAppController(
       case "4x" => "1x"
     }
   }
-
-  /**
-   * Method that update clock's hand corresponding to the current phase and show the name of the current phase
-   * @param generationPhase
-   *   the current generation phase
-   */
-  private def updateClock(generationPhase: GenerationPhase): Unit = clockController.updateClock(generationPhase)
 
 }
