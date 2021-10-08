@@ -109,16 +109,13 @@ object Bunny {
    * Method that filter a population of bunnies with two AlleleKinds together
    * @param bunnies
    *   the bunny population
-   * @param allele1
-   *   the first allele filtered on the population
-   * @param allele2
-   *   the second allele filtered in population
+   * @param alleleKinds
+   *   the alleles filter the population with
    * @return
    *   Population the population with the specified AlleleKinds together
    */
-  def filterBunniesWithAlleles(bunnies: Population, allele1: AlleleKind, allele2: AlleleKind): Population =
-    bunnies filter { bunny =>
-      bunny.genotype.phenotype.values.exists(_ == allele1) &&
-      bunny.genotype.phenotype.values.exists(_ == allele2)
+  def filterBunniesWithAlleles(bunnies: Population, alleleKinds: AlleleKind*): Population =
+    bunnies filter {
+      bunny => alleleKinds.count(ak => bunny.genotype.phenotype.values.exists(_ == ak)) == alleleKinds.size
     }
 }
