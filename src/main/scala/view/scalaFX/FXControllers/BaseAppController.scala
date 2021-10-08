@@ -67,7 +67,10 @@ class BaseAppController(
     @FXML private val startButton: Button,
     @FXML private val generationLabel: Label,
     @FXML private val chartChoicePane: AnchorPane,
-    @FXML private val speedButton: Button
+    @FXML private val speedButton: Button,
+    @FXML private val summerButton: Button,
+    @FXML private val winterButton: Button,
+    @FXML private val informationPanel: AnchorPane
 ) extends BaseAppControllerInterface {
 
   private var bunnyViews: Seq[BunnyView] = Seq.empty
@@ -141,18 +144,27 @@ class BaseAppController(
   /** Handler of Start button click */
   def startSimulation(): Unit = {
     startButton.setVisible(false)
+    informationPanel.visible = false
     Controller.startSimulation()
   }
 
   /** Handler of Summer button click */
   def setEnvironmentSummer(): Unit = {
     Controller.setSummerClimate()
-    factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
+    manageClimateClick(summerButton, winterButton)
   }
 
   /** Handler of Winter button click */
   def setEnvironmentWinter(): Unit = {
     Controller.setWinterClimate()
+    manageClimateClick(winterButton, summerButton)
+  }
+
+  private def manageClimateClick(clickedButton: Button, otherButton: Button): Unit = {
+    clickedButton.styleClass -= "button-clickable"
+    otherButton.styleClass += "button-clickable"
+    clickedButton.disable = true
+    otherButton.disable = false
     factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
   }
 
