@@ -2,11 +2,11 @@ package view.scalaFX.components
 
 import engine.SimulationConstants.NUMBER_OF_PHASE
 import engine.SimulationConstants.PhasesConstants._
-import model.world.GenerationsUtils.{GenerationPhase, ReproductionPhase}
+import model.world.GenerationsUtils.{ GenerationPhase, ReproductionPhase }
 import scalafx.Includes.jfxDoubleProperty2sfx
 import scalafx.scene.Group
 import scalafx.scene.control.Label
-import scalafx.scene.shape.{Circle, Line}
+import scalafx.scene.shape.{ Circle, Line }
 import scalafx.scene.transform.Rotate
 
 trait ClockView {
@@ -84,7 +84,7 @@ object ClockView {
       labelClock.text = phase.name
       rotateClockHand(angle)
     }
-    
+
     override def reset(): Unit = generationPhase.phase match {
       case WOLVES_PHASE       => rotateClockHand(2 * angle)
       case FOOD_PHASE         => rotateClockHand(angle)
