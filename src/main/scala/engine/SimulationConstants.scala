@@ -5,35 +5,11 @@ import scala.language.postfixOps
 
 object SimulationConstants {
 
-  /** After how many milliseconds from the start of generation the wolves can eat */
-  val WOLVES_INSTANT: Double = 3000
-
-  /** After how many milliseconds from the start of generation the bunnies can eat */
-  val FOOD_INSTANT: Double = 6000
-
-  /** After how many milliseconds from the start of generation the bunnies are affected by high temperatures */
-  val TEMP_INSTANT: Double = 9000
-
-  /** Duration in milliseconds of a generation */
-  val GENERATION_END: Double = 12000
-
   val DEFAULT_SPEED: Double = 1
 
   val TWO_PER_SPEED: Double = 0.5
 
   val FOUR_PER_SPEED: Double = 0.25
-
-  /** Double value associated to generation initial phase */
-  val REPRODUCTION_PHASE: Double = 0.0
-
-  /** Double value associated to generation wolf phase */
-  val WOLVES_PHASE: Double = 0.25
-
-  /** Double value associated to generation food phase */
-  val FOOD_PHASE: Double = 0.50
-
-  /** Double value associated to generation temp phase */
-  val TEMPERATURE_PHASE = 0.75
 
   /** Maximum number of alive bunnies in the world */
   val MAX_ALIVE_BUNNIES: Int = 1000
@@ -52,6 +28,33 @@ object SimulationConstants {
 
   /** Number of generations in a genealogical tree */
   val MAX_GENEALOGICAL_TREE_GENERATIONS: Int = 4
+
+  object PhasesConstants {
+
+    /** Double value associated to generation initial phase */
+    val REPRODUCTION_PHASE: Double = 0.0
+
+    /** Double value associated to generation wolf phase */
+    val WOLVES_PHASE: Double = 0.25
+
+    /** Double value associated to generation food phase */
+    val FOOD_PHASE: Double = 0.50
+
+    /** Double value associated to generation temp phase */
+    val TEMPERATURE_PHASE = 0.75
+
+    /** After how many milliseconds from the start of generation the wolves can eat */
+    val WOLVES_INSTANT: Double = 3000
+
+    /** After how many milliseconds from the start of generation the bunnies can eat */
+    val FOOD_INSTANT: Double = 6000
+
+    /** After how many milliseconds from the start of generation the bunnies are affected by high temperatures */
+    val TEMP_INSTANT: Double = 9000
+
+    /** Duration in milliseconds of a generation */
+    val GENERATION_END: Double = 12000
+  }
 
   object FactorsConstants {
 
