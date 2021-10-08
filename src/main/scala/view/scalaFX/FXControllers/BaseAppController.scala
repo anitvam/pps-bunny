@@ -152,20 +152,20 @@ class BaseAppController(
   /** Handler of Summer button click */
   def setEnvironmentSummer(): Unit = {
     Controller.setSummerClimate()
-    summerButton.styleClass -= "button-clickable"
-    summerButton.disable = true
-    winterButton.styleClass += "button-clickable"
-    winterButton.disable = false
-    factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
+    manageClimateClick(summerButton, winterButton)
   }
 
   /** Handler of Winter button click */
   def setEnvironmentWinter(): Unit = {
     Controller.setWinterClimate()
-    winterButton.styleClass -= "button-clickable"
-    winterButton.disable = true
-    summerButton.styleClass += "button-clickable"
-    summerButton.disable = false
+    manageClimateClick(winterButton, summerButton)
+  }
+
+  private def manageClimateClick(clickedButton: Button, otherButton: Button): Unit = {
+    clickedButton.styleClass -= "button-clickable"
+    otherButton.styleClass += "button-clickable"
+    clickedButton.disable = true
+    otherButton.disable = false
     factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
   }
 
