@@ -2,7 +2,7 @@ package engine
 
 import engine.SimulationConstants._
 import model.world.Generation.Population
-import model.world.Reproduction.{generateInitialCouple, nextGenerationBunnies}
+import model.world.Reproduction.{initialCoupleGenerator, nextGenerationBunnies}
 import model.world._
 
 import scala.language.implicitConversions
@@ -11,7 +11,7 @@ object SimulationHistory {
 
   type History = List[Generation]
 
-  val historyInit: () => History = () => List(Generation(Environment(Summer, List()), generateInitialCouple().toSeq))
+  val historyInit: () => History = () => List(Generation(Environment(Summer, List()), initialCoupleGenerator().toSeq))
 
   var history: History = historyInit()
 

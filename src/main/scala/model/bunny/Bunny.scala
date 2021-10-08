@@ -70,8 +70,7 @@ object Bunny {
   val randomGenderChooser: () => Gender = () => Seq(Male, Female).random
 
   /**
-   * @return
-   *   a FirstBunny with the "base" allele for each gene
+   * Generator for a Bunny with the "base" allele for each gene.
    */
   val baseBunnyGenerator: Gender =>  FirstBunny = gender => new FirstBunny(
     CompleteGenotype(
@@ -79,8 +78,7 @@ object Bunny {
     ), gender)
 
   /**
-   * @return
-   *   a FirstBunny with a random allele for each gene
+   * Generator for a Bunny with a random allele for each gene.
    */
   val randomBunnyGenerator: () => FirstBunny = () => {
     new FirstBunny(

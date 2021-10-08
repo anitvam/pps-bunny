@@ -4,7 +4,7 @@ import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
 import model.bunny.Bunny.randomBunnyGenerator
 import model.bunny.Tree.generateTree
 import model.bunny._
-import model.world.Reproduction.{generateInitialCouple, nextGenerationBunnies}
+import model.world.Reproduction.{initialCoupleGenerator, nextGenerationBunnies}
 import org.scalatest.{FlatSpec, Matchers}
 import util.PimpScala.RichOption
 
@@ -21,7 +21,7 @@ class TestTree extends FlatSpec with Matchers {
   }
 
   val bunnyWithParents: Bunny =
-    nextGenerationBunnies(List.fill(2)(generateInitialCouple()).flatMap(_.toSeq)).filter(_.mom ?).head
+    nextGenerationBunnies(List.fill(2)(initialCoupleGenerator()).flatMap(_.toSeq)).filter(_.mom ?).head
 
   val tree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunnyWithParents)
 
@@ -33,7 +33,7 @@ class TestTree extends FlatSpec with Matchers {
 
   var bunny: Bunny = randomBunnyGenerator()
   for (_ <- 0 to MAX_GENEALOGICAL_TREE_GENERATIONS) {
-    bunny = nextGenerationBunnies(bunny :: List.fill(2)(generateInitialCouple()).flatMap(_.toSeq))
+    bunny = nextGenerationBunnies(bunny :: List.fill(2)(initialCoupleGenerator()).flatMap(_.toSeq))
       .sortBy(generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, _).generations).reverse.head
   }
   val fullTree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)

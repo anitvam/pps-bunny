@@ -9,7 +9,7 @@ import model.world.Reproduction._
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestMutations extends FlatSpec with Matchers {
-  val couple: Couple = generateInitialCouple()
+  val couple: Couple = initialCoupleGenerator()
   val children: Population = generateChildren(couple)
   val mutationFurColor: Mutation = Mutation(Genes.FUR_COLOR, isDominant = true)
   val mutationFurLength: Mutation = Mutation(Genes.FUR_LENGTH, isDominant = false)

@@ -80,12 +80,6 @@ object Reproduction {
   }
 
   /**
-   * @return
-   *   the first two bunnies of the simulation
-   */
-  val generateInitialCouple: () => Couple = () => Couple(mom = baseBunnyGenerator(Female), dad = baseBunnyGenerator(Male))
-
-  /**
    * @param bunnies
    *   bunnies from the last generation
    * @return
@@ -95,4 +89,9 @@ object Reproduction {
     bunnies.foreach(_.increaseAge())
     generateAllChildren(bunnies, mutations) ++ bunnies.filter(_.alive)
   }
+
+  /**
+   * Generator for the first two bunnies of the simulation.
+   */
+  val initialCoupleGenerator: () => Couple = () => Couple(mom = baseBunnyGenerator(Female), dad = baseBunnyGenerator(Male))
 }
