@@ -4,7 +4,7 @@ import cats.effect.IO
 import it.unibo.pps.bunny.controller.Controller
 import it.unibo.pps.bunny.engine.SimulationHistory.{ getActualGeneration, getActualPopulation }
 import it.unibo.pps.bunny.model.world.GenerationsUtils.GenerationPhase
-import it.unibo.pps.bunny.model.world.disturbingFactors.FactorTypes._
+import it.unibo.pps.bunny.model.world.disturbingFactors._
 import it.unibo.pps.bunny.util.PimpScala.RichOption
 import it.unibo.pps.bunny.view.scalaFX.ScalaFXView
 

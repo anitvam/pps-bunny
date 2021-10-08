@@ -7,7 +7,6 @@ import it.unibo.pps.bunny.model.world.Generation.Population
 import scala.util.Random
 
 trait Factor {
-  import it.unibo.pps.bunny.model.world.disturbingFactors.FactorTypes._
 
   /** @return the normal damage that is applied with this Factor */
   val normalDamage: Double
@@ -73,8 +72,7 @@ object FactorsUtils {
 
 }
 
-object FactorTypes extends Enumeration {
-  type FactorKind = Value
-
-  val WolvesFactorKind, UnfriendlyClimateFactorKind, FoodFactorKind = Value
-}
+sealed trait FactorKind
+case object WolvesFactorKind extends FactorKind
+case object UnfriendlyClimateFactorKind extends FactorKind
+case object FoodFactorKind extends FactorKind

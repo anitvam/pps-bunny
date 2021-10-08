@@ -1,6 +1,6 @@
 package it.unibo.pps.bunny.model.world.disturbingFactors
 
-import it.unibo.pps.bunny.model.world.disturbingFactors.FactorTypes._
+import it.unibo.pps.bunny.model.world.disturbingFactors._
 import it.unibo.pps.bunny.util.PimpScala._
 
 case class Factors(private var factors: List[Factor] = List()) {

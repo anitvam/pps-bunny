@@ -1,43 +1,40 @@
 package it.unibo.pps.bunny.model.factors
 
-import it.unibo.pps.bunny.model.world.disturbingFactors.{
-  FactorTypes, HighFoodFactor, HighToughFoodFactor, LimitedFoodFactor, LimitedHighFoodFactor,
-  LimitedHighToughFoodFactor, LimitedToughFoodFactor, ToughFoodFactor, UnfriendlyClimateFactor, WolvesFactor
-}
+import it.unibo.pps.bunny.model.world.disturbingFactors._
 import org.scalatest.{ FlatSpec, Matchers }
 
 class TestFactors extends FlatSpec with Matchers {
 
   "A LimitedFoodFactor" should "have FoodFactor type" in assert(
-    LimitedFoodFactor().factorType == FactorTypes.FoodFactorKind
+    LimitedFoodFactor().factorType == FoodFactorKind
   )
 
   "A ToughFoodFactor" should "have FoodFactor type" in assert(
-    ToughFoodFactor().factorType == FactorTypes.FoodFactorKind
+    ToughFoodFactor().factorType == FoodFactorKind
   )
 
-  "A HighFoodFactor" should "have FoodFactor type" in assert(HighFoodFactor().factorType == FactorTypes.FoodFactorKind)
+  "A HighFoodFactor" should "have FoodFactor type" in assert(HighFoodFactor().factorType == FoodFactorKind)
 
   "A HighLimitedFoodFactor" should "have FoodFactor type" in assert(
-    LimitedHighFoodFactor().factorType == FactorTypes.FoodFactorKind
+    LimitedHighFoodFactor().factorType == FoodFactorKind
   )
 
   "A HighToughFoodFactor" should "have FoodFactor type" in assert(
-    HighToughFoodFactor().factorType == FactorTypes.FoodFactorKind
+    HighToughFoodFactor().factorType == FoodFactorKind
   )
 
   "A ToughLimitedFoodFactor" should "have FoodFactor type" in assert(
-    LimitedToughFoodFactor().factorType == FactorTypes.FoodFactorKind
+    LimitedToughFoodFactor().factorType == FoodFactorKind
   )
 
   "A LimitedToughHighFoodFactor" should "have FoodFactor type" in assert(
-    LimitedHighToughFoodFactor().factorType == FactorTypes.FoodFactorKind
+    LimitedHighToughFoodFactor().factorType == FoodFactorKind
   )
 
-  "A WolvesFactor" should "have Wolves type" in assert(WolvesFactor().factorType == FactorTypes.WolvesFactorKind)
+  "A WolvesFactor" should "have Wolves type" in assert(WolvesFactor().factorType == WolvesFactorKind)
 
   "A UnfriendlyClimateFactor" should "have UnfriendlyClimate type" in assert(
-    UnfriendlyClimateFactor().factorType == FactorTypes.UnfriendlyClimateFactorKind
+    UnfriendlyClimateFactor().factorType == UnfriendlyClimateFactorKind
   )
 
 }

@@ -6,7 +6,7 @@ import it.unibo.pps.bunny.model.genome.Genes
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.{ Climate, Summer }
-import it.unibo.pps.bunny.model.world.disturbingFactors.FactorTypes.{ FactorKind, UnfriendlyClimateFactorKind }
+import it.unibo.pps.bunny.model.world.disturbingFactors._
 import it.unibo.pps.bunny.model.world.disturbingFactors.FactorsUtils.applyCustomDamage
 
 abstract class ClimateFactor() extends BasicFactor {

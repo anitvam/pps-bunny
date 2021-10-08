@@ -7,7 +7,7 @@ import it.unibo.pps.bunny.model.genome.Genes
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.world.Climate
 import it.unibo.pps.bunny.model.world.Generation.Population
-import it.unibo.pps.bunny.model.world.disturbingFactors.FactorTypes._
+import it.unibo.pps.bunny.model.world.disturbingFactors._
 import it.unibo.pps.bunny.model.world.disturbingFactors.FactorsUtils._
 
 sealed trait FoodFactor extends BasicFactor {
