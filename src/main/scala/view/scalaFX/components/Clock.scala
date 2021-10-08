@@ -1,6 +1,8 @@
 package view.scalaFX.components
 
 import engine.SimulationConstants.NUMBER_OF_PHASE
+import engine.SimulationConstants.PhasesConstants._
+import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes.jfxDoubleProperty2sfx
 import scalafx.scene.Group
 import scalafx.scene.control.Label
@@ -12,6 +14,7 @@ trait Clock {
   /** angle of the clock hand */
   protected val angle: Double = 360 / NUMBER_OF_PHASE
 
+
   /**
    * Initialization of the clock element in the GUI
    * @return
@@ -19,15 +22,15 @@ trait Clock {
    */
   def initialize: Group
 
-  /** Rotate the clock hand to show the flow of time */
-  def rotateClockHand(angle: Double = angle): Unit
-
   /**
-   * Update the label of the clock with the name of the current phase
-   * @param phase
+   * Update the label of the clock with the name of the current phase (chosen in correlation to the current generation
+   * phase) and rotate the clock hand
+   * @param generationPhase
    *   the label to be shown
+   * @param angle
+   *   the angle the clock hand rotate to
    */
-  def updateClockLabel(phase: String): Unit
+  def updateClock(generationPhase: GenerationPhase, angle: Double = angle): Unit
 }
 object Clock {
   def apply(): Clock = ClockImpl()
@@ -52,6 +55,7 @@ object Clock {
       clockHand.translateY = clockRadius
 
       for (i <- 0 to NUMBER_OF_PHASE) {
+
         val tick = Line(0, -23, 0, -33)
         tick.translateX = clockRadius
         tick.translateY = clockRadius
@@ -69,9 +73,17 @@ object Clock {
       analogueClock
     }
 
-    override def rotateClockHand(angle: Double = angle): Unit = clockHand.transforms += new Rotate(angle)
+    private def rotateClockHand(angle: Double = angle): Unit = clockHand.transforms += new Rotate(angle)
 
-    override def updateClockLabel(phase: String): Unit = labelClock.text = phase
+    override def updateClock(phase: GenerationPhase, angle: Double = angle): Unit = {
+      labelClock.text = phase.phase match {
+        case WOLVES_PHASE => "WOLVES"
+        case FOOD_PHASE => "FOOD"
+        case TEMPERATURE_PHASE => "TEMPERATURE"
+        case REPRODUCTION_PHASE => "REPRODUCTION"
+      }
+      rotateClockHand(angle)
+    }
   }
 
 }

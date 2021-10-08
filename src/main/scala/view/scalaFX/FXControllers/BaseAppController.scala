@@ -116,8 +116,6 @@ class BaseAppController(
     // Load the default environment background
     factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
     populationChart = Some(PopulationChart(PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH))
-    simulationPane.background = SummerImage()
-    populationChart = Some(PopulationChart(PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH))
     showPopulationChart()
   }
 
@@ -182,6 +180,8 @@ class BaseAppController(
     bunnyViews.filterNot(_.bunny.alive).foreach(bv => simulationPane.children.remove(bv.imageView))
     bunnyViews = bunnyViews.filter(_.bunny.alive)
 
+    updateClock(generationPhase)
+
     // Bunny visualization inside simulationPane
     if (generationPhase.phase == REPRODUCTION_PHASE) {
       val newBunnyViews = bunnies filter { _.age == 0 } map { BunnyView(_) }
@@ -195,18 +195,19 @@ class BaseAppController(
       // Start movement of the new bunnies
       newBunnyViews foreach { _.play() }
 
-      updateClock("REPRODUCTION")
+      updateClock(generationPhase)
     }
 
     if (generationPhase.phase == WOLVES_PHASE) {
-      updateClock("WOLVES")
+      updateClock(generationPhase)
       factorsPanelController --> { _.showWolvesEating() }
     }
 
-    if (generationPhase.phase == FOOD_PHASE) updateClock("FOOD")
+    if (generationPhase.phase == FOOD_PHASE) updateClock(generationPhase)
 
     if (generationPhase.phase == TEMPERATURE_PHASE)
-      updateClock("HIGH_TEMPERATURE")
+      updateClock(generationPhase)
+
 
   }
 
@@ -245,12 +246,9 @@ class BaseAppController(
 
   /**
    * Method that update clock's hand corresponding to the current phase and show the name of the current phase
-   * @param label
-   *   the name of the current phase
+   * @param generationPhase
+   *   the current generation phase
    */
-  private def updateClock(label: String): Unit = {
-    clockController.rotateClockHand()
-    clockController.updateClockLabel(label)
-  }
+  private def updateClock(generationPhase: GenerationPhase): Unit = clockController.updateClock(generationPhase)
 
 }
