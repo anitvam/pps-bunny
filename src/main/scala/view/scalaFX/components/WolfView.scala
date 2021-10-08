@@ -23,6 +23,8 @@ trait WolfView extends AnimalView {
   /** Reference to the factor panel controller entity */
   val factorsPanelController: Option[FactorsPanelControllerInterface]
 
+  def playInstantly(): Unit
+
 }
 
 object WolfView {
@@ -56,23 +58,34 @@ object WolfView {
   ) extends WolfView {
 
     private var lastTime = 0L
+    private var isPlayDelayed = true
+
+    private val isAnimationDelayed: Long => Boolean =
+      _ < WOLVES_INSTANT_DEVIATION * 1000 * Controller.getCurrentSimulationSpeed()
 
     private val timer: AnimationTimer = AnimationTimer(_ => {
-      if (lastTime < WOLVES_INSTANT_DEVIATION * 1000 * Controller.getCurrentSimulationSpeed()) {} else if (
-        lastTime <= WOLVES_PHASE * 1000 * Controller.getCurrentSimulationSpeed()
-      ) {
-        imageView.visible = true
-        checkDirection(
-          positionX + imageView.getFitWidth / 2 >= PREFERRED_SIMULATION_PANEL_WIDTH - PREFERRED_SIMULATION_PANEL_BORDER,
-          positionX - imageView.getFitWidth / 2 < 0
-        )
-        moveHorizontally(WOLVES_MOVING_SPACE)
-        imageView.x = positionX
-      } else stop()
+      if (!isAnimationDelayed(lastTime) || !isPlayDelayed)
+        if (lastTime <= WOLVES_PHASE * 1000 * Controller.getCurrentSimulationSpeed()) {
+          imageView.visible = true
+          checkDirection(
+            positionX + imageView.getFitWidth / 2 >= PREFERRED_SIMULATION_PANEL_WIDTH - PREFERRED_SIMULATION_PANEL_BORDER,
+            positionX - imageView.getFitWidth / 2 < 0
+          )
+          moveHorizontally(WOLVES_MOVING_SPACE)
+          imageView.x = positionX
+        } else stop()
+
       lastTime += 1
     })
 
     override def play(): Unit = {
+      isPlayDelayed = true
+      imageView.visible = false
+      timer.start()
+    }
+
+    override def playInstantly(): Unit = {
+      isPlayDelayed = false
       imageView.visible = false
       timer.start()
     }

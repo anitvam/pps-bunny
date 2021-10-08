@@ -26,10 +26,15 @@ sealed trait FactorsPanelControllerInterface {
   /** Method to show the wolves phase in the principal panel */
   def showWolves(): Unit
 
-  /** Method to remove the wolf when the corresponding phase terminate
-   * @param wolfImage the image of the wolf to be removed from the panel
+  /**
+   * Method to remove the wolf when the corresponding phase terminate
+   * @param wolfImage
+   *   the image of the wolf to be removed from the panel
    */
   def removeWolf(wolfImage: ImageView): Unit
+
+  /** @return true if the wolves have to be shown */
+  var areWolvesShown: Boolean = false
 }
 
 @sfxml
@@ -74,14 +79,27 @@ class FactorsPanelController(
     )
   }
 
-  override def showWolves(): Unit = if (wolfCheckBox.isSelected) wolvesView foreach (w => {
-    baseAppController --> { b => b.simulationPane.children.add(w.imageView) }
-    w.play()
-  })
+  def startWolfAnimation(playWolf: WolfView => Unit = _.play()): Unit = {
+    wolvesView foreach (w => {
+      baseAppController --> { _.simulationPane.children.add(w.imageView) }
+      playWolf(w)
+    })
+    areWolvesShown = false
+  }
 
-  override def removeWolf(wolfImage: ImageView): Unit = baseAppController --> {b => b.simulationPane.children.remove(wolfImage)}
+  override def showWolves(): Unit = {
+    areWolvesShown = true
+    if (wolfCheckBox.isSelected) startWolfAnimation()
+  }
 
-  def onWolfClick(): Unit = onFactorClick(wolfCheckBox, Wolves())
+  override def removeWolf(wolfImage: ImageView): Unit = {
+    baseAppController --> { _.simulationPane.children.remove(wolfImage) }
+  }
+
+  def onWolfClick(): Unit = {
+    onFactorClick(wolfCheckBox, Wolves())
+    if (areWolvesShown && wolfCheckBox.isSelected) startWolfAnimation(_.playInstantly())
+  }
 
   def onToughFoodClick(): Unit = {
     manageEnvironmentBackgroundChange()
