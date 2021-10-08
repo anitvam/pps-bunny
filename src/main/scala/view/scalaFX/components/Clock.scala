@@ -32,9 +32,7 @@ trait Clock {
    */
   def updateClock(generationPhase: GenerationPhase, angle: Double = angle): Unit
 
-  /**
-   * Reset the clock to its initial status
-   */
+  /** Reset the clock to its initial status */
   def reset(): Unit
 }
 
