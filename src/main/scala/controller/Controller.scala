@@ -16,6 +16,7 @@ object Controller {
   /** Method that starts the simulation */
   def startSimulation(): Unit = simulationLoop().unsafeRunAsyncAndForget()
 
+  /** Method that change the Simulation Speed */
   def changeSimulationSpeed(): Unit = SimulationEngine.changeSpeed()
 
   /** Method that sets the Summer Climate inside Environment */
@@ -32,7 +33,11 @@ object Controller {
   def insertMutation(mutation: Mutation): Unit =
     SimulationHistory.getActualGeneration.environment introduceMutation mutation
 
-  /** Method that shows the end of the simulation on the Application GUI */
+  /**
+   * Method that shows the end of the simulation on the Application GUI
+   * @param endType
+   *   the reason why the simulation is terminated
+   */
   def showEnd(endType: SimulationEndType): Unit = Platform runLater {
     ScalaFXView.showEnd(endType)
   }
@@ -44,10 +49,21 @@ object Controller {
     resetEngine()
   }
 
+  /** Method to get the population of the actual generation, it contains also dead bunnies */
   def population: Population = SimulationHistory.getActualGeneration.population
 
+  /**
+   * Method to introduce a new [[Factor]] in the environment of the actual generation
+   * @param factor
+   *   the new factor added by the user
+   */
   def introduceFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment introduceFactor factor
 
+  /**
+   * Method to remove a [[Factor]] from the environment of the actual generation
+   * @param factor
+   *   the new factor added by the user
+   */
   def removeFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment removeFactor factor
 
   def getCurrentSimulationSpeed: Double = SimulationEngine.simulationSpeed
