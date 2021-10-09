@@ -1,20 +1,20 @@
 package engine
 
 import cats.effect.IO
-import engine.GenerationTimer.{resetTimer, waitFor}
+import engine.GenerationTimer.{ resetTimer, waitFor }
 import engine.Simulation._
 import engine.SimulationConstants._
-import engine.SimulationHistory.{getBunniesNumber, getGenerationNumber}
+import engine.SimulationHistory.{ getBunniesNumber, getGenerationNumber }
 import engine.engineConversions._
 import model.world.GenerationsUtils._
 
-import scala.concurrent.duration.{DurationDouble, FiniteDuration}
-import scala.language.{implicitConversions, postfixOps}
+import scala.concurrent.duration.{ DurationDouble, FiniteDuration }
+import scala.language.{ implicitConversions, postfixOps }
 
 object SimulationEngine {
   var simulationSpeed: Double = 1
 
-  def incrementSpeed(): Unit = simulationSpeed match {
+  def changeSpeed(): Unit = simulationSpeed match {
     case DEFAULT_SPEED  => simulationSpeed = TWO_PER_SPEED
     case TWO_PER_SPEED  => simulationSpeed = FOUR_PER_SPEED
     case FOUR_PER_SPEED => simulationSpeed = DEFAULT_SPEED

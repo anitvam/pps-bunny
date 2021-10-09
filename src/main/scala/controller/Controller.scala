@@ -16,7 +16,7 @@ object Controller {
   /** Method that starts the simulation */
   def startSimulation(): Unit = simulationLoop().unsafeRunAsyncAndForget()
 
-  def incrementSimulationSpeed(): Unit = SimulationEngine.incrementSpeed()
+  def changeSimulationSpeed(): Unit = SimulationEngine.changeSpeed()
 
   /** Method that sets the Summer Climate inside Environment */
   def setSummerClimate(): Unit = SimulationHistory changeEnvironmentClimate Summer

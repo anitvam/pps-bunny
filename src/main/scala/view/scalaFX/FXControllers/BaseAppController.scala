@@ -234,7 +234,7 @@ class BaseAppController(
   override def changeBackgroundEnvironment(background: Background): Unit = simulationPane.background = background
 
   override def changeSimulationSpeed(): Unit = {
-    Controller.incrementSimulationSpeed()
+    Controller.changeSimulationSpeed()
     speedButton.text = speedButton.getText match {
       case "1x" => "2x"
       case "2x" => "4x"
