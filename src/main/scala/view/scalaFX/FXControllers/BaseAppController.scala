@@ -27,6 +27,7 @@ sealed trait BaseAppControllerInterface {
   /** Method to reset the application interface and start a new simulation */
   def reset(): Unit
 
+  /** Method to get the simulation panel */
   def simulationPane: AnchorPane
 
   /** Method that shows population chart inside chartsPane */
@@ -187,7 +188,7 @@ class BaseAppController(
     updatedBunnyViews._1
   }
 
-  def updateView(bunnies: Population, generationPhase: GenerationPhase): Unit = {
+  override def updateView(bunnies: Population, generationPhase: GenerationPhase): Unit = {
     updateCharts(bunnies, generationPhase)
     clockView.updateClock(generationPhase)
 
@@ -230,7 +231,7 @@ class BaseAppController(
 
   override def changeBackgroundEnvironment(background: Background): Unit = simulationPane.background = background
 
-  def addSpeedUp(): Unit = {
+  override def addSpeedUp(): Unit = {
     Controller.incrementSimulationSpeed()
     speedButton.text = speedButton.getText match {
       case "1x" => "2x"
