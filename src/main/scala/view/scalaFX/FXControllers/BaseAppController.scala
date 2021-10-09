@@ -3,23 +3,21 @@ package view.scalaFX.FXControllers
 import controller.Controller
 import engine.SimulationConstants.PhasesConstants._
 import javafx.fxml.FXML
-import javafx.scene.{layout => jfxs}
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
-import scalafx.Includes._
-import scalafx.scene.control.{Button, Label}
-import scalafx.scene.layout.{AnchorPane, Background}
+import scalafx.scene.control.{ Button, Label }
+import scalafx.scene.layout.{ AnchorPane, Background }
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
-import util.PimpScala.RichOption
-import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH}
-import view.scalaFX.components.{BunnyView, ClockView}
+import util.PimpScala._
+import view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH }
 import view.scalaFX.components.charts.PopulationChart
 import view.scalaFX.components.charts.pedigree.PedigreeChart
-import view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
+import view.scalaFX.components.{ BunnyView, ClockView }
+import view.scalaFX.utilities.FxmlUtils.{ loadPanelAndGetController, setFitParent }
 import view.scalaFX.utilities._
 
-import scala.language.{implicitConversions, postfixOps}
+import scala.language.{ implicitConversions, postfixOps }
 
 sealed trait BaseAppControllerInterface {
 
@@ -84,26 +82,30 @@ class BaseAppController(
 
   override def initialize(): Unit = {
 
-    val loadedMutationChoicePanel = loadFXMLResource[jfxs.AnchorPane]("/fxml/mutationsPanel.fxml")
-    mutationChoicePane.children += loadedMutationChoicePanel._1
-    mutationsPanelController = Some(loadedMutationChoicePanel._2.getController[MutationsPanelControllerInterface])
+    mutationsPanelController = loadPanelAndGetController[MutationsPanelControllerInterface](
+      "/fxml/mutationsPanel.fxml",
+      mutationChoicePane.children += _
+    )
 
-    val loadedFactorsChoicePanel = loadFXMLResource[jfxs.AnchorPane]("/fxml/factorsPanel.fxml")
-    factorChoicePane.children += loadedFactorsChoicePanel._1
-    factorsPanelController = Some(loadedFactorsChoicePanel._2.getController[FactorsPanelControllerInterface])
+    factorsPanelController = loadPanelAndGetController[FactorsPanelControllerInterface](
+      "/fxml/factorsPanel.fxml",
+      factorChoicePane.children += _
+    )
     factorsPanelController --> { _.initialize(this) }
 
-    val loadedChartChoice = loadFXMLResource[jfxs.AnchorPane]("/fxml/chartChoiceSelection.fxml")
-    chartChoicePane.children += loadedChartChoice._1
-    chartSelectionPanelController = Some(loadedChartChoice._2.getController[ChartChoiceControllerInterface])
+    chartSelectionPanelController = loadPanelAndGetController[ChartChoiceControllerInterface](
+      "/fxml/chartChoiceSelection.fxml",
+      chartChoicePane.children += _
+    )
     chartSelectionPanelController --> { _.initialize(this) }
 
-    val loadedProportionsChartView = loadFXMLResource[jfxs.AnchorPane]("/fxml/proportionsChartPane.fxml")
-    proportionsChartPane = Some(loadedProportionsChartView._1)
-    proportionsChartController = Some(loadedProportionsChartView._2.getController[ChartController])
+    proportionsChartController = loadPanelAndGetController[ChartController](
+      "/fxml/proportionsChartPane.fxml",
+      chart => proportionsChartPane = Some(chart)
+    )
+    proportionsChartController --> { _.initialize() }
 
     setFitParent(proportionsChartPane.get)
-    proportionsChartController --> { _.initialize() }
 
     clock.children = clockView.initialize
     this.initializeView()
@@ -116,32 +118,34 @@ class BaseAppController(
     showPopulationChart()
   }
 
+  private def resetSimulationPanel(): Unit = {
+    bunnyViews = Seq.empty
+    simulationPane.children = Seq.empty
+    generationLabel.text = ""
+  }
+
+  private def resetSpeedButton(): Unit = {
+    speedButton.onAction = _ => addSpeedUp()
+    speedButton.text = "2x"
+    speedButton.styleClass -= "restart-button"
+  }
+
   def reset(): Unit = {
     speedButton.onAction = _ => {
       Controller.reset()
-      this.resetSimulationPanel()
+      resetSimulationPanel()
       selectedBunny = Option.empty
       proportionsChartController --> { _.resetChart() }
       mutationsPanelController --> { _.reset() }
       chartSelectionPanelController --> { _.reset() }
       factorsPanelController --> { _.reset() }
       clockView.reset()
-      this.initializeView()
-      speedButton.onAction = _ => addSpeedUp()
-      speedButton.text = "2x"
-      speedButton.styleClass -= "restart-button"
+      initializeView()
+      resetSpeedButton()
       startSimulation()
     }
     speedButton.text = ""
     speedButton.styleClass += "restart-button"
-  }
-
-  private def resetSimulationPanel(): Unit = {
-    bunnyViews = Seq.empty
-    simulationPane.children = Seq.empty
-    generationLabel.text = ""
-    speedButton.styleClass -= "restart-button"
-    startButton.setVisible(true)
   }
 
   /** Handler of Start button click */
@@ -171,16 +175,23 @@ class BaseAppController(
     factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
   }
 
-  def updateView(bunnies: Population, generationPhase: GenerationPhase): Unit = {
-    proportionsChartController.get.updateChart(generationPhase, bunnies)
+  private def updateCharts(bunnies: Population, generationPhase: GenerationPhase): Unit = {
+    proportionsChartController --> { _.updateChart(generationPhase, bunnies) }
     populationChart --> { _.updateChart(generationPhase, bunnies) }
-    if (chartSelectionPanelController.get.activeChart == ChartType.Pedigree) showPedigreeChart()
+    chartSelectionPanelController --> { c => if (c.activeChart == ChartType.Pedigree) showPedigreeChart() }
+  }
 
-    bunnyViews.filterNot(_.bunny.alive).foreach(bv => simulationPane.children.remove(bv.imageView))
-    bunnyViews = bunnyViews.filter(_.bunny.alive)
+  private def stillAliveBunnyViews: Seq[BunnyView] = {
+    val updatedBunnyViews = bunnyViews.partition(_.bunny.alive)
+    updatedBunnyViews._2.foreach(bv => simulationPane.children.remove(bv.imageView))
+    updatedBunnyViews._1
+  }
 
+  def updateView(bunnies: Population, generationPhase: GenerationPhase): Unit = {
+    updateCharts(bunnies, generationPhase)
     clockView.updateClock(generationPhase)
 
+    bunnyViews = stillAliveBunnyViews
     // Bunny visualization inside simulationPane
     if (generationPhase.phase == REPRODUCTION_PHASE) {
       val newBunnyViews = bunnies filter { _.age == 0 } map { BunnyView(_) }
