@@ -133,7 +133,7 @@ class BaseAppController(
     speedButton.styleClass -= "restart-button"
   }
 
-  def reset(): Unit = {
+  override def reset(): Unit = {
     speedButton.onAction = _ => {
       Controller.reset()
       resetSimulationPanel()
