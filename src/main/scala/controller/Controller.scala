@@ -49,7 +49,7 @@ object Controller {
     resetEngine()
   }
 
-  /** Method to get the population of the actual generation, it contains also dead bunnies */
+  /** @return the population of the actual generation, it contains also dead bunnies */
   def population: Population = SimulationHistory.getActualGeneration.population
 
   /**
@@ -66,5 +66,6 @@ object Controller {
    */
   def removeFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment removeFactor factor
 
+  /** @return the current simulation speed */
   def getCurrentSimulationSpeed: Double = SimulationEngine.simulationSpeed
 }
