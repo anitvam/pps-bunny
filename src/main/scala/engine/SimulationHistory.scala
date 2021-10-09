@@ -18,9 +18,6 @@ object SimulationHistory {
   /** Resets history to the initial value */
   def resetHistory(): Unit = history = historyInit()
 
-  /** Reset all the mutations added */
-  def resetMutations(): Unit = getActualGeneration.environment.mutations = List()
-
   /** @return the actual [[Generation]] */
   def getActualGeneration: Generation = history.head
 
@@ -36,8 +33,7 @@ object SimulationHistory {
   /**
    * Determines if there is a next generation
    */
-  def existNextGeneration: Boolean =
-    getGenerationNumber < MAX_GENERATIONS_NUMBER && getActualBunniesNumber < MAX_ALIVE_BUNNIES && getActualBunniesNumber >= MIN_ALIVE_BUNNIES
+  def existNextGeneration: Boolean = !worldIsOverpopulated && !bunniesAreExtinct && !tooManyGenerations
 
   /**
    * Determines if the wold is overpopulated by the bunnies
@@ -52,7 +48,7 @@ object SimulationHistory {
   /**
    * Determines if too many generations have passed
    */
-  def tooManyGeneration: Boolean = getGenerationNumber >= MAX_GENERATIONS_NUMBER
+  def tooManyGenerations: Boolean = getGenerationNumber >= MAX_GENERATIONS_NUMBER
 
   /** @return the [[Population]]  for the next [[Generation]] */
   private def getPopulationForNextGeneration: Population =
@@ -68,10 +64,4 @@ object SimulationHistory {
     history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history
   }
 
-  /**
-   * Change the Environment of the actual generation
-   * @param climate
-   *   the climate to set into the Environment
-   */
-  def changeEnvironmentClimate(climate: Climate): Unit = getActualGeneration.environment.climate = climate
 }

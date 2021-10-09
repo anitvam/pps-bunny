@@ -4,7 +4,7 @@ import cats.effect.IO
 import engine.GenerationTimer.{ resetTimer, waitFor }
 import engine.Simulation._
 import engine.SimulationConstants._
-import engine.SimulationHistory.{ bunniesAreExtinct, getGenerationNumber, tooManyGeneration, worldIsOverpopulated }
+import engine.SimulationHistory.{ bunniesAreExtinct, getGenerationNumber, tooManyGenerations, worldIsOverpopulated }
 import engine.engineConversions._
 import model.world.GenerationsUtils._
 
@@ -39,7 +39,7 @@ object SimulationEngine {
       _ <-
         if (bunniesAreExtinct) extinction()
         else if (worldIsOverpopulated) overpopulation()
-        else if (tooManyGeneration) end()
+        else if (tooManyGenerations) end()
         else generationLoop()
     } yield ()
   }

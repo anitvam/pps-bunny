@@ -11,7 +11,15 @@ ThisBuild / assemblyMergeStrategy := {
   case _                        => MergeStrategy.first
 }
 
-scalacOptions ++= Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-feature", "-Ymacro-annotations")
+scalacOptions ++= Seq(
+  "-unchecked",
+  "-deprecation",
+  "-encoding",
+  "utf8",
+  "-feature",
+  "-Ymacro-annotations",
+  "-language:implicitConversions"
+)
 
 name := "pps-bunny"
 
