@@ -3,10 +3,9 @@ package model.genome
 import model.MultipleDominanceAssignmentException
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
-import util.PimpScala.RichOption
+import util.PimpScala.{RichOption, RichSeq}
 
 import scala.language.{implicitConversions, postfixOps}
-import scala.util.Random
 
 /**
  * An Enumeration for all the Alleles present in the World.
@@ -14,6 +13,7 @@ import scala.util.Random
 object Alleles extends Enumeration {
   type AlleleKind = Value
   implicit def valueToAllelesVal(x: Value): AllelesVal = x.asInstanceOf[AllelesVal]
+  implicit def valueToString(x: Value): String = x.prettyName
 
   val WHITE_FUR: AllelesVal = AllelesVal("Pelo Bianco")
   val BROWN_FUR: AllelesVal = AllelesVal("Pelo Marrone")
@@ -61,6 +61,7 @@ object Genes extends Enumeration {
                                 prettyName: String) extends super.Val
   import scala.language.implicitConversions
   implicit def valueToGenesVal(x: Value): GenesVal = x.asInstanceOf[GenesVal]
+  implicit def valueToString(x: Value): String = x.prettyName
 
   val FUR_COLOR: GenesVal =  GenesVal(base = Alleles.WHITE_FUR,
                                 mutated = Alleles.BROWN_FUR,
@@ -87,16 +88,15 @@ object Genes extends Enumeration {
 object KindsUtils {
 
   /**d
-   * @param geneKind the gene kind of which the allele must be associated with
-   * @return a random AlleleKind for the specified GeneKind
+   * Function to get a random AlleleKind for the specified GeneKind.
    */
-  def getRandomAlleleKind(geneKind: GeneKind): AlleleKind = Seq(geneKind.base, geneKind.mutated)(Random.nextInt(2))
+  val randomAlleleKindChooser: GeneKind => AlleleKind = geneKind => Seq(geneKind.base, geneKind.mutated).random
 
   /**
    * Randomly chooses one AlleleKind as Dominant for each GeneKind
    */
   def assignRandomDominance(): Unit =
-    Genes.values.foreach(gk => setAlleleDominance(getRandomAlleleKind(gk)))
+    Genes.values.foreach(gk => setAlleleDominance(randomAlleleKindChooser(gk)))
 
   /**
    * Sets an AlleleKind as dominant for a specific GeneKind.

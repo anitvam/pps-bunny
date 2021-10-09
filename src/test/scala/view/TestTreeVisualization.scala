@@ -1,11 +1,11 @@
 package view
 
 import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
-import model.Bunny.generateRandomFirstBunny
-import model.genome.KindsUtils.{ assignRandomDominance, resetDominance }
-import model.genome.{ Gene, Genes, JustMutatedAllele }
+import model.bunny.Bunny.{randomBunnyGenerator, randomGenderChooser}
+import model.genome.KindsUtils.{assignRandomDominance, resetDominance}
+import model.genome.{Gene, Genes, JustMutatedAllele}
 import model.world.Reproduction.nextGenerationBunnies
-import model.{ Bunny, ChildBunny }
+import model.bunny.{Bunny, ChildBunny}
 import scalafx.application.JFXApp3
 import scalafx.application.JFXApp3.PrimaryStage
 import scalafx.scene.Scene
@@ -24,10 +24,10 @@ object TestTreeVisualization extends JFXApp3 {
     bunnies = nextGenerationBunnies(bunnies)
   }
 
-  var bunnies: Seq[Bunny] = Seq.fill(5)(generateRandomFirstBunny.asInstanceOf[Bunny])
+  var bunnies: Seq[Bunny] = Seq.fill(5)(randomBunnyGenerator.asInstanceOf[Bunny])
   var bunny: Bunny = Random.shuffle(bunnies).head
 
-  bunny = new ChildBunny(bunny.genotype + mutatedGene, bunny.mom, bunny.dad)
+  bunny = new ChildBunny(bunny.genotype + mutatedGene, bunny.mom, bunny.dad, randomGenderChooser())
   bunny.alive = false
 
   override def start(): Unit = {

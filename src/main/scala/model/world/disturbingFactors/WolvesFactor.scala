@@ -1,7 +1,7 @@
 package model.world.disturbingFactors
 
 import engine.SimulationConstants.FactorsConstants.{ WOLF_HIGH_DAMAGE, WOLF_LOW_DAMAGE, WOLF_MEDIUM_DAMAGE }
-import model.Bunny.filterBunniesWithAlleles
+import model.bunny.Bunny.filterBunniesWithAlleles
 import model.genome.Genes
 import model.genome.Genes.GeneKind
 import model.world.Climate

@@ -1,12 +1,12 @@
 package model.world.disturbingFactors
 
 import engine.SimulationConstants.FactorsConstants.UNFRIENDLY_CLIMATE_DAMAGE
-import model.Bunny
+import model.bunny.Bunny
 import model.genome.Genes
 import model.genome.Genes.GeneKind
 import model.world.Generation.Population
-import model.world.{ Climate, Summer }
-import model.world.disturbingFactors.FactorTypes.{ FactorKind, UnfriendlyClimateFactorKind }
+import model.world.{Climate, Summer}
+import model.world.disturbingFactors.FactorTypes.{FactorKind, UnfriendlyClimateFactorKind}
 import model.world.disturbingFactors.FactorsUtils.applyCustomDamage
 
 abstract class ClimateFactor() extends BasicFactor {

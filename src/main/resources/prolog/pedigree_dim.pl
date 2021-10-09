@@ -6,7 +6,7 @@ BS is (W + BP) / ((BP + 1) ** (G - 1) - 1).
 % max_bunny_size_for_height(+Height, +BunnyInfoProportion, +FontInfoPercent, +Generations, -BunnySize)
 % Calculates the maximum bunny size to fit in the height.
 max_bunny_size_for_height(H, BI, FI, G, BS) :- 
-BS is (H * BI * FI) / ((BI * FI + 1 + FI) * G).
+BS is (H * BI) / ((BI + 1 + 2 * FI) * G).
 
 % bunny_size_unlimited (+Height, +Width, +BunnyPlusProportion, +BunnyInfoProportion, +FontInfoPercent, +Generations, -BunnySize)
 % Calculates the maximum bunny size to fit in the width and the height without limitations for the bunny size.

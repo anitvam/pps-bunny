@@ -1,4 +1,4 @@
-package model
+package model.bunny
 
 import engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
 

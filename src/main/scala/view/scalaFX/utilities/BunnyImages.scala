@@ -1,12 +1,13 @@
 package view.scalaFX.utilities
 
+import model.bunny.Bunny
+
 import scala.language.implicitConversions
-import model.Bunny
 import model.genome.Alleles._
 import model.genome.Genes._
-import model.genome.{ Genes, Phenotype }
+import model.genome.{Genes, Phenotype}
 import scalafx.scene.image.Image
-import view.scalaFX.utilities.ImageType.{ ImageType, Jumping, Normal }
+import view.scalaFX.utilities.ImageType.{ImageType, Jumping, Normal}
 
 /** Enumeration for all the bunny images */
 object BunnyImage extends Enumeration {

@@ -29,4 +29,9 @@ class InconsistentMutatedAlleleException
       "Mutated allele EXCEPTION: the allele has isMutated as true, but the kind of the allele is the base one"
     )
 
+class CoupleGendersException
+  extends ExplainedException(
+    "Couple genders EXCEPTION: the bunnies of a couple must be one Male and one Female"
+  )
+
 class InvalidFoodFactor extends ExplainedException("The specified Food Factor is invalid for this operation")

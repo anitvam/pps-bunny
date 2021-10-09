@@ -1,8 +1,6 @@
 package model.world
-
+import model.bunny.{Bunny, ChildBunny}
 import engine.SimulationConstants.PhasesConstants._
-import model.{ Bunny, ChildBunny }
-
 import model.world.Generation.Population
 import scala.language.implicitConversions
 
@@ -36,7 +34,7 @@ trait Generation {
 
   def terminate(): Unit = {
     this.isEnded = true
-    populationAtTheEnd = this.population.map(b => new ChildBunny(b.genotype, b.mom, b.dad, b.age, b.alive))
+    populationAtTheEnd = this.population.map(b => new ChildBunny(b.genotype, b.mom, b.dad, b.gender, b.age, b.alive))
   }
 
   /** @return the current number of alive bunnies */

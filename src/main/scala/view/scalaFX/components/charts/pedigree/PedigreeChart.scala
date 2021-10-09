@@ -1,8 +1,8 @@
 package view.scalaFX.components.charts.pedigree
 
+import model.bunny.Tree.{actualGenerations, generateTree}
+import model.bunny.{BinaryTree, Bunny, Node}
 import alice.tuprolog.Term
-import model.Tree.{actualGenerations, generateTree}
-import model.{BinaryTree, Bunny, Node}
 import scalafx.geometry.Pos
 import scalafx.scene.image.ImageView
 import scalafx.scene.layout._
