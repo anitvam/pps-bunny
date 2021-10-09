@@ -53,4 +53,6 @@ object Controller {
   def introduceFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment introduceFactor factor
 
   def removeFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment removeFactor factor
+
+  def getCurrentSimulationSpeed(): Double = SimulationEngine.simulationSpeed
 }
