@@ -31,10 +31,10 @@ object Reproduction {
   }
 
   /**
-   * @param mom
-   *   a bunny
-   * @param dad
-   *   another bunny
+   * @param couple
+   *   the couple of bunny
+   * @param mutations
+   *   list of the mutations
    * @return
    *   the 4 children of the couple, one for each cell of the Punnett's square
    */
