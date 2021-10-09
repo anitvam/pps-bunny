@@ -1,18 +1,17 @@
 package controller
 
-import engine.SimulationEngine.{resetEngine, simulationLoop}
+import engine.SimulationEngine.{ resetEngine, simulationLoop }
 import engine.SimulationHistory.resetHistory
 import engine.SimulationEndType
-import engine.{SimulationEngine, SimulationHistory}
+import engine.{ SimulationEngine, SimulationHistory }
 import model.genome.KindsUtils.resetDominance
 import model.world.Generation.Population
 import model.world.disturbingFactors.Factor
-import model.world.{Mutation, Summer, Winter}
+import model.world.{ Mutation, Summer, Winter }
 import scalafx.application.Platform
 import view.scalaFX.ScalaFXView
 
 object Controller {
-
 
   /** Method that starts the simulation */
   def startSimulation(): Unit = simulationLoop().unsafeRunAsyncAndForget()

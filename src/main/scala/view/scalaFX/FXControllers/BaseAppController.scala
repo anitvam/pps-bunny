@@ -198,16 +198,12 @@ class BaseAppController(
       bunnyViews = bunnyViews ++ newBunnyViews
 
       generationLabel.text = "Generazione " + generationPhase.generationNumber
-      if (generationPhase.generationNumber > 0) {
-        mutationsPanelController --> { _.hideMutationIncoming() }
-      }
+      if (generationPhase.generationNumber > 0) mutationsPanelController --> { _.hideMutationIncoming() }
       simulationPane.children ++= newBunnyViews.map(_.imageView)
       // Start movement of the new bunnies
       newBunnyViews foreach { _.play() }
-
       factorsPanelController --> { _.showWolves() }
     } else factorsPanelController --> { _.areWolvesShown = false }
-
   }
 
   override def showPopulationChart(): Unit = populationChart --> { c => chartsPane.children = c.chart }
@@ -223,12 +219,12 @@ class BaseAppController(
       chartsPane.children = pedigreeChart
     } else chartsPane.children = pedigreeText
 
-  override def showProportionsChart(): Unit = chartsPane.children = proportionsChartPane.get
+  override def showProportionsChart(): Unit = proportionsChartPane --> { chartsPane.children = _ }
 
   override def handleBunnyClick(bunny: BunnyView): Unit = {
-    if (selectedBunny ?) selectedBunny.get.removeClickedEffect()
+    selectedBunny --> { _.removeClickedEffect() }
     selectedBunny = Some(bunny)
-    selectedBunny.get.addClickedEffect()
+    selectedBunny --> { _.addClickedEffect() }
     chartSelectionPanelController --> { _.handleBunnyClick() }
   }
 
