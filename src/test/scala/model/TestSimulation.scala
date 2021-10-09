@@ -1,8 +1,8 @@
 package model
 
-import engine.SimulationHistory
+import engine.{ SimulationConstants, SimulationHistory }
 import engine.SimulationHistory._
-import model.world.Generation.Population
+import model.TestUtils.goToGenerationNumber
 import model.world.{ Generation, Summer }
 import org.scalatest.{ FlatSpec, Matchers }
 
@@ -10,7 +10,6 @@ class TestSimulation extends FlatSpec with Matchers {
 
   SimulationHistory.resetHistory()
   val firstGeneration: Generation = SimulationHistory.getActualGeneration
-  val initialBunnies: Population = SimulationHistory.getActualPopulation
 
   "The first generation" should "be the generation zero" in {
     assert(SimulationHistory.getGenerationNumber == 0)
@@ -40,41 +39,90 @@ class TestSimulation extends FlatSpec with Matchers {
     assert(SimulationHistory.history.size == 1)
   }
 
-  "The next generation" should "have the same climate of the previous one" in {
-    SimulationHistory.startNextGeneration()
-    assert(SimulationHistory.getActualGeneration.environment.climate == Summer)
+  "The second generation" should "have the same climate of the previous one" in {
+    goToGenerationNumber(1)
+    assert(getActualGeneration.environment.climate == Summer)
   }
 
   it should "have already no factors" in {
-    assert(SimulationHistory.getActualGeneration.environment.factors.isEmpty)
+    goToGenerationNumber(1)
+    assert(getActualGeneration.environment.factors.isEmpty)
   }
 
   it should "have the right number of alive bunnies" in {
-    val previousBunniesNumber: Int = firstGeneration.population.size
-    assert(SimulationHistory.getActualBunniesNumber == (previousBunniesNumber / 2 * 4 + previousBunniesNumber))
+    goToGenerationNumber(1)
+    assert(getActualGeneration.getAliveBunniesNumber == 6)
   }
 
   "At the fifth generation the initial couple of bunnies" should "be dead" in {
-    for (_ <- 1 to 3) SimulationHistory.startNextGeneration()
+    goToGenerationNumber(4)
     assert(getGenerationNumber == 4)
-    assert(initialBunnies.forall(!_.alive))
+    assert(SimulationHistory.history.last.population.forall(!_.alive))
   }
 
-  "The fifth generation" should "be the only Generation in history that isn't already ended" in {
+  "The actual generation" should "be the only Generation in history that isn't already ended" in {
     SimulationHistory.history match {
       case h :: t => assert(!h.isEnded && t.forall(_.isEnded))
     }
   }
 
-  it should "have only 1 alive bunny if the other ones are died" in {
-    getActualPopulation.tail.foreach(_.alive = false)
-    assert(firstGeneration.getAliveBunniesNumber == 1)
+  "The seventh generation" should "be overpopulated " in {
+    goToGenerationNumber(6)
+    assert(getGenerationNumber == 6)
+    assert(worldIsOverpopulated)
+    assert(getActualBunniesNumber >= SimulationConstants.MAX_ALIVE_BUNNIES)
+  }
 
+  it should "not have a next generation" in {
+    goToGenerationNumber(6)
+    assert(!existNextGeneration)
+  }
+
+  it should "only have one alive bunny if the others are killed" in {
+    goToGenerationNumber(6)
+    getActualPopulation.tail.foreach(_.alive = false)
+    assert(getActualBunniesNumber == 1)
+  }
+
+  it should "no longer be overpopulated" in {
+    goToGenerationNumber(6)
+    getActualPopulation.tail.foreach(_.alive = false)
+    assert(!worldIsOverpopulated)
+  }
+
+  it should "have a next generation now" in {
+    goToGenerationNumber(6)
+    getActualPopulation.tail.foreach(_.alive = false)
+    assert(existNextGeneration)
   }
 
   "The next generation" should " have just one alive bunny if in the previous one all the other one are dead" in {
+    goToGenerationNumber(6)
+    getActualPopulation.tail.foreach(_.alive = false)
     SimulationHistory.startNextGeneration()
     assert(SimulationHistory.history.head.getAliveBunniesNumber == 1)
+  }
+
+  it should "have a next generation" in {
+    goToGenerationNumber(6)
+    getActualPopulation.tail.foreach(_.alive = false)
+    SimulationHistory.startNextGeneration()
+    assert(existNextGeneration)
+  }
+
+  "A generation" should "not have a next one if the bunnies have become extinct" in {
+    getActualPopulation.foreach(_.alive = false)
+    assert(bunniesAreExtinct)
+    assert(!existNextGeneration)
+  }
+
+}
+
+object TestUtils {
+
+  def goToGenerationNumber(n: Int): Unit = {
+    SimulationHistory.resetHistory()
+    for (_ <- 1 to n) SimulationHistory.startNextGeneration()
   }
 
 }

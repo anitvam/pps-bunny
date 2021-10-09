@@ -2,7 +2,7 @@ package engine
 
 import engine.SimulationConstants._
 import model.world.Generation.Population
-import model.world.Reproduction.{initialCoupleGenerator, nextGenerationBunnies}
+import model.world.Reproduction.{ initialCoupleGenerator, nextGenerationBunnies }
 import model.world._
 
 import scala.language.implicitConversions
@@ -42,7 +42,17 @@ object SimulationHistory {
   /**
    * Determines if the wold is overpopulated by the bunnies
    */
-  def isOverpopulated: Boolean = getActualBunniesNumber >= MAX_ALIVE_BUNNIES
+  def worldIsOverpopulated: Boolean = getActualBunniesNumber >= MAX_ALIVE_BUNNIES
+
+  /**
+   * Determines if all bunnies are dead
+   */
+  def bunniesAreExtinct: Boolean = getActualBunniesNumber < MIN_ALIVE_BUNNIES
+
+  /**
+   * Determines if too many generations have passed
+   */
+  def tooManyGeneration: Boolean = getGenerationNumber >= MAX_GENERATIONS_NUMBER
 
   /** @return the [[Population]]  for the next [[Generation]] */
   private def getPopulationForNextGeneration: Population =

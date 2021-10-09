@@ -4,7 +4,7 @@ import cats.effect.IO
 import engine.GenerationTimer.{ resetTimer, waitFor }
 import engine.Simulation._
 import engine.SimulationConstants._
-import engine.SimulationHistory.{ getActualBunniesNumber, getGenerationNumber }
+import engine.SimulationHistory.{ bunniesAreExtinct, getGenerationNumber, tooManyGeneration, worldIsOverpopulated }
 import engine.engineConversions._
 import model.world.GenerationsUtils._
 
@@ -21,7 +21,7 @@ object SimulationEngine {
   }
 
   private def generationPhase(generationPhase: GenerationPhase, action: IO[Unit]): IO[Unit] =
-    if (getActualBunniesNumber >= MIN_ALIVE_BUNNIES) {
+    if (!bunniesAreExtinct) {
       for {
         _ <- waitFor((generationPhase.instant, simulationSpeed))
         _ <- action
@@ -37,9 +37,9 @@ object SimulationEngine {
       _ <- generationPhase(HighTemperaturePhase(getGenerationNumber), applyTemperatureDamage)
       _ <- generationPhase(ReproductionPhase(getGenerationNumber + 1), startNewGeneration)
       _ <-
-        if (getActualBunniesNumber < MIN_ALIVE_BUNNIES) extinction()
-        else if (getActualBunniesNumber > MAX_ALIVE_BUNNIES) overpopulation()
-        else if (getGenerationNumber >= MAX_GENERATIONS_NUMBER) end()
+        if (bunniesAreExtinct) extinction()
+        else if (worldIsOverpopulated) overpopulation()
+        else if (tooManyGeneration) end()
         else generationLoop()
     } yield ()
   }
