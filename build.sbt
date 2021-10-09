@@ -35,6 +35,8 @@ libraryDependencies ++= {
   )
 }
 
+coverageEnabled := true
+
 // Add ScalaTest dependencies
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % "test"
 
