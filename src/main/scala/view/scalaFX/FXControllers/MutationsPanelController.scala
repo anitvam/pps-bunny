@@ -3,7 +3,7 @@ package view.scalaFX.FXControllers
 import controller.Controller
 import javafx.fxml.FXML
 import model.genome.Genes._
-import model.world.Mutation
+import model.mutation.Mutation
 import scalafx.scene.control.{ Button, Label }
 import scalafxml.core.macros.sfxml
 import view.scalaFX.ScalaFXConstants.Style.MutationsChoice.{ CHOSEN_BUTTON_STYLE, OTHER_BUTTON_STYLE }

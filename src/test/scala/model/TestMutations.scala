@@ -4,9 +4,9 @@ import controller.Controller
 import model.genome.Genes
 import model.genome.KindsUtils.resetDominance
 import model.world.Generation.Population
-import model.world.Mutation
+import model.mutation.Mutation
 import model.world.Reproduction._
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{ FlatSpec, Matchers }
 
 class TestMutations extends FlatSpec with Matchers {
   val couple: Couple = initialCoupleGenerator()
@@ -58,4 +58,5 @@ class TestMutations extends FlatSpec with Matchers {
     assert(mutationsEachBunny.count(_ == 1) == 3)
     assert(mutationsEachBunny.count(_ == 2) == 1)
   }
+
 }

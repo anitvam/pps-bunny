@@ -1,6 +1,7 @@
 package model.world
 
 import model.genome.KindsUtils
+import model.mutation.Mutation
 import model.world.Environment.{ Factors, Mutations }
 import model.world.disturbingFactors._
 import model.world.disturbingFactors.PimpFactors._
