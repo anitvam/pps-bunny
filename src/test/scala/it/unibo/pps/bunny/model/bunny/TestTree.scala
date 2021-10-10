@@ -35,7 +35,7 @@ class TestTree extends FlatSpec with Matchers {
   for (_ <- 0 to MAX_GENEALOGICAL_TREE_GENERATIONS) {
     bunnies = nextGenerationBunnies(bunnies ++ initialCoupleGenerator().toSeq)
   }
-  val bunny = bunnies.sortBy(actualGenerations).reverse.head
+  val bunny: Bunny = bunnies.sortBy(actualGenerations).reverse.head
   val fullTree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
 
   "A full genealogical tree " should "contain all the required generations" in {
