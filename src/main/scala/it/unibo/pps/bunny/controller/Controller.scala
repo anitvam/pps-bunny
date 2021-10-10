@@ -19,10 +19,10 @@ object Controller {
   def incrementSimulationSpeed(): Unit = SimulationEngine.incrementSpeed()
 
   /** Method that sets the Summer Climate inside Environment */
-  def setSummerClimate(): Unit = SimulationHistory changeEnvironmentClimate Summer
+  def setSummerClimate(): Unit = SimulationHistory.getActualGeneration.environment.climate = Summer
 
   /** Method that sets the Winter Climate inside Environment */
-  def setWinterClimate(): Unit = SimulationHistory changeEnvironmentClimate Winter
+  def setWinterClimate(): Unit = SimulationHistory.getActualGeneration.environment.climate = Winter
 
   /**
    * Method that insert a mutation inside the simulation
