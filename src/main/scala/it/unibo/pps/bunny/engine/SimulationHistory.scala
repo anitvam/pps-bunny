@@ -2,10 +2,8 @@ package it.unibo.pps.bunny.engine
 
 import it.unibo.pps.bunny.engine.SimulationConstants._
 import it.unibo.pps.bunny.model.world.Generation.Population
-import it.unibo.pps.bunny.util.PimpScala.RichTuple2
-import it.unibo.pps.bunny.model.world.Reproduction.{ generateInitialCouple, nextGenerationBunnies }
+import it.unibo.pps.bunny.model.world.Reproduction.{ initialCoupleGenerator, nextGenerationBunnies }
 import it.unibo.pps.bunny.model.world._
-import it.unibo.pps.bunny.model.world.disturbingFactors.Factors
 
 import scala.language.implicitConversions
 
@@ -13,7 +11,7 @@ object SimulationHistory {
 
   type History = List[Generation]
 
-  val historyInit: () => History = () => List(Generation(Environment(Summer(), Factors()), generateInitialCouple.toSeq))
+  val historyInit: () => History = () => List(Generation(Environment(Summer, List()), initialCoupleGenerator().toSeq))
 
   var history: History = historyInit()
 

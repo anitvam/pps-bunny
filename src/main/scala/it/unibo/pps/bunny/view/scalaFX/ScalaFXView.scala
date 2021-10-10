@@ -1,6 +1,7 @@
 package it.unibo.pps.bunny.view.scalaFX
 
 import it.unibo.pps.bunny.controller.ScalaFXLauncher.stage
+import it.unibo.pps.bunny.engine._
 import javafx.{ scene => jfxs }
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.GenerationsUtils.GenerationPhase
@@ -18,8 +19,29 @@ import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT
 import it.unibo.pps.bunny.view.scalaFX.components.BunnyView
 import it.unibo.pps.bunny.view.scalaFX.utilities.FxmlUtils
 
+import scala.language.implicitConversions
+
 object ScalaFXView extends View {
   var baseAppController: Option[BaseAppControllerInterface] = Option.empty
+  var OVERPOPULATION_END_IMAGE = new Image("img/world.png")
+  var EXTINCTION_END_IMAGE = new Image("img/extinction.png")
+  var GENERATIONS_OVERLOAD_END_IMAGE = new Image("img/generations_overload.png")
+
+  private def endStage(showingImage: Image): Stage = new Stage {
+    title = "Fine simulazione"
+
+    scene = new Scene(new AnchorPane {
+
+      children = new ImageView {
+        image = showingImage
+        fitHeight = PREFERRED_CHART_HEIGHT
+        preserveRatio = true
+      }
+
+    })
+
+    resizable = false
+  }
 
   def start(): Unit = {
     val loadedRootPanel = FxmlUtils.loadFXMLResource[jfxs.Parent]("/fxml/baseApp.fxml")
@@ -39,25 +61,17 @@ object ScalaFXView extends View {
     baseAppController --> { _.updateView(bunnies, generationPhase) }
   }
 
-  override def showEnd(isOverpopulation: Boolean): Unit = {
-    if (isOverpopulation) {
-      val endStage = new Stage {
-        title = "Fine simulazione"
-        scene = new Scene(new AnchorPane {
-          children = new ImageView {
-            image = new Image("img/world.png")
-            fitHeight = PREFERRED_CHART_HEIGHT
-            preserveRatio = true
-          }
-        })
-        resizable = false
-      }
-      endStage.show()
-    } else {
-      println("FINE CAUSATA DA ESTINZIONE")
-    }
+  override def showEnd(endType: SimulationEndType): Unit = {
+    endStage(endType).show()
     Platform.runLater { baseAppController --> { _.reset() } }
   }
 
   override def handleBunnyClick(bunny: BunnyView): Unit = baseAppController --> { _.handleBunnyClick(bunny) }
+
+  implicit private def simulationEndTypeImage(endType: SimulationEndType): Image = endType match {
+    case Overpopulation      => OVERPOPULATION_END_IMAGE
+    case Extinction          => EXTINCTION_END_IMAGE
+    case GenerationsOverload => GENERATIONS_OVERLOAD_END_IMAGE
+  }
+
 }

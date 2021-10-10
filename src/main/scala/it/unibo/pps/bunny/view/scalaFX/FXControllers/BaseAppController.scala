@@ -1,25 +1,26 @@
 package it.unibo.pps.bunny.view.scalaFX.FXControllers
 
 import it.unibo.pps.bunny.controller.Controller
-import it.unibo.pps.bunny.engine.SimulationConstants._
+import it.unibo.pps.bunny.engine.SimulationConstants.PhasesConstants._
 import javafx.fxml.FXML
 import javafx.scene.{ layout => jfxs }
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.GenerationsUtils.GenerationPhase
+import it.unibo.pps.bunny.view.scalaFX.components.ClockView
 import scalafx.Includes._
 import scalafx.scene.control.{ Button, Label }
 import scalafx.scene.layout.{ AnchorPane, Background }
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 import it.unibo.pps.bunny.util.PimpScala.RichOption
-import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH }
+import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants._
 import it.unibo.pps.bunny.view.scalaFX.components.BunnyView
 import it.unibo.pps.bunny.view.scalaFX.components.charts.PopulationChart
 import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart
 import it.unibo.pps.bunny.view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, setFitParent }
 import it.unibo.pps.bunny.view.scalaFX.utilities._
 
-import scala.language.postfixOps
+import scala.language.{ implicitConversions, postfixOps }
 
 sealed trait BaseAppControllerInterface {
 
@@ -53,7 +54,6 @@ sealed trait BaseAppControllerInterface {
    */
   def changeBackgroundEnvironment(background: Background): Unit
 
-  def addSpeedUp(): Unit
 }
 
 @sfxml
@@ -66,7 +66,11 @@ class BaseAppController(
     @FXML private val startButton: Button,
     @FXML private val generationLabel: Label,
     @FXML private val chartChoicePane: AnchorPane,
-    @FXML private val speedButton: Button
+    @FXML private val speedButton: Button,
+    @FXML private val summerButton: Button,
+    @FXML private val winterButton: Button,
+    @FXML private val informationPanel: AnchorPane,
+    @FXML private val clock: AnchorPane
 ) extends BaseAppControllerInterface {
 
   private var bunnyViews: Seq[BunnyView] = Seq.empty
@@ -77,6 +81,7 @@ class BaseAppController(
   private var proportionsChartController: Option[ChartController] = Option.empty
   private var proportionsChartPane: Option[AnchorPane] = Option.empty
   private var populationChart: Option[PopulationChart] = Option.empty
+  private val clockView: ClockView = ClockView()
 
   override def initialize(): Unit = {
 
@@ -101,6 +106,7 @@ class BaseAppController(
     setFitParent(proportionsChartPane.get)
     proportionsChartController --> { _.initialize() }
 
+    clock.children = clockView.initialize
     this.initializeView()
   }
 
@@ -120,6 +126,7 @@ class BaseAppController(
       mutationsPanelController --> { _.reset() }
       chartSelectionPanelController --> { _.reset() }
       factorsPanelController --> { _.reset() }
+      clockView.reset()
       this.initializeView()
       speedButton.onAction = _ => addSpeedUp()
       speedButton.text = "2x"
@@ -134,24 +141,34 @@ class BaseAppController(
     bunnyViews = Seq.empty
     simulationPane.children = Seq.empty
     generationLabel.text = ""
+    speedButton.styleClass -= "restart-button"
     startButton.setVisible(true)
   }
 
   /** Handler of Start button click */
   def startSimulation(): Unit = {
     startButton.setVisible(false)
+    informationPanel.visible = false
     Controller.startSimulation()
   }
 
   /** Handler of Summer button click */
   def setEnvironmentSummer(): Unit = {
     Controller.setSummerClimate()
-    factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
+    manageClimateClick(summerButton, winterButton)
   }
 
   /** Handler of Winter button click */
   def setEnvironmentWinter(): Unit = {
     Controller.setWinterClimate()
+    manageClimateClick(winterButton, summerButton)
+  }
+
+  private def manageClimateClick(clickedButton: Button, otherButton: Button): Unit = {
+    clickedButton.styleClass -= "button-clickable"
+    otherButton.styleClass += "button-clickable"
+    clickedButton.disable = true
+    otherButton.disable = false
     factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
   }
 
@@ -162,6 +179,8 @@ class BaseAppController(
 
     bunnyViews.filterNot(_.bunny.alive).foreach(bv => simulationPane.children.remove(bv.imageView))
     bunnyViews = bunnyViews.filter(_.bunny.alive)
+
+    clockView.updateClock(generationPhase)
 
     // Bunny visualization inside simulationPane
     if (generationPhase.phase == REPRODUCTION_PHASE) {
@@ -175,15 +194,10 @@ class BaseAppController(
       simulationPane.children ++= newBunnyViews.map(_.imageView)
       // Start movement of the new bunnies
       newBunnyViews foreach { _.play() }
-    }
 
-    if (generationPhase.phase == WOLVES_PHASE) {
-      factorsPanelController --> { _.showWolvesEating() }
-    }
+      factorsPanelController --> { _.showWolves() }
+    } else factorsPanelController --> { _.areWolvesShown = false }
 
-    if (generationPhase.phase == FOOD_PHASE) {
-      factorsPanelController --> { _.removeWolves() }
-    }
   }
 
   override def showPopulationChart(): Unit = populationChart --> { c => chartsPane.children = c.chart }

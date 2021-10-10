@@ -1,12 +1,11 @@
 package it.unibo.pps.bunny.model.world.disturbingFactors
 
 import it.unibo.pps.bunny.engine.SimulationConstants.FactorsConstants.UNFRIENDLY_CLIMATE_DAMAGE
-import it.unibo.pps.bunny.model.Bunny
+import it.unibo.pps.bunny.model.bunny.Bunny
 import it.unibo.pps.bunny.model.genome.Genes
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.{ Climate, Summer }
-import it.unibo.pps.bunny.model.world.disturbingFactors._
 import it.unibo.pps.bunny.model.world.disturbingFactors.FactorsUtils.applyCustomDamage
 
 abstract class ClimateFactor() extends BasicFactor {
@@ -30,7 +29,7 @@ abstract class ClimateFactor() extends BasicFactor {
   protected def winterAction(bunnies: Population): Population
 
   override def applyDamage(bunnies: Population, climate: Climate): Population =
-    if (climate == Summer()) summerAction(bunnies) else winterAction(bunnies)
+    if (climate == Summer) summerAction(bunnies) else winterAction(bunnies)
 
 }
 

@@ -2,11 +2,12 @@ package it.unibo.pps.bunny.engine
 
 import cats.effect.IO
 import it.unibo.pps.bunny.controller.Controller
-import it.unibo.pps.bunny.engine.SimulationHistory.{ getActualGeneration, getActualPopulation }
+import it.unibo.pps.bunny.engine.SimulationHistory._
 import it.unibo.pps.bunny.model.world.GenerationsUtils.GenerationPhase
 import it.unibo.pps.bunny.model.world.disturbingFactors._
-import it.unibo.pps.bunny.util.PimpScala.RichOption
+import it.unibo.pps.bunny.model.world.disturbingFactors.PimpFactors._
 import it.unibo.pps.bunny.view.scalaFX.ScalaFXView
+import it.unibo.pps.bunny.util.PimpScala._
 
 import scala.language.implicitConversions
 
@@ -22,16 +23,18 @@ object Simulation {
     ScalaFXView.updateView(generationPhase, getActualPopulation)
 
   def overpopulation(): IO[Unit] = {
-    Controller.showEnd(true)
+    Controller.showEnd(Overpopulation)
   }
 
   def extinction(): IO[Unit] = {
-    Controller.showEnd(false)
+    Controller.showEnd(Extinction)
   }
 
-  def startNewGeneration: IO[Unit] = {
-    SimulationHistory.startNextGeneration()
+  def end(): IO[Unit] = {
+    Controller.showEnd(GenerationsOverload)
   }
+
+  def startNewGeneration: IO[Unit] = SimulationHistory.startNextGeneration()
 
   implicit def unitToIO(exp: => Unit): IO[Unit] = IO { exp }
 
@@ -41,3 +44,8 @@ object Simulation {
     }
 
 }
+
+sealed trait SimulationEndType
+case object Overpopulation extends SimulationEndType
+case object Extinction extends SimulationEndType
+case object GenerationsOverload extends SimulationEndType

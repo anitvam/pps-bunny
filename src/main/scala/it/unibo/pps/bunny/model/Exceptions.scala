@@ -2,10 +2,7 @@ package it.unibo.pps.bunny.model
 
 import it.unibo.pps.bunny.model.genome.Gene
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
-
-class ExplainedException(exp: String) extends Exception {
-  print(exp + "\n")
-}
+import it.unibo.pps.bunny.util.ExplainedException
 
 class InconsistentAlleleException
     extends ExplainedException(
@@ -30,6 +27,11 @@ class MultipleDominanceAssignmentException
 class InconsistentMutatedAlleleException
     extends ExplainedException(
       "Mutated allele EXCEPTION: the allele has isMutated as true, but the kind of the allele is the base one"
+    )
+
+class CoupleGendersException
+    extends ExplainedException(
+      "Couple genders EXCEPTION: the bunnies of a couple must be one Male and one Female"
     )
 
 class InvalidFoodFactor extends ExplainedException("The specified Food Factor is invalid for this operation")

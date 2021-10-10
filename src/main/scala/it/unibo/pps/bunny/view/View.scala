@@ -1,5 +1,6 @@
 package it.unibo.pps.bunny.view
 
+import it.unibo.pps.bunny.engine.SimulationEndType
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.GenerationsUtils.GenerationPhase
 import it.unibo.pps.bunny.view.scalaFX.components.BunnyView
@@ -20,7 +21,7 @@ trait View {
   def updateView(generationNumber: GenerationPhase, bunnies: Population): Unit
 
   /** Method that shows the end of the simulation to the user */
-  def showEnd(isOverpopulation: Boolean): Unit
+  def showEnd(endType: SimulationEndType): Unit
 
   /**
    * Method that handle the click of a bunny

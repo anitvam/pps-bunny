@@ -8,6 +8,7 @@ import scalafxml.core.macros.sfxml
 import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.Style.MutationsChoice.{
   CHOSEN_BUTTON_STYLE, OTHER_BUTTON_STYLE
 }
+import javafx.fxml.FXML
 
 sealed trait MutationsPanelControllerInterface {
 
@@ -20,17 +21,17 @@ sealed trait MutationsPanelControllerInterface {
 
 @sfxml
 class MutationsPanelController(
-    private val jumpRecessiveChoiceButton: Button,
-    private val jumpDominantChoiceButton: Button,
-    private val teethRecessiveChoiceButton: Button,
-    private val teethDominantChoiceButton: Button,
-    private val earsRecessiveChoiceButton: Button,
-    private val earsDominantChoiceButton: Button,
-    private val furLengthRecessiveChoiceButton: Button,
-    private val furLengthDominantChoiceButton: Button,
-    private val furColorRecessiveChoiceButton: Button,
-    private val furColorDominantChoiceButton: Button,
-    private val mutationIncomingLabel: Label
+    @FXML private val jumpRecessiveChoiceButton: Button,
+    @FXML private val jumpDominantChoiceButton: Button,
+    @FXML private val teethRecessiveChoiceButton: Button,
+    @FXML private val teethDominantChoiceButton: Button,
+    @FXML private val earsRecessiveChoiceButton: Button,
+    @FXML private val earsDominantChoiceButton: Button,
+    @FXML private val furLengthRecessiveChoiceButton: Button,
+    @FXML private val furLengthDominantChoiceButton: Button,
+    @FXML private val furColorRecessiveChoiceButton: Button,
+    @FXML private val furColorDominantChoiceButton: Button,
+    @FXML private val mutationIncomingLabel: Label
 ) extends MutationsPanelControllerInterface {
 
   case class MutationButton(button: Button, originalText: String) {

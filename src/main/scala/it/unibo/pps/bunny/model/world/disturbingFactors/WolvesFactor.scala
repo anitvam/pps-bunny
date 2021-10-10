@@ -3,7 +3,7 @@ package it.unibo.pps.bunny.model.world.disturbingFactors
 import it.unibo.pps.bunny.engine.SimulationConstants.FactorsConstants.{
   WOLF_HIGH_DAMAGE, WOLF_LOW_DAMAGE, WOLF_MEDIUM_DAMAGE
 }
-import it.unibo.pps.bunny.model.Bunny.filterBunniesWithAlleles
+import it.unibo.pps.bunny.model.bunny.Bunny.filterBunniesWithAlleles
 import it.unibo.pps.bunny.model.genome.Genes
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.world.Generation.Population

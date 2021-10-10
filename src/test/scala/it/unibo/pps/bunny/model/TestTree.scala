@@ -1,9 +1,10 @@
 package it.unibo.pps.bunny.model
 
 import it.unibo.pps.bunny.engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
-import it.unibo.pps.bunny.model.Bunny.generateRandomFirstBunny
-import it.unibo.pps.bunny.model.Tree.generateTree
-import it.unibo.pps.bunny.model.world.Reproduction.nextGenerationBunnies
+import it.unibo.pps.bunny.model.bunny.{ BinaryTree, Bunny, Leaf, Node }
+import it.unibo.pps.bunny.model.bunny.Bunny._
+import it.unibo.pps.bunny.model.bunny.Tree.generateTree
+import it.unibo.pps.bunny.model.world.Reproduction._
 import org.scalatest.{ FlatSpec, Matchers }
 import it.unibo.pps.bunny.util.PimpScala.RichOption
 
@@ -12,14 +13,15 @@ import scala.language.postfixOps
 class TestTree extends FlatSpec with Matchers {
 
   "A genealogical tree " should "contain just the bunny as a Leaf, if he has no parents" in {
-    val bunny = generateRandomFirstBunny
+    val bunny = randomBunnyGenerator()
     val tree = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
     assert(tree.isInstanceOf[Leaf[Bunny]])
     assert(tree.generations == 1)
     assert(tree.elem == bunny)
   }
 
-  val bunnyWithParents: Bunny = nextGenerationBunnies(List.fill(5)(generateRandomFirstBunny)).filter(_.mom ?).head
+  val bunnyWithParents: Bunny =
+    nextGenerationBunnies(List.fill(2)(initialCoupleGenerator()).flatMap(_.toSeq)).filter(_.mom ?).head
 
   val tree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunnyWithParents)
 
@@ -29,10 +31,13 @@ class TestTree extends FlatSpec with Matchers {
     assert(tree.generations == 2)
   }
 
-  var bunny: Bunny = generateRandomFirstBunny
+  var bunny: Bunny = randomBunnyGenerator()
 
   for (_ <- 0 to MAX_GENEALOGICAL_TREE_GENERATIONS) {
-    bunny = nextGenerationBunnies(List.fill(5)(bunny)).filter(_.mom ?).head
+    bunny = nextGenerationBunnies(bunny :: List.fill(2)(initialCoupleGenerator()).flatMap(_.toSeq))
+      .sortBy(generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, _).generations)
+      .reverse
+      .head
   }
 
   val fullTree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)

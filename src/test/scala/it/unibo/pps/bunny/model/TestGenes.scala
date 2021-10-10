@@ -1,6 +1,7 @@
 package it.unibo.pps.bunny.model
 
-import it.unibo.pps.bunny.model.Bunny.generateBaseFirstBunny
+import it.unibo.pps.bunny.model.bunny.Bunny._
+import it.unibo.pps.bunny.model.bunny.FirstBunny
 import it.unibo.pps.bunny.model.genome.Genes.{ EARS, FUR_COLOR, FUR_LENGTH, GeneKind }
 import it.unibo.pps.bunny.model.genome.KindsUtils.{ assignRandomDominance, getGeneKind, resetDominance }
 import it.unibo.pps.bunny.model.genome._
@@ -107,8 +108,8 @@ class TestGenes extends FlatSpec with Matchers {
     val geneKind = Genes.FUR_COLOR
     val standardGene = Gene(geneKind, StandardAllele(geneKind.base), StandardAllele(geneKind.base))
     val updatedGene = Gene(geneKind, StandardAllele(geneKind.base), StandardAllele(geneKind.mutated))
-    val standardBunny = generateBaseFirstBunny
-    val updatedBunny = new FirstBunny(standardBunny.genotype + updatedGene)
+    val standardBunny = baseBunnyGenerator(randomGenderChooser())
+    val updatedBunny = new FirstBunny(standardBunny.genotype + updatedGene, standardBunny.gender)
 
     println(standardBunny.genotype(geneKind))
     println(standardGene)

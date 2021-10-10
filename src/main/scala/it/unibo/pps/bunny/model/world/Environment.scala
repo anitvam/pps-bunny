@@ -2,8 +2,12 @@ package it.unibo.pps.bunny.model.world
 
 import it.unibo.pps.bunny.model.genome.KindsUtils
 import it.unibo.pps.bunny.model.mutation.Mutation
-import it.unibo.pps.bunny.model.world.Environment.Mutations
-import it.unibo.pps.bunny.model.world.disturbingFactors.{ Factor, Factors }
+import it.unibo.pps.bunny.model.world.Environment.{ Factors, Mutations }
+import it.unibo.pps.bunny.model.world.disturbingFactors.Factor
+import it.unibo.pps.bunny.model.world.disturbingFactors.PimpFactors._
+
+import scala.language.postfixOps
+import scala.language.implicitConversions
 
 /** Environment of a Generation */
 trait Environment {
@@ -60,6 +64,7 @@ trait Environment {
 object Environment {
 
   type Mutations = List[Mutation]
+  type Factors = List[Factor]
 
   /**
    * Generate an Environment from the previous one
@@ -76,9 +81,9 @@ object Environment {
       override var mutations: Mutations = List()
   ) extends Environment {
 
-    override def introduceFactor(factor: Factor): Unit = factors add factor
+    override def introduceFactor(factor: Factor): Unit = factors = factors + factor
 
-    override def removeFactor(factor: Factor): Unit = factors remove factor
+    override def removeFactor(factor: Factor): Unit = factors = factors - factor
 
     def introduceMutation(mutation: Mutation): Unit = {
       if (mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
@@ -94,7 +99,7 @@ object Environment {
 trait Climate
 
 /** Summer Climate */
-case class Summer() extends Climate
+case object Summer extends Climate
 
 /** Winter Climate */
-case class Winter() extends Climate
+case object Winter extends Climate

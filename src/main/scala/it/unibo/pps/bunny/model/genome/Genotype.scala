@@ -28,20 +28,23 @@ sealed trait Genotype {
   def apply(gk: GeneKind): Gene = genes(gk)
 
   /**
-   * @return the number of mutated alleles in the genotype
+   * @return
+   *   the number of mutated alleles in the genotype
    */
-  def mutatedAllelesQuantity: Int = genes.values.count(g =>
-    g.dadAllele.isInstanceOf[JustMutatedAllele] || g.momAllele.isInstanceOf[JustMutatedAllele]
-  )
+  def mutatedAllelesQuantity: Int =
+    genes.values.count(g => g.dadAllele.isInstanceOf[JustMutatedAllele] || g.momAllele.isInstanceOf[JustMutatedAllele])
 
   /**
-   * @return true if there are mutated allels, false if not
+   * @return
+   *   true if there are mutated allels, false if not
    */
   def isJustMutated: Boolean = mutatedAllelesQuantity > 0
 
   /**
-   * @param geneKind the kind of genes for which the alleles are required
-   * @return a sequence of standard alleles with the parents kind, useful during the generation of children
+   * @param geneKind
+   *   the kind of genes for which the alleles are required
+   * @return
+   *   a sequence of standard alleles with the parents kind, useful during the generation of children
    */
   def getStandardAlleles(geneKind: GeneKind): (Allele, Allele) = {
     (StandardAllele(genes(geneKind).momAllele.kind), StandardAllele(genes(geneKind).dadAllele.kind))

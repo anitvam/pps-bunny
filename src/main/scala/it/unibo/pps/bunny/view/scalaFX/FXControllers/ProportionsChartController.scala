@@ -1,10 +1,10 @@
 package it.unibo.pps.bunny.view.scalaFX.FXControllers
 
 import it.unibo.pps.bunny.controller.Controller
-import it.unibo.pps.bunny.engine.SimulationConstants._
+import it.unibo.pps.bunny.engine.SimulationConstants.PhasesConstants._
 import it.unibo.pps.bunny.engine.SimulationHistory
 import javafx.scene.{ control => jfxc }
-import it.unibo.pps.bunny.model.Bunny
+import it.unibo.pps.bunny.model.bunny.Bunny
 import it.unibo.pps.bunny.model.genome.Genes
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.world.Generation.Population
@@ -36,8 +36,8 @@ class ProportionsChartController(
     val genText: Text
 ) extends ChartController {
 
-  private var startPie: PieChart = createEmptyPieChart("Inizio Generazione")
-  private var currentPie: PieChart = createEmptyPieChart("Attualmente")
+  private val startPie: PieChart = createEmptyPieChart("Inizio Generazione")
+  private val currentPie: PieChart = createEmptyPieChart("Attualmente")
   private var displayedGenerationNumber: Int = 0
   private var isInHistoryMode: Boolean = false
 

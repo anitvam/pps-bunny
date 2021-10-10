@@ -1,5 +1,6 @@
 package it.unibo.pps.bunny.view.scalaFX.FXControllers
 
+import javafx.fxml.FXML
 import scalafx.scene.control.RadioButton
 import scalafx.scene.layout.VBox
 import scalafxml.core.macros.sfxml
@@ -30,9 +31,9 @@ sealed trait ChartChoiceControllerInterface {
 
 @sfxml
 class ChartChoiceController(
-    private val pedigreeRadioButton: RadioButton,
-    private val legendBox: VBox,
-    private val populationRadioButton: RadioButton
+    @FXML private val pedigreeRadioButton: RadioButton,
+    @FXML private val legendBox: VBox,
+    @FXML private val populationRadioButton: RadioButton
 ) extends ChartChoiceControllerInterface {
 
   private var baseAppController: Option[BaseAppControllerInterface] = None

@@ -1,7 +1,7 @@
 package it.unibo.pps.bunny.view.scalaFX.utilities
 
 import scala.language.implicitConversions
-import it.unibo.pps.bunny.model.Bunny
+import it.unibo.pps.bunny.model.bunny.Bunny
 import it.unibo.pps.bunny.model.genome.Alleles._
 import it.unibo.pps.bunny.model.genome.Genes._
 import it.unibo.pps.bunny.model.genome.{ Genes, Phenotype }

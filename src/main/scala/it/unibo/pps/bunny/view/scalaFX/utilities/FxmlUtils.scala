@@ -35,7 +35,7 @@ object FxmlUtils {
   }
 
   /**
-   * Methos that sets the 4 anchors to zero of an AnchorPane's children
+   * Method that sets the 4 anchors to zero of an AnchorPane's children
    *
    * @param node
    *   the node on which anchors are set

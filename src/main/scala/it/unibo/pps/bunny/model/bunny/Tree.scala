@@ -1,4 +1,6 @@
-package it.unibo.pps.bunny.model
+package it.unibo.pps.bunny.model.bunny
+
+import it.unibo.pps.bunny.engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
 
 /**
  * Represents a Tree.
@@ -50,4 +52,11 @@ object Tree {
     else Node(bunny, generateTree(generations - 1, bunny.mom.get), generateTree(generations - 1, bunny.dad.get))
   }
 
+  /**
+   * @param bunny
+   *   the subject bunny
+   * @return
+   *   the max number of generations present in the tree (the real one or maximum if there are more)
+   */
+  def actualGenerations(bunny: Bunny): Int = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny).generations
 }

@@ -20,7 +20,11 @@ object GenerationTimer {
    * Returns a [[IO]] description that when evaluated will create an async task that will wait until the time specified
    *
    * @param to
+<<<<<<< HEAD:src/main/scala/it/unibo/pps/bunny/engine/GenerationTimer.scala
    *   the moment until when the timer sleep
+=======
+   *   the moment in which the sleeping of the timer ends
+>>>>>>> develop:src/main/scala/engine/GenerationTimer.scala
    * @return
    *   the IO monad describing the operation
    */
@@ -34,9 +38,15 @@ object GenerationTimer {
    * specified.
    *
    * @param from
+<<<<<<< HEAD:src/main/scala/it/unibo/pps/bunny/engine/GenerationTimer.scala
    *   the lower bound for of the time interval to be slept
    * @param to
    *   the upper bound of the time interval until when sleep.
+=======
+   *   the lower bound for the sleeping time interval
+   * @param to
+   *   the upper bound for the sleeping time interval
+>>>>>>> develop:src/main/scala/engine/GenerationTimer.scala
    * @return
    *   the IO monad describing the sleeping operation.
    */

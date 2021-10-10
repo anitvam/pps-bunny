@@ -1,10 +1,6 @@
 package it.unibo.pps.bunny.model
 
 import it.unibo.pps.bunny.engine.SimulationHistory
-import it.unibo.pps.bunny.engine.SimulationHistory.{ getActualGeneration, getActualPopulation }
-import it.unibo.pps.bunny.model.Bunny.generateRandomFirstBunny
-import it.unibo.pps.bunny.model.world.Reproduction.{ generateInitialCouple, nextGenerationBunnies }
-import it.unibo.pps.bunny.model.world.{ Environment, Generation, Summer }
 import org.scalatest.{ FlatSpec, Matchers }
 
 class TestSimulation extends FlatSpec with Matchers {

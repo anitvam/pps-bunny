@@ -1,6 +1,6 @@
 package it.unibo.pps.bunny.view.scalaFX.components
 
-import it.unibo.pps.bunny.model.Bunny
+import it.unibo.pps.bunny.model.bunny.Bunny
 import it.unibo.pps.bunny.model.genome.Alleles
 import scalafx.Includes.{ at, double2DurationHelper }
 import scalafx.animation.{ KeyFrame, Timeline }
@@ -17,19 +17,10 @@ import scala.language.postfixOps
 import scala.util.Random
 
 /** Bunny wrapper in order to manage its movement inside of the GUI */
-trait BunnyView {
-
-  /** Type annotation for a Seq of KeyFrames */
-  type AnimationFrames = Seq[KeyFrame]
+trait BunnyView extends AnimalView {
 
   /** Reference to the model bunny entity */
   val bunny: Bunny
-
-  /** The image of the bunny displayed on the GUI */
-  val imageView: ImageView
-
-  /** Starts the bunny animation */
-  def play(): Unit
 
   /** Add clicked effect to this bunny */
   def addClickedEffect(): Unit
@@ -57,9 +48,9 @@ object BunnyView {
   private case class BunnyViewImpl(
       imageView: ImageView,
       bunny: Bunny,
-      private var direction: Direction,
-      private var positionX: Double,
-      private var positionY: Double
+      var direction: Direction,
+      var positionX: Double,
+      var positionY: Double
   ) extends BunnyView {
 
     private val normalImage: Image = BunnyImageUtils.bunnyToImage(bunny, ImageType.Normal)
@@ -87,24 +78,29 @@ object BunnyView {
 
     override def play(): Unit = timeline.play()
 
+    override def stop(): Unit = timeline.stop()
+
     override def addClickedEffect(): Unit = imageView.effect = new DropShadow(10, Color.Black)
 
     override def removeClickedEffect(): Unit = imageView.effect = null
 
     private def jump(): AnimationFrames = {
-      checkDirection()
+      checkDirection(
+        (positionX + (2 * jumpingValue)) >= PREFERRED_SIMULATION_PANEL_WIDTH,
+        positionX - (2 * jumpingValue) < 0
+      )
       Seq(
         at(0 s) {
           Set(imageView.image -> jumpingImage)
         },
         at(0.5 s) {
-          moveHorizontally()
+          moveHorizontally(jumpingValue)
           positionY -= jumpingValue
 
           Set(imageView.x -> positionX, imageView.y -> positionY)
         },
         at(1 s) {
-          moveHorizontally()
+          moveHorizontally(jumpingValue)
           positionY += jumpingValue
 
           Set(imageView.x -> positionX, imageView.y -> positionY)
@@ -113,24 +109,6 @@ object BunnyView {
           Set(imageView.image -> normalImage)
         }
       )
-    }
-
-    /** Method that checks the actual direction of the bunny and update the orientation of its image */
-    private def checkDirection(): Unit = {
-      if ((positionX + (2 * jumpingValue)) >= PREFERRED_SIMULATION_PANEL_WIDTH) {
-        direction = Left
-      } else if (positionX - (2 * jumpingValue) < 0) {
-        direction = Right
-      }
-      imageView.setScaleX(scaleXValue(direction))
-    }
-
-    /**
-     * Method that updates the bunny position according to bunny actual Direction
-     */
-    private def moveHorizontally(): Unit = direction match {
-      case Right => positionX += jumpingValue
-      case Left  => positionX -= jumpingValue
     }
 
   }

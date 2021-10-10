@@ -6,7 +6,7 @@ import scala.language.{ implicitConversions, postfixOps }
 import engineConversions._
 import it.unibo.pps.bunny.engine.GenerationTimer.{ resetTimer, waitFor }
 import it.unibo.pps.bunny.engine.Simulation.{
-  applyTemperatureDamage, bunniesEat, extinction, overpopulation, startNewGeneration, updateView, wolvesEat
+  applyTemperatureDamage, bunniesEat, end, extinction, overpopulation, startNewGeneration, updateView, wolvesEat
 }
 import it.unibo.pps.bunny.engine.SimulationConstants._
 import it.unibo.pps.bunny.engine.SimulationHistory.{ existNextGeneration, getBunniesNumber, getGenerationNumber }
@@ -42,9 +42,10 @@ object SimulationEngine {
       _ <- generationPhase(HighTemperaturePhase(getGenerationNumber), applyTemperatureDamage)
       _ <- generationPhase(ReproductionPhase(getGenerationNumber + 1), startNewGeneration)
       _ <-
-        if (existNextGeneration) generationLoop()
+        if (getBunniesNumber < MIN_ALIVE_BUNNIES) extinction()
         else if (getBunniesNumber > MAX_ALIVE_BUNNIES) overpopulation()
-        else extinction()
+        else if (getGenerationNumber >= MAX_GENERATIONS_NUMBER) end()
+        else generationLoop()
     } yield ()
   }
 

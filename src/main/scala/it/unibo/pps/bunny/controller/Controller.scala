@@ -1,6 +1,6 @@
 package it.unibo.pps.bunny.controller
 
-import it.unibo.pps.bunny.engine.{ SimulationEngine, SimulationHistory }
+import it.unibo.pps.bunny.engine.{ SimulationEndType, SimulationEngine, SimulationHistory }
 import it.unibo.pps.bunny.engine.SimulationEngine.{ resetEngine, simulationLoop }
 import it.unibo.pps.bunny.engine.SimulationHistory.resetHistory
 import it.unibo.pps.bunny.model.genome.KindsUtils.resetDominance
@@ -13,24 +13,16 @@ import it.unibo.pps.bunny.view.scalaFX.ScalaFXView
 
 object Controller {
 
-  /**
-   * Method that starts the simulation
-   * @param climate
-   *   the Environment Climate
-   * @param factors
-   *   the Environment Factors
-   */
+  /** Method that starts the simulation */
   def startSimulation(): Unit = simulationLoop().unsafeRunAsyncAndForget()
 
-  def incrementSimulationSpeed(): Unit = {
-    SimulationEngine.incrementSpeed()
-  }
+  def incrementSimulationSpeed(): Unit = SimulationEngine.incrementSpeed()
 
   /** Method that sets the Summer Climate inside Environment */
-  def setSummerClimate(): Unit = SimulationHistory changeEnvironmentClimate Summer()
+  def setSummerClimate(): Unit = SimulationHistory changeEnvironmentClimate Summer
 
   /** Method that sets the Winter Climate inside Environment */
-  def setWinterClimate(): Unit = SimulationHistory changeEnvironmentClimate Winter()
+  def setWinterClimate(): Unit = SimulationHistory changeEnvironmentClimate Winter
 
   /**
    * Method that insert a mutation inside the simulation
@@ -41,8 +33,8 @@ object Controller {
     SimulationHistory.getActualGeneration.environment introduceMutation mutation
 
   /** Method that shows the end of the simulation on the Application GUI */
-  def showEnd(isOverpopulation: Boolean): Unit = Platform runLater {
-    ScalaFXView.showEnd(isOverpopulation)
+  def showEnd(endType: SimulationEndType): Unit = Platform runLater {
+    ScalaFXView.showEnd(endType)
   }
 
   /** Resets the simulation model to its initial state */
@@ -57,4 +49,6 @@ object Controller {
   def introduceFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment introduceFactor factor
 
   def removeFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment removeFactor factor
+
+  def getCurrentSimulationSpeed: Double = SimulationEngine.simulationSpeed
 }

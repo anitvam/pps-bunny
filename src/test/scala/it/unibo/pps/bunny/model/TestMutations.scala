@@ -1,16 +1,16 @@
 package it.unibo.pps.bunny.model
 
 import it.unibo.pps.bunny.controller.Controller
-import it.unibo.pps.bunny.model.Bunny.generateBaseFirstBunny
 import it.unibo.pps.bunny.model.genome.Genes
 import it.unibo.pps.bunny.model.genome.KindsUtils.resetDominance
 import it.unibo.pps.bunny.model.mutation.Mutation
 import it.unibo.pps.bunny.model.world.Generation.Population
-import it.unibo.pps.bunny.model.world.Reproduction.{ generateChildren, nextGenerationBunnies }
+import it.unibo.pps.bunny.model.world.Reproduction._
 import org.scalatest.{ FlatSpec, Matchers }
 
 class TestMutations extends FlatSpec with Matchers {
-  val children: Seq[Bunny] = generateChildren(generateBaseFirstBunny, generateBaseFirstBunny)
+  val couple: Couple = initialCoupleGenerator()
+  val children: Population = generateChildren(couple)
   val mutationFurColor: Mutation = Mutation(Genes.FUR_COLOR, isDominant = true)
   val mutationFurLength: Mutation = Mutation(Genes.FUR_LENGTH, isDominant = false)
   val mutationTeeth: Mutation = Mutation(Genes.TEETH, isDominant = false)
@@ -22,9 +22,10 @@ class TestMutations extends FlatSpec with Matchers {
     Controller.insertMutation(mutationFurColor)
 
     val nextGeneration = nextGenerationBunnies(children, List(mutationFurColor))
+    val couplesNum = combineCouples(children).size
     val bunnyWithMutation = nextGeneration filter (_.genotype.phenotype(Genes.FUR_COLOR) == Genes.FUR_COLOR.mutated)
 
-    assert(nextGeneration.length == children.length / 2 * 4 + children.length)
+    assert(nextGeneration.length == couplesNum * 4 + children.length)
     assert(bunnyWithMutation.length <= (nextGeneration.length - children.length) / 2 + 1)
   }
 
@@ -39,8 +40,9 @@ class TestMutations extends FlatSpec with Matchers {
         b.genotype.phenotype(Genes.FUR_COLOR) == Genes.FUR_COLOR.mutated ||
         b.genotype.phenotype(Genes.TEETH) == Genes.TEETH.mutated
     )
+    val couplesNum = combineCouples(children).size
 
-    assert(nextGeneration.length == children.length / 2 * 4 + children.length)
+    assert(nextGeneration.length == couplesNum * 4 + children.length)
     assert(bunnyWithMutation.length <= (nextGeneration.length - children.length) / 2 + 1)
     assert(bunnyWithMutation.length <= (nextGeneration.length - children.length))
   }
@@ -50,7 +52,7 @@ class TestMutations extends FlatSpec with Matchers {
     val mutations = List(mutationFurColor, mutationFurLength, mutationTeeth, mutationEars, mutationJump)
     mutations.foreach(Controller.insertMutation)
 
-    val brothers: Population = generateChildren(generateBaseFirstBunny, generateBaseFirstBunny, mutations)
+    val brothers: Population = generateChildren(couple, mutations)
     val mutationsEachBunny: Seq[Int] = brothers map (b => b.genotype.mutatedAllelesQuantity)
 
     assert(mutationsEachBunny.count(_ == 1) == 3)
