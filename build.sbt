@@ -1,10 +1,10 @@
 import sbt.Keys.libraryDependencies
 
 ThisBuild / version := "0.3.0"
-ThisBuild / organization := "it.unibo"
+ThisBuild / organization := "it.unibo.pps.bunny"
 scalaVersion := "2.13.6"
 
-assembly / mainClass := Some("controller.ScalaFXLauncher")
+assembly / mainClass := Some("it.unibo.pps.bunny.controller.ScalaFXLauncher")
 
 ThisBuild / assemblyMergeStrategy := {
   case PathList("META-INF", _*) => MergeStrategy.discard
