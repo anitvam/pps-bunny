@@ -39,13 +39,14 @@ class ChartChoiceController(
   private var baseAppController: Option[BaseAppControllerInterface] = None
 
   override def initialize(controller: BaseAppControllerInterface): Unit = {
-    legendBox.setVisible(false)
+    legendBox.visible = false
     baseAppController = Some(controller)
   }
 
   override def reset(): Unit = {
     activeChart = ChartType.Population
     populationRadioButton.selected = true
+    legendBox.visible = false
   }
 
   override def handleBunnyClick(): Unit =
@@ -56,7 +57,7 @@ class ChartChoiceController(
       chartToShow: BaseAppControllerInterface => Unit,
       chartType: ChartType
   ): Unit = {
-    legendBox.setVisible(legendVisibility)
+    legendBox.visible = legendVisibility
     this.activeChart = chartType
     baseAppController --> { chartToShow }
   }
