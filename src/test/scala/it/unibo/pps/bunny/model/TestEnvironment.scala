@@ -57,12 +57,12 @@ class TestEnvironment extends FlatSpec with Matchers {
     assert(prevEnv.factors.isEmpty)
   }
 
-//  "A new Environment" should "have an empty list of Mutation" in {
-//    assert(env.mutations.isEmpty)
-//  }
-//
-//  it should "be able to introduce a new Mutation" in {
-//    env introduceMutation Mutation(Genes.FUR_COLOR, true)
-//  }
+  "A new Environment" should "have an empty list of Mutation" in {
+    assert(env.mutations.isEmpty)
+  }
+
+  it should "be able to introduce a new Mutation" in {
+    env introduceMutation Mutation(Genes.FUR_COLOR, true)
+  }
 
 }
