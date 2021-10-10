@@ -4,8 +4,10 @@ import engine.SimulationEngine.{ resetEngine, simulationLoop }
 import engine.SimulationHistory.resetHistory
 import engine.SimulationEndType
 import engine.{ SimulationEngine, SimulationHistory }
+import model.genome.Genes.GeneKind
 import model.genome.KindsUtils.resetDominance
 import model.mutation.Mutation
+import model.mutation.Mutation.{ dominantMutation, recessiveMutation }
 import model.world.Generation.Population
 import model.world.disturbingFactors.Factor
 import model.world.{ Summer, Winter }
@@ -32,6 +34,20 @@ object Controller {
    */
   def insertMutation(mutation: Mutation): Unit =
     SimulationHistory.getActualGeneration.environment introduceMutation mutation
+
+  /**
+   * Method that insert a recessive mutation inside the simulation
+   * @param geneKind
+   *   the gene mutated
+   */
+  def insertRecessiveMutationFor(geneKind: GeneKind): Unit = insertMutation(recessiveMutation(geneKind))
+
+  /**
+   * Method that insert a dominant mutation inside the simulation
+   * @param geneKind
+   *   the gene mutated
+   */
+  def insertDominantMutationFor(geneKind: GeneKind): Unit = insertMutation(dominantMutation(geneKind))
 
   /** Method that shows the end of the simulation on the Application GUI */
   def showEnd(endType: SimulationEndType): Unit = Platform runLater {

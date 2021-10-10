@@ -5,17 +5,18 @@ import model.genome.Genes
 import model.genome.KindsUtils.resetDominance
 import model.world.Generation.Population
 import model.mutation.Mutation
+import model.mutation.Mutation.{ dominantMutation, recessiveMutation }
 import model.world.Reproduction._
 import org.scalatest.{ FlatSpec, Matchers }
 
 class TestMutations extends FlatSpec with Matchers {
   val couple: Couple = initialCoupleGenerator()
   val children: Population = generateChildren(couple)
-  val mutationFurColor: Mutation = Mutation(Genes.FUR_COLOR, isDominant = true)
-  val mutationFurLength: Mutation = Mutation(Genes.FUR_LENGTH, isDominant = false)
-  val mutationTeeth: Mutation = Mutation(Genes.TEETH, isDominant = false)
-  val mutationEars: Mutation = Mutation(Genes.EARS, isDominant = true)
-  val mutationJump: Mutation = Mutation(Genes.JUMP, isDominant = false)
+  val mutationFurColor: Mutation = dominantMutation(Genes.FUR_COLOR)
+  val mutationFurLength: Mutation = recessiveMutation(Genes.FUR_LENGTH)
+  val mutationTeeth: Mutation = recessiveMutation(Genes.TEETH)
+  val mutationEars: Mutation = dominantMutation(Genes.EARS)
+  val mutationJump: Mutation = recessiveMutation(Genes.JUMP)
 
   "When introducing a Mutation" should "compare to the utmost only half population" in {
     resetDominance()

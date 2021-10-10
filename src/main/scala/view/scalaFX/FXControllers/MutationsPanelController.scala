@@ -68,7 +68,8 @@ class MutationsPanelController(
       buttonClicked: Button,
       otherButton: Button
   ): Unit = {
-    Controller.insertMutation(Mutation(geneKind, isDominant))
+    if (isDominant) Controller.insertDominantMutationFor(geneKind)
+    else Controller.insertRecessiveMutationFor(geneKind)
     otherButton.text = newText
     updateButtonStyle(buttonClicked, otherButton)
     showMutationIncoming()

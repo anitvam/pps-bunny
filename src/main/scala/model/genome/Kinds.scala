@@ -3,9 +3,10 @@ package model.genome
 import model.MultipleDominanceAssignmentException
 import model.genome.Alleles.AlleleKind
 import model.genome.Genes.GeneKind
-import util.PimpScala.{RichOption, RichSeq}
+import model.mutation.Mutation
+import util.PimpScala.{ RichOption, RichSeq }
 
-import scala.language.{implicitConversions, postfixOps}
+import scala.language.{ implicitConversions, postfixOps }
 
 /**
  * An Enumeration for all the Alleles present in the World.
@@ -85,17 +86,15 @@ object Genes extends Enumeration {
 
 object KindsUtils {
 
-  /**d
-   * Function to get a random AlleleKind for the specified GeneKind.
+  /**
+   * d Function to get a random AlleleKind for the specified GeneKind.
    */
   val randomAlleleKindChooser: GeneKind => AlleleKind = geneKind => Seq(geneKind.base, geneKind.mutated).random
 
   /**
    * Randomly chooses one AlleleKind as Dominant for each GeneKind
    */
-  def assignRandomDominance(): Unit =
-    Genes.values.foreach(gk => setAlleleDominance(randomAlleleKindChooser(gk)))
-
+  def assignRandomDominance(): Unit = Genes.values.foreach(gk => setAlleleDominance(randomAlleleKindChooser(gk)))
 
   /**
    * Sets an AlleleKind as dominant for a specific GeneKind.
@@ -106,6 +105,11 @@ object KindsUtils {
   def setAlleleDominance(alleleKind: AlleleKind): Unit = {
     alleleKind.setDominance(true)
     getAlternativeAlleleKind(alleleKind).setDominance(false)
+  }
+
+  def setAlleleDominanceFromMutation(mutation: Mutation): Unit = {
+    if (mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
+    else KindsUtils.setAlleleDominance(mutation.geneKind.base)
   }
 
   /**
