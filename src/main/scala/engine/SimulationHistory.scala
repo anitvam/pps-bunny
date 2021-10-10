@@ -30,24 +30,16 @@ object SimulationHistory {
   /** @return the [[Population]] of the actual generation */
   def getActualPopulation: Population = getActualGeneration.livingPopulation
 
-  /**
-   * Determines if there is a next generation
-   */
+  /** Determines if there is a next generation */
   def existNextGeneration: Boolean = !worldIsOverpopulated && !bunniesAreExtinct && !tooManyGenerations
 
-  /**
-   * Determines if the wold is overpopulated by the bunnies
-   */
+  /** Determines if the wold is overpopulated by the bunnies */
   def worldIsOverpopulated: Boolean = getActualBunniesNumber >= MAX_ALIVE_BUNNIES
 
-  /**
-   * Determines if all bunnies are dead
-   */
+  /** Determines if all bunnies are dead */
   def bunniesAreExtinct: Boolean = getActualBunniesNumber < MIN_ALIVE_BUNNIES
 
-  /**
-   * Determines if too many generations have passed
-   */
+  /** Determines if too many generations have passed */
   def tooManyGenerations: Boolean = getGenerationNumber >= MAX_GENERATIONS_NUMBER
 
   /** @return the [[Population]]  for the next [[Generation]] */
