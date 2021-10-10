@@ -8,7 +8,7 @@ import it.unibo.pps.bunny.engine.Simulation.{
   applyTemperatureDamage, bunniesEat, end, extinction, overpopulation, startNewGeneration, updateView, wolvesEat
 }
 import it.unibo.pps.bunny.engine.SimulationConstants._
-import it.unibo.pps.bunny.engine.SimulationHistory.{ existNextGeneration, getBunniesNumber, getGenerationNumber }
+import it.unibo.pps.bunny.engine.SimulationHistory._
 import it.unibo.pps.bunny.model.world.GenerationsUtils.{
   FoodPhase, GenerationPhase, HighTemperaturePhase, ReproductionPhase, WolvesPhase
 }
@@ -25,7 +25,7 @@ object SimulationEngine {
   }
 
   private def generationPhase(generationPhase: GenerationPhase, action: IO[Unit]): IO[Unit] =
-    if (getBunniesNumber >= MIN_ALIVE_BUNNIES) {
+    if (!bunniesAreExtinct) {
       for {
         _ <- waitFor((generationPhase.instant, simulationSpeed))
         _ <- action
@@ -41,9 +41,9 @@ object SimulationEngine {
       _ <- generationPhase(HighTemperaturePhase(getGenerationNumber), applyTemperatureDamage)
       _ <- generationPhase(ReproductionPhase(getGenerationNumber + 1), startNewGeneration)
       _ <-
-        if (getBunniesNumber < MIN_ALIVE_BUNNIES) extinction()
-        else if (getBunniesNumber > MAX_ALIVE_BUNNIES) overpopulation()
-        else if (getGenerationNumber >= MAX_GENERATIONS_NUMBER) end()
+        if (bunniesAreExtinct) extinction()
+        else if (worldIsOverpopulated) overpopulation()
+        else if (tooManyGenerations) end()
         else generationLoop()
     } yield ()
   }

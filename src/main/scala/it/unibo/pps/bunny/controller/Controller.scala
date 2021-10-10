@@ -3,8 +3,10 @@ package it.unibo.pps.bunny.controller
 import it.unibo.pps.bunny.engine.{ SimulationEndType, SimulationEngine, SimulationHistory }
 import it.unibo.pps.bunny.engine.SimulationEngine.{ resetEngine, simulationLoop }
 import it.unibo.pps.bunny.engine.SimulationHistory.resetHistory
+import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.genome.KindsUtils.resetDominance
 import it.unibo.pps.bunny.model.mutation.Mutation
+import it.unibo.pps.bunny.model.mutation.Mutation._
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.disturbingFactors.Factor
 import it.unibo.pps.bunny.model.world.{ Summer, Winter }
@@ -20,10 +22,10 @@ object Controller {
   def changeSimulationSpeed(): Unit = SimulationEngine.changeSpeed()
 
   /** Method that sets the Summer Climate inside Environment */
-  def setSummerClimate(): Unit = SimulationHistory changeEnvironmentClimate Summer
+  def setSummerClimate(): Unit = SimulationHistory.getActualGeneration.environment.climate = Summer
 
   /** Method that sets the Winter Climate inside Environment */
-  def setWinterClimate(): Unit = SimulationHistory changeEnvironmentClimate Winter
+  def setWinterClimate(): Unit = SimulationHistory.getActualGeneration.environment.climate = Winter
 
   /**
    * Method that insert a mutation inside the simulation
@@ -34,9 +36,23 @@ object Controller {
     SimulationHistory.getActualGeneration.environment introduceMutation mutation
 
   /**
+   * Method that insert a recessive mutation inside the simulation
+   * @param geneKind
+   *   the gene mutated
+   */
+  def insertRecessiveMutationFor(geneKind: GeneKind): Unit = insertMutation(recessiveMutation(geneKind))
+
+  /**
+   * Method that insert a dominant mutation inside the simulation
+   * @param geneKind
+   *   the gene mutated
+   */
+  def insertDominantMutationFor(geneKind: GeneKind): Unit = insertMutation(dominantMutation(geneKind))
+
+  /**
    * Method that shows the end of the simulation on the Application GUI
    * @param endType
-   *   the reason why the simulation is terminated
+   *   the reason why simulation ended
    */
   def showEnd(endType: SimulationEndType): Unit = Platform runLater {
     ScalaFXView.showEnd(endType)

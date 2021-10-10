@@ -11,7 +11,15 @@ ThisBuild / assemblyMergeStrategy := {
   case _                        => MergeStrategy.first
 }
 
-scalacOptions ++= Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-feature", "-Ymacro-annotations")
+scalacOptions ++= Seq(
+  "-unchecked",
+  "-deprecation",
+  "-encoding",
+  "utf8",
+  "-feature",
+  "-Ymacro-annotations",
+  "-language:implicitConversions"
+)
 
 name := "pps-bunny"
 
@@ -34,6 +42,8 @@ libraryDependencies ++= {
     "org.openjfx" % s"javafx-$m" % "16" classifier osName
   )
 }
+
+coverageEnabled := true
 
 // Add ScalaTest dependencies
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % "test"
