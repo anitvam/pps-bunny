@@ -24,21 +24,21 @@ trait Environment {
   /**
    * Introduce the specified [[Factor]] inside the Environment
    * @param factor
-   *   the factor to introduce
+   *   the new factor
    */
   def introduceFactor(factor: Factor): Unit
 
   /**
    * Remove the specified [[Factor]] from the Environment
    * @param factor
-   *   the factor to remove
+   *   the factor to be removed
    */
   def removeFactor(factor: Factor): Unit
 
   /**
    * Introduce the specified [[Mutation]] inside the Environment
    * @param mutation
-   *   the mutation to insert
+   *   the new mutation
    */
   def introduceMutation(mutation: Mutation): Unit
 }
