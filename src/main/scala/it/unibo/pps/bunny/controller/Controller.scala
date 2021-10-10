@@ -3,8 +3,10 @@ package it.unibo.pps.bunny.controller
 import it.unibo.pps.bunny.engine.{ SimulationEndType, SimulationEngine, SimulationHistory }
 import it.unibo.pps.bunny.engine.SimulationEngine.{ resetEngine, simulationLoop }
 import it.unibo.pps.bunny.engine.SimulationHistory.resetHistory
+import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.genome.KindsUtils.resetDominance
 import it.unibo.pps.bunny.model.mutation.Mutation
+import it.unibo.pps.bunny.model.mutation.Mutation._
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.disturbingFactors.Factor
 import it.unibo.pps.bunny.model.world.{ Summer, Winter }
@@ -31,6 +33,20 @@ object Controller {
    */
   def insertMutation(mutation: Mutation): Unit =
     SimulationHistory.getActualGeneration.environment introduceMutation mutation
+
+  /**
+   * Method that insert a recessive mutation inside the simulation
+   * @param geneKind
+   *   the gene mutated
+   */
+  def insertRecessiveMutationFor(geneKind: GeneKind): Unit = insertMutation(recessiveMutation(geneKind))
+
+  /**
+   * Method that insert a dominant mutation inside the simulation
+   * @param geneKind
+   *   the gene mutated
+   */
+  def insertDominantMutationFor(geneKind: GeneKind): Unit = insertMutation(dominantMutation(geneKind))
 
   /** Method that shows the end of the simulation on the Application GUI */
   def showEnd(endType: SimulationEndType): Unit = Platform runLater {

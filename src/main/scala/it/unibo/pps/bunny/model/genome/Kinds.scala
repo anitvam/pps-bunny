@@ -3,6 +3,7 @@ package it.unibo.pps.bunny.model.genome
 import it.unibo.pps.bunny.model.MultipleDominanceAssignmentException
 import it.unibo.pps.bunny.model.genome.Alleles.AlleleKind
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
+import it.unibo.pps.bunny.model.mutation.Mutation
 import it.unibo.pps.bunny.util.PimpScala.{ RichOption, RichSeq }
 
 import scala.language.postfixOps
@@ -102,6 +103,11 @@ object KindsUtils {
   def setAlleleDominance(alleleKind: AlleleKind): Unit = {
     alleleKind.setDominance(true)
     getAlternativeAlleleKind(alleleKind).setDominance(false)
+  }
+
+  def setAlleleDominanceFromMutation(mutation: Mutation): Unit = {
+    if (mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
+    else KindsUtils.setAlleleDominance(mutation.geneKind.base)
   }
 
   /**

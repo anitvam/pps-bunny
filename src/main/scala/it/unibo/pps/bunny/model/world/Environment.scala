@@ -86,8 +86,7 @@ object Environment {
     override def removeFactor(factor: Factor): Unit = factors = factors - factor
 
     def introduceMutation(mutation: Mutation): Unit = {
-      if (mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
-      else KindsUtils.setAlleleDominance(mutation.geneKind.base)
+      KindsUtils.setAlleleDominanceFromMutation(mutation)
       mutations = mutation :: mutations
     }
 

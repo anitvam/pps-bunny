@@ -2,7 +2,6 @@ package it.unibo.pps.bunny.view.scalaFX.FXControllers
 
 import it.unibo.pps.bunny.controller.Controller
 import it.unibo.pps.bunny.model.genome.Genes._
-import it.unibo.pps.bunny.model.mutation.Mutation
 import scalafx.scene.control.{ Button, Label }
 import scalafxml.core.macros.sfxml
 import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.Style.MutationsChoice.{
@@ -70,7 +69,8 @@ class MutationsPanelController(
       buttonClicked: Button,
       otherButton: Button
   ): Unit = {
-    Controller.insertMutation(Mutation(geneKind, isDominant))
+    if (isDominant) Controller.insertDominantMutationFor(geneKind)
+    else Controller.insertRecessiveMutationFor(geneKind)
     otherButton.text = newText
     updateButtonStyle(buttonClicked, otherButton)
     showMutationIncoming()
