@@ -2,23 +2,24 @@ package view.scalaFX
 
 import controller.ScalaFXLauncher.stage
 import engine._
-
-import javafx.{ scene => jfxs }
+import javafx.{scene => jfxs}
 import model.world.Generation.Population
 import model.world.GenerationsUtils.GenerationPhase
 import scalafx.Includes._
 import scalafx.application.JFXApp3.PrimaryStage
 import scalafx.application.Platform
 import scalafx.scene.Scene
-import scalafx.scene.image.{ Image, ImageView }
+import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.AnchorPane
 import scalafx.stage.Stage
 import util.PimpScala._
 import view._
 import view.scalaFX.FXControllers.BaseAppControllerInterface
-import view.scalaFX.ScalaFXConstants.{ PREFERRED_CHART_HEIGHT, SCENE_HEIGHT, SCENE_WIDTH }
+import view.scalaFX.ScalaFXConstants.{PREFERRED_CHART_HEIGHT, SCENE_HEIGHT, SCENE_WIDTH}
 import view.scalaFX.components.BunnyView
 import view.scalaFX.utilities.FxmlUtils
+
+import scala.language.implicitConversions
 
 object ScalaFXView extends View {
   var baseAppController: Option[BaseAppControllerInterface] = Option.empty

@@ -53,7 +53,6 @@ sealed trait BaseAppControllerInterface {
    */
   def changeBackgroundEnvironment(background: Background): Unit
 
-  def addSpeedUp(): Unit
 }
 
 @sfxml

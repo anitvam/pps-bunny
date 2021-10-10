@@ -4,7 +4,7 @@ import cats.effect.IO
 import engine.GenerationTimer.{resetTimer, waitFor}
 import engine.Simulation._
 import engine.SimulationConstants._
-import engine.SimulationHistory.{existNextGeneration, getBunniesNumber, getGenerationNumber}
+import engine.SimulationHistory.{getBunniesNumber, getGenerationNumber}
 import engine.engineConversions._
 import model.world.GenerationsUtils._
 

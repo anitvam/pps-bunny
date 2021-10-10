@@ -25,7 +25,8 @@ sealed trait Allele {
 
 /**
  * Represents a standard allele.
- * @param kind the kind of the Allele.
+ * @param kind
+ *   the kind of the Allele.
  */
 case class StandardAllele(kind: AlleleKind) extends Allele {
   override val justMutated: Boolean = false
@@ -33,7 +34,8 @@ case class StandardAllele(kind: AlleleKind) extends Allele {
 
 /**
  * Represents an allele which has just been mutated.
- * @param kind the kind of the Allele.
+ * @param kind
+ *   the kind of the Allele.
  */
 case class JustMutatedAllele(kind: AlleleKind) extends Allele {
   override val justMutated: Boolean = true
@@ -65,9 +67,12 @@ object Gene {
 
   /**
    * Represents a Standard Gene of a specific Bunny.
-   * @param kind the kind of Gene
-   * @param momAllele the allele from the mom
-   * @param dadAllele the allele from the dad
+   * @param kind
+   *   the kind of Gene
+   * @param momAllele
+   *   the allele from the mom
+   * @param dadAllele
+   *   the allele from the dad
    */
   private case class GeneImpl(
       override val kind: GeneKind,

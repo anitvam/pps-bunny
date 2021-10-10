@@ -1,10 +1,10 @@
 package view.scalaFX.utilities
 
-import javafx.scene.{layout => jfxs}
+import javafx.scene.{ layout => jfxs }
 import scalafx.Includes._
 import scalafx.scene.Node
 import scalafx.scene.layout.AnchorPane
-import scalafxml.core.{FXMLLoader, NoDependencyResolver}
+import scalafxml.core.{ FXMLLoader, NoDependencyResolver }
 
 import java.io.IOException
 
@@ -35,7 +35,7 @@ object FxmlUtils {
   }
 
   /**
-   * Methos that sets the 4 anchors to zero of an AnchorPane's children
+   * Method that sets the 4 anchors to zero of an AnchorPane's children
    *
    * @param node
    *   the node on which anchors are set

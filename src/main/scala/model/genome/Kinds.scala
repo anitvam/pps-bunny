@@ -28,11 +28,12 @@ object Alleles extends Enumeration {
 
   /**
    * The information each AlleleKind must have
-   * @param prettyName the name of each allele, that will be shown to the user
+   * @param prettyName
+   *   the name of each allele, that will be shown to the user
    */
   protected case class AllelesVal(prettyName: String) extends super.Val {
     private var dominant: Option[Boolean] = Option.empty
-    def resetDominance: Unit = dominant = Option.empty
+    def resetDominance(): Unit = dominant = Option.empty
 
     def setDominance(cond: Boolean): Unit =
       if (dominant ?) throw new MultipleDominanceAssignmentException else dominant = Option(cond)
@@ -51,38 +52,35 @@ object Genes extends Enumeration {
 
   /**
    * The information each GeneKind must have.
-   * @param base the base Allele of the gene
-   * @param mutated the mutated Allele of the gene
-   * @param letter the letter which corresponds to this gene
+   * @param base
+   *   the base Allele of the gene
+   * @param mutated
+   *   the mutated Allele of the gene
+   * @param letter
+   *   the letter which corresponds to this gene
    */
-  protected case class GenesVal(base: AlleleKind,
-                                mutated: AlleleKind,
-                                letter: String,
-                                prettyName: String) extends super.Val
+  protected case class GenesVal(base: AlleleKind, mutated: AlleleKind, letter: String, prettyName: String)
+      extends super.Val
+
   import scala.language.implicitConversions
   implicit def valueToGenesVal(x: Value): GenesVal = x.asInstanceOf[GenesVal]
   implicit def valueToString(x: Value): String = x.prettyName
 
-  val FUR_COLOR: GenesVal =  GenesVal(base = Alleles.WHITE_FUR,
-                                mutated = Alleles.BROWN_FUR,
-                                letter = "f",
-                                prettyName = "Colore pelliccia")
-  val FUR_LENGTH: GenesVal = GenesVal(base = Alleles.SHORT_FUR,
-                                mutated = Alleles.LONG_FUR,
-                                letter = "l",
-                                prettyName = "Lunghezza pelo")
-  val TEETH: GenesVal =      GenesVal(base = Alleles.SHORT_TEETH,
-                                mutated = Alleles.LONG_TEETH,
-                                letter = "t",
-                                prettyName = "Lunghezza denti")
-  val EARS: GenesVal =       GenesVal(base = Alleles.HIGH_EARS,
-                                mutated = Alleles.LOW_EARS,
-                                letter = "e" ,
-                                prettyName = "Orecchie")
-  val JUMP: GenesVal =       GenesVal(base = Alleles.LOW_JUMP,
-                                mutated = Alleles.HIGH_JUMP,
-                                letter = "j",
-                                prettyName = "Altezza salto")
+  val FUR_COLOR: GenesVal =
+    GenesVal(base = Alleles.WHITE_FUR, mutated = Alleles.BROWN_FUR, letter = "f", prettyName = "Colore pelliccia")
+
+  val FUR_LENGTH: GenesVal =
+    GenesVal(base = Alleles.SHORT_FUR, mutated = Alleles.LONG_FUR, letter = "l", prettyName = "Lunghezza pelo")
+
+  val TEETH: GenesVal =
+    GenesVal(base = Alleles.SHORT_TEETH, mutated = Alleles.LONG_TEETH, letter = "t", prettyName = "Lunghezza denti")
+
+  val EARS: GenesVal =
+    GenesVal(base = Alleles.HIGH_EARS, mutated = Alleles.LOW_EARS, letter = "e", prettyName = "Orecchie")
+
+  val JUMP: GenesVal =
+    GenesVal(base = Alleles.LOW_JUMP, mutated = Alleles.HIGH_JUMP, letter = "j", prettyName = "Altezza salto")
+
 }
 
 object KindsUtils {
@@ -97,6 +95,7 @@ object KindsUtils {
    */
   def assignRandomDominance(): Unit =
     Genes.values.foreach(gk => setAlleleDominance(randomAlleleKindChooser(gk)))
+
 
   /**
    * Sets an AlleleKind as dominant for a specific GeneKind.
@@ -132,5 +131,5 @@ object KindsUtils {
   /**
    * Reset dominance of all Alleles.
    */
-  def resetDominance(): Unit = Alleles.values.foreach(_.resetDominance)
+  def resetDominance(): Unit = Alleles.values.foreach(_.resetDominance())
 }

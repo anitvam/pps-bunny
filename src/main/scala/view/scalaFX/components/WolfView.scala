@@ -61,11 +61,11 @@ object WolfView {
     private var isPlayDelayed = true
 
     private val isAnimationDelayed: Long => Boolean =
-      _ < WOLVES_INSTANT_DEVIATION * 1000 * Controller.getCurrentSimulationSpeed()
+      _ < WOLVES_INSTANT_DEVIATION * 1000 * Controller.getCurrentSimulationSpeed
 
     private val timer: AnimationTimer = AnimationTimer(_ => {
       if (!isAnimationDelayed(lastTime) || !isPlayDelayed)
-        if (lastTime <= WOLVES_PHASE * 1000 * Controller.getCurrentSimulationSpeed()) {
+        if (lastTime <= WOLVES_PHASE * 1000 * Controller.getCurrentSimulationSpeed) {
           imageView.visible = true
           factorsPanelController --> { _.disableWolfFactor() }
           checkDirection(
