@@ -71,7 +71,7 @@ object Environment {
 
     override def removeFactor(factor: Factor): Unit = _factors = _factors - factor
 
-    def introduceMutation(mutation: Mutation): Unit = {
+    override def introduceMutation(mutation: Mutation): Unit = {
       KindsUtils.setAlleleDominanceFromMutation(mutation)
       _mutations = mutation :: _mutations
     }
