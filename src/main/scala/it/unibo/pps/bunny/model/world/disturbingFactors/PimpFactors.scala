@@ -7,26 +7,28 @@ import scala.language.implicitConversions
 
 object PimpFactors {
 
-  /** Implicit class that enrich [[Factors]] */
+  /** A rich wrapper of [[Factors]] to add specific methods */
   implicit class RichFactors(factors: Factors) {
 
-    /** @return true if there is a [[FoodFactor]] inside the simulation [[Factors]] */
+    /** @return if in the factors list there is a [[FoodFactor]] */
     private def foodFactorIsPresent: Boolean = factors.exists(_.factorKind == FoodFactorKind)
 
-    /** @return the [[FoodFactor]] instance inside the simulation [[Factors]] */
+    /** Getter for the [[FoodFactor]] in the list */
     private def getFoodFactor: FoodFactor = getFactor(FoodFactorKind).map(_.asInstanceOf[FoodFactor]).get
 
     /**
-     * Method that inserts a new [[FoodFactor]] inside [[Factors]]
+     * Combines the [[FoodFactor]] already in the list with the new one
      * @param newFoodFactor
-     *   the [[FoodFactor]] that will be inserted
-     * @return
-     *   the updated [[Factors]]
+     *   the new foodFactor added in the environment
      */
     private def combineFoodFactor(newFoodFactor: FoodFactor): Factors =
       getFoodFactor + newFoodFactor :: factors -? (_.factorKind == FoodFactorKind)
 
-    /** Method that removes a [[FoodFactor]] from [[Factors]] */
+    /**
+     * Method that removes a [[FoodFactor]] from [[Factors]]
+     * @param subFactor
+     *   the foodFactor removed from the environment
+     */
     private def updateFoodFactor(subFactor: FoodFactor): Factors =
       getFoodFactor - subFactor :: factors -? (_.factorKind == FoodFactorKind)
 
