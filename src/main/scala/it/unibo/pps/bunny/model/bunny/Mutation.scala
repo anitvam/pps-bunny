@@ -1,4 +1,4 @@
-package it.unibo.pps.bunny.model.mutation
+package it.unibo.pps.bunny.model.bunny
 
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 

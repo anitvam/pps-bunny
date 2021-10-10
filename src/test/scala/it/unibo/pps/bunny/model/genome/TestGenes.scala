@@ -1,11 +1,11 @@
-package it.unibo.pps.bunny.model
+package it.unibo.pps.bunny.model.genome
 
 import it.unibo.pps.bunny.model.bunny.Bunny._
 import it.unibo.pps.bunny.model.bunny.FirstBunny
-import it.unibo.pps.bunny.model.genome.Genes.{ EARS, FUR_COLOR, FUR_LENGTH, GeneKind }
-import it.unibo.pps.bunny.model.genome.KindsUtils.{ assignRandomDominance, getGeneKind, resetDominance }
-import it.unibo.pps.bunny.model.genome._
-import org.scalatest.{ FlatSpec, Matchers }
+import it.unibo.pps.bunny.model.genome.Genes.{EARS, FUR_COLOR, FUR_LENGTH, GeneKind}
+import it.unibo.pps.bunny.model.genome.KindsUtils.{assignRandomDominance, getGeneKind, resetDominance}
+import it.unibo.pps.bunny.model._
+import org.scalatest.{FlatSpec, Matchers}
 
 class TestGenes extends FlatSpec with Matchers {
 

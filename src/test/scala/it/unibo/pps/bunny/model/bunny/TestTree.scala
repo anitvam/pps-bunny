@@ -1,12 +1,12 @@
-package it.unibo.pps.bunny.model
+package it.unibo.pps.bunny.model.bunny
 
 import it.unibo.pps.bunny.engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
-import it.unibo.pps.bunny.model.bunny.{ BinaryTree, Bunny, Leaf, Node }
 import it.unibo.pps.bunny.model.bunny.Bunny._
-import it.unibo.pps.bunny.model.bunny.Tree.generateTree
+import it.unibo.pps.bunny.model.bunny.Tree.{actualGenerations, generateTree}
+import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.Reproduction._
-import org.scalatest.{ FlatSpec, Matchers }
 import it.unibo.pps.bunny.util.PimpScala.RichOption
+import org.scalatest.{FlatSpec, Matchers}
 
 import scala.language.postfixOps
 
@@ -31,15 +31,11 @@ class TestTree extends FlatSpec with Matchers {
     assert(tree.generations == 2)
   }
 
-  var bunny: Bunny = randomBunnyGenerator()
-
+  var bunnies: Population = Seq(randomBunnyGenerator())
   for (_ <- 0 to MAX_GENEALOGICAL_TREE_GENERATIONS) {
-    bunny = nextGenerationBunnies(bunny :: List.fill(2)(initialCoupleGenerator()).flatMap(_.toSeq))
-      .sortBy(generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, _).generations)
-      .reverse
-      .head
+    bunnies = nextGenerationBunnies(bunnies ++ initialCoupleGenerator().toSeq)
   }
-
+  val bunny = bunnies.sortBy(actualGenerations).reverse.head
   val fullTree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
 
   "A full genealogical tree " should "contain all the required generations" in {

@@ -1,8 +1,8 @@
-package it.unibo.pps.bunny.model
+package it.unibo.pps.bunny.model.genome
 
-import it.unibo.pps.bunny.model.genome.KindsUtils.{ resetDominance, setAlleleDominance }
-import it.unibo.pps.bunny.model.genome.{ Alleles, Genes }
-import org.scalatest.{ FlatSpec, Matchers }
+import it.unibo.pps.bunny.model.MultipleDominanceAssignmentException
+import it.unibo.pps.bunny.model.genome.KindsUtils.{resetDominance, setAlleleDominance}
+import org.scalatest.{FlatSpec, Matchers}
 
 class TestKinds extends FlatSpec with Matchers {
 

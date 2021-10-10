@@ -1,8 +1,8 @@
 package it.unibo.pps.bunny.model.world
 
+import it.unibo.pps.bunny.model.bunny.Mutation
 import it.unibo.pps.bunny.model.genome.KindsUtils
-import it.unibo.pps.bunny.model.mutation.Mutation
-import it.unibo.pps.bunny.model.world.Environment.{ Factors, Mutations }
+import it.unibo.pps.bunny.model.world.Environment.{Factors, Mutations}
 import it.unibo.pps.bunny.model.world.disturbingFactors.Factor
 import it.unibo.pps.bunny.model.world.disturbingFactors.PimpFactors._
 

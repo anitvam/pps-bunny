@@ -1,15 +1,15 @@
 package it.unibo.pps.bunny.controller
 
-import it.unibo.pps.bunny.engine.{ SimulationEndType, SimulationEngine, SimulationHistory }
-import it.unibo.pps.bunny.engine.SimulationEngine.{ resetEngine, simulationLoop }
+import it.unibo.pps.bunny.engine.{SimulationEndType, SimulationEngine, SimulationHistory}
+import it.unibo.pps.bunny.engine.SimulationEngine.{resetEngine, simulationLoop}
 import it.unibo.pps.bunny.engine.SimulationHistory.resetHistory
+import it.unibo.pps.bunny.model.bunny.Mutation
+import it.unibo.pps.bunny.model.bunny.Mutation.{dominantMutation, recessiveMutation}
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.genome.KindsUtils.resetDominance
-import it.unibo.pps.bunny.model.mutation.Mutation
-import it.unibo.pps.bunny.model.mutation.Mutation._
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.disturbingFactors.Factor
-import it.unibo.pps.bunny.model.world.{ Summer, Winter }
+import it.unibo.pps.bunny.model.world.{Summer, Winter}
 import scalafx.application.Platform
 import it.unibo.pps.bunny.view.scalaFX.ScalaFXView
 

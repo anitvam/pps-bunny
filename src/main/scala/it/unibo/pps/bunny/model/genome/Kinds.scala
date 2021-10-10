@@ -1,10 +1,10 @@
 package it.unibo.pps.bunny.model.genome
 
 import it.unibo.pps.bunny.model.MultipleDominanceAssignmentException
+import it.unibo.pps.bunny.model.bunny.Mutation
 import it.unibo.pps.bunny.model.genome.Alleles.AlleleKind
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
-import it.unibo.pps.bunny.model.mutation.Mutation
-import it.unibo.pps.bunny.util.PimpScala.{ RichOption, RichSeq }
+import it.unibo.pps.bunny.util.PimpScala.{RichOption, RichSeq}
 
 import scala.language.postfixOps
 import scala.language.implicitConversions

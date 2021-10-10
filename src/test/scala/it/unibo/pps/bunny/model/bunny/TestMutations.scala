@@ -1,13 +1,12 @@
-package it.unibo.pps.bunny.model
+package it.unibo.pps.bunny.model.bunny
 
 import it.unibo.pps.bunny.controller.Controller
+import it.unibo.pps.bunny.model.bunny.Mutation.{dominantMutation, recessiveMutation}
 import it.unibo.pps.bunny.model.genome.Genes
 import it.unibo.pps.bunny.model.genome.KindsUtils.resetDominance
-import it.unibo.pps.bunny.model.mutation.Mutation
-import it.unibo.pps.bunny.model.mutation.Mutation._
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.Reproduction._
-import org.scalatest.{ FlatSpec, Matchers }
+import org.scalatest.{FlatSpec, Matchers}
 
 class TestMutations extends FlatSpec with Matchers {
   val couple: Couple = initialCoupleGenerator()
