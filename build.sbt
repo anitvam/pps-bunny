@@ -1,17 +1,25 @@
 import sbt.Keys.libraryDependencies
 
 ThisBuild / version := "0.3.0"
-ThisBuild / organization := "it.unibo"
+ThisBuild / organization := "it.unibo.pps.bunny"
 scalaVersion := "2.13.6"
 
-assembly / mainClass := Some("controller.ScalaFXLauncher")
+assembly / mainClass := Some("it.unibo.pps.bunny.controller.ScalaFXLauncher")
 
 ThisBuild / assemblyMergeStrategy := {
   case PathList("META-INF", _*) => MergeStrategy.discard
   case _                        => MergeStrategy.first
 }
 
-scalacOptions ++= Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-feature", "-Ymacro-annotations")
+scalacOptions ++= Seq(
+  "-unchecked",
+  "-deprecation",
+  "-encoding",
+  "utf8",
+  "-feature",
+  "-Ymacro-annotations",
+  "-language:implicitConversions"
+)
 
 name := "pps-bunny"
 
@@ -35,12 +43,17 @@ libraryDependencies ++= {
   )
 }
 
+coverageEnabled := true
+
 // Add ScalaTest dependencies
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % "test"
 
 //Add Cats dependencies
 libraryDependencies += "org.typelevel" %% "cats-core" % "2.0.0"
 libraryDependencies += "org.typelevel" %% "cats-effect" % "2.2.0"
+
+//Add Prolog dependencies
+libraryDependencies += "it.unibo.alice.tuprolog" % "tuprolog" % "3.3.0"
 
 // Fork a new JVM for 'run' and 'test:run', to avoid JavaFX double initialization problems
 fork := true
