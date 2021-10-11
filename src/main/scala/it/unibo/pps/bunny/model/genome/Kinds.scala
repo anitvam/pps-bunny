@@ -130,7 +130,7 @@ object KindsUtils {
 
   /**
    * @param geneKind
-   *   the subject genekind
+   *   the subject [[GeneKind]]
    * @return
    *   true if the dominance is already assigned for the genekind, false if not
    */
