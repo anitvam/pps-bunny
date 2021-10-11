@@ -75,7 +75,7 @@ object ScalaFXConstants {
     val CHOSEN_BUNNY_BORDER : Int = 1
 
     /** Padding size in px for the tree inside its panel */
-    val EXTERNAL_PADDING: Int = 3
+    val EXTERNAL_PADDING: Int = 5
 
     /** Additional space in each direction caused by the external padding and the chosen bunny selection*/
     val ADDITIONAL_SPACE: Int = (CHOSEN_BUNNY_PADDING + CHOSEN_BUNNY_BORDER + EXTERNAL_PADDING) * 2
