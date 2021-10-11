@@ -1,14 +1,23 @@
 package it.unibo.pps.bunny.model
 
 import it.unibo.pps.bunny.engine.SimulationConstants._
-import it.unibo.pps.bunny.model.bunny.{Bunny, Female, Male}
 import it.unibo.pps.bunny.model.bunny.Bunny._
+import it.unibo.pps.bunny.model.bunny.{Bunny, Female, Male}
 import it.unibo.pps.bunny.model.genome.{Gene, Genes, StandardAllele}
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.Reproduction._
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestReproduction extends FlatSpec with Matchers {
+
+  "A couple" should "have one Male and one Female Bunny" in {
+    assertThrows[CoupleGendersException] {
+      Couple(baseBunnyGenerator(Male), baseBunnyGenerator(Male))
+    }
+    assertThrows[CoupleGendersException] {
+      Couple(baseBunnyGenerator(Female), baseBunnyGenerator(Female))
+    }
+  }
 
   "Couples of bunnies " should "be generabile from any group of bunnies with males and females" in {
     val someBunnies = Seq.fill(9)(randomBunnyGenerator())
