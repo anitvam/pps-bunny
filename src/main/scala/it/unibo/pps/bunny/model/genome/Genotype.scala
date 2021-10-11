@@ -53,9 +53,8 @@ sealed trait Genotype {
    * @return
    *   a sequence of standard alleles with the parents kind, useful during the generation of children
    */
-  def getStandardAlleles(geneKind: GeneKind): (Allele, Allele) = {
+  def getStandardAlleles(geneKind: GeneKind): (StandardAllele, StandardAllele) =
     (StandardAllele(genes(geneKind).momAllele.kind), StandardAllele(genes(geneKind).dadAllele.kind))
-  }
 
   if (genes.count(g => g._1 != g._2.kind) > 0) throw new InconsistentGenotypeException(genes)
 }

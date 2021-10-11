@@ -15,12 +15,12 @@ sealed trait Allele {
   val kind: AlleleKind
   val justMutated: Boolean
 
+  def isDominant: Boolean = kind.isDominant.getOrElse(false)
+
   def getLetter: String =
     if (kind.isDominant ?) {
       if (kind.isDominant.get) getGeneKind(kind).letter.toUpperCase else getGeneKind(kind).letter.toLowerCase
     } else ""
-
-  def isDominant: Boolean = kind.isDominant.getOrElse(false)
 }
 
 /**
@@ -50,9 +50,9 @@ trait Gene {
   val momAllele: Allele
   val dadAllele: Allele
 
-  def getVisibleTrait: AlleleKind = if (isHomozygous || momAllele.isDominant) momAllele.kind else dadAllele.kind
+  private def isHomozygous: Boolean = momAllele.kind == dadAllele.kind
 
-  def isHomozygous: Boolean = momAllele.kind == dadAllele.kind
+  def getVisibleTrait: AlleleKind = if (isHomozygous || momAllele.isDominant) momAllele.kind else dadAllele.kind
 
   def getLetters: String = momAllele.getLetter + dadAllele.getLetter
 }
@@ -60,10 +60,12 @@ trait Gene {
 object Gene {
 
   def apply(kind: GeneKind, momAllele: Allele, dadAllele: Allele): Gene = {
-    val checkKind = (allele: Allele) => allele.kind == kind.base || allele.kind == kind.mutated
-    if (!(checkKind(momAllele) && checkKind(dadAllele))) throw new InconsistentAlleleException
+    if (!(checkKind(kind, momAllele) && checkKind(kind, dadAllele))) throw new InconsistentAlleleException
     GeneImpl(kind, momAllele, dadAllele)
   }
+
+  /** Checks if the the specified GeneKind and the kind of the Allele are consistent.*/
+  private val checkKind: (GeneKind, Allele) => Boolean = (kind, allele) => getGeneKind(allele.kind) == kind
 
   /**
    * Represents a Standard Gene of a specific Bunny.

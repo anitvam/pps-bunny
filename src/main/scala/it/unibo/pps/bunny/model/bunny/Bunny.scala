@@ -77,8 +77,6 @@ class HistoryBunny(bunny: Bunny) extends Bunny {
 
 /** Companion object of the bunny. */
 object Bunny {
-  type baseBunnies = Seq[Bunny]
-  type mutatedBunnies = Seq[Bunny]
 
   /**
    * Function to get a random gender for the Bunny.
@@ -112,6 +110,8 @@ object Bunny {
     )
   }
 
+  private type baseBunnies = Seq[Bunny]
+  private type mutatedBunnies = Seq[Bunny]
   /**
    * @param geneKind
    *   the kind of Gene we want to split the bunnies by
@@ -121,7 +121,7 @@ object Bunny {
    *   a tuple with the sequence of bunnies with the base Allele and the sequence of bunnies with the mutated Allele
    */
   def splitBunniesByGene(geneKind: GeneKind, bunnies: Population): (baseBunnies, mutatedBunnies) =
-    bunnies.partition(_.genotype.phenotype(geneKind) == geneKind.base)
+    bunnies partition (_.genotype.phenotype(geneKind) == geneKind.base)
 
   /**
    * Method that filter a population of bunnies with two AlleleKinds together
@@ -133,6 +133,6 @@ object Bunny {
    *   Population the population with the specified AlleleKinds together
    */
   def filterBunniesWithAlleles(bunnies: Population, alleleKinds: AlleleKind*): Population = bunnies filter { bunny =>
-    alleleKinds.count(ak => bunny.genotype.phenotype.values.exists(_ == ak)) == alleleKinds.size
+    (alleleKinds count (ak => bunny.genotype.phenotype.values.exists(_ == ak))) == alleleKinds.size
   }
 }

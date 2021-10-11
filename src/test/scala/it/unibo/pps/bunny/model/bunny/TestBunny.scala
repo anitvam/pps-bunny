@@ -11,8 +11,8 @@ class TestBunny extends FlatSpec with Matchers {
     noException should be thrownBy randomBunnyGenerator
   }
 
-  val baseBunny = baseBunnyGenerator(randomGenderChooser())
-  val randomBunny = randomBunnyGenerator()
+  private val baseBunny: FirstBunny = baseBunnyGenerator(randomGenderChooser())
+  private val randomBunny: FirstBunny = randomBunnyGenerator()
 
   it should "have all kind of Genes" in {
     assert(baseBunny.genotype.genes.size == Genes.values.size)
