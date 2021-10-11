@@ -1,12 +1,12 @@
 package it.unibo.pps.bunny.view.scalaFX.components
 
+import it.unibo.pps.bunny.engine.SimulationConstants.NUMBER_OF_PHASE
 import it.unibo.pps.bunny.engine.SimulationConstants.PhasesConstants._
-import it.unibo.pps.bunny.engine.SimulationConstants._
-import it.unibo.pps.bunny.model.world.GenerationsUtils.{ GenerationPhase, ReproductionPhase }
+import it.unibo.pps.bunny.model.world.GenerationsUtils.{GenerationPhase, ReproductionPhase, getNumberOfPhases}
 import scalafx.Includes.jfxDoubleProperty2sfx
 import scalafx.scene.Group
 import scalafx.scene.control.Label
-import scalafx.scene.shape.{ Circle, Line }
+import scalafx.scene.shape.{Circle, Line}
 import scalafx.scene.transform.Rotate
 
 trait ClockView {
@@ -58,7 +58,7 @@ object ClockView {
       clockHand.translateX = clockRadius
       clockHand.translateY = clockRadius
 
-      for (i <- 0 to NUMBER_OF_PHASE) {
+      for (i <- 0 to getNumberOfPhases) {
 
         val tick = Line(0, -23, 0, -33)
         tick.translateX = clockRadius
