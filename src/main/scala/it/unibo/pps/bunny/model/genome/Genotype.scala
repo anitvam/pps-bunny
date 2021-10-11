@@ -17,10 +17,12 @@ sealed trait Phenotype {
   val values: Iterable[AlleleKind] = visibleTraits.values
   /** A method to get the [[AlleleKind]] for a specific [[GeneKind]] directly, without using visibleTraits */
   def apply(gk: GeneKind): AlleleKind = visibleTraits(gk)
+  def has(ak: AlleleKind): Boolean = values.toSet.contains(ak)
 }
 
 object Phenotype {
   def apply(visibleTraits: Map[GeneKind, AlleleKind]): Phenotype = PhenotypeImpl(visibleTraits)
+
   private case class PhenotypeImpl(override val visibleTraits: Map[GeneKind, AlleleKind]) extends Phenotype
 }
 

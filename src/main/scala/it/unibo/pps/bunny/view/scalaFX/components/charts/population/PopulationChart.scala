@@ -118,8 +118,8 @@ case class PopulationChart(height: Double, width: Double) {
   val xAxis: NumberAxis = createNumberAxis("Generazioni", AXIS_LOWER_BOUND, X_AXIS_UPPER_BOUND, X_AXIS_TICK)
   val yAxis: NumberAxis = createNumberAxis("Popolazione", AXIS_LOWER_BOUND, Y_AXIS_UPPER_BOUND, Y_AXIS_TICK)
 
-  var mutations: MutationsChartSeries = MutationsChartSeries()
-  var total: ChartSeries = ChartSeries(SeriesData(), createEmptySeries("Total"))
+  val mutations: MutationsChartSeries = MutationsChartSeries()
+  val total: ChartSeries = ChartSeries(SeriesData(), createEmptySeries("Total"))
 
   val chart: LineChart[Number, Number] =
     createPopulationChart(xAxis, yAxis, height, width, total.xySeries :: mutations.xySeries)
@@ -134,9 +134,7 @@ case class PopulationChart(height: Double, width: Double) {
   def updateChart(generationPhase: GenerationPhase, population: Population): Unit = {
     import ChartConverters._
     total + (generationPhase, population.size)
-    Alleles.values.foreach(ak =>
-      mutations + (ak, (generationPhase, population.count(_.genotype.phenotype.values.toSet.contains(ak))))
-    )
+    Alleles.values.foreach(ak => mutations + (ak, (generationPhase, population.count(_.genotype.phenotype.has(ak)))))
     updateChartBound(generationPhase, population.size)
   }
 

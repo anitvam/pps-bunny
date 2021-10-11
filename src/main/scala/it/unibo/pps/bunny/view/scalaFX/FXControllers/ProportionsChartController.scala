@@ -84,7 +84,7 @@ class ProportionsChartController(
         fillPieCharts(population, getSelectedGeneKind)
         displayedGenerationNumber = generationPhase.generationNumber
         genText.text = s"Generazione $displayedGenerationNumber"
-        if (generationPhase.generationNumber > 0) backBtn.disable = false
+        backBtn.disable = generationPhase.generationNumber <= 0
       } else fillCurrentPieChart(population, getSelectedGeneKind)
     }
   }
