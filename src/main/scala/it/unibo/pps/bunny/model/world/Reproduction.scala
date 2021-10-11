@@ -38,11 +38,11 @@ object Reproduction {
 
   /**
    * @param couple
-   *   the couple of bunny
+   *   the [[Couple]] of bunnies
    * @param mutations
-   *   list of the mutations
+   *   the [[Mutations]]
    * @return
-   *   the 4 children of the couple, one for each cell of the Punnett's square
+   *   a [[Population]] with the 4 children of the couple, one for each cell of the Punnett's square
    */
   def generateChildren(couple: Couple, mutations: Mutations = List()): Population = {
     var childrenGenotypes = (List fill CHILDREN_FOR_EACH_COUPLE)(PartialGenotype(Map()))
