@@ -48,24 +48,26 @@ object Reproduction {
     var childrenGenotypes = (List fill CHILDREN_FOR_EACH_COUPLE)(PartialGenotype(Map()))
 
     // For each kind of gene
-    Genes.values.foreach(gk => {
-      // Create 4 new genes from the parents alleles, in random order
-      var childrenGenes: Seq[Gene] = (for {
-        momAllele <- couple.mom.genotype.getStandardAlleles(gk).toSeq
-        dadAllele <- couple.dad.genotype.getStandardAlleles(gk).toSeq
-      } yield Gene(gk, momAllele, dadAllele)).shuffle
+    Genes.values foreach { gk =>
+      {
+        // Create 4 new genes from the parents alleles, in random order
+        var childrenGenes: Seq[Gene] = (for {
+          momAllele <- couple.mom.genotype.getStandardAlleles(gk).toSeq
+          dadAllele <- couple.dad.genotype.getStandardAlleles(gk).toSeq
+        } yield Gene(gk, momAllele, dadAllele)).shuffle
 
-      // Check if there is a mutation for this kind of gene and substitute one of the genes with the mutated one
-      if (mutations.find(_.geneKind == gk) ?)
-        childrenGenes = Gene(gk, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) +:
-          childrenGenes.take(CHILDREN_FOR_EACH_COUPLE - 1)
+        // Check if there is a mutation for this kind of gene and substitute one of the genes with the mutated one
+        if (mutations.find(_.geneKind == gk) ?)
+          childrenGenes = Gene(gk, JustMutatedAllele(gk.mutated), JustMutatedAllele(gk.mutated)) +:
+            childrenGenes.take(CHILDREN_FOR_EACH_COUPLE - 1)
 
-      // Add the 4 new genes to the children genotypes and put the genotype with less mutations at the beginning of the list,
-      // so it will include the next mutated gene if there is one
-      childrenGenotypes =
-        (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE)
-          yield childrenGenotypes(i) + childrenGenes(i)).toList sortBy (_.mutatedAllelesQuantity)
-    })
+        // Add the 4 new genes to the children genotypes and put the genotype with less mutations at the beginning of the list,
+        // so it will include the next mutated gene if there is one
+        childrenGenotypes =
+          (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE)
+            yield childrenGenotypes(i) + childrenGenes(i)).toList sortBy (_.mutatedAllelesQuantity)
+      }
+    }
     // Creates the bunnies with the complete genotypes, half of them are going to be Males and half Females
     val createBunny: (Genotype, Gender) => Bunny =
       (genotype, gender) => ChildBunny(CompleteGenotype(genotype.genes), Option(couple.mom), Option(couple.dad), gender)

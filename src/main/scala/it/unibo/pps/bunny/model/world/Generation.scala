@@ -14,7 +14,7 @@ trait Generation {
   var population: Population
 
   /** @return the alive [[Population]] */
-  def livingPopulation: Population = population.filter(_.alive)
+  def livingPopulation: Population = population filter { _.alive }
 
   /** The [[Population]] at the end of the Generation */
   var populationAtTheEnd: Population
@@ -25,7 +25,7 @@ trait Generation {
   /** Method that terminates the actual Generation */
   def terminate(): Unit = {
     this.isEnded = true
-    populationAtTheEnd = this.population.map(HistoryBunny(_))
+    populationAtTheEnd = this.population map { HistoryBunny }
   }
 
   /** @return the current number of alive bunnies */

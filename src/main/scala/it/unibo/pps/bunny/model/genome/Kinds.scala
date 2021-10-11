@@ -98,15 +98,6 @@ object KindsUtils {
   /** Function to get a random [[AlleleKind]] for the specified [[GeneKind]] */
   val randomAlleleKindChooser: GeneKind => AlleleKind = geneKind => Seq(geneKind.base, geneKind.mutated).random
 
-  /**
-   * @param alleleKind
-   *   the AlleleKind of which the GeneKind is needed
-   * @return
-   *   the GeneKind uniquely associated with this AlleleKind
-   */
-  def getGeneKind(alleleKind: AlleleKind): GeneKind =
-    Genes.values.filter(gk => gk.base == alleleKind || gk.mutated == alleleKind).firstKey
-
   /** Method that randomly chooses one [[AlleleKind]] as Dominant for each [[GeneKind]] */
   def assignRandomDominance(): Unit = Genes.values.foreach(gk => setAlleleDominance(randomAlleleKindChooser(gk)))
 
@@ -136,7 +127,16 @@ object KindsUtils {
    * @param alleleKind
    *   the [[AlleleKind]] of which alternative [[AlleleKind]] is needed
    * @return
-   *   the [[AlleleKind]] uniquely associated with the specified [[AlleleKind]]
+   *   the [[GeneKind]] uniquely associated with the specified [[AlleleKind]]
+   */
+  def getGeneKind(alleleKind: AlleleKind): GeneKind =
+    Genes.values filter { gk => gk.base == alleleKind || gk.mutated == alleleKind } firstKey
+
+  /**
+   * @param alleleKind
+   *   the AlleleKind of which alternative AlleleKind is needed
+   * @return
+   *   the AlleleKind uniquely associated with the specified AlleleKind
    */
   def getAlternativeAlleleKind(alleleKind: AlleleKind): AlleleKind = {
     val geneKind = getGeneKind(alleleKind)
@@ -146,7 +146,7 @@ object KindsUtils {
   /**
    * Method that resets the dominance of all Alleles
    */
-  def resetDominance(): Unit = Alleles.values.foreach(_.resetDominance())
+  def resetDominance(): Unit = Alleles.values foreach { _.resetDominance() }
 
   /**
    * @param geneKind
@@ -155,4 +155,5 @@ object KindsUtils {
    *   true if the dominance is already assigned for the genekind, false if not
    */
   def isDominanceAssigned(geneKind: GeneKind): Boolean = geneKind.base.isDominant ?
+
 }
