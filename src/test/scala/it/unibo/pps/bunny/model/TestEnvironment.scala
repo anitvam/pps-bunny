@@ -1,12 +1,16 @@
 package it.unibo.pps.bunny.model
 
+import it.unibo.pps.bunny.model.bunny.Mutation.dominantMutation
+import it.unibo.pps.bunny.model.genome.Genes.FUR_COLOR
 import it.unibo.pps.bunny.model.world.Environment.fromPreviousOne
-import it.unibo.pps.bunny.model.world._
+import it.unibo.pps.bunny.model.world.disturbingFactors.PimpFactors._
+import it.unibo.pps.bunny.model.world.disturbingFactors._
+import it.unibo.pps.bunny.model.world.{ Environment, Summer, Winter }
 import org.scalatest.{ FlatSpec, Matchers }
 
 class TestEnvironment extends FlatSpec with Matchers {
   val env: Environment = Environment(Summer, List())
-  val prevEnv: Environment = Environment(Winter, List(Wolves()))
+  val prevEnv: Environment = Environment(Winter, List(WolvesFactor()))
   val newEnv: Environment = fromPreviousOne(prevEnv)
 
   "An environment" should "be created by a climate and a empty list of factors" in {
@@ -26,23 +30,23 @@ class TestEnvironment extends FlatSpec with Matchers {
   }
 
   it should "be able to introduce a new factor" in {
-    prevEnv introduceFactor UnfriendlyClimate()
-    assert(prevEnv.factors.contains(UnfriendlyClimate()))
-    assert(prevEnv.factors.contains(Wolves()))
+    prevEnv introduceFactor UnfriendlyClimateFactor()
+    assert(prevEnv.factors.contains(UnfriendlyClimateFactor()))
+    assert(prevEnv.factors.contains(WolvesFactor()))
   }
 
   it should "be able to introduce more than one FoodFactor" in {
     prevEnv introduceFactor LimitedFoodFactor()
     assert(prevEnv.factors.getFactor(FoodFactorKind).isDefined)
-    assert(prevEnv.factors.contains(Wolves()))
+    assert(prevEnv.factors.contains(WolvesFactor()))
     assert(prevEnv.factors.contains(LimitedFoodFactor()))
     prevEnv introduceFactor HighFoodFactor()
     assertResult(Some(LimitedHighFoodFactor()))(prevEnv.factors.getFactor(FoodFactorKind))
   }
 
   it should "be able to remove a specific Factor" in {
-    prevEnv removeFactor Wolves()
-    assert(!prevEnv.factors.contains(Wolves()))
+    prevEnv removeFactor WolvesFactor()
+    assert(!prevEnv.factors.contains(WolvesFactor()))
   }
 
   it should "be able to remove a SingleFoodFactor" in {
@@ -51,9 +55,9 @@ class TestEnvironment extends FlatSpec with Matchers {
   }
 
   it should "be able to remove all the Factors" in {
-    prevEnv removeFactor UnfriendlyClimate()
+    prevEnv removeFactor UnfriendlyClimateFactor()
     prevEnv removeFactor HighFoodFactor()
-    prevEnv removeFactor Wolves()
+    prevEnv removeFactor WolvesFactor()
     assert(prevEnv.factors.isEmpty)
   }
 
@@ -62,7 +66,7 @@ class TestEnvironment extends FlatSpec with Matchers {
   }
 
   it should "be able to introduce a new Mutation" in {
-    env introduceMutation Mutation(Genes.FUR_COLOR, true)
+    env introduceMutation dominantMutation(FUR_COLOR)
   }
 
 }
