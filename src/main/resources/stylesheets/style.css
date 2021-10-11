@@ -15,10 +15,9 @@
 
 .tree-chosen-bunny {
     -fx-border-color: black;
-    -fx-border-width: 1;
     -fx-border-radius: 1em;
-    -fx-padding: 0.5em;
-    -fx-text-alignment: center;
+    -fx-border-width: 1px;
+    -fx-padding: 5px;
 }
 
 .chosen-button {
@@ -52,7 +51,6 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
 }
-
 
 .speedup-button {
     -fx-background-size: 3em 3em;
