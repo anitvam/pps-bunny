@@ -70,7 +70,7 @@ object ScalaFXConstants {
 
     val CHOSEN_BUNNY_PADDING : Int = 5
     val CHOSEN_BUNNY_BORDER : Int = 1
-    val ADDITIONAL_CHOSEN_SPACE = (CHOSEN_BUNNY_PADDING + CHOSEN_BUNNY_BORDER) * 2
+    val ADDITIONAL_CHOSEN_SPACE = ((CHOSEN_BUNNY_PADDING + CHOSEN_BUNNY_BORDER) * 2) +2
 
     /** The padding between the bunny and its alleles */
     val BUNNY_ALLELE_PADDING = 3

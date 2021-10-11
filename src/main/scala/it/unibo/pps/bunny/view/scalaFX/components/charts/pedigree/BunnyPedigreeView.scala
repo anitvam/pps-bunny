@@ -1,16 +1,15 @@
 package it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree
 
 import it.unibo.pps.bunny.model.bunny.Bunny
-import it.unibo.pps.bunny.model.genome.KindsUtils.isDominanceAssigned
+import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.GenealogicalTree._
+import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart.{bunnyIconSize, spacingRegion}
+import it.unibo.pps.bunny.view.scalaFX.utilities.Direction.Right
+import it.unibo.pps.bunny.view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
 import scalafx.geometry.Insets
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout._
 import scalafx.scene.paint.Color
 import scalafx.scene.text.Text
-import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.GenealogicalTree._
-import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart.{bunnyIconSize, spacingRegion}
-import it.unibo.pps.bunny.view.scalaFX.utilities.Direction.Right
-import it.unibo.pps.bunny.view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
 
 /**
  * Represents the view on the Bunny in a tree.
@@ -49,7 +48,7 @@ object BunnyPedigreeView {
   private def genderView(bunny: Bunny): HBox = new HBox(
     spacingRegion(),
     new Text {
-      text = bunny.gender.toString
+      text = bunny.gender.toString + "(" + bunny.age + "," + bunny.alive + ")"
       style = "-fx-font-size: " + bunnyIconSize / BUNNY_FONT_PROPORTION + "px;"
       fill = Color.DimGray
     },
@@ -74,15 +73,15 @@ object BunnyPedigreeView {
       fitHeight = bunnyIconSize / BUNNY_INFO_PROPORTION
     }
 
-  private val deadImageView: ImageView = infoImageView("/img/death.png")
+  private val deadImageView: () => ImageView = () => infoImageView("/img/death.png")
 
-  private val mutationImageView: ImageView = infoImageView("/img/mutation.png")
+  private val mutationImageView: () => ImageView = () => infoImageView("/img/mutation.png")
 
   private val infoView: Bunny => HBox = bunny =>
     new HBox(
       spacingRegion(),
-      if (bunny.alive) new Region() else deadImageView,
-      if (bunny.genotype.isJustMutated) mutationImageView else new Region(),
+      if (bunny.alive) new Region() else deadImageView(),
+      if (bunny.genotype.isJustMutated) mutationImageView() else new Region(),
       spacingRegion()
     )
 
