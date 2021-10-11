@@ -84,7 +84,9 @@ case class HistoryBunny(bunny: Bunny) extends Bunny {
 /** Companion object of the bunny. */
 object Bunny {
 
-  /** Function to get a random gender for the Bunny. */
+  /**
+   * Function to get a random gender for the Bunny.
+   */
   val randomGenderChooser: () => Gender = () => Seq(Male, Female).random
 
   /**
