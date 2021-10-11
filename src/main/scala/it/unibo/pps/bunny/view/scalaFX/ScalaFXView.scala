@@ -43,7 +43,7 @@ object ScalaFXView extends View {
     resizable = false
   }
 
-  def start(): Unit = {
+  override def start(): Unit = {
     val loadedRootPanel = FxmlUtils.loadFXMLResource[jfxs.Parent]("/fxml/baseApp.fxml")
     baseAppController = Some(loadedRootPanel._2.getController[BaseAppControllerInterface])
     baseAppController --> { _.initialize() }
@@ -57,7 +57,7 @@ object ScalaFXView extends View {
     }
   }
 
-  def updateView(generationPhase: GenerationPhase, bunnies: Population): Unit = Platform.runLater {
+  override def updateView(generationPhase: GenerationPhase, bunnies: Population): Unit = Platform.runLater {
     baseAppController --> { _.updateView(bunnies, generationPhase) }
   }
 
