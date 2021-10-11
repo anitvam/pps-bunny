@@ -46,6 +46,8 @@ trait Bunny {
     if (age >= MAX_BUNNY_AGE) alive = false
   }
 
+  /** Kills the bunny by updating the alive value to false. */
+  def kill(): Unit = alive = false
 }
 
 /** Represents a Bunny that has just been created. */
