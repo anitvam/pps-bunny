@@ -24,22 +24,27 @@ object PopulationChartDataType {
   type XYData = XYChart.Data[Number, Number]
 
   /**
-   * A simple Point with two coordinates.
-   * @param x the coordinate on the x axis
-   * @param y the coordinate on the y axis
+   * A simple Point with two coordinates
+   * @param x
+   *   the coordinate on the x axis
+   * @param y
+   *   the coordinate on the y axis
    */
   case class Point(x: Double, y: Int)
 
   /**
-   * A [[Point]] of the chart with a flag that specifies if it must be shown.
-   * @param point the subject [[Point]]
-   * @param isTruePoint true if the point must be shown
+   * A [[Point]] of the chart with a flag that specifies if it must be shown
+   * @param point
+   *   the subject [[Point]]
+   * @param isTruePoint
+   *   true if the point must be shown, otherwise false
    */
   case class ChartPoint(point: Point, isTruePoint: Boolean)
 
   /**
-   * A sequence of points of the chart that must be graphed.
-   * @param data The sequence of [[ChartPoint]]s
+   * A sequence of points of the chart that must be graphed
+   * @param data
+   *   The sequence of [[ChartPoint]] s
    */
   case class SeriesData(var data: Seq[ChartPoint] = Seq()) {
     import ChartConverters._
@@ -56,8 +61,10 @@ object PopulationChartDataType {
 
   /**
    * A wrapper for a sequence of [[ChartPoint]] and the graphic element that displays them
-   * @param seriesData the sequence of [[ChartPoint]]
-   * @param xySeries the graphic element that displays the [[ChartPoint]]
+   * @param seriesData
+   *   the sequence of [[ChartPoint]]
+   * @param xySeries
+   *   the graphic element that displays the [[ChartPoint]]
    */
   case class ChartSeries(seriesData: SeriesData, xySeries: XYSeries) {
 
@@ -75,7 +82,8 @@ object PopulationChartDataType {
 
   /**
    * A map to manage the [[ChartSeries]] for each [[AlleleKind]]
-   * @param mutationMap A map any [[AlleleKind]] to a [[ChartSeries]]
+   * @param mutationMap
+   *   A map to bind any [[AlleleKind]] to a [[ChartSeries]]
    */
   case class MutationsChartSeries(var mutationMap: Map[AlleleKind, ChartSeries] = Map()) {
 
@@ -105,8 +113,10 @@ object PopulationChartDataType {
 
 /**
  * Represent the chart for the Population.
- * @param height the height of the panel to fit in
- * @param width the width of the panel to fit in
+ * @param height
+ *   the height of the panel to fit in
+ * @param width
+ *   the width of the panel to fit in
  */
 case class PopulationChart(height: Double, width: Double) {
   import LineChartComponentFactory._
@@ -122,8 +132,10 @@ case class PopulationChart(height: Double, width: Double) {
 
   /**
    * Updates the chart with population alive in the specified generation phase.
-   * @param generationPhase the [[GenerationPhase]] of the data
-   * @param population the [[Population]] to represent with the next point in the chart
+   * @param generationPhase
+   *   the [[GenerationPhase]] of the data
+   * @param population
+   *   the [[Population]] to represent with the next point in the chart
    */
   def updateChart(generationPhase: GenerationPhase, population: Population): Unit = {
     import ChartConverters._
@@ -136,8 +148,10 @@ case class PopulationChart(height: Double, width: Double) {
 
   /**
    * Updates the boundaries of the chart.
-   * @param x The maximum coordinate of the points on the x axis.
-   * @param y The maximum coordinate of the points on the y axis.
+   * @param x
+   *   The maximum coordinate of the points on the x axis.
+   * @param y
+   *   The maximum coordinate of the points on the y axis.
    */
   def updateChartBound(x: Double, y: Int): Unit = {
     if (x >= xAxis.upperBound.toDouble) xAxis.upperBound = x + 2

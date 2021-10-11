@@ -13,22 +13,22 @@ case object Proportions extends ChartKind
 
 sealed trait ChartChoiceControllerInterface {
 
-  /** States which is the active chart */
+  /** The selected Chart */
   var activeChart: ChartKind = Population
 
   /**
    * Method that initialize the ChartChoiceController
    * @param controller
-   *   the BaseAppControllerInterface instance
+   *   the [[BaseAppControllerInterface]] instance
    */
   def initialize(controller: BaseAppControllerInterface): Unit
 
   /**
-   * Method that reset the ChartChoiceController
+   * Method that resets the ChartChoiceController
    */
   def reset(): Unit
 
-  /** Method that handle the click of a Bunny */
+  /** Method that handle the click on a Bunny */
   def handleBunnyClick(): Unit
 }
 
@@ -70,4 +70,5 @@ class ChartChoiceController(
     this.activeChart = chartType
     baseAppController --> { chartToShow }
   }
+
 }

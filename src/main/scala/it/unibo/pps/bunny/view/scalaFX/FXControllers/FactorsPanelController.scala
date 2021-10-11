@@ -33,10 +33,13 @@ sealed trait FactorsPanelControllerInterface {
    */
   def removeWolf(wolfImage: ImageView): Unit
 
-  /** @return true if the wolves have to be shown */
+  /** @return true if the wolves have to be shown, otherwise false */
   var areWolvesShown: Boolean = false
 
+  /** Method that disables the Wolf Factor selection */
   def disableWolfFactor(): Unit
+
+  /** Method that enables the Wolf Factor selection */
   def enableWolfFactor(): Unit
 }
 
