@@ -39,7 +39,7 @@ object Controller {
   /**
    * Method that insert a recessive mutation inside the simulation for the given [[GeneKind]]
    * @param geneKind
-   *   the recessive gene of the mutation
+   *   the [[GeneKind]] for which a recessive mutation will be inserted
    */
   def insertRecessiveMutationFor(geneKind: GeneKind): Unit = insertMutation(recessiveMutation(geneKind))
 
