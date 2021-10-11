@@ -81,38 +81,38 @@ class TestSimulation extends FlatSpec with Matchers {
 
   it should "only have one alive bunny if the others are killed" in {
     goToGenerationNumber(6)
-    getActualPopulation.tail.foreach(_.alive = false)
+    getActualPopulation.tail.foreach(_.kill())
     assert(getActualBunniesNumber == 1)
   }
 
   it should "no longer be overpopulated" in {
     goToGenerationNumber(6)
-    getActualPopulation.tail.foreach(_.alive = false)
+    getActualPopulation.tail.foreach(_.kill())
     assert(!worldIsOverpopulated)
   }
 
   it should "have a next generation now" in {
     goToGenerationNumber(6)
-    getActualPopulation.tail.foreach(_.alive = false)
+    getActualPopulation.tail.foreach(_.kill())
     assert(existNextGeneration)
   }
 
   "The next generation" should " have just one alive bunny if in the previous one all the other one are dead" in {
     goToGenerationNumber(6)
-    getActualPopulation.tail.foreach(_.alive = false)
+    getActualPopulation.tail.foreach(_.kill())
     SimulationHistory.startNextGeneration()
     assert(SimulationHistory.history.head.getAliveBunniesNumber == 1)
   }
 
   it should "have a next generation" in {
     goToGenerationNumber(6)
-    getActualPopulation.tail.foreach(_.alive = false)
+    getActualPopulation.tail.foreach(_.kill())
     SimulationHistory.startNextGeneration()
     assert(existNextGeneration)
   }
 
   "A generation" should "not have a next one if the bunnies have become extinct" in {
-    getActualPopulation.foreach(_.alive = false)
+    getActualPopulation.foreach(_.kill())
     assert(bunniesAreExtinct)
     assert(!existNextGeneration)
   }

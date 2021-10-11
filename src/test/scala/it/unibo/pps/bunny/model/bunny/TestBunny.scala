@@ -39,12 +39,12 @@ class TestBunny extends FlatSpec with Matchers {
   }
 
   "An HistoryBunny" should "be immutable and throw an Exception when it age or alive field are modified" in {
-    val historyBunny: Bunny = new HistoryBunny(baseBunny)
+    val historyBunny: Bunny = HistoryBunny(baseBunny)
     assertThrows[HistoryBunnyUpdateException] {
-      historyBunny.alive = true
+      historyBunny.kill()
     }
     assertThrows[HistoryBunnyUpdateException] {
-      historyBunny.age = 0
+      historyBunny.increaseAge()
     }
   }
 

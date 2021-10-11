@@ -74,7 +74,7 @@ case class HistoryBunny(bunny: Bunny) extends Bunny {
   override val age: Int = bunny.age
   override val alive: Boolean = bunny.alive
 
-  override protected def age_=(age: Int): Unit = throw new HistoryBunnyUpdateException
+  override def age_=(age: Int): Unit = throw new HistoryBunnyUpdateException
   override protected def alive_=(alive: Boolean): Unit = throw new HistoryBunnyUpdateException
 }
 

@@ -114,6 +114,11 @@ class TestReproduction extends FlatSpec with Matchers {
     assert(nextGenerationBunnies(Seq(randomBunnyGenerator())).size == 1)
   }
 
+  it should "contain just the original bunnies if they were all of the same gender" in {
+    assert(nextGenerationBunnies(List.fill(10)(baseBunnyGenerator(Male))).size == 10)
+    assert(nextGenerationBunnies(List.fill(10)(baseBunnyGenerator(Female))).size == 10)
+  }
+
   it should "not contain any of the original bunnies after MAX_AGE generations" in {
     var nextGen = bunnies
     for (_ <- 0 to MAX_BUNNY_AGE) {
