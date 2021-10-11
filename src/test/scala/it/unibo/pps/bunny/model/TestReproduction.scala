@@ -2,11 +2,11 @@ package it.unibo.pps.bunny.model
 
 import it.unibo.pps.bunny.engine.SimulationConstants._
 import it.unibo.pps.bunny.model.bunny.Bunny._
-import it.unibo.pps.bunny.model.bunny.{Bunny, Female, Male}
-import it.unibo.pps.bunny.model.genome.{Gene, Genes, StandardAllele}
+import it.unibo.pps.bunny.model.bunny.{ Bunny, Female, Male }
+import it.unibo.pps.bunny.model.genome.{ Gene, Genes, StandardAllele }
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.Reproduction._
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{ FlatSpec, Matchers }
 
 class TestReproduction extends FlatSpec with Matchers {
 
@@ -71,15 +71,15 @@ class TestReproduction extends FlatSpec with Matchers {
   }
 
   they should "have the original bunnies as mom and dad " in {
-    children.foreach(child => assert(child.mom.get == couple.female && child.dad.get == couple.male))
+    children.foreach(child => assert(child.mom.get == couple.mom && child.dad.get == couple.dad))
   }
 
   they should "be one for each cell of the Punnett square, for each Gene" in {
     Genes.values.foreach(gk => {
-      val grandmaMomAllele = couple.female.genotype(gk).momAllele.kind
-      val grandpaMomAllele = couple.female.genotype(gk).dadAllele.kind
-      val grandmaDadAllele = couple.male.genotype(gk).momAllele.kind
-      val grandpaDadAllele = couple.male.genotype(gk).dadAllele.kind
+      val grandmaMomAllele = couple.mom.genotype(gk).momAllele.kind
+      val grandpaMomAllele = couple.mom.genotype(gk).dadAllele.kind
+      val grandmaDadAllele = couple.dad.genotype(gk).momAllele.kind
+      val grandpaDadAllele = couple.dad.genotype(gk).dadAllele.kind
       val childrenGenesOfType = children.map(b => b.genotype(gk))
 
       assert(childrenGenesOfType.contains(Gene(gk, StandardAllele(grandmaMomAllele), StandardAllele(grandmaDadAllele))))
@@ -128,6 +128,7 @@ class TestReproduction extends FlatSpec with Matchers {
   }
 
   private var genBunnies: Seq[Bunny] = List.fill(bunniesNum)(randomBunnyGenerator())
+
   "Next generation" should "contain the right number of bunnies after many generations and they should all be alive" in {
     val generations = 8
     var num = genBunnies.size
@@ -143,4 +144,5 @@ class TestReproduction extends FlatSpec with Matchers {
       num = genBunnies.size
     }
   }
+
 }

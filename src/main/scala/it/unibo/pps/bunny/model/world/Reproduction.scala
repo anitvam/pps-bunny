@@ -15,14 +15,14 @@ object Reproduction {
 
   /**
    * Represents a couple of bunnies.
-   * @param female
-   *   the female of the couple
-   * @param male
-   *   the male of the couple
+   * @param mom
+   *   the mother bunny
+   * @param dad
+   *   the father bunny
    */
-  case class Couple(female: Bunny, male: Bunny) {
-    def toSeq: Population = Seq(female, male)
-    if (female.gender != Female || male.gender != Male) throw new CoupleGendersException()
+  case class Couple(mom: Bunny, dad: Bunny) {
+    def toSeq: Population = Seq(mom, dad)
+    if (mom.gender != Female || dad.gender != Male) throw new CoupleGendersException()
   }
 
   /**
@@ -51,8 +51,8 @@ object Reproduction {
     Genes.values.foreach(gk => {
       // Create 4 new genes from the parents alleles, in random order
       var childrenGenes: Seq[Gene] = (for {
-        momAllele <- couple.female.genotype.getStandardAlleles(gk).toSeq
-        dadAllele <- couple.male.genotype.getStandardAlleles(gk).toSeq
+        momAllele <- couple.mom.genotype.getStandardAlleles(gk).toSeq
+        dadAllele <- couple.dad.genotype.getStandardAlleles(gk).toSeq
       } yield Gene(gk, momAllele, dadAllele)).shuffle
 
       // Check if there is a mutation for this kind of gene and substitute one of the genes with the mutated one
@@ -101,6 +101,6 @@ object Reproduction {
    * Generator for the first two bunnies of the simulation
    */
   val initialCoupleGenerator: () => Couple =
-    () => Couple(female = baseBunnyGenerator(Female), male = baseBunnyGenerator(Male))
+    () => Couple(mom = baseBunnyGenerator(Female), dad = baseBunnyGenerator(Male))
 
 }

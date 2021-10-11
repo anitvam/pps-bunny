@@ -147,4 +147,12 @@ object KindsUtils {
    * Method that resets the dominance of all Alleles
    */
   def resetDominance(): Unit = Alleles.values.foreach(_.resetDominance())
+
+  /**
+   * @param geneKind
+   *   the subject [[GeneKind]]
+   * @return
+   *   true if the dominance is already assigned for the genekind, false if not
+   */
+  def isDominanceAssigned(geneKind: GeneKind): Boolean = geneKind.base.isDominant ?
 }
