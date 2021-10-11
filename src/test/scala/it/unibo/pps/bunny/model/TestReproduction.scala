@@ -71,15 +71,15 @@ class TestReproduction extends FlatSpec with Matchers {
   }
 
   they should "have the original bunnies as mom and dad " in {
-    children.foreach(child => assert(child.mom.get == couple.mom && child.dad.get == couple.dad))
+    children.foreach(child => assert(child.mom.get == couple.female && child.dad.get == couple.male))
   }
 
   they should "be one for each cell of the Punnett square, for each Gene" in {
     Genes.values.foreach(gk => {
-      val grandmaMomAllele = couple.mom.genotype(gk).momAllele.kind
-      val grandpaMomAllele = couple.mom.genotype(gk).dadAllele.kind
-      val grandmaDadAllele = couple.dad.genotype(gk).momAllele.kind
-      val grandpaDadAllele = couple.dad.genotype(gk).dadAllele.kind
+      val grandmaMomAllele = couple.female.genotype(gk).momAllele.kind
+      val grandpaMomAllele = couple.female.genotype(gk).dadAllele.kind
+      val grandmaDadAllele = couple.male.genotype(gk).momAllele.kind
+      val grandpaDadAllele = couple.male.genotype(gk).dadAllele.kind
       val childrenGenesOfType = children.map(b => b.genotype(gk))
 
       assert(childrenGenesOfType.contains(Gene(gk, StandardAllele(grandmaMomAllele), StandardAllele(grandmaDadAllele))))

@@ -13,9 +13,16 @@ import scala.language.postfixOps
 
 object Reproduction {
 
-  case class Couple(mom: Bunny, dad: Bunny) {
-    def toSeq: Population = Seq(mom, dad)
-    if (mom.gender != Female || dad.gender != Male) throw new CoupleGendersException()
+  /**
+   * Represents a couple of bunnies.
+   * @param female
+   *   the female of the couple
+   * @param male
+   *   the male of the couple
+   */
+  case class Couple(female: Bunny, male: Bunny) {
+    def toSeq: Population = Seq(female, male)
+    if (female.gender != Female || male.gender != Male) throw new CoupleGendersException()
   }
 
   /**
@@ -44,8 +51,8 @@ object Reproduction {
     Genes.values.foreach(gk => {
       // Create 4 new genes from the parents alleles, in random order
       var childrenGenes: Seq[Gene] = (for {
-        momAllele <- couple.mom.genotype.getStandardAlleles(gk).toSeq
-        dadAllele <- couple.dad.genotype.getStandardAlleles(gk).toSeq
+        momAllele <- couple.female.genotype.getStandardAlleles(gk).toSeq
+        dadAllele <- couple.male.genotype.getStandardAlleles(gk).toSeq
       } yield Gene(gk, momAllele, dadAllele)).shuffle
 
       // Check if there is a mutation for this kind of gene and substitute one of the genes with the mutated one
@@ -60,8 +67,8 @@ object Reproduction {
           yield childrenGenotypes(i) + childrenGenes(i)).toList sortBy (_.mutatedAllelesQuantity)
     })
     // Creates the bunnies with the complete genotypes, half of them are going to be Males and half Females
-    val createBunny: (Genotype, Gender) => Bunny = (genotype, gender) =>
-      ChildBunny(CompleteGenotype(genotype.genes), Option(couple.mom), Option(couple.dad), gender)
+    val createBunny: (Genotype, Gender) => Bunny =
+      (genotype, gender) => ChildBunny(CompleteGenotype(genotype.genes), Option(couple.mom), Option(couple.dad), gender)
     val genotypesSplit = childrenGenotypes splitAt CHILDREN_FOR_EACH_COUPLE / 2
     (genotypesSplit._1 map (createBunny(_, Male))) ++ (genotypesSplit._2 map (createBunny(_, Female)))
   }
@@ -94,6 +101,6 @@ object Reproduction {
    * Generator for the first two bunnies of the simulation
    */
   val initialCoupleGenerator: () => Couple =
-    () => Couple(mom = baseBunnyGenerator(Female), dad = baseBunnyGenerator(Male))
+    () => Couple(female = baseBunnyGenerator(Female), male = baseBunnyGenerator(Male))
 
 }
