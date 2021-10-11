@@ -49,7 +49,7 @@ object ScalaFXConstants {
     val MIN_TREE_BUNNY_SIZE: Int = 46
 
     /** Proportion constants to resize the view of the info size in the tree depending on the bunny size */
-    val BUNNY_INFO_PROPORTION: Double = 3.5
+    val BUNNY_INFO_PROPORTION: Double = 3.3
 
     /** Proportion constants to resize the plus size in the tree depending on the bunny size */
     val BUNNY_PLUS_PROPORTION: Int = 2

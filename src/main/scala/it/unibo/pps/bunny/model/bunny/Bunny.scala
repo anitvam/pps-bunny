@@ -13,16 +13,24 @@ sealed trait Gender
 case object Male extends Gender
 case object Female extends Gender
 
-/**
- * Represents a Bunny.
- */
-sealed trait Bunny {
+/** Represents a Bunny. */
+trait Bunny {
   val genotype: CompleteGenotype
   val mom: Option[Bunny]
   val dad: Option[Bunny]
   val gender: Gender
-  var age: Int
-  var alive: Boolean
+
+  /** @return the age of the bunny */
+  def age: Int
+
+  /** @return true if the bunny is still alive, false otherwise */
+  def alive: Boolean
+
+  /** Setter for age. */
+  protected def age_=(age: Int): Unit
+
+  /** Setter for alive. */
+  protected def alive_=(alive: Boolean): Unit
 
   override def toString: String = {
     super.toString +
@@ -32,9 +40,7 @@ sealed trait Bunny {
       "\n" + genotype.toString
   }
 
-  /**
-   * Updates the bunny instance for the next generation, increasing the age and setting the right alive value.
-   */
+  /** Updates the bunny instance for the next generation, increasing the age and setting the right alive value. */
   def increaseAge(): Unit = {
     age += 1
     if (age >= MAX_BUNNY_AGE) alive = false
@@ -42,10 +48,8 @@ sealed trait Bunny {
 
 }
 
-/**
- * Represents a Bunny that has just been created.
- */
-class ChildBunny(
+/** Represents a Bunny that has just been created. */
+case class ChildBunny(
     override val genotype: CompleteGenotype,
     override val mom: Option[Bunny],
     override val dad: Option[Bunny],
@@ -55,16 +59,12 @@ class ChildBunny(
   override var alive: Boolean = true
 }
 
-/**
- * Represents the first Bunny which appears in the world, so it does not have a mom and a dad.
- */
+/** Represents the first Bunny which appears in the world, so it does not have a mom and a dad. */
 class FirstBunny(genotype: CompleteGenotype, gender: Gender)
     extends ChildBunny(genotype, Option.empty, Option.empty, gender)
 
-/**
- * Represents a Bunny in a defined moment in history and is immutable.
- */
-class HistoryBunny(bunny: Bunny) extends Bunny {
+/** Represents a Bunny in a defined moment in history and is immutable. */
+case class HistoryBunny(bunny: Bunny) extends Bunny {
   override val genotype: CompleteGenotype = bunny.genotype
   override val mom: Option[Bunny] = bunny.mom
   override val dad: Option[Bunny] = bunny.dad
@@ -72,22 +72,17 @@ class HistoryBunny(bunny: Bunny) extends Bunny {
   override val age: Int = bunny.age
   override val alive: Boolean = bunny.alive
 
-  def age_=(age: Int): Unit = throw new HistoryBunnyUpdateException
-  def alive_=(alive: Boolean): Unit = throw new HistoryBunnyUpdateException
+  override protected def age_=(age: Int): Unit = throw new HistoryBunnyUpdateException
+  override protected def alive_=(alive: Boolean): Unit = throw new HistoryBunnyUpdateException
 }
 
 /** Companion object of the bunny. */
 object Bunny {
 
-  private type baseBunnies = Seq[Bunny]
-  private type mutatedBunnies = Seq[Bunny]
-  /**
-   * Function to get a random gender for the Bunny.
-   */
+  /** Function to get a random gender for the Bunny. */
   val randomGenderChooser: () => Gender = () => Seq(Male, Female).random
-  /**
-   * Generator for a Bunny with the "base" allele for each gene.
-   */
+
+  /** Generator for a Bunny with the "base" allele for each gene. */
   val baseBunnyGenerator: Gender => FirstBunny = gender =>
     new FirstBunny(
       CompleteGenotype(
@@ -95,9 +90,8 @@ object Bunny {
       ),
       gender
     )
-  /**
-   * Generator for a Bunny with a random allele for each gene.
-   */
+
+  /** Generator for a Bunny with a random allele for each gene. */
   val randomBunnyGenerator: () => FirstBunny = () => {
     new FirstBunny(
       CompleteGenotype(
@@ -110,6 +104,9 @@ object Bunny {
       randomGenderChooser()
     )
   }
+
+  private type baseBunnies = Seq[Bunny]
+  private type mutatedBunnies = Seq[Bunny]
 
   /**
    * @param geneKind
@@ -134,5 +131,4 @@ object Bunny {
   def filterBunniesWithAlleles(bunnies: Population, alleleKinds: AlleleKind*): Population = bunnies filter { bunny =>
     (alleleKinds count (ak => bunny.genotype.phenotype.values.exists(_ == ak))) == alleleKinds.size
   }
-
 }

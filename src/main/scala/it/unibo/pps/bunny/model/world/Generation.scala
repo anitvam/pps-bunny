@@ -35,7 +35,7 @@ trait Generation {
 
   def terminate(): Unit = {
     this.isEnded = true
-    populationAtTheEnd = this.population.map(new HistoryBunny(_))
+    populationAtTheEnd = this.population.map(HistoryBunny(_))
   }
 
   /** @return the current number of alive bunnies */

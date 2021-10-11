@@ -61,7 +61,7 @@ object Reproduction {
     })
     // Creates the bunnies with the complete genotypes, half of them are going to be Males and half Females
     val createBunny: (Genotype, Gender) => Bunny = (genotype, gender) =>
-      new ChildBunny(CompleteGenotype(genotype.genes), Option(couple.mom), Option(couple.dad), gender)
+      ChildBunny(CompleteGenotype(genotype.genes), Option(couple.mom), Option(couple.dad), gender)
     val genotypesSplit = childrenGenotypes splitAt CHILDREN_FOR_EACH_COUPLE / 2
     (genotypesSplit._1 map (createBunny(_, Male))) ++ (genotypesSplit._2 map (createBunny(_, Female)))
   }
