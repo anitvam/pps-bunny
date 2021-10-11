@@ -1,6 +1,6 @@
 package it.unibo.pps.bunny.model.world
 
-import it.unibo.pps.bunny.model.bunny.{Bunny, HistoryBunny}
+import it.unibo.pps.bunny.model.bunny.{ Bunny, HistoryBunny }
 import it.unibo.pps.bunny.engine.SimulationConstants.PhasesConstants._
 import it.unibo.pps.bunny.model.world.Generation.Population
 

@@ -7,7 +7,7 @@ import it.unibo.pps.bunny.model.bunny._
 import it.unibo.pps.bunny.model.genome._
 import it.unibo.pps.bunny.model.world.Environment.Mutations
 import it.unibo.pps.bunny.model.world.Generation.Population
-import it.unibo.pps.bunny.util.PimpScala.{RichOption, RichSeq, RichTuple2}
+import it.unibo.pps.bunny.util.PimpScala.{ RichOption, RichSeq, RichTuple2 }
 
 import scala.language.postfixOps
 
@@ -55,8 +55,9 @@ object Reproduction {
 
       // Add the 4 new genes to the children genotypes and put the genotype with less mutations at the beginning of the list,
       // so it will include the next mutated gene if there is one
-      childrenGenotypes = (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE)
-        yield childrenGenotypes(i) + childrenGenes(i)).toList sortBy (_.mutatedAllelesQuantity)
+      childrenGenotypes =
+        (for (i <- 0 until CHILDREN_FOR_EACH_COUPLE)
+          yield childrenGenotypes(i) + childrenGenes(i)).toList sortBy (_.mutatedAllelesQuantity)
     })
     // Creates the bunnies with the complete genotypes, half of them are going to be Males and half Females
     val createBunny: (Genotype, Gender) => Bunny = (genotype, gender) =>

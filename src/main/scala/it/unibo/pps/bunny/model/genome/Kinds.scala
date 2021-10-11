@@ -4,9 +4,9 @@ import it.unibo.pps.bunny.model.MultipleDominanceAssignmentException
 import it.unibo.pps.bunny.model.bunny.Mutation
 import it.unibo.pps.bunny.model.genome.Alleles.AlleleKind
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
-import it.unibo.pps.bunny.util.PimpScala.{RichOption, RichSeq}
+import it.unibo.pps.bunny.util.PimpScala.{ RichOption, RichSeq }
 
-import scala.language.{implicitConversions, postfixOps}
+import scala.language.{ implicitConversions, postfixOps }
 
 /**
  * An Enumeration for all the Alleles present in the World.
@@ -50,6 +50,20 @@ object Alleles extends Enumeration {
 object Genes extends Enumeration {
   type GeneKind = Value
   import Alleles.AlleleKind
+  val FUR_COLOR: GenesVal =
+    GenesVal(base = Alleles.WHITE_FUR, mutated = Alleles.BROWN_FUR, letter = "f", prettyName = "Colore pelliccia")
+
+  import scala.language.implicitConversions
+  implicit def valueToGenesVal(x: Value): GenesVal = x.asInstanceOf[GenesVal]
+  implicit def valueToString(x: Value): String = x.prettyName
+  val FUR_LENGTH: GenesVal =
+    GenesVal(base = Alleles.SHORT_FUR, mutated = Alleles.LONG_FUR, letter = "l", prettyName = "Lunghezza pelo")
+  val TEETH: GenesVal =
+    GenesVal(base = Alleles.SHORT_TEETH, mutated = Alleles.LONG_TEETH, letter = "t", prettyName = "Lunghezza denti")
+  val EARS: GenesVal =
+    GenesVal(base = Alleles.HIGH_EARS, mutated = Alleles.LOW_EARS, letter = "e", prettyName = "Orecchie")
+  val JUMP: GenesVal =
+    GenesVal(base = Alleles.LOW_JUMP, mutated = Alleles.HIGH_JUMP, letter = "j", prettyName = "Altezza salto")
 
   /**
    * The information each GeneKind must have.
@@ -62,25 +76,6 @@ object Genes extends Enumeration {
    */
   protected case class GenesVal(base: AlleleKind, mutated: AlleleKind, letter: String, prettyName: String)
       extends super.Val
-
-  import scala.language.implicitConversions
-  implicit def valueToGenesVal(x: Value): GenesVal = x.asInstanceOf[GenesVal]
-  implicit def valueToString(x: Value): String = x.prettyName
-
-  val FUR_COLOR: GenesVal =
-    GenesVal(base = Alleles.WHITE_FUR, mutated = Alleles.BROWN_FUR, letter = "f", prettyName = "Colore pelliccia")
-
-  val FUR_LENGTH: GenesVal =
-    GenesVal(base = Alleles.SHORT_FUR, mutated = Alleles.LONG_FUR, letter = "l", prettyName = "Lunghezza pelo")
-
-  val TEETH: GenesVal =
-    GenesVal(base = Alleles.SHORT_TEETH, mutated = Alleles.LONG_TEETH, letter = "t", prettyName = "Lunghezza denti")
-
-  val EARS: GenesVal =
-    GenesVal(base = Alleles.HIGH_EARS, mutated = Alleles.LOW_EARS, letter = "e", prettyName = "Orecchie")
-
-  val JUMP: GenesVal =
-    GenesVal(base = Alleles.LOW_JUMP, mutated = Alleles.HIGH_JUMP, letter = "j", prettyName = "Altezza salto")
 
 }
 
@@ -134,8 +129,10 @@ object KindsUtils {
   def resetDominance(): Unit = Alleles.values.foreach(_.resetDominance())
 
   /**
-   * @param geneKind the subject genekind
-   * @return true if the dominance is already assigned for the genekind, false if not
+   * @param geneKind
+   *   the subject genekind
+   * @return
+   *   true if the dominance is already assigned for the genekind, false if not
    */
-  def isDominanceAssigned(geneKind: GeneKind) : Boolean = geneKind.base.isDominant?
+  def isDominanceAssigned(geneKind: GeneKind): Boolean = geneKind.base.isDominant ?
 }

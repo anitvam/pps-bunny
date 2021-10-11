@@ -33,17 +33,6 @@ class MutationsPanelController(
     @FXML private val mutationIncomingLabel: Label
 ) extends MutationsPanelControllerInterface {
 
-  case class MutationButton(button: Button, originalText: String) {
-
-    def reset(): Unit = {
-      button.styleClass -= CHOSEN_BUTTON_STYLE
-      button.styleClass -= OTHER_BUTTON_STYLE
-      button.disable = false
-      button.text = originalText
-    }
-
-  }
-
   val buttons: Seq[MutationButton] = Seq(
     MutationButton(jumpRecessiveChoiceButton, "Alto"),
     MutationButton(jumpDominantChoiceButton, "Alto"),
@@ -62,34 +51,7 @@ class MutationsPanelController(
     buttons.foreach(_.reset())
   }
 
-  private def manageChoiceClick(
-      geneKind: GeneKind,
-      isDominant: Boolean,
-      newText: String,
-      buttonClicked: Button,
-      otherButton: Button
-  ): Unit = {
-    if (isDominant) Controller.insertDominantMutationFor(geneKind)
-    else Controller.insertRecessiveMutationFor(geneKind)
-    otherButton.text = newText
-    updateButtonStyle(buttonClicked, otherButton)
-    showMutationIncoming()
-    disableButtons(buttonClicked, otherButton)
-  }
-
   def hideMutationIncoming(): Unit = mutationIncomingLabel.visible = false
-
-  private def disableButtons(firstButton: Button, secondButton: Button): Unit = {
-    firstButton.disable = true
-    secondButton.disable = true
-  }
-
-  private def updateButtonStyle(clicked: Button, other: Button): Unit = {
-    clicked.styleClass += CHOSEN_BUTTON_STYLE
-    other.styleClass += OTHER_BUTTON_STYLE
-  }
-
-  private def showMutationIncoming(): Unit = mutationIncomingLabel.visible = true
 
   def furColorDominantChoiceClick(): Unit = manageChoiceClick(
     FUR_COLOR,
@@ -170,5 +132,43 @@ class MutationsPanelController(
     buttonClicked = jumpRecessiveChoiceButton,
     otherButton = jumpDominantChoiceButton
   )
+
+  private def manageChoiceClick(
+      geneKind: GeneKind,
+      isDominant: Boolean,
+      newText: String,
+      buttonClicked: Button,
+      otherButton: Button
+  ): Unit = {
+    if (isDominant) Controller.insertDominantMutationFor(geneKind)
+    else Controller.insertRecessiveMutationFor(geneKind)
+    otherButton.text = newText
+    updateButtonStyle(buttonClicked, otherButton)
+    showMutationIncoming()
+    disableButtons(buttonClicked, otherButton)
+  }
+
+  private def disableButtons(firstButton: Button, secondButton: Button): Unit = {
+    firstButton.disable = true
+    secondButton.disable = true
+  }
+
+  private def updateButtonStyle(clicked: Button, other: Button): Unit = {
+    clicked.styleClass += CHOSEN_BUTTON_STYLE
+    other.styleClass += OTHER_BUTTON_STYLE
+  }
+
+  private def showMutationIncoming(): Unit = mutationIncomingLabel.visible = true
+
+  case class MutationButton(button: Button, originalText: String) {
+
+    def reset(): Unit = {
+      button.styleClass -= CHOSEN_BUTTON_STYLE
+      button.styleClass -= OTHER_BUTTON_STYLE
+      button.disable = false
+      button.text = originalText
+    }
+
+  }
 
 }

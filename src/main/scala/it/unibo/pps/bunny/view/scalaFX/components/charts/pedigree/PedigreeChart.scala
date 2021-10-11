@@ -70,9 +70,8 @@ object PedigreeChart {
     val engine: Term => Option[Term] = SingleSolutionPrologEngine("prolog/pedigree_dim.pl")
     val treeHeight = chartHeight - ADDITIONAL_SPACE
     val treeWidth = chartWidth - ADDITIONAL_SPACE
-    val goal: String =
-      s"pedigree_dimensions($treeHeight, $treeWidth, $BUNNY_PLUS_PROPORTION, $BUNNY_INFO_PROPORTION," +
-        s"$BUNNY_FONT_PROPORTION, $MAX_TREE_BUNNY_SIZE, $MIN_TREE_BUNNY_SIZE, $treeGenerations, BSF, G)"
+    val goal: String = s"pedigree_dimensions($treeHeight, $treeWidth, $BUNNY_PLUS_PROPORTION, $BUNNY_INFO_PROPORTION," +
+      s"$BUNNY_FONT_PROPORTION, $MAX_TREE_BUNNY_SIZE, $MIN_TREE_BUNNY_SIZE, $treeGenerations, BSF, G)"
     val solution = engine(goal)
     if (solution ?) (extractTerm(solution.get, BunnySizeIndex), extractTerm(solution.get, GenerationsIndex))
     else throw new PrologCalculationException
@@ -158,6 +157,7 @@ object PedigreeChart {
       row = createRow(row._2)
       rows = rows :+ row._1
     }
+
     addChosenBunnyStyle(rows.head.children(1))
 
     override val chartPane: VBox = new VBox {

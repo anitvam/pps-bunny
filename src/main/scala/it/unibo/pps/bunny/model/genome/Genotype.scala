@@ -3,7 +3,7 @@ package it.unibo.pps.bunny.model.genome
 import it.unibo.pps.bunny.model.genome.Alleles.AlleleKind
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.genome.KindsUtils.isDominanceAssigned
-import it.unibo.pps.bunny.model.{IllegalGenotypeBuildException, InconsistentGenotypeException}
+import it.unibo.pps.bunny.model.{ IllegalGenotypeBuildException, InconsistentGenotypeException }
 
 /**
  * Represents Phenotype of the Bunny, which is the visible traits.

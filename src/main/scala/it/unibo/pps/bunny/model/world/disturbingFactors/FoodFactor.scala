@@ -12,10 +12,10 @@ import it.unibo.pps.bunny.model.world.disturbingFactors.FactorsUtils._
 
 sealed trait FoodFactor extends BasicFactor {
   override val normalDamage: Double = FOOD_FACTOR_NORMAL_DAMAGE
-  override def factorKind: FactorKind = FoodFactorKind
-
   /** @return the LOW DAMAGE value for this Food */
   val lowDamage: Double = FOOD_FACTOR_LOW_DAMAGE
+
+  override def factorKind: FactorKind = FoodFactorKind
 
   /** @return true if this FoodFactor is combined with another one, otherwise false */
   def isCombined: Boolean
@@ -191,6 +191,15 @@ case class LimitedHighToughFoodFactor(
 ) extends TripleFoodFactor
     with FactorOnDoubleGene {
 
+  override protected val splitFunction: PartialFunction[FoodFactor, FoodFactor] = {
+    case _: LimitedFoodFactor      => HighToughFoodFactor()
+    case _: ToughFoodFactor        => LimitedHighFoodFactor()
+    case _: HighFoodFactor         => LimitedToughFoodFactor()
+    case _: LimitedHighFoodFactor  => ToughFoodFactor()
+    case _: HighToughFoodFactor    => LimitedFoodFactor()
+    case _: LimitedToughFoodFactor => HighFoodFactor()
+  }
+
   override def applyDamage(bunnies: Population, climate: Climate): Population = {
     super.applyDamage(Bunny.splitBunniesByGene(firstGeneAffected, bunnies)._1, climate)
     super.applyDamage(filterBunniesWithAlleles(bunnies, firstGeneAffected.mutated, secondGeneAffected.base), climate)
@@ -199,15 +208,6 @@ case class LimitedHighToughFoodFactor(
       lowDamage
     )
     bunnies
-  }
-
-  override protected val splitFunction: PartialFunction[FoodFactor, FoodFactor] = {
-    case _: LimitedFoodFactor      => HighToughFoodFactor()
-    case _: ToughFoodFactor        => LimitedHighFoodFactor()
-    case _: HighFoodFactor         => LimitedToughFoodFactor()
-    case _: LimitedHighFoodFactor  => ToughFoodFactor()
-    case _: HighToughFoodFactor    => LimitedFoodFactor()
-    case _: LimitedToughFoodFactor => HighFoodFactor()
   }
 
 }

@@ -1,4 +1,5 @@
 package it.unibo.pps.bunny.model.bunny
+
 import scala.language.implicitConversions
 import it.unibo.pps.bunny.engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
 
@@ -39,6 +40,7 @@ case class Node[A](override val elem: A, momTree: BinaryTree[A], dadTree: Binary
 
 object Tree {
   implicit def treeToNode(t: BinaryTree[Bunny]): Node[Bunny] = t.asInstanceOf[Node[Bunny]]
+
   /**
    * @param generations
    *   the number of older generations to retrieve

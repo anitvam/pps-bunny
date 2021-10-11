@@ -2,11 +2,11 @@ package it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree
 
 import it.unibo.pps.bunny.model.bunny.Bunny
 import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.GenealogicalTree._
-import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart.{bunnyIconSize, spacingGenerator}
+import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart.{ bunnyIconSize, spacingGenerator }
 import it.unibo.pps.bunny.view.scalaFX.utilities.Direction.Right
-import it.unibo.pps.bunny.view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
+import it.unibo.pps.bunny.view.scalaFX.utilities.{ BunnyImageUtils, Direction, ImageType }
 import scalafx.geometry.Insets
-import scalafx.scene.image.{Image, ImageView}
+import scalafx.scene.image.{ Image, ImageView }
 import scalafx.scene.layout._
 import scalafx.scene.paint.Color
 import scalafx.scene.text.Text
@@ -25,10 +25,9 @@ trait BunnyPedigreeView {
 
 object BunnyPedigreeView {
 
-  def apply(bunny: Bunny): BunnyPedigreeView = BunnyPedigreeViewImpl(bunny)
-
   private val bunnyViewer: Bunny => HBox = bunny =>
     new HBox {
+
       children = Seq(
         spacingGenerator(),
         new ImageView {
@@ -40,8 +39,8 @@ object BunnyPedigreeView {
         },
         spacingGenerator()
       )
-    }
 
+    }
   private val genderViewer: Bunny => HBox = bunny =>
     new HBox(
       spacingGenerator(),
@@ -53,7 +52,6 @@ object BunnyPedigreeView {
       },
       spacingGenerator()
     )
-
   private val allelesViewer: Bunny => HBox = bunny =>
     new HBox(
       spacingGenerator(),
@@ -64,18 +62,8 @@ object BunnyPedigreeView {
       },
       spacingGenerator()
     )
-
-  private def infoImage(path: String) : ImageView =
-    new ImageView {
-      image = new Image(path)
-      fitWidth = bunnyIconSize / BUNNY_INFO_PROPORTION
-      fitHeight = bunnyIconSize / BUNNY_INFO_PROPORTION
-    }
-
   private val deadImageGenerator: () => ImageView = () => infoImage("/img/death.png")
-
   private val mutationImageGenerator: () => ImageView = () => infoImage("/img/mutation.png")
-
   private val infoViewer: Bunny => HBox = bunny =>
     new HBox(
       spacingGenerator(),
@@ -83,6 +71,14 @@ object BunnyPedigreeView {
       if (bunny.genotype.isJustMutated) mutationImageGenerator() else new Region(),
       spacingGenerator()
     )
+
+  def apply(bunny: Bunny): BunnyPedigreeView = BunnyPedigreeViewImpl(bunny)
+
+  private def infoImage(path: String): ImageView = new ImageView {
+    image = new Image(path)
+    fitWidth = bunnyIconSize / BUNNY_INFO_PROPORTION
+    fitHeight = bunnyIconSize / BUNNY_INFO_PROPORTION
+  }
 
   private case class BunnyPedigreeViewImpl(override val bunny: Bunny) extends BunnyPedigreeView {
     override val pane: Pane = new VBox(bunnyViewer(bunny), genderViewer(bunny), allelesViewer(bunny), infoViewer(bunny))

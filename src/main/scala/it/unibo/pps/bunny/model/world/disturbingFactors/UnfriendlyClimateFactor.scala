@@ -10,6 +10,9 @@ import it.unibo.pps.bunny.model.world.disturbingFactors.FactorsUtils.applyCustom
 
 abstract class ClimateFactor() extends BasicFactor {
 
+  override def applyDamage(bunnies: Population, climate: Climate): Population =
+    if (climate == Summer) summerAction(bunnies) else winterAction(bunnies)
+
   /**
    * Action performed on a Population of Bunnies on summer
    * @param bunnies
@@ -28,15 +31,12 @@ abstract class ClimateFactor() extends BasicFactor {
    */
   protected def winterAction(bunnies: Population): Population
 
-  override def applyDamage(bunnies: Population, climate: Climate): Population =
-    if (climate == Summer) summerAction(bunnies) else winterAction(bunnies)
-
 }
 
 case class UnfriendlyClimateFactor(
-                                    override val normalDamage: Double = UNFRIENDLY_CLIMATE_DAMAGE,
-                                    override val factorKind: FactorKind = UnfriendlyClimateFactorKind,
-                                    override val affectedGene: GeneKind = Genes.FUR_LENGTH
+    override val normalDamage: Double = UNFRIENDLY_CLIMATE_DAMAGE,
+    override val factorKind: FactorKind = UnfriendlyClimateFactorKind,
+    override val affectedGene: GeneKind = Genes.FUR_LENGTH
 ) extends ClimateFactor
     with FactorOnSingleGene {
 

@@ -1,4 +1,5 @@
 package it.unibo.pps.bunny.model.bunny
+
 import it.unibo.pps.bunny.engine.SimulationConstants.MAX_BUNNY_AGE
 import it.unibo.pps.bunny.model.HistoryBunnyUpdateException
 import it.unibo.pps.bunny.model.genome.Alleles.AlleleKind
@@ -78,11 +79,12 @@ class HistoryBunny(bunny: Bunny) extends Bunny {
 /** Companion object of the bunny. */
 object Bunny {
 
+  private type baseBunnies = Seq[Bunny]
+  private type mutatedBunnies = Seq[Bunny]
   /**
    * Function to get a random gender for the Bunny.
    */
   val randomGenderChooser: () => Gender = () => Seq(Male, Female).random
-
   /**
    * Generator for a Bunny with the "base" allele for each gene.
    */
@@ -93,7 +95,6 @@ object Bunny {
       ),
       gender
     )
-
   /**
    * Generator for a Bunny with a random allele for each gene.
    */
@@ -110,8 +111,6 @@ object Bunny {
     )
   }
 
-  private type baseBunnies = Seq[Bunny]
-  private type mutatedBunnies = Seq[Bunny]
   /**
    * @param geneKind
    *   the kind of Gene we want to split the bunnies by
@@ -135,4 +134,5 @@ object Bunny {
   def filterBunniesWithAlleles(bunnies: Population, alleleKinds: AlleleKind*): Population = bunnies filter { bunny =>
     (alleleKinds count (ak => bunny.genotype.phenotype.values.exists(_ == ak))) == alleleKinds.size
   }
+
 }

@@ -77,8 +77,6 @@ object ClockView {
       analogueClock
     }
 
-    private def rotateClockHand(angle: Double = angle): Unit = clockHand.transforms += new Rotate(angle)
-
     override def updateClock(phase: GenerationPhase, angle: Double = angle): Unit = {
       this.generationPhase = phase
       labelClock.text = phase.name
@@ -91,6 +89,8 @@ object ClockView {
       case TEMPERATURE_PHASE  =>
       case REPRODUCTION_PHASE => rotateClockHand(3 * angle)
     }
+
+    private def rotateClockHand(angle: Double = angle): Unit = clockHand.transforms += new Rotate(angle)
 
   }
 

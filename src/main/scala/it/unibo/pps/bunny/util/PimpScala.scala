@@ -17,7 +17,7 @@ object PimpScala {
     def -?(pred: A => Boolean): List[A] = list.filterNot(pred)
   }
 
-  implicit class RichSeq[A](seq: Seq[A]){
+  implicit class RichSeq[A](seq: Seq[A]) {
     def shuffle: Seq[A] = Random.shuffle(seq)
     def random: A = seq.shuffle.head
   }
