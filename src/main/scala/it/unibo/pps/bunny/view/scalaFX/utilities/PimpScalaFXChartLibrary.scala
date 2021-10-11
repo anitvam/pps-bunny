@@ -13,7 +13,7 @@ object PimpScalaFXChartLibrary {
   /** A richer version of [[XYChart.Series]] */
   implicit class RichXYChartSeries[A, B](series: XYChart.Series[A, B]) {
 
-    /** @return true if the series is visible, otherwise false */
+    /** @return true if the series are visible, otherwise false */
     def enabled: Boolean = series.getNode.isVisible
 
     /**
