@@ -6,32 +6,15 @@ import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.GenerationsUtils.GenerationPhase
 import it.unibo.pps.bunny.util.PimpScala.RichOption
 import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants._
-import it.unibo.pps.bunny.view.scalaFX.components.{BunnyView, ClockView}
 import it.unibo.pps.bunny.view.scalaFX.components.charts.PopulationChart
 import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart
-import it.unibo.pps.bunny.view.scalaFX.utilities.FxmlUtils.{loadFXMLResource, setFitParent}
+import it.unibo.pps.bunny.view.scalaFX.components.{BunnyView, ClockView}
+import it.unibo.pps.bunny.view.scalaFX.utilities.FxmlUtils.{loadPanelAndGetController, setFitParent}
 import javafx.fxml.FXML
-import javafx.scene.{layout => jfxs}
-import scalafx.Includes._
 import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout.{AnchorPane, Background}
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
-import it.unibo.pps.bunny.model.world.Generation._
-import it.unibo.pps.bunny.model.world.GenerationsUtils.GenerationPhase
-import javafx.fxml.FXML
-import scalafx.scene.control.{ Button, Label }
-import scalafx.scene.layout.{ AnchorPane, Background }
-import scalafx.scene.text.Text
-import scalafxml.core.macros.sfxml
-import it.unibo.pps.bunny.util.PimpScala.RichOption
-import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants._
-import it.unibo.pps.bunny.view.scalaFX.components.{ BunnyView, ClockView }
-import it.unibo.pps.bunny.view.scalaFX.components.charts.PopulationChart
-import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart
-import it.unibo.pps.bunny.view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, loadPanelAndGetController, setFitParent }
-import it.unibo.pps.bunny.view.scalaFX.utilities._
-
 import scala.language.{implicitConversions, postfixOps}
 
 sealed trait BaseAppControllerInterface {

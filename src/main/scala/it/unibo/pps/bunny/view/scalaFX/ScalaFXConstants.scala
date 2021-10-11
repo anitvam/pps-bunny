@@ -53,10 +53,10 @@ object ScalaFXConstants {
   /** Constants for the tree visualization */
   object GenealogicalTree {
 
-    /** Max size of the bunny picture in the tree */
+    /** Max size in px of the bunny picture in the tree */
     val MAX_TREE_BUNNY_SIZE: Int = 80
 
-    /** Min size of the bunny picture in the tree */
+    /** Min size in px of the bunny picture in the tree */
     val MIN_TREE_BUNNY_SIZE: Int = 46
 
     /** Proportion constants to resize the view of the info size in the tree depending on the bunny size */
@@ -66,12 +66,19 @@ object ScalaFXConstants {
     val BUNNY_PLUS_PROPORTION: Int = 2
 
     /** Proportion constants to resize the font depending on the info proportion */
-    val BUNNY_FONT_PROPORTION : Int = 5
+    val BUNNY_FONT_PROPORTION : Double = 5.5
 
+    /** Padding size in px for the chosen bunny in the tree */
     val CHOSEN_BUNNY_PADDING : Int = 5
+
+    /** Border size in px for the chosen bunny in the tree */
     val CHOSEN_BUNNY_BORDER : Int = 1
+
+    /** Padding size in px for the tree inside its panel */
     val EXTERNAL_PADDING: Int = 2
-    val ADDITIONAL_SPACE = ((CHOSEN_BUNNY_PADDING + CHOSEN_BUNNY_BORDER + EXTERNAL_PADDING) * 2)
+
+    /** Additional space in each direction caused by the external padding and the chosen bunny selection*/
+    val ADDITIONAL_SPACE: Int = (CHOSEN_BUNNY_PADDING + CHOSEN_BUNNY_BORDER + EXTERNAL_PADDING) * 2
 
     /** The padding between the bunny and its alleles */
     val BUNNY_ALLELE_PADDING = 3
