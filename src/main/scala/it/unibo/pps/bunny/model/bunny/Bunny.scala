@@ -1,5 +1,4 @@
 package it.unibo.pps.bunny.model.bunny
-
 import it.unibo.pps.bunny.engine.SimulationConstants.MAX_BUNNY_AGE
 import it.unibo.pps.bunny.model.HistoryBunnyUpdateException
 import it.unibo.pps.bunny.model.genome.Alleles.AlleleKind
@@ -34,8 +33,6 @@ sealed trait Bunny {
 
   /**
    * Updates the bunny instance for the next generation, increasing the age and setting the right alive value.
-   * @return
-   *   a sequence of standard alleles with the parents kind, useful during the generation of children
    */
   def increaseAge(): Unit = {
     age += 1
@@ -45,7 +42,7 @@ sealed trait Bunny {
 }
 
 /**
- * Represents a Bunny that as just been created.
+ * Represents a Bunny that has just been created.
  */
 class ChildBunny(
     override val genotype: CompleteGenotype,
@@ -78,6 +75,7 @@ class HistoryBunny(bunny: Bunny) extends Bunny {
   def alive_=(alive: Boolean): Unit = throw new HistoryBunnyUpdateException
 }
 
+/** Companion object of the bunny. */
 object Bunny {
   type baseBunnies = Seq[Bunny]
   type mutatedBunnies = Seq[Bunny]
@@ -137,5 +135,4 @@ object Bunny {
   def filterBunniesWithAlleles(bunnies: Population, alleleKinds: AlleleKind*): Population = bunnies filter { bunny =>
     alleleKinds.count(ak => bunny.genotype.phenotype.values.exists(_ == ak)) == alleleKinds.size
   }
-
 }
