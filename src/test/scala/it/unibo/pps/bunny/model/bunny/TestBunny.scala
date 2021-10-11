@@ -1,12 +1,13 @@
 package it.unibo.pps.bunny.model.bunny
 
+import it.unibo.pps.bunny.model.HistoryBunnyUpdateException
 import it.unibo.pps.bunny.model.bunny.Bunny._
-import it.unibo.pps.bunny.model.genome.Genes
+import it.unibo.pps.bunny.model.genome._
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestBunny extends FlatSpec with Matchers {
 
-  "Any FirstBunny" should "be instantiated without exceptions" in {
+  "A FirstBunny" should "be instantiated without exceptions" in {
     noException should be thrownBy baseBunnyGenerator(randomGenderChooser())
     noException should be thrownBy randomBunnyGenerator
   }
@@ -26,8 +27,40 @@ class TestBunny extends FlatSpec with Matchers {
     assert(randomBunny.dad == Option.empty)
   }
 
-  "Any BaseFirstBunny" should "have a Phenotype with only base attributes" in {
+  "A Base FirstBunny" should "have a Phenotype with only base attributes" in {
     baseBunny.genotype.phenotype.visibleTraits.foreach(entry => assert(entry._2 == entry._1.base))
   }
 
+  it should "should have a toString with the correct info" in {
+    assert(baseBunny.toString.contains("gender: " + baseBunny.gender))
+    assert(baseBunny.toString.contains("alive: " + baseBunny.alive))
+    assert(baseBunny.toString.contains("age: " + baseBunny.age))
+    assert(baseBunny.toString.contains(baseBunny.genotype.toString))
+  }
+
+  "An HistoryBunny" should "be immutable and throw an Exception when it age or alive field are modified" in {
+    val historyBunny: Bunny = new HistoryBunny(baseBunny)
+    assertThrows[HistoryBunnyUpdateException] {
+      historyBunny.alive = true
+    }
+    assertThrows[HistoryBunnyUpdateException] {
+      historyBunny.age = 0
+    }
+  }
+
+  "Bunnies " should "be splittable by gene" in {
+    val bunnies: List[Bunny] = List.fill(10)(randomBunnyGenerator())
+    Genes.values.foreach(gk => {
+      val baseCount = bunnies.count(_.genotype.phenotype(gk) == gk.base)
+      val mutatedCount = bunnies.count(_.genotype.phenotype(gk) == gk.mutated)
+      val split = splitBunniesByGene(gk, bunnies)
+      assert(split._1.size == baseCount)
+      assert(split._2.size == mutatedCount)
+    })
+  }
+
+  it should "be possible to create a lot of them " in {
+    val totBunnies = 100000
+    noException should be thrownBy List.fill(totBunnies)(randomBunnyGenerator())
+  }
 }

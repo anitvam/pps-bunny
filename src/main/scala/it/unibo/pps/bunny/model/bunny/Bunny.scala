@@ -26,7 +26,7 @@ sealed trait Bunny {
   override def toString: String = {
     super.toString +
       "\n gender: " + gender +
-      "\n alive:" + alive +
+      "\n alive: " + alive +
       "\n age: " + age +
       "\n" + genotype.toString
   }
@@ -67,9 +67,9 @@ class HistoryBunny(bunny: Bunny) extends Bunny {
   override val genotype: CompleteGenotype = bunny.genotype
   override val mom: Option[Bunny] = bunny.mom
   override val dad: Option[Bunny] = bunny.dad
+  override val gender: Gender = bunny.gender
   override val age: Int = bunny.age
   override val alive: Boolean = bunny.alive
-  override val gender: Gender = bunny.gender
 
   def age_=(age: Int): Unit = throw new HistoryBunnyUpdateException
   def alive_=(alive: Boolean): Unit = throw new HistoryBunnyUpdateException

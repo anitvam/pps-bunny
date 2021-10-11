@@ -63,6 +63,7 @@ class TestSimulation extends FlatSpec with Matchers {
   "The actual generation" should "be the only Generation in history that isn't already ended" in {
     SimulationHistory.history match {
       case h :: t => assert(!h.isEnded && t.forall(_.isEnded))
+      case _ => {}
     }
   }
 
