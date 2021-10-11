@@ -120,7 +120,6 @@ class ProportionsChartController(
       isInHistoryMode = false
       nextBtn.disable = true
       currentPie.title = "Attualmente"
-
     }
   }
 
