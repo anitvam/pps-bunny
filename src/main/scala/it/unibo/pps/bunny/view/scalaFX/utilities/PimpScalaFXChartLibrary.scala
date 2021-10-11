@@ -85,7 +85,7 @@ object PimpScalaFXChartLibrary {
     }
 
     /**
-     * Returns the first series that has the specified name
+     * Returns the first series that have the specified name
      * @param name
      *   the specified name
      * @return
