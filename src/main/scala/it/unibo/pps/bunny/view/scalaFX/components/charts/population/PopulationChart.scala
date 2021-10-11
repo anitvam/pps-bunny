@@ -46,13 +46,11 @@ object PopulationChartDataType {
   case class SeriesData(var data: Seq[ChartPoint] = Seq()) {
     import ChartConverters._
 
-    def ^(p: Point): Unit = data match {
-      case Nil                    => data = data :+ (p, true)
-      case lastPopulationValue(y) => data = data.appendedAll(Seq((p.x, y, false), (p, y != p.y)))
-      case _                      => println(data)
+    def +(p: Point): SeriesData = data match {
+      case Nil                    => SeriesData(data :+ (p, true))
+      case lastPopulationValue(y) => SeriesData(data ++ Seq((p.x, y, false), (p, y != p.y)))
+      case _                      => SeriesData(data)
     }
-
-    def reset(): Unit = data = Seq()
 
   }
 
@@ -63,15 +61,15 @@ object PopulationChartDataType {
    * @param xySeries
    *   the graphic element that displays the [[ChartPoint]]
    */
-  case class ChartSeries(seriesData: SeriesData, xySeries: XYSeries) {
+  case class ChartSeries(var seriesData: SeriesData, xySeries: XYSeries) {
 
     def +(p: Point): Unit = {
-      seriesData ^ p
+      seriesData = seriesData + p
       seriesData.data takeRight 2 foreach { xySeries += createXYChartData(_, xySeries) }
     }
 
     def reset(): Unit = {
-      seriesData.reset()
+      seriesData = SeriesData()
       xySeries.getData.clear()
     }
 
