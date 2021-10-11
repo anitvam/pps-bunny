@@ -12,31 +12,44 @@ import scala.language.postfixOps
  * Represents an Allele of a Gene of a specific Bunny.
  */
 sealed trait Allele {
+
+  /** The [[AlleleKind]] of this Allele */
   val kind: AlleleKind
+
+  /** This value is true if the Allele is mutated on the actual generation, otherwise false */
   val justMutated: Boolean
 
+<<<<<<< HEAD
   def isDominant: Boolean = kind.isDominant.getOrElse(false)
 
+=======
+  /** @return the letter that represents this Allele */
+>>>>>>> Refactor of scaladoc inside bunny package
   def getLetter: String =
     if (kind.isDominant ?) {
       if (kind.isDominant.get) getGeneKind(kind).letter.toUpperCase else getGeneKind(kind).letter.toLowerCase
     } else ""
 
+<<<<<<< HEAD
+=======
+  /** @return true if the Allele is dominant */
+  def isDominant: Boolean = kind.isDominant.getOrElse(false)
+>>>>>>> Refactor of scaladoc inside bunny package
 }
 
 /**
- * Represents a standard allele.
+ * Represents a standard Allele.
  * @param kind
- *   the kind of the Allele.
+ *   the [[AlleleKind]] of this Allele.
  */
 case class StandardAllele(kind: AlleleKind) extends Allele {
   override val justMutated: Boolean = false
 }
 
 /**
- * Represents an allele which has just been mutated.
+ * Represents an Allele which has just been mutated.
  * @param kind
- *   the kind of the Allele.
+ *   the [[AlleleKind]] of the Allele.
  */
 case class JustMutatedAllele(kind: AlleleKind) extends Allele {
   override val justMutated: Boolean = true
@@ -47,12 +60,26 @@ case class JustMutatedAllele(kind: AlleleKind) extends Allele {
  * Represents a Gene of a specific Bunny.
  */
 trait Gene {
+
+  /** The [[GeneKind]] of this Gene */
   val kind: GeneKind
+
+  /** The [[Allele]] of this Gene inherited from the mom */
   val momAllele: Allele
+
+  /** The [[Allele]] of this Gene inherited from the dad */
   val dadAllele: Allele
 
+  /** @return the [[AlleleKind]] of the visible trait for this gene */
   def getVisibleTrait: AlleleKind = if (isHomozygous || momAllele.isDominant) momAllele.kind else dadAllele.kind
 
+<<<<<<< HEAD
+=======
+  /** @return true if the Gene is homozygous, otherwise false */
+  def isHomozygous: Boolean = momAllele.kind == dadAllele.kind
+
+  /** @return the string representation of this Gene */
+>>>>>>> Refactor of scaladoc inside bunny package
   def getLetters: String = momAllele.getLetter + dadAllele.getLetter
 
   private def isHomozygous: Boolean = momAllele.kind == dadAllele.kind

@@ -13,7 +13,7 @@ sealed trait BinaryTree[A] {
 }
 
 /**
- * Represents a Leaf of the Tree, with just an element.
+ * Represents a Leaf of the Tree, with just one element.
  * @param elem
  *   the element in the leaf
  * @tparam A
@@ -42,6 +42,7 @@ object Tree {
   implicit def treeToNode(t: BinaryTree[Bunny]): Node[Bunny] = t.asInstanceOf[Node[Bunny]]
 
   /**
+   * Method that generates the bunny genealogical tree
    * @param generations
    *   the number of older generations to retrieve
    * @param bunny
