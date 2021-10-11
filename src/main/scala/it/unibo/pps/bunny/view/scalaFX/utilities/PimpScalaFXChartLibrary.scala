@@ -129,7 +129,7 @@ object PimpScalaFXChartLibrary {
 
   }
 
-  /** Class that enrich the [[PieChart]] implementation */
+  /** Class that enriches the [[PieChart]] implementation */
   implicit class RichPieChart(chart: PieChart) {
 
     def +=(data: Seq[(String, Double)]): Unit = {
