@@ -8,6 +8,7 @@ import it.unibo.pps.bunny.model.bunny.Mutation.{ dominantMutation, recessiveMuta
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.genome.KindsUtils.resetDominance
 import it.unibo.pps.bunny.model.world.Generation.Population
+import it.unibo.pps.bunny.model.world.GenerationsUtils.GenerationPhase
 import it.unibo.pps.bunny.model.world.disturbingFactors.Factor
 import it.unibo.pps.bunny.model.world.{ Summer, Winter }
 import scalafx.application.Platform
@@ -48,6 +49,16 @@ object Controller {
    *   the dominant gene of the mutation
    */
   def insertDominantMutationFor(geneKind: GeneKind): Unit = insertMutation(dominantMutation(geneKind))
+
+  /**
+   * Method that updates the view
+   * @param generationPhase
+   *   the actual generation phase
+   * @param population
+   *   the actual population
+   */
+  def updateView(generationPhase: GenerationPhase, population: Population): Unit =
+    ScalaFXView.updateView(generationPhase, population)
 
   /**
    * Method that shows the end of the simulation on the Application GUI

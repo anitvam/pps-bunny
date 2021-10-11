@@ -16,12 +16,17 @@ import it.unibo.pps.bunny.model.world.GenerationsUtils.{
 import scala.concurrent.duration.{ DurationDouble, FiniteDuration }
 
 object SimulationEngine {
-  var simulationSpeed: Double = 1
 
+  private var _simulationSpeed: Double = DEFAULT_SPEED
+
+  /** @return the actual simulation speed */
+  def simulationSpeed: Double = _simulationSpeed
+
+  /** Method that increments the Simulation Speed in a circular way */
   def changeSpeed(): Unit = simulationSpeed match {
-    case DEFAULT_SPEED  => simulationSpeed = TWO_PER_SPEED
-    case TWO_PER_SPEED  => simulationSpeed = FOUR_PER_SPEED
-    case FOUR_PER_SPEED => simulationSpeed = DEFAULT_SPEED
+    case DEFAULT_SPEED  => _simulationSpeed = TWO_PER_SPEED
+    case TWO_PER_SPEED  => _simulationSpeed = FOUR_PER_SPEED
+    case FOUR_PER_SPEED => _simulationSpeed = DEFAULT_SPEED
   }
 
   private def generationPhase(generationPhase: GenerationPhase, action: IO[Unit]): IO[Unit] =
@@ -48,6 +53,7 @@ object SimulationEngine {
     } yield ()
   }
 
+  /** Engine Loop for the simulation */
   def simulationLoop(): IO[Unit] = {
     for {
       _ <- updateView(ReproductionPhase(getGenerationNumber))
@@ -55,12 +61,21 @@ object SimulationEngine {
     } yield ()
   }
 
+  /** Method that resets the Simulation Speed */
   def resetEngine(): Unit = {
-    simulationSpeed = 1
+    _simulationSpeed = DEFAULT_SPEED
   }
 
 }
 
 object engineConversions {
+
+  /**
+   * Implicit method that converts a tuple into a FiniteDuration
+   * @param d
+   *   a [[(Double, Double)]] tuple
+   * @return
+   *   a [[FiniteDuration]]
+   */
   implicit def fromTupleToFiniteDuration(d: (Double, Double)): FiniteDuration = (d._1 * d._2) millis
 }

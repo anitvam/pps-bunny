@@ -11,8 +11,10 @@ object SimulationHistory {
 
   type History = List[Generation]
 
+  /** Function that resets the history */
   val historyInit: () => History = () => List(Generation(Environment(Summer, List()), initialCoupleGenerator().toSeq))
 
+  /** History actual value */
   var history: History = historyInit()
 
   /** Resets history to the initial value */
@@ -30,18 +32,19 @@ object SimulationHistory {
   /** @return the [[Population]] of the actual generation */
   def getActualPopulation: Population = getActualGeneration.livingPopulation
 
-  /** Determines if there is a next generation */
+  /** @return true if there is a next generation, otherwise false */
   def existNextGeneration: Boolean = !worldIsOverpopulated && !bunniesAreExtinct && !tooManyGenerations
 
-  /** Determines if the wold is overpopulated by the bunnies */
+  /** @return true if the world is overpopulated by the bunnies, otherwise false */
   def worldIsOverpopulated: Boolean = getActualBunniesNumber >= MAX_ALIVE_BUNNIES
 
-  /** Determines if all bunnies are dead */
+  /** @return true if all bunnies are dead, otherwise false */
   def bunniesAreExtinct: Boolean = getActualBunniesNumber < MIN_ALIVE_BUNNIES
 
-  /** Determines if too many generations have passed */
+  /** @return true if too many generations have passed, otherwise false */
   def tooManyGenerations: Boolean = getGenerationNumber >= MAX_GENERATIONS_NUMBER
 
+<<<<<<< HEAD
   /** Terminate the actual [[Generation]] and start the next one */
   def startNextGeneration(): Unit = {
     getActualGeneration.terminate()
@@ -49,11 +52,23 @@ object SimulationHistory {
   }
 
   /** @return the [[Population]]  for the next [[Generation]] */
+=======
+  /** @return the [[Population]] for the next [[Generation]] */
+>>>>>>> refactor of scaladoc inside it.unibo.pps.bunny.engine package
   private def getPopulationForNextGeneration: Population =
     nextGenerationBunnies(getActualPopulation, getActualGeneration.environment.mutations)
 
-  /** @return the [[Environment]]  for the next [[Generation]] */
+  /** @return the [[Environment]] for the next [[Generation]] */
   private def getEnvironmentForNextGeneration: Environment =
     Environment.fromPreviousOne(getActualGeneration.environment)
 
+<<<<<<< HEAD
+=======
+  /** Terminate the actual [[Generation]] and starts the next one */
+  def startNextGeneration(): Unit = {
+    getActualGeneration.terminate()
+    history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history
+  }
+
+>>>>>>> refactor of scaladoc inside it.unibo.pps.bunny.engine package
 }
