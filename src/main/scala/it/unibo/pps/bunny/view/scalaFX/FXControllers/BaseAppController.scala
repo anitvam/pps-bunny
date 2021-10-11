@@ -215,10 +215,12 @@ class BaseAppController(
   /** Handler of simulation speed button */
   def changeSimulationSpeed(): Unit = {
     Controller.changeSimulationSpeed()
+    val currentSpeed: String = speedButton.text.value
+    speedLabel.text = s"Speed: $currentSpeed"
     speedButton.text = speedButton.getText match {
-      case "1x" => speedLabel.text = "Speed: 1x"; "2x"
-      case "2x" => speedLabel.text = "Speed: 2x"; "4x"
-      case "4x" => speedLabel.text = "Speed: 4x"; "1x"
+      case "1x" => "2x"
+      case "2x" => "4x"
+      case "4x" => "1x"
     }
   }
 
