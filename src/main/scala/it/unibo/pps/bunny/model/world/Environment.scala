@@ -3,7 +3,7 @@ package it.unibo.pps.bunny.model.world
 import it.unibo.pps.bunny.model.bunny.Mutation
 import it.unibo.pps.bunny.model.genome.KindsUtils
 import it.unibo.pps.bunny.model.world.Environment.{ Factors, Mutations }
-import it.unibo.pps.bunny.model.world.disturbingFactors.Factor
+import it.unibo.pps.bunny.model.world.disturbingFactors._
 import it.unibo.pps.bunny.model.world.disturbingFactors.PimpFactors._
 
 import scala.language.postfixOps
@@ -12,49 +12,31 @@ import scala.language.implicitConversions
 /** Environment of a Generation */
 trait Environment {
 
-  /** @return the Environment Factors */
-  var factors: Factors
+  /** The actual Environment [[Climate]] */
+  var climate: Climate
 
-  /**
-   * Get the actual climate of the Environment
-   * @return
-   *   the Climate
-   */
-  def climate: Climate
-
-  /**
-   * Set a new climate inside the Environment
-   * @param climate
-   *   the new climate value
-   */
-  def climate_=(climate: Climate): Unit
-
-  /** @return the Environment Mutations */
+  /** @return The actual Environment [[Mutations]] */
   def mutations: Mutations
 
-  /**
-   * Set a list of mutation inside the Environment
-   * @param mutations
-   *   a List[Mutation]
-   */
-  def mutations_=(mutations: Mutations): Unit
+  /** @return The Environment [[Factors]] */
+  def factors: Factors
 
   /**
-   * Introduce the specified Factor inside the environment
+   * Introduce the specified [[Factor]] inside the Environment
    * @param factor
    *   the factor to introduce
    */
   def introduceFactor(factor: Factor): Unit
 
   /**
-   * Remove the specified factor from the Environment
+   * Remove the specified [[Factor]] from the Environment
    * @param factor
    *   the factor to remove
    */
   def removeFactor(factor: Factor): Unit
 
   /**
-   * Introduce the specified mutations inside the Environment
+   * Introduce the specified [[Mutation]] inside the Environment
    * @param mutation
    *   the mutation to insert
    */
@@ -67,7 +49,7 @@ object Environment {
   type Factors = List[Factor]
 
   /**
-   * Generate an Environment from the previous one
+   * Method that generates an Environment from the previous one
    * @param environment
    *   the previous Environment
    */
@@ -77,17 +59,21 @@ object Environment {
 
   private case class EnvironmentImpl(
       override var climate: Climate,
-      override var factors: Factors,
-      override var mutations: Mutations = List()
+      private var _factors: Factors,
+      private var _mutations: Mutations = List()
   ) extends Environment {
 
-    override def introduceFactor(factor: Factor): Unit = factors = factors + factor
+    override def factors: Factors = _factors
 
-    override def removeFactor(factor: Factor): Unit = factors = factors - factor
+    override def mutations: Mutations = _mutations
+
+    override def introduceFactor(factor: Factor): Unit = _factors = _factors + factor
+
+    override def removeFactor(factor: Factor): Unit = _factors = _factors - factor
 
     def introduceMutation(mutation: Mutation): Unit = {
       KindsUtils.setAlleleDominanceFromMutation(mutation)
-      mutations = mutation :: mutations
+      _mutations = mutation :: _mutations
     }
 
   }

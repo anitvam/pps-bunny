@@ -8,11 +8,11 @@ import it.unibo.pps.bunny.util.PimpScala._
 
 trait Factor {
 
-  /** @return the normal damage that is applied with this Factor */
+  /** @return the normal damage that is applied with this [[Factor]] */
   val normalDamage: Double
 
   /**
-   * Method that applies the damage of this Factor on a Population with the given climate
+   * Method that applies the damage of this [[Factor]] on a Population with the given climate
    * @param bunnies
    *   the actual Population
    * @param climate
@@ -22,7 +22,7 @@ trait Factor {
    */
   def applyDamage(bunnies: Population, climate: Climate): Population
 
-  /** @return the FactorType of this Factor */
+  /** @return the [[FactorKind]] of this Factor */
   def factorKind: FactorKind
 }
 
@@ -35,7 +35,7 @@ trait FactorOnSingleGene extends BasicFactor {
   /**
    * The afflicted Gene of this Factor
    * @return
-   *   a GeneKind
+   *   a [[GeneKind]]
    */
   val affectedGene: GeneKind
 
@@ -46,14 +46,14 @@ trait FactorOnDoubleGene extends BasicFactor {
   /**
    * The first afflicted Gene of this Factor
    * @return
-   *   a GeneKind
+   *   a [[GeneKind]]
    */
   val firstGeneAffected: GeneKind
 
   /**
    * The second afflicted Gene of this Factor
    * @return
-   *   a GeneKind
+   *   a [[GeneKind]]
    */
   val secondGeneAffected: GeneKind
 }
@@ -63,9 +63,9 @@ object FactorsUtils {
   /**
    * Kills the percentage amount of bunnies on the population
    * @param bunnies
-   *   a Population of bunnies
+   *   a [[Population]] of bunnies
    * @param percentage
-   *   a percentage of bunnies
+   *   a percentage of bunnies to kill
    * @return
    *   the updated population
    */
@@ -76,6 +76,7 @@ object FactorsUtils {
 
 }
 
+/** Represents the main Kinds of Factors */
 sealed trait FactorKind
 case object WolvesFactorKind extends FactorKind
 case object UnfriendlyClimateFactorKind extends FactorKind

@@ -20,9 +20,9 @@ object Reproduction {
 
   /**
    * @param bunnies
-   *   a seq of bunnies
+   *   a [[Population]] of bunnies
    * @return
-   *   a seq of random couples formed from all of the bunnies (or most of them, if they are odd)
+   *   a [[Seq]] of random couples formed from all of the bunnies (or most of them, if they are odd)
    */
   def combineCouples(bunnies: Population): Seq[Couple] = {
     val split = bunnies partition (_.gender == Female)
@@ -68,9 +68,9 @@ object Reproduction {
 
   /**
    * @param bunnies
-   *   a seq of bunnies
+   *   a [[Population]] of bunnies
    * @return
-   *   a seq with the children of the bunnies
+   *   the updated [[Population]] with the children of the bunnies
    */
   def generateAllChildren(bunnies: Population, mutations: Mutations = List()): Population = {
     val couples = combineCouples(bunnies)
@@ -81,9 +81,9 @@ object Reproduction {
 
   /**
    * @param bunnies
-   *   bunnies from the last generation
+   *   [[Population]] from the last generation
    * @return
-   *   the new bunnies, adding the children and removing the ones who are dead
+   *   the new [[Population]], adding the children and removing the ones who are dead
    */
   def nextGenerationBunnies(bunnies: Population, mutations: Mutations = List()): Population = {
     bunnies foreach (_.increaseAge())
@@ -91,7 +91,7 @@ object Reproduction {
   }
 
   /**
-   * Generator for the first two bunnies of the simulation.
+   * Generator for the first two bunnies of the simulation
    */
   val initialCoupleGenerator: () => Couple =
     () => Couple(mom = baseBunnyGenerator(Female), dad = baseBunnyGenerator(Male))
