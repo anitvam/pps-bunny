@@ -43,7 +43,7 @@ sealed trait BaseAppControllerInterface {
   def showProportionsChart(): Unit
 
   /**
-   * Method that handle the click on a Bunny
+   * Method that handles the click on a [[Bunny]]
    * @param bunny
    *   the [[BunnyView]] clicked
    */
