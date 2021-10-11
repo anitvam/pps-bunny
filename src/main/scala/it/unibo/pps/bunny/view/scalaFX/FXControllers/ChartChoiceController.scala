@@ -53,7 +53,7 @@ class ChartChoiceController(
   }
 
   override def handleBunnyClick(): Unit =
-    if (pedigreeRadioButton.selected.value) baseAppController --> { _.showPedigreeChart() }
+    if (pedigreeRadioButton.isSelected) baseAppController --> { _.showPedigreeChart() }
 
   private def showChart(
       legendVisibility: Boolean,
