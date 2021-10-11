@@ -132,6 +132,7 @@ class BaseAppController(
     showPopulationChart()
   }
 
+
   override def reset(): Unit = {
     speedButton.onAction = _ => {
       Controller.reset()
@@ -215,12 +216,12 @@ class BaseAppController(
   /** Handler of simulation speed button */
   def changeSimulationSpeed(): Unit = {
     Controller.changeSimulationSpeed()
-    val currentSpeed: String = speedButton.text.value
-    speedLabel.text = s"Speed: $currentSpeed"
-    speedButton.text = speedButton.getText match {
-      case "1x" => "2x"
-      case "2x" => "4x"
-      case "4x" => "1x"
+//    val currentSpeed: String = speedButton.text.value
+//    speedLabel.text = s"Speed: $currentSpeed"
+    speedLabel.text = speedLabel.getText match {
+      case "Speed: 1x" => "Speed: 2x"
+      case "Speed: 2x" => "Speed: 4x"
+      case "Speed: 4x" => "Speed: 1x"
     }
   }
 
