@@ -49,9 +49,6 @@ sealed trait BaseAppControllerInterface {
    *   the current background
    */
   def changeBackgroundEnvironment(background: Background): Unit
-
-  /** Method that requires the increment of simulation speed */
-  def changeSimulationSpeed(): Unit
 }
 
 @sfxml
@@ -199,7 +196,8 @@ class BaseAppController(
 
   override def changeBackgroundEnvironment(background: Background): Unit = simulationPane.background = background
 
-  override def changeSimulationSpeed(): Unit = {
+  /** Handler of simulation speed button */
+  def changeSimulationSpeed(): Unit = {
     Controller.changeSimulationSpeed()
     speedButton.text = speedButton.getText match {
       case "1x" => "2x"
