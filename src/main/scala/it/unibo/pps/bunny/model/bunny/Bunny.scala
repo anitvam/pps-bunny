@@ -25,11 +25,11 @@ sealed trait Bunny {
   var alive: Boolean
 
   override def toString: String = {
-    super.toString + "\n gender: " + gender + "\n alive:" + alive + " \n age: " + age + "\n" +
-      genotype.genes
-        .map(g => "\t" + g._1 + ": " + g._2.getVisibleTrait.toString.toLowerCase + " (" + g._2.getLetters + ")")
-        .reduce(_ + "\n" + _)
-        .replace("_", " ") + "\n"
+    super.toString +
+      "\n gender: " + gender +
+      "\n alive:" + alive +
+      "\n age: " + age +
+      "\n" + genotype.toString
   }
 
   /**

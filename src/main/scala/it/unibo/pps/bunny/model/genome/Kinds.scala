@@ -89,25 +89,6 @@ object KindsUtils {
   /** Function to get a random AlleleKind for the specified GeneKind. */
   val randomAlleleKindChooser: GeneKind => AlleleKind = geneKind => Seq(geneKind.base, geneKind.mutated).random
 
-  /** Randomly chooses one AlleleKind as Dominant for each GeneKind */
-  def assignRandomDominance(): Unit = Genes.values.foreach(gk => setAlleleDominance(randomAlleleKindChooser(gk)))
-
-  /**
-   * Sets an AlleleKind as dominant for a specific GeneKind.
-   *
-   * @param alleleKind
-   *   the AlleleKind that has to be set as dominant
-   */
-  def setAlleleDominance(alleleKind: AlleleKind): Unit = {
-    alleleKind.setDominance(true)
-    getAlternativeAlleleKind(alleleKind).setDominance(false)
-  }
-
-  def setAlleleDominanceFromMutation(mutation: Mutation): Unit = {
-    if (mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
-    else KindsUtils.setAlleleDominance(mutation.geneKind.base)
-  }
-
   /**
    * @param alleleKind
    *   the AlleleKind of which the GeneKind is needed
@@ -128,8 +109,33 @@ object KindsUtils {
     if (geneKind.base == alleleKind) geneKind.mutated else geneKind.base
   }
 
+  /** Randomly chooses one AlleleKind as Dominant for each GeneKind */
+  def assignRandomDominance(): Unit = Genes.values.foreach(gk => setAlleleDominance(randomAlleleKindChooser(gk)))
+
+  /**
+   * Sets an AlleleKind as dominant for a specific GeneKind.
+   *
+   * @param alleleKind
+   *   the AlleleKind that has to be set as dominant
+   */
+  def setAlleleDominance(alleleKind: AlleleKind): Unit = {
+    alleleKind.setDominance(true)
+    getAlternativeAlleleKind(alleleKind).setDominance(false)
+  }
+
+  def setAlleleDominanceFromMutation(mutation: Mutation): Unit = {
+    if (mutation.isDominant) KindsUtils.setAlleleDominance(mutation.geneKind.mutated)
+    else KindsUtils.setAlleleDominance(mutation.geneKind.base)
+  }
+
   /**
    * Reset dominance of all Alleles.
    */
   def resetDominance(): Unit = Alleles.values.foreach(_.resetDominance())
+
+  /**
+   * @param geneKind the subject genekind
+   * @return true if the dominance is already assigned for the genekind, false if not
+   */
+  def isDominanceAssigned(geneKind: GeneKind) : Boolean = geneKind.base.isDominant?
 }

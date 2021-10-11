@@ -1,15 +1,16 @@
 package it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree
 
 import it.unibo.pps.bunny.model.bunny.Bunny
+import it.unibo.pps.bunny.model.genome.KindsUtils.isDominanceAssigned
 import scalafx.geometry.Insets
-import scalafx.scene.image.{ Image, ImageView }
+import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout._
 import scalafx.scene.paint.Color
 import scalafx.scene.text.Text
 import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.GenealogicalTree._
-import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart.{ bunnyIconSize, spacingRegion }
+import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart.{bunnyIconSize, spacingRegion}
 import it.unibo.pps.bunny.view.scalaFX.utilities.Direction.Right
-import it.unibo.pps.bunny.view.scalaFX.utilities.{ BunnyImageUtils, Direction, ImageType }
+import it.unibo.pps.bunny.view.scalaFX.utilities.{BunnyImageUtils, Direction, ImageType}
 
 /**
  * Represents the view on the Bunny in a tree.
@@ -59,7 +60,7 @@ object BunnyPedigreeView {
     new HBox(
       spacingRegion(),
       new Text {
-        text = bunny.genotype.genes.values.map(g => g.momAllele.getLetter + g.dadAllele.getLetter).reduce(_ + " " + _)
+        text = bunny.genotype.toString
         style = "-fx-font-size: " + bunnyIconSize / BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT + "px;"
       },
       spacingRegion()

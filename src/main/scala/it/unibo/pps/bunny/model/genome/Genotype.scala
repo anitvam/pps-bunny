@@ -2,7 +2,8 @@ package it.unibo.pps.bunny.model.genome
 
 import it.unibo.pps.bunny.model.genome.Alleles.AlleleKind
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
-import it.unibo.pps.bunny.model.{ IllegalGenotypeBuildException, InconsistentGenotypeException }
+import it.unibo.pps.bunny.model.genome.KindsUtils.isDominanceAssigned
+import it.unibo.pps.bunny.model.{IllegalGenotypeBuildException, InconsistentGenotypeException}
 
 /**
  * Represents Phenotype of the Bunny, which is the visible traits.
@@ -26,6 +27,12 @@ sealed trait Genotype {
   val values: Iterable[Gene] = genes.values
   val phenotype: Phenotype = Phenotype(genes.map(entry => (entry._1, entry._2.getVisibleTrait)))
   def apply(gk: GeneKind): Gene = genes(gk)
+
+  override def toString: String = genes.values
+    .filter(g => isDominanceAssigned(g.kind))
+    .map(g => g.momAllele.getLetter + g.dadAllele.getLetter)
+    .reduceOption(_ + " " + _)
+    .getOrElse("")
 
   /**
    * @return
