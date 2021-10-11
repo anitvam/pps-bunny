@@ -31,7 +31,7 @@ trait Environment {
   /**
    * Remove the specified [[Factor]] from the Environment
    * @param factor
-   *   the factor to be removed
+   *   the factor to remove
    */
   def removeFactor(factor: Factor): Unit
 
