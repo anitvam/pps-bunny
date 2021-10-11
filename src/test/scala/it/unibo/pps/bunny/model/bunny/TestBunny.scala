@@ -1,10 +1,8 @@
-package it.unibo.pps.bunny.model
+package it.unibo.pps.bunny.model.bunny
 
-import it.unibo.pps.bunny.engine.SimulationConstants.MAX_BUNNY_AGE
 import it.unibo.pps.bunny.model.bunny.Bunny._
-import it.unibo.pps.bunny.model.genome.{ Gene, Genes, StandardAllele }
-import it.unibo.pps.bunny.model.world.Reproduction._
-import org.scalatest.{ FlatSpec, Matchers }
+import it.unibo.pps.bunny.model.genome.Genes
+import org.scalatest.{FlatSpec, Matchers}
 
 class TestBunny extends FlatSpec with Matchers {
 

@@ -9,6 +9,11 @@
     -fx-scale-x: 1.01;
 }
 
+.tree-bunny {
+    -fx-padding: 0;
+    -fx-margin: 0;
+}
+
 .button:disabled, .button:disabled > * {
     -fx-opacity: 1.0;
 }

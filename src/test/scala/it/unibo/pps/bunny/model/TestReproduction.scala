@@ -1,12 +1,12 @@
 package it.unibo.pps.bunny.model
 
 import it.unibo.pps.bunny.engine.SimulationConstants._
+import it.unibo.pps.bunny.model.bunny.{Bunny, Female, Male}
 import it.unibo.pps.bunny.model.bunny.Bunny._
-import it.unibo.pps.bunny.model.bunny.{ Bunny, Female, Male }
-import it.unibo.pps.bunny.model.genome.{ Gene, Genes, StandardAllele }
+import it.unibo.pps.bunny.model.genome.{Gene, Genes, StandardAllele}
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.Reproduction._
-import org.scalatest.{ FlatSpec, Matchers }
+import org.scalatest.{FlatSpec, Matchers}
 
 class TestReproduction extends FlatSpec with Matchers {
 

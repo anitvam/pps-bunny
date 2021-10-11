@@ -50,7 +50,7 @@ object BunnyPedigreeView {
     spacingRegion(),
     new Text {
       text = bunny.gender.toString
-      style = "-fx-font-size: " + bunnyIconSize / BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT + "px;"
+      style = "-fx-font-size: " + bunnyIconSize / BUNNY_FONT_PROPORTION + "px;"
       fill = Color.DimGray
     },
     spacingRegion()
@@ -61,7 +61,8 @@ object BunnyPedigreeView {
       spacingRegion(),
       new Text {
         text = bunny.genotype.toString
-        style = "-fx-font-size: " + bunnyIconSize / BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT + "px;"
+        styleClass = Iterable("tree-bunny")
+        style = "-fx-font-size: " + bunnyIconSize / BUNNY_FONT_PROPORTION + "px;"
       },
       spacingRegion()
     )
