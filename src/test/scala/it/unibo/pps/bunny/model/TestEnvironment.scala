@@ -1,7 +1,7 @@
 package it.unibo.pps.bunny.model
 
 import it.unibo.pps.bunny.model.bunny.Mutation.{ dominantMutation, recessiveMutation }
-import it.unibo.pps.bunny.model.genome.Genes.{ EARS, FUR_COLOR }
+import it.unibo.pps.bunny.model.genome.Genes.{ EARS, FUR_COLOR, FUR_LENGTH }
 import it.unibo.pps.bunny.model.world.Environment.fromPreviousOne
 import it.unibo.pps.bunny.model.world.disturbingFactors.PimpFactors._
 import it.unibo.pps.bunny.model.world.disturbingFactors._
@@ -68,11 +68,14 @@ class TestEnvironment extends FlatSpec with Matchers {
   it should "be able to introduce a new dominant mutation" in {
     env introduceMutation dominantMutation(FUR_COLOR)
     assert(env.mutations.map(_.geneKind).contains(FUR_COLOR))
+    assert(env.mutations.find(_.geneKind == FUR_COLOR).get.isDominant)
   }
 
   it should "be able to introduce a new recessive mutation" in {
-    env introduceMutation recessiveMutation(EARS)
-    assert(env.mutations.map(_.geneKind).contains(EARS))
+    env introduceMutation recessiveMutation(FUR_LENGTH)
+    assert(env.mutations.map(_.geneKind).contains(FUR_LENGTH))
+    assert(!env.mutations.find(_.geneKind == FUR_LENGTH).get.isDominant)
+
   }
 
 }
