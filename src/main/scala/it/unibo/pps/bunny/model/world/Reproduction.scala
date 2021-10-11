@@ -77,7 +77,7 @@ object Reproduction {
    * @param bunnies
    *   a [[Population]] of bunnies
    * @return
-   *   the updated [[Population]] with the children of the bunnies
+   *   a [[Population]] with the children of the original bunnies
    */
   def generateAllChildren(bunnies: Population, mutations: Mutations = List()): Population = {
     val couples = combineCouples(bunnies)
