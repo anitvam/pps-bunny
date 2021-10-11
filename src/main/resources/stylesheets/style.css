@@ -13,6 +13,14 @@
     -fx-opacity: 1.0;
 }
 
+.tree-chosen-bunny {
+    -fx-border-color: black;
+    -fx-border-width: 1;
+    -fx-border-radius: 1em;
+    -fx-padding: 0.5em;
+    -fx-text-alignment: center;
+}
+
 .chosen-button {
     -fx-border-color: #8093f1;
     -fx-border-width: 5;

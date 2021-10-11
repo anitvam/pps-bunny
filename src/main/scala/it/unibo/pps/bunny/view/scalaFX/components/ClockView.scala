@@ -71,7 +71,7 @@ object ClockView {
       analogueClock.children = List(clock, labelClock, ticks, spindle, clockHand)
       analogueClock.translateX = clockRadius
       analogueClock.translateY = clockRadius
-      analogueClock.stylesheets += "/fxml/stylesheets/clock.css"
+      analogueClock.stylesheets += "/stylesheets/clock.css"
 
       rotateClockHand(-angle)
       analogueClock

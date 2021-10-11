@@ -49,11 +49,7 @@ object BunnyPedigreeView {
     spacingRegion(),
     new Text {
       text = bunny.gender.toString
-
-      style = "-fx-font-family: \"Helvetica\"; " +
-        "-fx-font-weight: bold; " +
-        "-fx-font-size: " + bunnyIconSize / BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT + "px"
-
+      style = "-fx-font-size: " + bunnyIconSize / BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT + "px;"
       fill = Color.DimGray
     },
     spacingRegion()
@@ -63,12 +59,8 @@ object BunnyPedigreeView {
     new HBox(
       spacingRegion(),
       new Text {
-        text = bunny.genotype.genes.values.map(g => g.momAllele.getLetter + g.dadAllele.getLetter + " ").reduce(_ + _)
-
-        style = "-fx-font-family: \"Helvetica\"; " +
-          "-fx-font-weight: bold; " +
-          "-fx-font-size: " + bunnyIconSize / BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT + "px"
-
+        text = bunny.genotype.genes.values.map(g => g.momAllele.getLetter + g.dadAllele.getLetter).reduce(_ + " " + _)
+        style = "-fx-font-size: " + bunnyIconSize / BUNNY_INFO_PROPORTION * FONT_INFO_PERCENT + "px;"
       },
       spacingRegion()
     )

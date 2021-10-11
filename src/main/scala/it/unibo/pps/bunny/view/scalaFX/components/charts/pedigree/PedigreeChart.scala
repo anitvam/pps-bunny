@@ -151,6 +151,7 @@ object PedigreeChart {
       row = createRow(row._2)
       rows = rows :+ row._1
     }
+    rows(0).children(1).getStyleClass.add("tree-chosen-bunny")
 
     override val chartPane: VBox = new VBox {
       children = spacingRegion() +: rows.reverse :+ spacingRegion()
