@@ -71,13 +71,11 @@ object ClockView {
       analogueClock.children = List(clock, labelClock, ticks, spindle, clockHand)
       analogueClock.translateX = clockRadius
       analogueClock.translateY = clockRadius
-      analogueClock.stylesheets += "/fxml/stylesheets/clock.css"
+      analogueClock.stylesheets += "/stylesheets/clock.css"
 
       rotateClockHand(-angle)
       analogueClock
     }
-
-    private def rotateClockHand(angle: Double = angle): Unit = clockHand.transforms += new Rotate(angle)
 
     override def updateClock(phase: GenerationPhase, angle: Double = angle): Unit = {
       this.generationPhase = phase
@@ -91,6 +89,8 @@ object ClockView {
       case TEMPERATURE_PHASE  =>
       case REPRODUCTION_PHASE => rotateClockHand(3 * angle)
     }
+
+    private def rotateClockHand(angle: Double = angle): Unit = clockHand.transforms += new Rotate(angle)
 
   }
 

@@ -1,6 +1,7 @@
 package it.unibo.pps.bunny.model.bunny
 
 import it.unibo.pps.bunny.engine.SimulationConstants.MAX_BUNNY_AGE
+import it.unibo.pps.bunny.model.HistoryBunnyUpdateException
 import it.unibo.pps.bunny.model.genome.Alleles.AlleleKind
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.genome.KindsUtils.randomAlleleKindChooser
@@ -12,67 +13,78 @@ sealed trait Gender
 case object Male extends Gender
 case object Female extends Gender
 
-/**
- * Represents a Bunny.
- */
-sealed trait Bunny {
+/** Represents a Bunny. */
+trait Bunny {
   val genotype: CompleteGenotype
   val mom: Option[Bunny]
   val dad: Option[Bunny]
   val gender: Gender
-  var age: Int
-  var alive: Boolean
+
+  /** @return the age of the bunny */
+  def age: Int
+
+  /** @return true if the bunny is still alive, false otherwise */
+  def alive: Boolean
+
+  /** Setter for age. */
+  protected def age_=(age: Int): Unit
+
+  /** Setter for alive. */
+  protected def alive_=(alive: Boolean): Unit
 
   override def toString: String = {
-    super.toString + "\n gender: " + gender + "\n alive:" + alive + " \n age: " + age + "\n" +
-      genotype.genes
-        .map(g => "\t" + g._1 + ": " + g._2.getVisibleTrait.toString.toLowerCase + " (" + g._2.getLetters + ")")
-        .reduce(_ + "\n" + _)
-        .replace("_", " ") + "\n"
+    super.toString +
+      "\n gender: " + gender +
+      "\n alive: " + alive +
+      "\n age: " + age +
+      "\n" + genotype.toString
   }
 
-  /**
-   * Updates the bunny instance for the next generation, increasing the age and setting the right alive value.
-   * @return
-   *   a sequence of standard alleles with the parents kind, useful during the generation of children
-   */
+  /** Updates the bunny instance for the next generation, increasing the age and setting the right alive value. */
   def increaseAge(): Unit = {
     age += 1
     if (age >= MAX_BUNNY_AGE) alive = false
   }
 
+  /** Kills the bunny by updating the alive value to false. */
+  def kill(): Unit = alive = false
 }
 
-/**
- * Represents a Bunny that as just been created.
- */
-class ChildBunny(
+/** Represents a Bunny that has just been created. */
+case class ChildBunny(
     override val genotype: CompleteGenotype,
     override val mom: Option[Bunny],
     override val dad: Option[Bunny],
-    override val gender: Gender,
-    override var age: Int = 0,
-    override var alive: Boolean = true
-) extends Bunny
+    override val gender: Gender
+) extends Bunny {
+  override var age: Int = 0
+  override var alive: Boolean = true
+}
 
-/**
- * Represents the first Bunny which appears in the world, so it does not have a mom and a dad.
- */
+/** Represents the first Bunny which appears in the world, so it does not have a mom and a dad. */
 class FirstBunny(genotype: CompleteGenotype, gender: Gender)
     extends ChildBunny(genotype, Option.empty, Option.empty, gender)
 
-object Bunny {
-  type baseBunnies = Seq[Bunny]
-  type mutatedBunnies = Seq[Bunny]
+/** Represents a Bunny in a defined moment in history and is immutable. */
+case class HistoryBunny(bunny: Bunny) extends Bunny {
+  override val genotype: CompleteGenotype = bunny.genotype
+  override val mom: Option[Bunny] = bunny.mom
+  override val dad: Option[Bunny] = bunny.dad
+  override val gender: Gender = bunny.gender
+  override val age: Int = bunny.age
+  override val alive: Boolean = bunny.alive
 
-  /**
-   * Function to get a random gender for the Bunny.
-   */
+  override def age_=(age: Int): Unit = throw new HistoryBunnyUpdateException
+  override protected def alive_=(alive: Boolean): Unit = throw new HistoryBunnyUpdateException
+}
+
+/** Companion object of the bunny. */
+object Bunny {
+
+  /** Function to get a random gender for the Bunny. */
   val randomGenderChooser: () => Gender = () => Seq(Male, Female).random
 
-  /**
-   * Generator for a Bunny with the "base" allele for each gene.
-   */
+  /** Generator for a Bunny with the "base" allele for each gene. */
   val baseBunnyGenerator: Gender => FirstBunny = gender =>
     new FirstBunny(
       CompleteGenotype(
@@ -81,9 +93,7 @@ object Bunny {
       gender
     )
 
-  /**
-   * Generator for a Bunny with a random allele for each gene.
-   */
+  /** Generator for a Bunny with a random allele for each gene. */
   val randomBunnyGenerator: () => FirstBunny = () => {
     new FirstBunny(
       CompleteGenotype(
@@ -97,6 +107,9 @@ object Bunny {
     )
   }
 
+  private type baseBunnies = Seq[Bunny]
+  private type mutatedBunnies = Seq[Bunny]
+
   /**
    * @param geneKind
    *   the kind of Gene we want to split the bunnies by
@@ -106,7 +119,7 @@ object Bunny {
    *   a tuple with the sequence of bunnies with the base Allele and the sequence of bunnies with the mutated Allele
    */
   def splitBunniesByGene(geneKind: GeneKind, bunnies: Population): (baseBunnies, mutatedBunnies) =
-    bunnies.partition(_.genotype.phenotype(geneKind) == geneKind.base)
+    bunnies partition (_.genotype.phenotype(geneKind) == geneKind.base)
 
   /**
    * Method that filter a population of bunnies with two AlleleKinds together
@@ -118,7 +131,6 @@ object Bunny {
    *   Population the population with the specified AlleleKinds together
    */
   def filterBunniesWithAlleles(bunnies: Population, alleleKinds: AlleleKind*): Population = bunnies filter { bunny =>
-    alleleKinds.count(ak => bunny.genotype.phenotype.values.exists(_ == ak)) == alleleKinds.size
+    (alleleKinds count (ak => bunny.genotype.phenotype.values.exists(_ == ak))) == alleleKinds.size
   }
-
 }

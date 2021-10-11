@@ -1,7 +1,7 @@
 package it.unibo.pps.bunny.model.world
 
+import it.unibo.pps.bunny.model.bunny.Mutation
 import it.unibo.pps.bunny.model.genome.KindsUtils
-import it.unibo.pps.bunny.model.mutation.Mutation
 import it.unibo.pps.bunny.model.world.Environment.{ Factors, Mutations }
 import it.unibo.pps.bunny.model.world.disturbingFactors.Factor
 import it.unibo.pps.bunny.model.world.disturbingFactors.PimpFactors._
@@ -11,6 +11,9 @@ import scala.language.implicitConversions
 
 /** Environment of a Generation */
 trait Environment {
+
+  /** @return the Environment Factors */
+  var factors: Factors
 
   /**
    * Get the actual climate of the Environment
@@ -35,9 +38,6 @@ trait Environment {
    *   a List[Mutation]
    */
   def mutations_=(mutations: Mutations): Unit
-
-  /** @return the Environment Factors */
-  var factors: Factors
 
   /**
    * Introduce the specified Factor inside the environment

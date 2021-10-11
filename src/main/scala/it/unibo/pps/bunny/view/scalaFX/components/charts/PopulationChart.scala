@@ -226,7 +226,7 @@ object LineChartComponentFactory {
     chart.legend.getLabels.foreach(li => {
       li.styleClass += ITEM_STYLE
       seriesData.getSeries(li.text.value) --> { s =>
-        s.addStyle("population-chart-legend-item")
+        s.addStyle(ITEM_STYLE)
         li.onMouseClicked = _ => {
           s.enabled = !s.getNode.isVisible
           if (s.getNode.isVisible) chart.legend.setLabelAsClicked(s.getName)

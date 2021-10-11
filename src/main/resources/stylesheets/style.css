@@ -9,6 +9,16 @@
     -fx-scale-x: 1.01;
 }
 
+.tree-bunny-text {
+    -fx-padding: 0;
+    -fx-margin: 0;
+}
+
+.tree-chosen-bunny {
+    -fx-border-color: black;
+    -fx-border-radius: 1em;
+}
+
 .button:disabled, .button:disabled > * {
     -fx-opacity: 1.0;
 }
@@ -44,7 +54,6 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
 }
-
 
 .speedup-button {
     -fx-background-size: 3em 3em;

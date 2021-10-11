@@ -2,6 +2,7 @@ package it.unibo.pps.bunny.model.genome
 
 import it.unibo.pps.bunny.model.genome.Alleles.AlleleKind
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
+import it.unibo.pps.bunny.model.genome.KindsUtils.isDominanceAssigned
 import it.unibo.pps.bunny.model.{ IllegalGenotypeBuildException, InconsistentGenotypeException }
 
 /**
@@ -27,6 +28,12 @@ sealed trait Genotype {
   val phenotype: Phenotype = Phenotype(genes.map(entry => (entry._1, entry._2.getVisibleTrait)))
   def apply(gk: GeneKind): Gene = genes(gk)
 
+  override def toString: String = genes.values
+    .filter(g => isDominanceAssigned(g.kind))
+    .map(g => g.momAllele.getLetter + g.dadAllele.getLetter)
+    .reduceOption(_ + " " + _)
+    .getOrElse("-")
+
   /**
    * @return
    *   the number of mutated alleles in the genotype
@@ -46,9 +53,8 @@ sealed trait Genotype {
    * @return
    *   a sequence of standard alleles with the parents kind, useful during the generation of children
    */
-  def getStandardAlleles(geneKind: GeneKind): (Allele, Allele) = {
+  def getStandardAlleles(geneKind: GeneKind): (StandardAllele, StandardAllele) =
     (StandardAllele(genes(geneKind).momAllele.kind), StandardAllele(genes(geneKind).dadAllele.kind))
-  }
 
   if (genes.count(g => g._1 != g._2.kind) > 0) throw new InconsistentGenotypeException(genes)
 }

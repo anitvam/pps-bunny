@@ -1,7 +1,7 @@
 package it.unibo.pps.bunny.model.world
 
+import it.unibo.pps.bunny.model.bunny.{ Bunny, HistoryBunny }
 import it.unibo.pps.bunny.engine.SimulationConstants.PhasesConstants._
-import it.unibo.pps.bunny.model.bunny.{ Bunny, ChildBunny }
 import it.unibo.pps.bunny.model.world.Generation.Population
 
 /** The unit of time of the simulation and wraps its properties */
@@ -35,7 +35,7 @@ trait Generation {
 
   def terminate(): Unit = {
     this.isEnded = true
-    populationAtTheEnd = this.population.map(b => new ChildBunny(b.genotype, b.mom, b.dad, b.gender, b.age, b.alive))
+    populationAtTheEnd = this.population.map(HistoryBunny(_))
   }
 
   /** @return the current number of alive bunnies */

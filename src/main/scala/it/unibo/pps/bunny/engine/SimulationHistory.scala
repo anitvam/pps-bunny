@@ -42,6 +42,12 @@ object SimulationHistory {
   /** Determines if too many generations have passed */
   def tooManyGenerations: Boolean = getGenerationNumber >= MAX_GENERATIONS_NUMBER
 
+  /** Terminate the actual [[Generation]] and start the next one */
+  def startNextGeneration(): Unit = {
+    getActualGeneration.terminate()
+    history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history
+  }
+
   /** @return the [[Population]]  for the next [[Generation]] */
   private def getPopulationForNextGeneration: Population =
     nextGenerationBunnies(getActualPopulation, getActualGeneration.environment.mutations)
@@ -49,11 +55,5 @@ object SimulationHistory {
   /** @return the [[Environment]]  for the next [[Generation]] */
   private def getEnvironmentForNextGeneration: Environment =
     Environment.fromPreviousOne(getActualGeneration.environment)
-
-  /** Terminate the actual [[Generation]] and start the next one */
-  def startNextGeneration(): Unit = {
-    getActualGeneration.terminate()
-    history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history
-  }
 
 }

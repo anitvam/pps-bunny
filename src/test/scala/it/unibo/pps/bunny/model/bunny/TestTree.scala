@@ -1,14 +1,15 @@
-package it.unibo.pps.bunny.model
+package it.unibo.pps.bunny.model.bunny
 
 import it.unibo.pps.bunny.engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
-import it.unibo.pps.bunny.model.bunny.{ BinaryTree, Bunny, Leaf, Node }
 import it.unibo.pps.bunny.model.bunny.Bunny._
-import it.unibo.pps.bunny.model.bunny.Tree.generateTree
+import it.unibo.pps.bunny.model.bunny.Tree.{treeToNode}
+import it.unibo.pps.bunny.model.bunny.Tree.{actualGenerations, generateTree}
+import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.Reproduction._
-import org.scalatest.{ FlatSpec, Matchers }
 import it.unibo.pps.bunny.util.PimpScala.RichOption
+import org.scalatest.{FlatSpec, Matchers}
 
-import scala.language.postfixOps
+import scala.language.{implicitConversions, postfixOps}
 
 class TestTree extends FlatSpec with Matchers {
 
@@ -20,42 +21,41 @@ class TestTree extends FlatSpec with Matchers {
     assert(tree.elem == bunny)
   }
 
-  val bunnyWithParents: Bunny =
+  private val bunnyWithParents: Bunny =
     nextGenerationBunnies(List.fill(2)(initialCoupleGenerator()).flatMap(_.toSeq)).filter(_.mom ?).head
+  private val tree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunnyWithParents)
 
-  val tree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunnyWithParents)
-
-  it should "contain his parents, if he has them" in {
-    assert(tree.asInstanceOf[Node[Bunny]].momTree.elem == bunnyWithParents.mom.get)
-    assert(tree.asInstanceOf[Node[Bunny]].dadTree.elem == bunnyWithParents.dad.get)
+  it should "contain his parents, if the bunny has them" in {
+    assert(tree.momTree.elem == bunnyWithParents.mom.get)
+    assert(tree.dadTree.elem == bunnyWithParents.dad.get)
     assert(tree.generations == 2)
   }
 
-  var bunny: Bunny = randomBunnyGenerator()
-
-  for (_ <- 0 to MAX_GENEALOGICAL_TREE_GENERATIONS) {
-    bunny = nextGenerationBunnies(bunny :: List.fill(2)(initialCoupleGenerator()).flatMap(_.toSeq))
-      .sortBy(generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, _).generations)
-      .reverse
-      .head
+  it should "return its elem toString in the toString method" in {
+    assert(tree.toString == tree.elem.toString)
   }
 
-  val fullTree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
+  private var bunnies: Population = Seq(randomBunnyGenerator())
+  for (_ <- 0 to MAX_GENEALOGICAL_TREE_GENERATIONS) {
+    bunnies = nextGenerationBunnies(bunnies ++ initialCoupleGenerator().toSeq)
+  }
+  private val bunny: Bunny = bunnies.sortBy(actualGenerations).reverse.head
+  private val fullTree: BinaryTree[Bunny] = generateTree(MAX_GENEALOGICAL_TREE_GENERATIONS, bunny)
 
   "A full genealogical tree " should "contain all the required generations" in {
     assert(fullTree.generations == MAX_GENEALOGICAL_TREE_GENERATIONS)
   }
 
   it should "contain the right bunnies as parents of the first bunny " in {
-    assert(fullTree.asInstanceOf[Node[Bunny]].momTree.elem == bunny.mom.get)
-    assert(fullTree.asInstanceOf[Node[Bunny]].dadTree.elem == bunny.dad.get)
+    assert(fullTree.momTree.elem == bunny.mom.get)
+    assert(fullTree.dadTree.elem == bunny.dad.get)
   }
 
   it should "contain the right bunnies in all the generations" in {
     var bunniesToCheck: Seq[(Bunny, BinaryTree[Bunny])] = Seq((bunny, fullTree))
     bunniesToCheck.foreach(bt => {
-      val momTree = bt._2.asInstanceOf[Node[Bunny]].momTree
-      val dadTree = bt._2.asInstanceOf[Node[Bunny]].dadTree
+      val momTree = bt._2.momTree
+      val dadTree = bt._2.dadTree
       val mom = bt._1.mom.get
       val dad = bt._1.dad.get
       assert(momTree.elem == mom)

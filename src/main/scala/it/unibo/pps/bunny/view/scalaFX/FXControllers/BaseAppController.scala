@@ -2,21 +2,19 @@ package it.unibo.pps.bunny.view.scalaFX.FXControllers
 
 import it.unibo.pps.bunny.controller.Controller
 import it.unibo.pps.bunny.engine.SimulationConstants.PhasesConstants._
-import it.unibo.pps.bunny.model.world.Generation._
+import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.GenerationsUtils.GenerationPhase
+import it.unibo.pps.bunny.util.PimpScala.RichOption
+import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants._
+import it.unibo.pps.bunny.view.scalaFX.components.charts.PopulationChart
+import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart
+import it.unibo.pps.bunny.view.scalaFX.components.{ BunnyView, ClockView }
+import it.unibo.pps.bunny.view.scalaFX.utilities.FxmlUtils.{ loadPanelAndGetController, setFitParent }
 import javafx.fxml.FXML
 import scalafx.scene.control.{ Button, Label }
 import scalafx.scene.layout.{ AnchorPane, Background }
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
-import it.unibo.pps.bunny.util.PimpScala.RichOption
-import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants._
-import it.unibo.pps.bunny.view.scalaFX.components.{ BunnyView, ClockView }
-import it.unibo.pps.bunny.view.scalaFX.components.charts.PopulationChart
-import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart
-import it.unibo.pps.bunny.view.scalaFX.utilities.FxmlUtils.{ loadFXMLResource, loadPanelAndGetController, setFitParent }
-import it.unibo.pps.bunny.view.scalaFX.utilities._
-
 import scala.language.{ implicitConversions, postfixOps }
 
 sealed trait BaseAppControllerInterface {
@@ -73,6 +71,7 @@ class BaseAppController(
     @FXML private val clock: AnchorPane
 ) extends BaseAppControllerInterface {
 
+  private val clockView: ClockView = ClockView()
   private var bunnyViews: Seq[BunnyView] = Seq.empty
   private var chartSelectionPanelController: Option[ChartChoiceControllerInterface] = None
   private var selectedBunny: Option[BunnyView] = None
@@ -81,7 +80,6 @@ class BaseAppController(
   private var proportionsChartController: Option[ChartController] = Option.empty
   private var proportionsChartPane: Option[AnchorPane] = Option.empty
   private var populationChart: Option[PopulationChart] = Option.empty
-  private val clockView: ClockView = ClockView()
 
   override def initialize(): Unit = {
 
@@ -121,18 +119,6 @@ class BaseAppController(
     showPopulationChart()
   }
 
-  private def resetSimulationPanel(): Unit = {
-    bunnyViews = Seq.empty
-    simulationPane.children = Seq.empty
-    generationLabel.text = ""
-  }
-
-  private def resetSpeedButton(): Unit = {
-    speedButton.onAction = _ => changeSimulationSpeed()
-    speedButton.text = "2x"
-    speedButton.styleClass -= "restart-button"
-  }
-
   override def reset(): Unit = {
     speedButton.onAction = _ => {
       Controller.reset()
@@ -168,26 +154,6 @@ class BaseAppController(
   def setEnvironmentWinter(): Unit = {
     Controller.setWinterClimate()
     manageClimateClick(winterButton, summerButton)
-  }
-
-  private def manageClimateClick(clickedButton: Button, otherButton: Button): Unit = {
-    clickedButton.styleClass -= "button-clickable"
-    otherButton.styleClass += "button-clickable"
-    clickedButton.disable = true
-    otherButton.disable = false
-    factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
-  }
-
-  private def updateCharts(bunnies: Population, generationPhase: GenerationPhase): Unit = {
-    proportionsChartController --> { _.updateChart(generationPhase, bunnies) }
-    populationChart --> { _.updateChart(generationPhase, bunnies) }
-    chartSelectionPanelController --> { c => if (c.activeChart == ChartType.Pedigree) showPedigreeChart() }
-  }
-
-  private def stillAliveBunnyViews: Seq[BunnyView] = {
-    val updatedBunnyViews = bunnyViews.partition(_.bunny.alive)
-    updatedBunnyViews._2.foreach(bv => simulationPane.children.remove(bv.imageView))
-    updatedBunnyViews._1
   }
 
   override def updateView(bunnies: Population, generationPhase: GenerationPhase): Unit = {
@@ -240,6 +206,38 @@ class BaseAppController(
       case "2x" => "4x"
       case "4x" => "1x"
     }
+  }
+
+  private def resetSimulationPanel(): Unit = {
+    bunnyViews = Seq.empty
+    simulationPane.children = Seq.empty
+    generationLabel.text = ""
+  }
+
+  private def resetSpeedButton(): Unit = {
+    speedButton.onAction = _ => changeSimulationSpeed()
+    speedButton.text = "2x"
+    speedButton.styleClass -= "restart-button"
+  }
+
+  private def manageClimateClick(clickedButton: Button, otherButton: Button): Unit = {
+    clickedButton.styleClass -= "button-clickable"
+    otherButton.styleClass += "button-clickable"
+    clickedButton.disable = true
+    otherButton.disable = false
+    factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
+  }
+
+  private def updateCharts(bunnies: Population, generationPhase: GenerationPhase): Unit = {
+    proportionsChartController --> { _.updateChart(generationPhase, bunnies) }
+    populationChart --> { _.updateChart(generationPhase, bunnies) }
+    chartSelectionPanelController --> { c => if (c.activeChart == Pedigree) showPedigreeChart() }
+  }
+
+  private def stillAliveBunnyViews: Seq[BunnyView] = {
+    val updatedBunnyViews = bunnyViews.partition(_.bunny.alive)
+    updatedBunnyViews._2.foreach(bv => simulationPane.children.remove(bv.imageView))
+    updatedBunnyViews._1
   }
 
 }

@@ -6,35 +6,35 @@ import org.scalatest.{ FlatSpec, Matchers }
 class TestFactors extends FlatSpec with Matchers {
 
   "A LimitedFoodFactor" should "have FoodFactor type" in assert(
-    LimitedFoodFactor().factorType == FoodFactorKind
+    LimitedFoodFactor().factorKind == FoodFactorKind
   )
 
   "A ToughFoodFactor" should "have FoodFactor type" in assert(
-    ToughFoodFactor().factorType == FoodFactorKind
+    ToughFoodFactor().factorKind == FoodFactorKind
   )
 
-  "A HighFoodFactor" should "have FoodFactor type" in assert(HighFoodFactor().factorType == FoodFactorKind)
+  "A HighFoodFactor" should "have FoodFactor type" in assert(HighFoodFactor().factorKind == FoodFactorKind)
 
   "A HighLimitedFoodFactor" should "have FoodFactor type" in assert(
-    LimitedHighFoodFactor().factorType == FoodFactorKind
+    LimitedHighFoodFactor().factorKind == FoodFactorKind
   )
 
   "A HighToughFoodFactor" should "have FoodFactor type" in assert(
-    HighToughFoodFactor().factorType == FoodFactorKind
+    HighToughFoodFactor().factorKind == FoodFactorKind
   )
 
   "A ToughLimitedFoodFactor" should "have FoodFactor type" in assert(
-    LimitedToughFoodFactor().factorType == FoodFactorKind
+    LimitedToughFoodFactor().factorKind == FoodFactorKind
   )
 
   "A LimitedToughHighFoodFactor" should "have FoodFactor type" in assert(
-    LimitedHighToughFoodFactor().factorType == FoodFactorKind
+    LimitedHighToughFoodFactor().factorKind == FoodFactorKind
   )
 
-  "A WolvesFactor" should "have Wolves type" in assert(WolvesFactor().factorType == WolvesFactorKind)
+  "A WolvesFactor" should "have Wolves type" in assert(WolvesFactor().factorKind == WolvesFactorKind)
 
   "A UnfriendlyClimateFactor" should "have UnfriendlyClimate type" in assert(
-    UnfriendlyClimateFactor().factorType == UnfriendlyClimateFactorKind
+    UnfriendlyClimateFactor().factorKind == UnfriendlyClimateFactorKind
   )
 
 }

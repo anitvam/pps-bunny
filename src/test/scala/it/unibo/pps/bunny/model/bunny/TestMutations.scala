@@ -1,24 +1,23 @@
-package it.unibo.pps.bunny.model
+package it.unibo.pps.bunny.model.bunny
 
 import it.unibo.pps.bunny.controller.Controller
+import it.unibo.pps.bunny.model.bunny.Mutation.{dominantMutation, recessiveMutation}
 import it.unibo.pps.bunny.model.genome.Genes
 import it.unibo.pps.bunny.model.genome.KindsUtils.resetDominance
-import it.unibo.pps.bunny.model.mutation.Mutation
-import it.unibo.pps.bunny.model.mutation.Mutation._
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.Reproduction._
-import org.scalatest.{ FlatSpec, Matchers }
+import org.scalatest.{FlatSpec, Matchers}
 
 class TestMutations extends FlatSpec with Matchers {
-  val couple: Couple = initialCoupleGenerator()
-  val children: Population = generateChildren(couple)
-  val mutationFurColor: Mutation = dominantMutation(Genes.FUR_COLOR)
-  val mutationFurLength: Mutation = recessiveMutation(Genes.FUR_LENGTH)
-  val mutationTeeth: Mutation = recessiveMutation(Genes.TEETH)
-  val mutationEars: Mutation = dominantMutation(Genes.EARS)
-  val mutationJump: Mutation = recessiveMutation(Genes.JUMP)
+  private val couple: Couple = initialCoupleGenerator()
+  private val children: Population = generateChildren(couple)
+  private val mutationFurColor: Mutation = dominantMutation(Genes.FUR_COLOR)
+  private val mutationFurLength: Mutation = recessiveMutation(Genes.FUR_LENGTH)
+  private val mutationTeeth: Mutation = recessiveMutation(Genes.TEETH)
+  private val mutationEars: Mutation = dominantMutation(Genes.EARS)
+  private val mutationJump: Mutation = recessiveMutation(Genes.JUMP)
 
-  "When introducing a Mutation" should "compare to the utmost only half population" in {
+  "When introducing a Mutation, it" should "compare to the utmost only half population" in {
     resetDominance()
     Controller.insertMutation(mutationFurColor)
 
@@ -30,7 +29,7 @@ class TestMutations extends FlatSpec with Matchers {
     assert(bunnyWithMutation.length <= (nextGeneration.length - children.length) / 2 + 1)
   }
 
-  "When introducing more than one Mutations" should "compare only a Mutation for Bunny" in {
+  "When introducing more than one Mutation, they" should "compare only a Mutation for Bunny" in {
     resetDominance()
     val mutations = List(mutationFurColor, mutationFurLength, mutationTeeth)
     mutations.foreach(Controller.insertMutation)
@@ -48,7 +47,7 @@ class TestMutations extends FlatSpec with Matchers {
     assert(bunnyWithMutation.length <= (nextGeneration.length - children.length))
   }
 
-  "When introducing more mutations than children" should "compare two mutations in some bunnies" in {
+  "When introducing more mutations than children there" should "be two mutations in some bunnies" in {
     resetDominance()
     val mutations = List(mutationFurColor, mutationFurLength, mutationTeeth, mutationEars, mutationJump)
     mutations.foreach(Controller.insertMutation)

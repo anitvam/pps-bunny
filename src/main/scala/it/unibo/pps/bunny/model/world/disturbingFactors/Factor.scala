@@ -4,8 +4,7 @@ import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.world.Climate
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.disturbingFactors.FactorsUtils.applyCustomDamage
-
-import scala.util.Random
+import it.unibo.pps.bunny.util.PimpScala._
 
 trait Factor {
 
@@ -24,13 +23,11 @@ trait Factor {
   def applyDamage(bunnies: Population, climate: Climate): Population
 
   /** @return the FactorType of this Factor */
-  def factorType: FactorKind
+  def factorKind: FactorKind
 }
 
 abstract class BasicFactor extends Factor {
-
   override def applyDamage(bunnies: Population, climate: Climate): Population = applyCustomDamage(bunnies, normalDamage)
-
 }
 
 trait FactorOnSingleGene extends BasicFactor {
@@ -73,7 +70,7 @@ object FactorsUtils {
    *   the updated population
    */
   def applyCustomDamage(bunnies: Population, percentage: Double): Population = {
-    Random.shuffle(bunnies) take (bunnies.length * percentage).round.toInt foreach { _.alive = false }
+    bunnies.shuffle take (bunnies.length * percentage).round.toInt foreach { _.kill() }
     bunnies
   }
 

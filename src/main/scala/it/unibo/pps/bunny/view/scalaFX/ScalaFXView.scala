@@ -27,22 +27,6 @@ object ScalaFXView extends View {
   var EXTINCTION_END_IMAGE = new Image("img/extinction.png")
   var GENERATIONS_OVERLOAD_END_IMAGE = new Image("img/generations_overload.png")
 
-  private def endStage(showingImage: Image): Stage = new Stage {
-    title = "Fine simulazione"
-
-    scene = new Scene(new AnchorPane {
-
-      children = new ImageView {
-        image = showingImage
-        fitHeight = PREFERRED_CHART_HEIGHT
-        preserveRatio = true
-      }
-
-    })
-
-    resizable = false
-  }
-
   override def start(): Unit = {
     val loadedRootPanel = FxmlUtils.loadFXMLResource[jfxs.Parent]("/fxml/baseApp.fxml")
     baseAppController = Some(loadedRootPanel._2.getController[BaseAppControllerInterface])
@@ -67,6 +51,22 @@ object ScalaFXView extends View {
   }
 
   override def handleBunnyClick(bunny: BunnyView): Unit = baseAppController --> { _.handleBunnyClick(bunny) }
+
+  private def endStage(showingImage: Image): Stage = new Stage {
+    title = "Fine simulazione"
+
+    scene = new Scene(new AnchorPane {
+
+      children = new ImageView {
+        image = showingImage
+        fitHeight = PREFERRED_CHART_HEIGHT
+        preserveRatio = true
+      }
+
+    })
+
+    resizable = false
+  }
 
   implicit private def simulationEndTypeImage(endType: SimulationEndType): Image = endType match {
     case Overpopulation      => OVERPOPULATION_END_IMAGE

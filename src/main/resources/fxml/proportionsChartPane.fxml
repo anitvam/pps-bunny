@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="/fxml/stylesheets/style.css"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="/stylesheets/style.css"
             xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="it.unibo.pps.bunny.view.scalaFX.FXControllers.ProportionsChartController">
    <GridPane alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
