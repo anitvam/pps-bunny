@@ -12,7 +12,7 @@ object PimpScala {
      * @param consumer
      *   the consumer applied to the option
      */
-    def -->(consumer: A => Unit): Unit = option.foreach(consumer)
+    def -->(consumer: A => Unit): Unit = option foreach { consumer }
 
     /** @return true if the Option is defined, otherwise false */
     def ? : Boolean = option.isDefined
