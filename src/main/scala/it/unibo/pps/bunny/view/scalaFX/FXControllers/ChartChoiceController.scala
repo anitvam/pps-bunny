@@ -5,13 +5,16 @@ import scalafx.scene.control.RadioButton
 import scalafx.scene.layout.VBox
 import scalafxml.core.macros.sfxml
 import it.unibo.pps.bunny.util.PimpScala.RichOption
-import it.unibo.pps.bunny.view.scalaFX.utilities.ChartType
-import it.unibo.pps.bunny.view.scalaFX.utilities.ChartType.ChartType
+
+sealed trait ChartKind
+case object Population extends ChartKind
+case object Pedigree extends ChartKind
+case object Proportions extends ChartKind
 
 sealed trait ChartChoiceControllerInterface {
 
   /** States which is the active chart */
-  var activeChart: ChartType = ChartType.Population
+  var activeChart: ChartKind = Population
 
   /**
    * Method that initialize the ChartChoiceController
@@ -44,7 +47,7 @@ class ChartChoiceController(
   }
 
   override def reset(): Unit = {
-    activeChart = ChartType.Population
+    activeChart = Population
     populationRadioButton.selected = true
     legendBox.visible = false
   }
@@ -55,17 +58,17 @@ class ChartChoiceController(
   private def showChart(
       legendVisibility: Boolean,
       chartToShow: BaseAppControllerInterface => Unit,
-      chartType: ChartType
+      chartType: ChartKind
   ): Unit = {
     legendBox.visible = legendVisibility
     this.activeChart = chartType
     baseAppController --> { chartToShow }
   }
 
-  def showPopulationChart(): Unit = showChart(legendVisibility = false, _.showPopulationChart(), ChartType.Population)
+  def showPopulationChart(): Unit = showChart(legendVisibility = false, _.showPopulationChart(), Population)
 
   def showProportionsChart(): Unit =
-    showChart(legendVisibility = false, _.showProportionsChart(), ChartType.Proportions)
+    showChart(legendVisibility = false, _.showProportionsChart(), Proportions)
 
-  def showPedigreeChart(): Unit = showChart(legendVisibility = true, _.showPedigreeChart(), ChartType.Pedigree)
+  def showPedigreeChart(): Unit = showChart(legendVisibility = true, _.showPedigreeChart(), Pedigree)
 }
