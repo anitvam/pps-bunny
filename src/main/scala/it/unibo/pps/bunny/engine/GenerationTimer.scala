@@ -21,13 +21,7 @@ object GenerationTimer {
    * specified
    *
    * @param to
-<<<<<<< HEAD
-   *   <<<<<<< HEAD:src/main/scala/it/unibo/pps/bunny/engine/GenerationTimer.scala the moment until when the timer sleep
-   * ======= the moment in which the sleeping of the timer ends >>>>>>>
-   * develop:src/main/scala/engine/GenerationTimer.scala
-=======
    *   the moment in which the timer sleep ends
->>>>>>> refactor of scaladoc inside it.unibo.pps.bunny.engine package
    * @return
    *   the [[IO]] monad describing the operation
    */
@@ -41,19 +35,9 @@ object GenerationTimer {
    * specified.
    *
    * @param from
-<<<<<<< HEAD
-   *   <<<<<<< HEAD:src/main/scala/it/unibo/pps/bunny/engine/GenerationTimer.scala the lower bound for of the time
-   *   interval to be slept
-   * @param to
-   *   the upper bound of the time interval until when sleep.
-   * ======= the lower bound for the sleeping time interval
-   * @param to
-   *   the upper bound for the sleeping time interval >>>>>>> develop:src/main/scala/engine/GenerationTimer.scala
-=======
    *   the lower bound for the sleeping time interval
    * @param to
    *   the upper bound for the sleeping time interval
->>>>>>> refactor of scaladoc inside it.unibo.pps.bunny.engine package
    * @return
    *   the [[IO]] monad describing the sleeping operation.
    */
