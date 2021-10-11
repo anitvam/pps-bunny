@@ -16,7 +16,7 @@ sealed trait Allele {
   /** The [[AlleleKind]] of this Allele */
   val kind: AlleleKind
 
-  /** This value is true if the Allele is mutated on the actual generation, otherwise false */
+  /** True if the mutation for this [[AlleleKind]] has been inserted in the actual generation, otherwise false */
   val justMutated: Boolean
 
   /** @return the letter that represents this Allele */

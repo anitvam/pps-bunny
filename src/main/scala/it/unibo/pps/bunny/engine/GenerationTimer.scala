@@ -13,7 +13,7 @@ object GenerationTimer {
   /** The [[FiniteDuration]] of when the timer is started */
   var start: FiniteDuration = System.currentTimeMillis() millis
 
-  /** @return a [[IO]] description that when evaluated will reset the timer */
+  /** @return a [[IO]] description that resets the timer when evaluated */
   def resetTimer: IO[Unit] = IO { start = System.currentTimeMillis() millis }
 
   /**
