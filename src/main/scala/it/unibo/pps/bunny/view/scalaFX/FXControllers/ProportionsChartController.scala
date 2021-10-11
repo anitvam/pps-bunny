@@ -34,7 +34,7 @@ trait ChartController {
    */
   def updateChart(generationPhase: GenerationPhase, population: Population): Unit
 
-  /** Method that reset the chart visualization */
+  /** Method that resets the chart visualization */
   def resetChart(): Unit
 }
 

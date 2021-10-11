@@ -28,7 +28,7 @@ sealed trait ChartChoiceControllerInterface {
    */
   def reset(): Unit
 
-  /** Method that handle the click on a Bunny */
+  /** Method that handles the click on a Bunny */
   def handleBunnyClick(): Unit
 }
 
