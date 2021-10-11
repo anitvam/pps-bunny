@@ -183,6 +183,14 @@
                     </Button>
                 </HBox>
                 <AnchorPane fx:id="clock" prefHeight="200.0" prefWidth="200.0" />
+            <Label fx:id="speedLabel" text="Speed: 1x" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets left="180.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
             </GridPane>
         </GridPane>
         <GridPane GridPane.columnIndex="1">
