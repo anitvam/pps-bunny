@@ -86,7 +86,7 @@ class FactorsPanelController(
   }
 
   def startWolfAnimation(playWolf: WolfView => Unit = _.play()): Unit = {
-    wolvesView foreach (w => {
+    wolvesView.filter(!_.isShown) foreach (w => {
       baseAppController --> { _.simulationPane.children.add(w.imageView) }
       playWolf(w)
     })
