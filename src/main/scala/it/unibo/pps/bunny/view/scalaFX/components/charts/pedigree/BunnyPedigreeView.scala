@@ -40,8 +40,6 @@ object BunnyPedigreeView {
         },
         spacingGenerator()
       )
-
-      padding = Insets(top = 0, left = 0, bottom = BUNNY_ALLELE_PADDING, right = 0)
     }
 
   private val genderViewer: Bunny => HBox = bunny =>
