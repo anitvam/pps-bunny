@@ -32,7 +32,7 @@ sealed trait Genotype {
     .filter(g => isDominanceAssigned(g.kind))
     .map(g => g.momAllele.getLetter + g.dadAllele.getLetter)
     .reduceOption(_ + " " + _)
-    .getOrElse("")
+    .getOrElse("-")
 
   /**
    * @return

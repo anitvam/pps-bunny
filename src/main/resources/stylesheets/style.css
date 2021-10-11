@@ -9,20 +9,18 @@
     -fx-scale-x: 1.01;
 }
 
-.tree-bunny {
+.tree-bunny-text {
     -fx-padding: 0;
     -fx-margin: 0;
-}
-
-.button:disabled, .button:disabled > * {
-    -fx-opacity: 1.0;
 }
 
 .tree-chosen-bunny {
     -fx-border-color: black;
     -fx-border-radius: 1em;
-    -fx-border-width: 1px;
-    -fx-padding: 5px;
+}
+
+.button:disabled, .button:disabled > * {
+    -fx-opacity: 1.0;
 }
 
 .chosen-button {
