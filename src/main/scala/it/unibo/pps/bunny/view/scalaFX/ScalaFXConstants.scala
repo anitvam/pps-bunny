@@ -60,7 +60,7 @@ object ScalaFXConstants {
     val MIN_TREE_BUNNY_SIZE: Int = 46
 
     /** Proportion constants to resize the view of the info size in the tree depending on the bunny size */
-    val BUNNY_INFO_PROPORTION: Double = 4
+    val BUNNY_INFO_PROPORTION: Double = 3.5
 
     /** Proportion constants to resize the plus size in the tree depending on the bunny size */
     val BUNNY_PLUS_PROPORTION: Int = 2
@@ -70,7 +70,8 @@ object ScalaFXConstants {
 
     val CHOSEN_BUNNY_PADDING : Int = 5
     val CHOSEN_BUNNY_BORDER : Int = 1
-    val ADDITIONAL_CHOSEN_SPACE = ((CHOSEN_BUNNY_PADDING + CHOSEN_BUNNY_BORDER) * 2) +2
+    val EXTERNAL_PADDING: Int = 2
+    val ADDITIONAL_SPACE = ((CHOSEN_BUNNY_PADDING + CHOSEN_BUNNY_BORDER + EXTERNAL_PADDING) * 2)
 
     /** The padding between the bunny and its alleles */
     val BUNNY_ALLELE_PADDING = 3
