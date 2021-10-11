@@ -19,13 +19,13 @@ trait Generation {
   /** The [[Population]] at the end of the Generation */
   var populationAtTheEnd: Population
 
-  /** Generation end value: true if the population isEnded, otherwise false */
-  var isEnded: Boolean
+  /** Generation end value: true if the population has ended, otherwise false */
+  var isOver: Boolean
 
   /** Method that terminates the actual Generation */
   def terminate(): Unit = {
-    this.isEnded = true
-    populationAtTheEnd = this.population map { HistoryBunny }
+    this.isOver = true
+    populationAtTheEnd = population map { HistoryBunny }
   }
 
   /** @return the current number of alive bunnies */
@@ -43,7 +43,7 @@ object Generation {
       override val environment: Environment,
       override var population: Population,
       override var populationAtTheEnd: Population = Seq(),
-      override var isEnded: Boolean = false
+      override var isOver: Boolean = false
   ) extends Generation
 
 }

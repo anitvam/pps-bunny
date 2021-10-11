@@ -113,7 +113,7 @@ class ProportionsChartController(
     displayedGenerationNumber = generationNumber
     genText.text = s"Generazione $displayedGenerationNumber"
     currentPie.title = "Fine Generazione"
-    fillPieCharts(if (generation.isEnded) generation.populationAtTheEnd else generation.population, getSelectedGeneKind)
+    fillPieCharts(if (generation.isOver) generation.populationAtTheEnd else generation.population, getSelectedGeneKind)
     if (displayedGenerationNumber == 0) backBtn.disable = true
     if (displayedGenerationNumber == SimulationHistory.getGenerationNumber) {
       isInHistoryMode = false

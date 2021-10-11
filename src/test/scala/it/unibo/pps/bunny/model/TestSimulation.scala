@@ -31,8 +31,8 @@ class TestSimulation extends FlatSpec with Matchers {
     assert(firstGeneration.environment.factors.isEmpty)
   }
 
-  it should "be not already ended" in {
-    assert(!firstGeneration.isEnded)
+  it should "be not already is over" in {
+    assert(!firstGeneration.isOver)
   }
 
   it should "be the only Generation in the history" in {
@@ -60,9 +60,9 @@ class TestSimulation extends FlatSpec with Matchers {
     assert(SimulationHistory.history.last.population.forall(!_.alive))
   }
 
-  "The actual generation" should "be the only Generation in history that isn't already ended" in {
+  "The actual generation" should "be the only Generation in history that isn't already is over" in {
     SimulationHistory.history match {
-      case h :: t => assert(!h.isEnded && t.forall(_.isEnded))
+      case h :: t => assert(!h.isOver && t.forall(_.isOver))
       case _      => fail()
     }
   }
