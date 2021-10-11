@@ -233,18 +233,18 @@ class BaseAppController(
     speedButton.styleClass -= "restart-button"
   }
 
+  private def updateCharts(bunnies: Population, generationPhase: GenerationPhase): Unit = {
+    proportionsChartController --> { _.updateChart(generationPhase, bunnies) }
+    populationChart --> { _.updateChart(generationPhase, bunnies) }
+    chartSelectionPanelController --> { c => if (c.activeChart == Pedigree) showPedigreeChart() }
+  }
+
   private def manageClimateClick(clickedButton: Button, otherButton: Button): Unit = {
     clickedButton.styleClass -= "button-clickable"
     otherButton.styleClass += "button-clickable"
     clickedButton.disable = true
     otherButton.disable = false
     factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
-  }
-
-  private def updateCharts(bunnies: Population, generationPhase: GenerationPhase): Unit = {
-    proportionsChartController --> { _.updateChart(generationPhase, bunnies) }
-    populationChart --> { _.updateChart(generationPhase, bunnies) }
-    chartSelectionPanelController --> { c => if (c.activeChart == Pedigree) showPedigreeChart() }
   }
 
   private def stillAliveBunnyViews: Seq[BunnyView] = {

@@ -4,10 +4,7 @@ import scala.language.postfixOps
 
 object SimulationConstants {
 
-<<<<<<< HEAD
-=======
   /** Constants for the speed of the simulation */
->>>>>>> refactor of scaladoc inside it.unibo.pps.bunny.engine package
   val DEFAULT_SPEED: Double = 1
   val TWO_PER_SPEED: Double = 0.5
   val FOUR_PER_SPEED: Double = 0.25
@@ -32,6 +29,7 @@ object SimulationConstants {
 
   /** Number of generations in a genealogical tree */
   val MAX_GENEALOGICAL_TREE_GENERATIONS: Int = 4
+
   /** Number of phases in the loop of simulation */
   val NUMBER_OF_PHASE = 4
 
@@ -61,12 +59,6 @@ object SimulationConstants {
     /** Duration in milliseconds of a generation */
     val GENERATION_END: Double = 12000
   }
-<<<<<<< HEAD
-=======
-
-  /** Number of phases in the loop of simulation */
-  val NUMBER_OF_PHASE = 4
->>>>>>> refactor of scaladoc inside it.unibo.pps.bunny.engine package
 
   object FactorsConstants {
 

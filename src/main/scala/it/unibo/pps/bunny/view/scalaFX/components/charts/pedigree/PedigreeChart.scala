@@ -38,7 +38,8 @@ object PedigreeChart {
    *
    * @param bunny
    *   the [[Bunny]] that is the subject of the tree
-   * @return the [[PedigreeChart]]
+   * @return
+   *   the [[PedigreeChart]]
    */
   def apply(bunny: Bunny): PedigreeChart = {
     this(bunny, PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH)
@@ -78,9 +79,9 @@ object PedigreeChart {
 
   /**
    * @param trees
-   *   The [[BinaryTree]]s with the elems that need to be in this row
+   *   The [[BinaryTree]] s with the elems that need to be in this row
    * @return
-   *   The view of the row and the [[BinaryTree]]s which needs to be inserted in the next one
+   *   The view of the row and the [[BinaryTree]] s which needs to be inserted in the next one
    */
   private def createRow(trees: Seq[Option[BinaryTree[Bunny]]]): (HBox, Seq[Option[BinaryTree[Bunny]]]) = {
     var nextTrees: Seq[Option[BinaryTree[Bunny]]] = Seq()
@@ -114,48 +115,27 @@ object PedigreeChart {
     (row, nextTrees)
   }
 
-<<<<<<< HEAD
   /** Creates a spacing region to justify the rows of bunnies */
   val spacingGenerator: () => Region = () =>
-=======
-  /** Creates a spacing region to show the rows of bunnies with a justify alignment*/
-  val spacingRegion: () => Region = () =>
->>>>>>> Pedigree scaladoc updated.
     new Region {
       hgrow = Priority.Always
     }
 
-<<<<<<< HEAD
   /** Creates an empty ImageView with the same size of the bunny, for the bunnies with no ancient relatives */
   private val emptyBunnyGenerator: () => ImageView = () =>
-=======
-  /** Creates an empty ImageView with the same size of the bunny, for the bunnies with no parents and ancient relatives */
-  private val emptyImageView: () => ImageView = () =>
->>>>>>> Pedigree scaladoc updated.
     new ImageView {
       fitWidth = bunnyIconSize
     }
 
-<<<<<<< HEAD
   /** Creates an empty Text with the same size of the plus, for the bunnies with no ancient relatives */
   private val emptyPlusGenerator: () => Text = () => {
     val txt = plusViewGenerator()
-=======
-  /** Creates an empty Text with the same size of the plus, for the bunnies with no parents and ancient relatives */
-  private val emptyPlusView: () => Text = () => {
-    val txt = plusView()
->>>>>>> Pedigree scaladoc updated.
     txt setVisible false
     txt
   }
 
-<<<<<<< HEAD
   /** Creates a view of the plus between couples of bunnies */
   private val plusViewGenerator: () => Text = () =>
-=======
-  /** Creates a view of the plus between a couple of bunnies */
-  private val plusView: () => Text = () =>
->>>>>>> Pedigree scaladoc updated.
     new Text {
       text = "+"
       style = "-fx-font-weight: bold; -fx-font-size: " + bunnyIconSize / BUNNY_PLUS_PROPORTION + ";"
@@ -164,7 +144,7 @@ object PedigreeChart {
 
   private def addChosenBunnyStyle(chosen: javafx.scene.Node): Unit = {
     chosen.getStyleClass.add("tree-chosen-bunny")
-    chosen.setStyle("-fx-border-width: " + CHOSEN_BUNNY_BORDER + "px; -fx-padding: " + CHOSEN_BUNNY_PADDING + "px;");
+    chosen.setStyle("-fx-border-width: " + CHOSEN_BUNNY_BORDER + "px; -fx-padding: " + CHOSEN_BUNNY_PADDING + "px;")
   }
 
   private case class PedigreeChartImpl(override val bunny: Bunny, override val tree: BinaryTree[Bunny])
@@ -184,5 +164,7 @@ object PedigreeChart {
       children = spacingGenerator() +: rows.reverse :+ spacingGenerator()
       alignment = Pos.Center
     }
+
   }
+
 }

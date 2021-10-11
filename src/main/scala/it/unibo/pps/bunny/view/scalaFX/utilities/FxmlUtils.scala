@@ -11,12 +11,14 @@ import java.io.IOException
 object FxmlUtils {
 
   /**
-   * Method that loads an fxml document of type T
+   * Method that loads a fxml document of type T
    *
    * @param fxmlPath
    *   the path where the fxml is located
    * @return
    *   (T, FXMLLoader) a pair with the loaded panel and its loader
+   * @tparam T
+   *   the type of the panel loaded
    */
   def loadFXMLResource[T](fxmlPath: String): (T, FXMLLoader) = {
     val fxmlFile = getClass.getResource(fxmlPath)
@@ -34,6 +36,15 @@ object FxmlUtils {
     (loadedPane, loader)
   }
 
+  /**
+   * Method that loads a fxml from the specified path and applies the consumer
+   * @param fxmlPath
+   *   a [[String]] representing the fxml path
+   * @param paneConsumer
+   *   a [[(AnchorPane) => Unit]] function that is applied to the loaded pane
+   * @tparam T
+   *   the type of the panel loaded
+   */
   def loadPanelAndGetController[T](fxmlPath: String, paneConsumer: AnchorPane => Unit): Option[T] = {
     val loadedMutationChoicePanel = loadFXMLResource[jfxs.AnchorPane](fxmlPath)
     paneConsumer(loadedMutationChoicePanel._1)

@@ -44,17 +44,13 @@ object SimulationHistory {
   /** @return true if too many generations have passed, otherwise false */
   def tooManyGenerations: Boolean = getGenerationNumber >= MAX_GENERATIONS_NUMBER
 
-<<<<<<< HEAD
-  /** Terminate the actual [[Generation]] and start the next one */
+  /** Terminate the actual [[Generation]] and starts the next one */
   def startNextGeneration(): Unit = {
     getActualGeneration.terminate()
     history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history
   }
 
-  /** @return the [[Population]]  for the next [[Generation]] */
-=======
   /** @return the [[Population]] for the next [[Generation]] */
->>>>>>> refactor of scaladoc inside it.unibo.pps.bunny.engine package
   private def getPopulationForNextGeneration: Population =
     nextGenerationBunnies(getActualPopulation, getActualGeneration.environment.mutations)
 
@@ -62,13 +58,4 @@ object SimulationHistory {
   private def getEnvironmentForNextGeneration: Environment =
     Environment.fromPreviousOne(getActualGeneration.environment)
 
-<<<<<<< HEAD
-=======
-  /** Terminate the actual [[Generation]] and starts the next one */
-  def startNextGeneration(): Unit = {
-    getActualGeneration.terminate()
-    history = Generation(getEnvironmentForNextGeneration, getPopulationForNextGeneration) :: history
-  }
-
->>>>>>> refactor of scaladoc inside it.unibo.pps.bunny.engine package
 }

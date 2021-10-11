@@ -1,6 +1,7 @@
 package it.unibo.pps.bunny.view.scalaFX.components
 
-import it.unibo.pps.bunny.view.scalaFX.utilities.Direction._
+import it.unibo.pps.bunny.view.scalaFX.utilities._
+import it.unibo.pps.bunny.view.scalaFX.utilities.DirectionUtils._
 import scalafx.animation.KeyFrame
 import scalafx.scene.image.ImageView
 
