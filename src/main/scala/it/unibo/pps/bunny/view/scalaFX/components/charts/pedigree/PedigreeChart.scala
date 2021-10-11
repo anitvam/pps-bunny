@@ -16,13 +16,13 @@ import scala.language.postfixOps
 
 trait PedigreeChart {
 
-  /** Reference to the model bunny entity */
+  /** Reference to the model [[Bunny]] entity */
   val bunny: Bunny
 
-  /** Reference to the model tree entity created from the bunny */
+  /** Reference to the model [[BinaryTree]] entity created from the [[Bunny]] */
   val tree: BinaryTree[Bunny]
 
-  /** The pane with the view of the tree */
+  /** Pane with the view of the [[BinaryTree]] */
   val chartPane: Pane
 }
 
@@ -30,32 +30,31 @@ object PedigreeChart {
   type IconSize = Int
   type Generations = Int
 
-  /** The size required for the bunny icons */
+  /** The size of [[Bunny]] icons */
   var bunnyIconSize: Int = MAX_TREE_BUNNY_SIZE
 
   /**
    * To create a chart with the standard panel size
    *
    * @param bunny
-   *   the bunny that is the subject of the tree
-   * @return
-   *   the pedigree chart
+   *   the [[Bunny]] that is the subject of the tree
+   * @return the [[PedigreeChart]]
    */
   def apply(bunny: Bunny): PedigreeChart = {
     this(bunny, PREFERRED_CHART_HEIGHT, PREFERRED_CHART_WIDTH)
   }
 
   /**
-   * To create a chart with
+   * To create a chart with a custom panel size
    *
    * @param bunny
-   *   the bunny that is the subject of the tree
+   *   the [[Bunny]] that is the subject of the tree
    * @param chartWidth
-   *   the width of the panel and maximum width of the tree
+   *   the width of the panel to fit the tree into
    * @param chartHeight
-   *   the height of the panel and maximum height of the tree
+   *   the height of the panel to fit the tree into
    * @return
-   *   the pedigree chart
+   *   the [[PedigreeChart]]
    */
   def apply(bunny: Bunny, chartWidth: Int, chartHeight: Int): PedigreeChart = {
     val dims = dimensions(chartWidth, chartHeight, actualGenerations(bunny))
@@ -79,9 +78,9 @@ object PedigreeChart {
 
   /**
    * @param trees
-   *   The tree with the elems that need to be in this row
+   *   The [[BinaryTree]]s with the elems that need to be in this row
    * @return
-   *   The view of a row and the trees which needs to be inserted in the next one
+   *   The view of the row and the [[BinaryTree]]s which needs to be inserted in the next one
    */
   private def createRow(trees: Seq[Option[BinaryTree[Bunny]]]): (HBox, Seq[Option[BinaryTree[Bunny]]]) = {
     var nextTrees: Seq[Option[BinaryTree[Bunny]]] = Seq()
@@ -115,27 +114,48 @@ object PedigreeChart {
     (row, nextTrees)
   }
 
+<<<<<<< HEAD
   /** Creates a spacing region to justify the rows of bunnies */
   val spacingGenerator: () => Region = () =>
+=======
+  /** Creates a spacing region to show the rows of bunnies with a justify alignment*/
+  val spacingRegion: () => Region = () =>
+>>>>>>> Pedigree scaladoc updated.
     new Region {
       hgrow = Priority.Always
     }
 
+<<<<<<< HEAD
   /** Creates an empty ImageView with the same size of the bunny, for the bunnies with no ancient relatives */
   private val emptyBunnyGenerator: () => ImageView = () =>
+=======
+  /** Creates an empty ImageView with the same size of the bunny, for the bunnies with no parents and ancient relatives */
+  private val emptyImageView: () => ImageView = () =>
+>>>>>>> Pedigree scaladoc updated.
     new ImageView {
       fitWidth = bunnyIconSize
     }
 
+<<<<<<< HEAD
   /** Creates an empty Text with the same size of the plus, for the bunnies with no ancient relatives */
   private val emptyPlusGenerator: () => Text = () => {
     val txt = plusViewGenerator()
+=======
+  /** Creates an empty Text with the same size of the plus, for the bunnies with no parents and ancient relatives */
+  private val emptyPlusView: () => Text = () => {
+    val txt = plusView()
+>>>>>>> Pedigree scaladoc updated.
     txt setVisible false
     txt
   }
 
+<<<<<<< HEAD
   /** Creates a view of the plus between couples of bunnies */
   private val plusViewGenerator: () => Text = () =>
+=======
+  /** Creates a view of the plus between a couple of bunnies */
+  private val plusView: () => Text = () =>
+>>>>>>> Pedigree scaladoc updated.
     new Text {
       text = "+"
       style = "-fx-font-weight: bold; -fx-font-size: " + bunnyIconSize / BUNNY_PLUS_PROPORTION + ";"
@@ -164,7 +184,5 @@ object PedigreeChart {
       children = spacingGenerator() +: rows.reverse :+ spacingGenerator()
       alignment = Pos.Center
     }
-
   }
-
 }

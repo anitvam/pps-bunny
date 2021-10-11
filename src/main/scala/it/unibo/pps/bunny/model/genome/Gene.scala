@@ -19,22 +19,14 @@ sealed trait Allele {
   /** This value is true if the Allele is mutated on the actual generation, otherwise false */
   val justMutated: Boolean
 
-<<<<<<< HEAD
-  def isDominant: Boolean = kind.isDominant.getOrElse(false)
-
-=======
   /** @return the letter that represents this Allele */
->>>>>>> Refactor of scaladoc inside bunny package
   def getLetter: String =
     if (kind.isDominant ?) {
       if (kind.isDominant.get) getGeneKind(kind).letter.toUpperCase else getGeneKind(kind).letter.toLowerCase
     } else ""
 
-<<<<<<< HEAD
-=======
   /** @return true if the Allele is dominant */
   def isDominant: Boolean = kind.isDominant.getOrElse(false)
->>>>>>> Refactor of scaladoc inside bunny package
 }
 
 /**
@@ -73,27 +65,18 @@ trait Gene {
   /** @return the [[AlleleKind]] of the visible trait for this gene */
   def getVisibleTrait: AlleleKind = if (isHomozygous || momAllele.isDominant) momAllele.kind else dadAllele.kind
 
-<<<<<<< HEAD
-=======
   /** @return true if the Gene is homozygous, otherwise false */
   def isHomozygous: Boolean = momAllele.kind == dadAllele.kind
 
   /** @return the string representation of this Gene */
->>>>>>> Refactor of scaladoc inside bunny package
   def getLetters: String = momAllele.getLetter + dadAllele.getLetter
 
-  private def isHomozygous: Boolean = momAllele.kind == dadAllele.kind
 }
 
 object Gene {
 
   /** Checks if the the specified GeneKind and the kind of the Allele are consistent. */
   private val checkKind: (GeneKind, Allele) => Boolean = (kind, allele) => getGeneKind(allele.kind) == kind
-
-  def apply(kind: GeneKind, momAllele: Allele, dadAllele: Allele): Gene = {
-    if (!(checkKind(kind, momAllele) && checkKind(kind, dadAllele))) throw new InconsistentAlleleException
-    GeneImpl(kind, momAllele, dadAllele)
-  }
 
   /**
    * Represents a Standard Gene of a specific Bunny.
@@ -104,6 +87,11 @@ object Gene {
    * @param dadAllele
    *   the allele from the dad
    */
+  def apply(kind: GeneKind, momAllele: Allele, dadAllele: Allele): Gene = {
+    if (!(checkKind(kind, momAllele) && checkKind(kind, dadAllele))) throw new InconsistentAlleleException
+    GeneImpl(kind, momAllele, dadAllele)
+  }
+
   private case class GeneImpl(
       override val kind: GeneKind,
       override val momAllele: Allele,

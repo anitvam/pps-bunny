@@ -12,14 +12,14 @@ import scalafx.scene.paint.Color
 import scalafx.scene.text.Text
 
 /**
- * Represents the view on the Bunny in a tree.
+ * Represents the view of a [[Bunny]] in a tree.
  */
 trait BunnyPedigreeView {
 
-  /** Reference to the model bunny entity */
+  /** Reference to the model [[Bunny]] entity */
   val bunny: Bunny
 
-  /** Pane with actual view of the bunny */
+  /** Pane with view of the [[Bunny]] */
   val pane: Pane
 }
 
