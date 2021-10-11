@@ -1,7 +1,7 @@
 package it.unibo.pps.bunny.model.genome
 
 import it.unibo.pps.bunny.model.MultipleDominanceAssignmentException
-import it.unibo.pps.bunny.model.genome.KindsUtils.{resetDominance, setAlleleDominance}
+import it.unibo.pps.bunny.model.genome.KindsUtils.{assignRandomDominance, isDominanceAssigned, resetDominance, setAlleleDominance}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TestKinds extends FlatSpec with Matchers {
@@ -12,7 +12,7 @@ class TestKinds extends FlatSpec with Matchers {
     })
   }
 
-  "Each AlleleKind" should "be settable as dominant just once" in {
+  it should "be settable as dominant just once" in {
     resetDominance()
     Genes.values.foreach(gk => {
       setAlleleDominance(gk.base)
@@ -53,6 +53,18 @@ class TestKinds extends FlatSpec with Matchers {
 
   "Each GeneKind" should "have two different AlleleKind as base and muted" in {
     Genes.values.foreach(gk => assert(gk.base != gk.mutated))
+  }
+
+  it should "be possible to know it its dominance has been assigned" in {
+    resetDominance()
+    Genes.values.foreach(isDominanceAssigned(_) == false)
+    assignRandomDominance()
+    Genes.values.foreach(isDominanceAssigned(_) == true)
+
+    resetDominance()
+    setAlleleDominance(Alleles.BROWN_FUR)
+    isDominanceAssigned(Genes.FUR_COLOR) == true
+    Genes.values.filter(_ != Genes.FUR_COLOR).foreach(isDominanceAssigned(_) == false)
   }
 
 }
