@@ -15,7 +15,18 @@ La proposta si ispira al seguente gioco: https://phet.colorado.edu/en/simulation
 ### Genetica
 Il dominio dell'applicazione riguarda la genetica, perciò si è pensato di fornire una breve introduzione su tale argomento e sulla terminologia utilizzata nella relazione. 
 
-La genetica studia il genoma, formato da cromosomi e geni dai quali dipende il patrimonio genetico della prole che è composto dagli attributi trasmessi dai genitori e determinerà l'aspetto dei figli.  <br /> Ogni gene riguarda una caratteristica, che nell'ambito della riproduzione dei conigli può essere ad esempio il *colore della pelliccia* o la *forma delle orecchie*. Ogni gene è formato da due alleli ed ogni allele che può comparire in due forme, ad esempio per il *colore della pelliccia* possono essere la *pelliccia bianca* o la *pelliccia bruna*. Una delle due forme è dominante e l'altra recessiva, ciò significa che se compaiono entrambe per un certo gene quella dominante prevarrà, sarà visibile sul figlio e di conseguenza farà parte del suo *fenotipo*. <br /> Ogni figlio eredita dai genitori una coppia di alleli, uno dal padre ed uno dalla madre. Tale coppia sarà una delle combinazioni degli alleli dei genitori rappresentata nel  [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett), uno schema che per una qualsiasi coppia di genitori con certi alleli mostra le quattro combinazioni di alleli possibili per formare il gene del figlio. 
+La genetica studia il genoma, ovvero la totalità dei cromosomi e dei geni contenuti nelle cellule. 
+Dal genoma dipende il patrimonio genetico della prole degli attributi trasmessi dai genitori e che determinerà l'aspetto dei figli.  <br /> 
+Ogni gene riguarda una caratteristica, che nell'ambito della riproduzione dei conigli può essere ad esempio il *colore della pelliccia* o la *forma delle orecchie*. 
+Ogni gene è formato da due alleli ed ogni allele può comparire in due forme diverse, ad esempio per il *colore della pelliccia* possono essere la *pelliccia bianca* o la *pelliccia bruna*. 
+Una di queste due forme è dominante, mentre l'altra è recessiva. Ciò significa che se compaiono entrambe per un determinato
+a prevalere è la versione dominante e quindi sarà visibile sul figlio, ovvero farà parte del suo *fenotipo*. <br /> 
+Ogni figlio eredita dai genitori una coppia di alleli, uno dal padre ed uno dalla madre. Tale coppia sarà una delle combinazioni 
+degli alleli dei genitori rappresentata nel  [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett), uno schema 
+che per una qualsiasi coppia di genitori con certi alleli mostra le quattro combinazioni di alleli possibili per formare il gene del figlio.
+Per rendere il processo di simulazione più semplice e intuitivo possibile infatti si è deciso di applicare fedelmente il quadrato d i Punnet
+nella riproduzione dei conigli, considerando infatti quattro conigli ad ogni riproduzione si potranno prendere in considerazione
+tutte le combinazioni possibili degli alleli.
 
 #### Glossario
 * **Gene** - Una caratteristica dell'organismo, è composto da due alleli.
@@ -33,12 +44,27 @@ Il processo di sviluppo adottato mette in pratica le metodologie previste dalla 
 * producendo artefatti come il Product Backlog e il resoconto di ogni riunione,
 * tenendo traccia dello svolgimento di ogni task da parte dei singoli componenti del team.
 
-Il **Product Backlog** contiene le funzionalità fondamentali da sviluppare per la realizzazione dell'applicativo e viene aggiornato durante ogni Sprint Planning in base alle esigenze che emergono man mano che il progetto avanza. Per ogni feature sono individuati i task che ne permettono il completamento, a ognuno di essi è assegnato un punteggio che indica la difficoltà prevista per portarlo a termine.  <br /> Durante la **Sprint Review** si aggiorna il punteggio per i task dello Sprint appena concluso, per valutare la differenza fra la complessità prevista e quella reale. Inoltre durante la revisione si chiudono le eventuali Pull Request lasciate in sospeso e si rilascia un eseguibile dello stato attuale dell'applicazione.
+Il **Product Backlog** contiene le funzionalità fondamentali da sviluppare per la realizzazione dell'applicativo e viene 
+aggiornato durante ogni Sprint Planning in base alle esigenze che emergono man mano che il progetto avanza. Per ogni feature 
+sono individuati i task che ne permettono il completamento, a ognuno di essi è assegnato un punteggio che indica la difficoltà
+prevista per portarlo a termine.  <br /> 
+Durante la **Sprint Review** si aggiorna il punteggio per i task dello Sprint appena concluso, per valutare la differenza fra 
+la complessità prevista e quella reale. Inoltre durante la revisione si chiudono le eventuali Pull Request lasciate in sospeso
+e si rilascia un eseguibile dello stato attuale dell'applicazione.
 
 ### Sprint
 Per gli **Sprint** si è scelta una durata di circa due settimane, con la preparazione dello Sprint successivo prevista il lunedì.
 
-Per ogni Sprint, durante lo **Sprint Planning** si prefissa un obiettivo in termini di prototipo funzionante da produrre alla scadenza usando un approccio di sviluppo incrementale. In funzione di tale obiettivo si selezionano i task da completare durante lo Sprint fra tutti quelli individuati nel Product Backlog. Ogni task viene assegnato a un membro del team in modo che ogni sviluppatore nel corso della realizzazione del progetto si cimenti in vari aspetti (GUI, Model, Design, Documentazione) e che per ogni Sprint il carico sia adeguatamente bilanciato fra i componenti. <br /> Infine durante ogni Sprint Planning si discutono gli aspetti inerenti la modellazione del dominio in modo che tutti i membri del gruppo abbiano chiaro come lo si intende rappresentare, al fine di evitare fraintendimenti. <br /> Per lo Sprint Planning è prevista una durata di circa due ore, in realtà alcune pianificazioni hanno richiesto a malapena una ora mentre altre, in particolare quelle iniziali, sono arrivate a più di tre ore.
+Per ogni Sprint, durante lo **Sprint Planning** si prefissa un obiettivo in termini di prototipo funzionante da produrre 
+alla scadenza usando un approccio di sviluppo incrementale. In funzione di tale obiettivo si selezionano i task da completare 
+durante lo Sprint fra tutti quelli individuati nel Product Backlog. Ogni task viene assegnato a un membro del team in modo che 
+ogni sviluppatore nel corso della realizzazione del progetto si cimenti in vari aspetti (GUI, Model, Design, Documentazione) e 
+che per ogni Sprint il carico sia adeguatamente bilanciato fra i componenti. <br /> 
+Infine durante ogni Sprint Planning si 
+discutono gli aspetti inerenti la modellazione del dominio in modo che tutti i membri del gruppo abbiano chiaro come lo si 
+intende rappresentare, al fine di evitare fraintendimenti. <br /> 
+Per lo Sprint Planning è prevista una durata di circa due ore, in realtà alcune pianificazioni hanno richiesto a malapena una 
+mentre altre, in particolare quelle iniziali, sono arrivate a più di tre ore.
 
 ### Obiettivi
 Di seguito sono riportati gli obiettivi fissati ed i risultati realmente prodotti in ogni Sprint.
@@ -53,7 +79,7 @@ Di seguito sono riportati gli obiettivi fissati ed i risultati realmente prodott
 
 ### Modalità di revisione dei task
 
-Durante lo Sprint Planning viene assegnato a ogni membro l'insieme di task che esso ha il compito di portare a termine entro lo sprint successivo.
+Durante lo Sprint Planning viene assegnato a ogni membro l'insieme di task che ha il compito di portare a termine entro lo sprint successivo.
 Per ciascun task pianificato vengono definite una Issue su GitHub e una scheda Trello nella sezione "To Do" entrambe assegnate alla persona incaricata di implementare il task.
 
 La scheda su Trello fornisce la possibilità di aggiungere dei commenti e dei punti elenco, permettendo ad ogni sviluppatore
@@ -83,9 +109,9 @@ risoluzione del task, questa operazione facilita l'individuazione di task che no
 ### Strumenti di test, build e Continuous Integration
 Il processo di sviluppo adottato richiede che le feature sviluppate dai vari membri del team siano a ogni pull request
 integrate con quelle già presenti nel branch develop, dunque per rendere il processo di integrazione più fluido,
-evitando collisioni, si è deciso di introdurre la `Continuous Integration`. Con il file `.github/workflows/ci.yml` viene definita una sequenza di operazioni
-che vogliamo che siano svolte dalle `GitHub Actions`, le quali sono un insieme di macchine virtuali che `GitHub` mette a disposizione
-per poterle eseguire.
+evitando collisioni, si è deciso di introdurre la `Continuous Integration`. Con il file `.github/workflows/ci.yml` viene definita 
+una sequenza di operazioni che si sono delegate alle `GitHub Actions`, le quali sono un insieme di macchine virtuali che `GitHub` 
+mette a disposizione per poterle eseguire.
 
 All'interno della nostra pipeline il progetto viene `compilato` e `testato` su macchine di diversi sistemi operativi: `MacOS`,
 `Windows` e `Ubuntu`, con due versioni della JVM, ossia la `1.11` e la `1.16`.
@@ -247,6 +273,9 @@ Per facilitare la lettura del diagramma sono stati omessi alcuni package minori,
 ![](images/package_architecture.png)  
 
 
+
+//Pattern di progettazione 
+//Organizzazione del codice
 ## Implementazione
 
 ### Baiardi
