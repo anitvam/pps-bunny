@@ -15,8 +15,16 @@ sealed trait Phenotype {
 
   /** An [[Iterable]] on all the [[AlleleKind]] visible on the bunny */
   val values: Iterable[AlleleKind] = visibleTraits.values
+
   /** A method to get the [[AlleleKind]] for a specific [[GeneKind]] directly, without using visibleTraits */
   def apply(gk: GeneKind): AlleleKind = visibleTraits(gk)
+
+  /**
+   * @param ak
+   *   the specified [[AlleleKind]]
+   * @return
+   *   true if the phenotype has the [[AlleleKind]] specified, false otherwise
+   */
   def has(ak: AlleleKind): Boolean = values.toSet.contains(ak)
 }
 
@@ -39,6 +47,7 @@ sealed trait Genotype {
 
   /** The [[Phenotype]] of the bunny */
   val phenotype: Phenotype = Phenotype(genes.map(entry => (entry._1, entry._2.getVisibleTrait)))
+
   /** A method to get the [[Gene]] for a specific [[GeneKind]] directly, without using genes */
   def apply(gk: GeneKind): Gene = genes(gk)
 
