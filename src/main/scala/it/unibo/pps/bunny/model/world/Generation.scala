@@ -94,5 +94,4 @@ object GenerationsUtils {
       override val name: String = "Temperature"
   ) extends GenerationPhase
 
-  def getNumberOfPhases: Int = List(ReproductionPhase(1), WolvesPhase(2), FoodPhase(3), HighTemperaturePhase(4)).length
 }
