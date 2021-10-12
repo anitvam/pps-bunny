@@ -6,7 +6,7 @@ import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
 import scalafx.scene.chart.{ LineChart, PieChart, XYChart }
 import it.unibo.pps.bunny.util.PimpScala._
-import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.Style.PopulationLegend.{ CLICKED_ITEM_STYLE, ITEM_STYLE }
+import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.Style.PopulationLegend.CLICKED_ITEM_STYLE
 
 object PimpScalaFXChartLibrary {
 

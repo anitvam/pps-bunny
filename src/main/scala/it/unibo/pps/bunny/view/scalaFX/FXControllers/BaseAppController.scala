@@ -12,8 +12,8 @@ import scalafxml.core.macros.sfxml
 import it.unibo.pps.bunny.util.PimpScala.RichOption
 import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants._
 import it.unibo.pps.bunny.view.scalaFX.components.{ BunnyView, ClockView }
-import it.unibo.pps.bunny.view.scalaFX.components.charts.PopulationChart
 import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart
+import it.unibo.pps.bunny.view.scalaFX.components.charts.population.PopulationChart
 import it.unibo.pps.bunny.view.scalaFX.utilities.FxmlUtils.{ loadPanelAndGetController, setFitParent }
 
 import scala.language.{ implicitConversions, postfixOps }

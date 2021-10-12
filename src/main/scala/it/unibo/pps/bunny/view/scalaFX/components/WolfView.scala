@@ -20,6 +20,7 @@ trait WolfView extends AnimalView {
 
   /** Reference to the factor panel controller entity */
   val factorsPanelController: Option[FactorsPanelControllerInterface]
+  var isShown = false
 
   def playInstantly(): Unit
 
@@ -58,10 +59,13 @@ object WolfView {
     private val isAnimationDelayed: Long => Boolean =
       _ < WOLVES_INSTANT_DEVIATION * 1000 * Controller.getCurrentSimulationSpeed
 
+    private val areWolvesVisible: Long => Boolean = _ <= WOLVES_PHASE * 1000 * Controller.getCurrentSimulationSpeed
+
     private val timer: AnimationTimer = AnimationTimer(_ => {
-      if (!isAnimationDelayed(lastTime) || !isPlayDelayed)
-        if (lastTime <= WOLVES_PHASE * 1000 * Controller.getCurrentSimulationSpeed) {
+      if (!isAnimationDelayed(lastTime) || !isPlayDelayed) {
+        if (areWolvesVisible(lastTime)) {
           imageView.visible = true
+          isShown = true
           factorsPanelController --> { _.disableWolfFactor() }
           checkDirection(
             positionX + imageView.getFitWidth / 2 >= PREFERRED_SIMULATION_PANEL_WIDTH - PREFERRED_SIMULATION_PANEL_BORDER,
@@ -70,7 +74,7 @@ object WolfView {
           moveHorizontally(WOLVES_MOVING_SPACE)
           imageView.x = positionX
         } else stop()
-
+      }
       lastTime += 1
     })
 
@@ -92,6 +96,7 @@ object WolfView {
     override def stop(): Unit = {
       timer.stop()
       lastTime = 0L
+      isShown = false
       factorsPanelController --> { _.removeWolf(imageView) }
       factorsPanelController --> { _.enableWolfFactor() }
     }

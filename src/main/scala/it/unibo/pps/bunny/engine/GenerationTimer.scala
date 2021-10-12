@@ -19,7 +19,6 @@ object GenerationTimer {
   /**
    * Returns a [[IO]] description that when is evaluated it will create an async task that will wait until the time
    * specified
-   *
    * @param to
    *   the moment in which the timer sleep ends
    * @return
@@ -33,7 +32,6 @@ object GenerationTimer {
   /**
    * Returns a [[IO]] description that when evaluated will create an async task that will wait for the interval
    * specified.
-   *
    * @param from
    *   the lower bound for the sleeping time interval
    * @param to

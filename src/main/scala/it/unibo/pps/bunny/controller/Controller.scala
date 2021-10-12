@@ -63,7 +63,7 @@ object Controller {
   /**
    * Method that shows the end of the simulation on the Application GUI
    * @param endType
-   *   the reason why simulation ended
+   *   the reason why simulation is over
    */
   def showEnd(endType: SimulationEndType): Unit = Platform runLater {
     ScalaFXView.showEnd(endType)

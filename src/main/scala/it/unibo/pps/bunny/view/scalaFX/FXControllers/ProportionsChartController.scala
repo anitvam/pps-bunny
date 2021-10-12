@@ -5,6 +5,7 @@ import it.unibo.pps.bunny.engine.SimulationConstants.PhasesConstants._
 import it.unibo.pps.bunny.engine.SimulationHistory
 import javafx.scene.{ control => jfxc }
 import it.unibo.pps.bunny.model.bunny.Bunny
+import it.unibo.pps.bunny.model.bunny.Bunny.splitBunniesByGene
 import it.unibo.pps.bunny.model.genome.Genes
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.world.Generation.Population
@@ -84,7 +85,7 @@ class ProportionsChartController(
         fillPieCharts(population, getSelectedGeneKind)
         displayedGenerationNumber = generationPhase.generationNumber
         genText.text = s"Generazione $displayedGenerationNumber"
-        if (generationPhase.generationNumber > 0) backBtn.disable = false
+        backBtn.disable = generationPhase.generationNumber <= 0
       } else fillCurrentPieChart(population, getSelectedGeneKind)
     }
   }
@@ -113,13 +114,12 @@ class ProportionsChartController(
     displayedGenerationNumber = generationNumber
     genText.text = s"Generazione $displayedGenerationNumber"
     currentPie.title = "Fine Generazione"
-    fillPieCharts(if (generation.isEnded) generation.populationAtTheEnd else generation.population, getSelectedGeneKind)
+    fillPieCharts(if (generation.isOver) generation.populationAtTheEnd else generation.population, getSelectedGeneKind)
     if (displayedGenerationNumber == 0) backBtn.disable = true
     if (displayedGenerationNumber == SimulationHistory.getGenerationNumber) {
       isInHistoryMode = false
       nextBtn.disable = true
       currentPie.title = "Attualmente"
-
     }
   }
 
@@ -145,9 +145,6 @@ object PieChartConverters {
    */
   implicit def percentage(d: (Int, Int)): Double = (d._1.toDouble * 100 / d._2.toDouble).round.toDouble
 
-  private def getBaseAndMutatedBunnies(population: Population, geneKind: GeneKind): (Seq[Bunny], Seq[Bunny]) =
-    population.partition(_.genotype.phenotype.visibleTraits(geneKind) == geneKind.base)
-
   /**
    * Implicit Method that generates the chart's data from a given [[Population]] and a [[GeneKind]]
    * @param d
@@ -156,7 +153,7 @@ object PieChartConverters {
    *   a [[Seq]] containing the chart's data
    */
   implicit def getDataChart(d: (GeneKind, Population)): Seq[(String, Double)] = {
-    val (listBaseBunny, listMutatedBunny) = getBaseAndMutatedBunnies(d._2, d._1)
+    val (listBaseBunny, listMutatedBunny) = splitBunniesByGene(d._1, d._2)
     Seq(
       (d._1.base.prettyName, (listBaseBunny.size, d._2.size)),
       (d._1.mutated.prettyName, (listMutatedBunny.size, d._2.size))
