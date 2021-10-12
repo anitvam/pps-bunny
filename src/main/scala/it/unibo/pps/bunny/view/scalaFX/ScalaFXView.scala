@@ -22,10 +22,10 @@ import it.unibo.pps.bunny.view.scalaFX.utilities.FxmlUtils
 import scala.language.implicitConversions
 
 object ScalaFXView extends View {
-  var baseAppController: Option[BaseAppControllerInterface] = Option.empty
-  var OVERPOPULATION_END_IMAGE = new Image("img/world.png")
-  var EXTINCTION_END_IMAGE = new Image("img/extinction.png")
-  var GENERATIONS_OVERLOAD_END_IMAGE = new Image("img/generations_overload.png")
+  private var baseAppController: Option[BaseAppControllerInterface] = Option.empty
+  private val OVERPOPULATION_END_IMAGE = new Image("img/world.png")
+  private val EXTINCTION_END_IMAGE = new Image("img/extinction.png")
+  private val GENERATIONS_OVERLOAD_END_IMAGE = new Image("img/generations_overload.png")
 
   override def start(): Unit = {
     val loadedRootPanel = FxmlUtils.loadFXMLResource[jfxs.Parent]("/fxml/baseApp.fxml")

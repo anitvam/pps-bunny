@@ -23,13 +23,29 @@ object PopulationChartDataType {
   type XYSeries = XYChart.Series[Number, Number]
   type XYData = XYChart.Data[Number, Number]
 
-  /** A simple Point with two coordinates */
+  /**
+   * A simple Point with two coordinates
+   * @param x
+   *   the coordinate on the x axis
+   * @param y
+   *   the coordinate on the y axis
+   */
   case class Point(x: Double, y: Int)
 
-  /** A point with two coordinates and a flag to know if this point has to be shown */
+  /**
+   * A [[Point]] of the chart with a flag that specifies if it must be shown
+   * @param point
+   *   the subject [[Point]]
+   * @param isTruePoint
+   *   true if the point must be shown, otherwise false
+   */
   case class ChartPoint(point: Point, isTruePoint: Boolean)
 
-  /** A sequence of points that must be graphed */
+  /**
+   * A sequence of points of the chart that must be graphed
+   * @param data
+   *   The sequence of [[ChartPoint]] s
+   */
   case class SeriesData(var data: Seq[ChartPoint] = Seq()) {
     import ChartConverters._
 
@@ -43,7 +59,13 @@ object PopulationChartDataType {
 
   }
 
-  /** A wrapper for a sequence of points and the graphic element that displays them */
+  /**
+   * A wrapper for a sequence of [[ChartPoint]] and the graphic element that displays them
+   * @param seriesData
+   *   the sequence of [[ChartPoint]]
+   * @param xySeries
+   *   the graphic element that displays the [[ChartPoint]]
+   */
   case class ChartSeries(seriesData: SeriesData, xySeries: XYSeries) {
 
     def +(p: Point): Unit = {
@@ -58,7 +80,11 @@ object PopulationChartDataType {
 
   }
 
-  /** A map to mange the [[ChartSeries]] for each [[AlleleKind]] */
+  /**
+   * A map to manage the [[ChartSeries]] for each [[AlleleKind]]
+   * @param mutationMap
+   *   A map to bind any [[AlleleKind]] to a [[ChartSeries]]
+   */
   case class MutationsChartSeries(var mutationMap: Map[AlleleKind, ChartSeries] = Map()) {
 
     Alleles.values.foreach { ak =>
@@ -85,6 +111,13 @@ object PopulationChartDataType {
 
 }
 
+/**
+ * Represent the chart for the Population.
+ * @param height
+ *   the height of the panel to fit in
+ * @param width
+ *   the width of the panel to fit in
+ */
 case class PopulationChart(height: Double, width: Double) {
   import LineChartComponentFactory._
 
@@ -97,6 +130,13 @@ case class PopulationChart(height: Double, width: Double) {
   val chart: LineChart[Number, Number] =
     createLineChart(xAxis, yAxis, height, width, total.xySeries :: mutations.xySeries)
 
+  /**
+   * Updates the chart with population alive in the specified generation phase.
+   * @param generationPhase
+   *   the [[GenerationPhase]] of the data
+   * @param population
+   *   the [[Population]] to represent with the next point in the chart
+   */
   def updateChart(generationPhase: GenerationPhase, population: Population): Unit = {
     import ChartConverters._
     total + (generationPhase, population.size)
@@ -106,9 +146,16 @@ case class PopulationChart(height: Double, width: Double) {
     updateChartBound(generationPhase, population.size)
   }
 
-  def updateChartBound(x: Double, size: Int): Unit = {
+  /**
+   * Updates the boundaries of the chart.
+   * @param x
+   *   The maximum coordinate of the points on the x axis.
+   * @param y
+   *   The maximum coordinate of the points on the y axis.
+   */
+  def updateChartBound(x: Double, y: Int): Unit = {
     if (x >= xAxis.upperBound.toDouble) xAxis.upperBound = x + 2
-    if (size >= yAxis.upperBound.toInt) yAxis.upperBound = size + 10
+    if (y >= yAxis.upperBound.toInt) yAxis.upperBound = y + 10
   }
 
 }
@@ -128,7 +175,7 @@ object ChartConverters {
 
 }
 
-/** A factory for all the components of a LineChart */
+/** A factory for all the components of a [[LineChart]] */
 object LineChartComponentFactory {
   val fromNameToStyle: String => String = _.replace(" ", "_")
 
@@ -154,18 +201,18 @@ object LineChartComponentFactory {
   }
 
   /**
-   * Create Series with no data
+   * Create a Series with no data
    * @param name
-   *   the name of the series that is shown in legend
+   *   the name of the series that is shown in the legend
    */
   def createEmptySeries(name: String): XYSeries = createSeries(name, SeriesData())
 
   /**
-   * Create Series with some data
+   * Create a Series with some data
    * @param name
-   *   the name of the series that is shown in legend
+   *   the name of the series that is shown in the legend
    * @param s
-   *   the [[SeriesData]] shown by the series
+   *   the [[SeriesData]] to be shown
    */
   def createSeries(name: String, s: SeriesData): XYSeries = {
     XYChart.Series(
@@ -199,7 +246,7 @@ object LineChartComponentFactory {
   /**
    * Create a [[LineChart]]
    * @param seriesData
-   *   all the series that the chart shows
+   *   all the series the chart shows
    */
   def createLineChart(
       xAxis: NumberAxis,

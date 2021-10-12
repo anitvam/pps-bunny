@@ -13,14 +13,14 @@ trait Mutation {
 object Mutation {
 
   /**
-   * factory to create a recessive mutation
+   * Creates a recessive mutation
    * @param geneKind
    *   the gene mutated
    */
   def recessiveMutation(geneKind: GeneKind): Mutation = MutationImpl(geneKind, isDominant = false)
 
   /**
-   * factory to create a dominant mutation
+   * Creates a dominant mutation
    * @param geneKind
    *   the gene mutated
    */

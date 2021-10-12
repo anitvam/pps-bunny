@@ -13,7 +13,7 @@ object PimpScalaFXChartLibrary {
   /** A richer version of [[XYChart.Series]] */
   implicit class RichXYChartSeries[A, B](series: XYChart.Series[A, B]) {
 
-    /** A getter to know if the series is visible */
+    /** @return true if the series are visible, otherwise false */
     def enabled: Boolean = series.getNode.isVisible
 
     /**
@@ -43,6 +43,8 @@ object PimpScalaFXChartLibrary {
      *
      * @param data
      *   the new point
+     * @return
+     *   true if the collection has changed
      */
     def +=(data: XYChart.Data[A, B]): Boolean = series.dataProperty().value.add(data)
   }
@@ -50,25 +52,45 @@ object PimpScalaFXChartLibrary {
   /** A richer version of [[XYChart]] */
   implicit class RichLineChart[A, B](chart: LineChart[A, B]) {
 
-    /** A getter for easier access to the chart legend */
+    /** @return the chart legend */
     def legend: Legend = chart.getChildrenUnmodifiable.find(_.isInstanceOf[Legend]).map(l => l.asInstanceOf[Legend]).get
 
-    /** Add a sequence of [[XYChart.Series]] to the chart data */
+    /**
+     * Add a sequence of [[XYChart.Series]] to the chart data
+     * @param series
+     *   a [[Seq]] of [[XYChart.Series]]
+     */
     def ++=(series: Seq[XYChart.Series[A, B]]): Unit = series foreach { chart += _ }
 
-    /** Add a [[XYChart.Series]] to the chart data */
+    /**
+     * Add a [[XYChart.Series]] to the chart data
+     * @param series
+     *   a [[Seq]] of [[XYChart.Series]]
+     */
     def +=(series: XYChart.Series[A, B]): Boolean = chart.getData.add(series)
   }
 
   /** A richer version of a sequence of [[XYChart.Series]] */
   implicit class RichSeqChartSeries[A, B](series: Seq[XYChart.Series[A, B]]) {
 
-    /** Filters the sequence and consumes any series that satisfies the predicate */
+    /**
+     * Filters the sequence and consumes any [[XYChart.Series]] that satisfies the predicate
+     * @param pres
+     *   predicate on the [[XYChart.Series]]
+     * @param consumer
+     *   consumer applied to the [[XYChart.Series]]
+     */
     def filterAndForeach(pred: XYChart.Series[A, B] => Boolean, consumer: XYChart.Series[A, B] => Unit): Unit = {
       series filter pred foreach consumer
     }
 
-    /** Returns the first series that has the specified name */
+    /**
+     * Returns the first series that have the specified name
+     * @param name
+     *   the specified name
+     * @return
+     *   the first occurrence of [[XYChart.Series]]
+     */
     def getSeries(name: String): Option[XYChart.Series[A, B]] = series find { _.getName == name }
   }
 
@@ -86,18 +108,28 @@ object PimpScalaFXChartLibrary {
     def label(value: String): Option[Label] =
       legend.getChildrenUnmodifiable.find(_.asInstanceOf[Label].text.value == value).map(_.asInstanceOf[Label])
 
-    /** A getter for easier access to all the chart labels */
+    /** @return a [[Seq]] containing all the chart labels */
     def getLabels: Seq[Label] = legend.getChildrenUnmodifiable.collect {
       case l if l.isInstanceOf[Label] => l.asInstanceOf[Label]
     }.toSeq
 
-    /** Set the specified label as clicked by adding a specific style */
+    /**
+     * Set the specified label as clicked by adding a specific style
+     * @param value
+     *   the specified label
+     */
     def setLabelAsClicked(value: String): Unit = label(value) --> { _.styleClass += CLICKED_ITEM_STYLE }
 
+    /**
+     * Set the specified label as unclicked by removing a specific style
+     * @param value
+     *   the specified label
+     */
     def setLabelAsUnClicked(value: String): Unit = label(value) --> { _.styleClass -= CLICKED_ITEM_STYLE }
 
   }
 
+  /** Class that enriches the [[PieChart]] implementation */
   implicit class RichPieChart(chart: PieChart) {
 
     def +=(data: Seq[(String, Double)]): Unit = {
@@ -115,7 +147,7 @@ object PimpScalaFXChartLibrary {
       }
     }
 
-    /** A getter for easier access to the chart legend */
+    /** @return the chart legend */
     def legend: Legend = chart.getChildrenUnmodifiable.find(_.isInstanceOf[Legend]).map(l => l.asInstanceOf[Legend]).get
 
   }

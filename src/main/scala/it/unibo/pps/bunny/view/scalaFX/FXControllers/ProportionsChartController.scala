@@ -21,8 +21,20 @@ import scalafx.scene.text.Text
 import scala.language.implicitConversions
 
 trait ChartController {
+
+  /** Method that initializes the ChartController */
   def initialize(): Unit
+
+  /**
+   * Method that updates the chart visualization
+   * @param generationPhase
+   *   the actual [[GenerationPhase]]
+   * @param population
+   *   the actual [[Population]]
+   */
   def updateChart(generationPhase: GenerationPhase, population: Population): Unit
+
+  /** Method that resets the chart visualization */
   def resetChart(): Unit
 }
 
@@ -114,13 +126,35 @@ class ProportionsChartController(
 }
 
 object PieChartConverters {
+
+  /**
+   * Implicit method that converts a Gene name to a [[GeneKind]]
+   * @param geneName
+   *   the name of the Gene
+   * @return
+   *   the [[GeneKind]]
+   */
   implicit def fromStringToGeneKind(geneName: String): GeneKind = Genes.values.find(_.prettyName == geneName).get
 
+  /**
+   * Implicit method that converts a tuple into a percentage
+   * @param d
+   *   a tuple [[(Int, Int)]]
+   * @return
+   *   a [[Double]] percentage
+   */
   implicit def percentage(d: (Int, Int)): Double = (d._1.toDouble * 100 / d._2.toDouble).round.toDouble
 
   private def getBaseAndMutatedBunnies(population: Population, geneKind: GeneKind): (Seq[Bunny], Seq[Bunny]) =
     population.partition(_.genotype.phenotype.visibleTraits(geneKind) == geneKind.base)
 
+  /**
+   * Implicit Method that generates the chart's data from a given [[Population]] and a [[GeneKind]]
+   * @param d
+   *   a tuple [[(GeneKind, Population)]]
+   * @return
+   *   a [[Seq]] containing the chart's data
+   */
   implicit def getDataChart(d: (GeneKind, Population)): Seq[(String, Double)] = {
     val (listBaseBunny, listMutatedBunny) = getBaseAndMutatedBunnies(d._2, d._1)
     Seq(

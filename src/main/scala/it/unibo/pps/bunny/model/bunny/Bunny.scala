@@ -40,7 +40,10 @@ trait Bunny {
       "\n" + genotype.toString
   }
 
-  /** Updates the bunny instance for the next generation, increasing the age and setting the right alive value. */
+  /**
+   * Method that updates the bunny instance for the next generation, increasing the age and setting the right alive
+   * value
+   */
   def increaseAge(): Unit = {
     age += 1
     if (age >= MAX_BUNNY_AGE) alive = false
@@ -81,10 +84,14 @@ case class HistoryBunny(bunny: Bunny) extends Bunny {
 /** Companion object of the bunny. */
 object Bunny {
 
-  /** Function to get a random gender for the Bunny. */
+  /**
+   * Function to get a random gender for the Bunny.
+   */
   val randomGenderChooser: () => Gender = () => Seq(Male, Female).random
 
-  /** Generator for a Bunny with the "base" allele for each gene. */
+  /**
+   * Generator for a [[Bunny]] with the "base" [[AlleleKind]] for each [[GeneKind]]
+   */
   val baseBunnyGenerator: Gender => FirstBunny = gender =>
     new FirstBunny(
       CompleteGenotype(
@@ -93,7 +100,9 @@ object Bunny {
       gender
     )
 
-  /** Generator for a Bunny with a random allele for each gene. */
+  /**
+   * Generator for a [[Bunny]] with a random [[AlleleKind]] for each [[GeneKind]]
+   */
   val randomBunnyGenerator: () => FirstBunny = () => {
     new FirstBunny(
       CompleteGenotype(
@@ -111,10 +120,11 @@ object Bunny {
   private type mutatedBunnies = Seq[Bunny]
 
   /**
+   * Method that splits bunnies with a specified [[GeneKind]]
    * @param geneKind
    *   the kind of Gene we want to split the bunnies by
    * @param bunnies
-   *   all the bunnies
+   *   the [[Population]] of bunnies
    * @return
    *   a tuple with the sequence of bunnies with the base Allele and the sequence of bunnies with the mutated Allele
    */
@@ -122,15 +132,16 @@ object Bunny {
     bunnies partition (_.genotype.phenotype(geneKind) == geneKind.base)
 
   /**
-   * Method that filter a population of bunnies with two AlleleKinds together
+   * Method that filter a population of bunnies with a set of [[AlleleKind]]
    * @param bunnies
-   *   the bunny population
+   *   the bunny [[Population]]
    * @param alleleKinds
-   *   the alleles filter the population with
+   *   the alleles to filter the population with
    * @return
-   *   Population the population with the specified AlleleKinds together
+   *   the [[Population]] with all the specified [[AlleleKind]] together
    */
   def filterBunniesWithAlleles(bunnies: Population, alleleKinds: AlleleKind*): Population = bunnies filter { bunny =>
     (alleleKinds count (ak => bunny.genotype.phenotype.values.exists(_ == ak))) == alleleKinds.size
   }
+
 }

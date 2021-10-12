@@ -1,25 +1,26 @@
 package it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree
 
 import it.unibo.pps.bunny.model.bunny.Bunny
-import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.GenealogicalTree._
-import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart.{ bunnyIconSize, spacingGenerator }
-import it.unibo.pps.bunny.view.scalaFX.utilities.Direction.Right
-import it.unibo.pps.bunny.view.scalaFX.utilities.{ BunnyImageUtils, Direction, ImageType }
-import scalafx.geometry.Insets
+import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart.spacingGenerator
 import scalafx.scene.image.{ Image, ImageView }
 import scalafx.scene.layout._
 import scalafx.scene.paint.Color
 import scalafx.scene.text.Text
+import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.GenealogicalTree._
+import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart.bunnyIconSize
+import it.unibo.pps.bunny.view.scalaFX.utilities._
+import it.unibo.pps.bunny.view.scalaFX.utilities.DirectionUtils._
+import it.unibo.pps.bunny.view.scalaFX.utilities.{ BunnyImageUtils, ImageType }
 
 /**
- * Represents the view on the Bunny in a tree.
+ * Represents the view of a [[Bunny]] in a tree.
  */
 trait BunnyPedigreeView {
 
-  /** Reference to the model bunny entity */
+  /** Reference to the model [[Bunny]] entity */
   val bunny: Bunny
 
-  /** Pane with actual view of the bunny */
+  /** Pane with view of the [[Bunny]] */
   val pane: Pane
 }
 
@@ -35,12 +36,13 @@ object BunnyPedigreeView {
           fitWidth = bunnyIconSize
           fitHeight = bunnyIconSize
           preserveRatio = true
-          scaleX = Direction.scaleXValue(Right)
+          scaleX = scaleXValue(Right)
         },
         spacingGenerator()
       )
 
     }
+
   private val genderViewer: Bunny => HBox = bunny =>
     new HBox(
       spacingGenerator(),
@@ -52,6 +54,7 @@ object BunnyPedigreeView {
       },
       spacingGenerator()
     )
+
   private val allelesViewer: Bunny => HBox = bunny =>
     new HBox(
       spacingGenerator(),
@@ -62,8 +65,10 @@ object BunnyPedigreeView {
       },
       spacingGenerator()
     )
+
   private val deadImageGenerator: () => ImageView = () => infoImage("/img/death.png")
   private val mutationImageGenerator: () => ImageView = () => infoImage("/img/mutation.png")
+
   private val infoViewer: Bunny => HBox = bunny =>
     new HBox(
       spacingGenerator(),

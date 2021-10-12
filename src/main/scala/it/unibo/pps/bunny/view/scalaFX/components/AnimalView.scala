@@ -1,6 +1,7 @@
 package it.unibo.pps.bunny.view.scalaFX.components
 
-import it.unibo.pps.bunny.view.scalaFX.utilities.Direction._
+import it.unibo.pps.bunny.view.scalaFX.utilities._
+import it.unibo.pps.bunny.view.scalaFX.utilities.DirectionUtils._
 import scalafx.animation.KeyFrame
 import scalafx.scene.image.ImageView
 
@@ -15,8 +16,10 @@ abstract class AnimalView {
   /** The direction in which the animal moves */
   protected var direction: Direction
 
-  /** The position (X,Y) in which the animal moves */
+  /** The position on the x-axis in which the animal moves */
   protected var positionX: Double
+
+  /** The position on the y-axis in which the animal moves */
   protected var positionY: Double
 
   /** Starts the animation */
@@ -41,7 +44,7 @@ abstract class AnimalView {
   }
 
   /**
-   * Method that moves the animal position according to animal actual Direction
+   * Method that moves the animal position according to animal actual [[Direction]]
    * @param movingSpace:
    *   the value of the moving space for the animal
    */

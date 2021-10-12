@@ -6,11 +6,16 @@ import it.unibo.pps.bunny.model.genome.KindsUtils.isDominanceAssigned
 import it.unibo.pps.bunny.model.{ IllegalGenotypeBuildException, InconsistentGenotypeException }
 
 /**
- * Represents Phenotype of the Bunny, which is the visible traits.
+ * Represents Phenotype of the Bunny, which represents visible traits on the bunny
  */
 sealed trait Phenotype {
+
+  /** A [[Map]] that contains for each gene the visible [[AlleleKind]] on the bunny */
   val visibleTraits: Map[GeneKind, AlleleKind]
+
+  /** An [[Iterable]] on all the [[AlleleKind]] visible on the bunny */
   val values: Iterable[AlleleKind] = visibleTraits.values
+  /** A method to get the [[AlleleKind]] for a specific [[GeneKind]] directly, without using visibleTraits */
   def apply(gk: GeneKind): AlleleKind = visibleTraits(gk)
 }
 
@@ -23,9 +28,16 @@ object Phenotype {
  * Represents the genetic heritage of the Bunny, with visible and invisible traits.
  */
 sealed trait Genotype {
+
+  /** A [[Map]] that contains all the Genes of the bunny, each one identified from its [[GeneKind]] */
   val genes: Map[GeneKind, Gene]
+
+  /** An [[Iterable]] over the Genes of the bunny */
   val values: Iterable[Gene] = genes.values
+
+  /** The [[Phenotype]] of the bunny */
   val phenotype: Phenotype = Phenotype(genes.map(entry => (entry._1, entry._2.getVisibleTrait)))
+  /** A method to get the [[Gene]] for a specific [[GeneKind]] directly, without using genes */
   def apply(gk: GeneKind): Gene = genes(gk)
 
   override def toString: String = genes.values
@@ -34,17 +46,11 @@ sealed trait Genotype {
     .reduceOption(_ + " " + _)
     .getOrElse("-")
 
-  /**
-   * @return
-   *   the number of mutated alleles in the genotype
-   */
+  /** @return the number of mutated alleles in the genotype */
   def mutatedAllelesQuantity: Int =
     genes.values.count(g => g.dadAllele.isInstanceOf[JustMutatedAllele] || g.momAllele.isInstanceOf[JustMutatedAllele])
 
-  /**
-   * @return
-   *   true if there are mutated allels, false if not
-   */
+  /** @return true if there are mutated alleles, otherwise false */
   def isJustMutated: Boolean = mutatedAllelesQuantity > 0
 
   /**

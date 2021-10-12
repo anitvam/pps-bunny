@@ -12,7 +12,8 @@ import it.unibo.pps.bunny.model.world.disturbingFactors.FactorsUtils._
 
 sealed trait FoodFactor extends BasicFactor {
   override val normalDamage: Double = FOOD_FACTOR_NORMAL_DAMAGE
-  /** @return the LOW DAMAGE value for this Food */
+
+  /** @return the low damage value for this FoodFactor */
   val lowDamage: Double = FOOD_FACTOR_LOW_DAMAGE
 
   override def factorKind: FactorKind = FoodFactorKind
@@ -23,26 +24,26 @@ sealed trait FoodFactor extends BasicFactor {
   /**
    * Concat two FoodFactors
    * @param foodFactor
-   *   the FoodFactor to be concat
+   *   the [[FoodFactor]] to be concat
    * @return
-   *   the new instance of the combined FoodFactor
+   *   the new instance of the combined [[FoodFactor]]
    * @throws InvalidFoodFactor
-   *   if the specified FoodFactor could not be concat
+   *   if the specified [[FoodFactor]] could not be concat
    * @throws UnsupportedOperationException
-   *   if the operation is not supported on this FoodFactor
+   *   if the operation is not supported on this [[FoodFactor]]
    */
   def +(foodFactor: FoodFactor): FoodFactor
 
   /**
    * Split two FoodFactors
    * @param foodFactor
-   *   the FoodFactor to be split
+   *   the [[FoodFactor]] to be split
    * @return
-   *   the new instance of the combined FoodFactor
+   *   the new instance of the combined [[FoodFactor]]
    * @throws InvalidFoodFactor
-   *   if the specified FoodFactor could not be split
+   *   if the specified [[FoodFactor]] could not be split
    * @throws UnsupportedOperationException
-   *   if the operation is not supported on this FoodFactor
+   *   if the operation is not supported on this [[FoodFactor]]
    */
   def -(foodFactor: FoodFactor): FoodFactor
 }

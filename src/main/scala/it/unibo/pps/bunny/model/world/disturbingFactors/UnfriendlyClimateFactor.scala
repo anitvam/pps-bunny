@@ -14,20 +14,20 @@ abstract class ClimateFactor() extends BasicFactor {
     if (climate == Summer) summerAction(bunnies) else winterAction(bunnies)
 
   /**
-   * Action performed on a Population of Bunnies on summer
+   * Action performed on a [[Population]] of bunnies on Summer
    * @param bunnies
-   *   the population
+   *   the [[Population]]
    * @return
-   *   the population updated
+   *   the [[Population]] updated
    */
   protected def summerAction(bunnies: Population): Population
 
   /**
-   * Action performed on a Population of Bunnies on winter
+   * Action performed on a [[Population]] of bunnies on Winter
    * @param bunnies
-   *   the population
+   *   the [[Population]]
    * @return
-   *   the population updated
+   *   the [[Population]] updated
    */
   protected def winterAction(bunnies: Population): Population
 

@@ -2,16 +2,16 @@ package it.unibo.pps.bunny.view.scalaFX.components
 
 import it.unibo.pps.bunny.model.bunny.Bunny
 import it.unibo.pps.bunny.model.genome.Alleles
+import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants._
+import it.unibo.pps.bunny.view.scalaFX.ScalaFXView
+import it.unibo.pps.bunny.view.scalaFX.utilities.DirectionUtils._
+import it.unibo.pps.bunny.view.scalaFX.utilities.{ BunnyImageUtils, Direction, ImageType, _ }
 import scalafx.Includes.{ at, double2DurationHelper }
-import scalafx.animation.{ KeyFrame, Timeline }
+import scalafx.animation.Timeline
 import scalafx.scene.effect.DropShadow
 import scalafx.scene.image.{ Image, ImageView }
 import scalafx.scene.paint.Color
 import scalafx.util.Duration
-import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants._
-import it.unibo.pps.bunny.view.scalaFX.ScalaFXView
-import it.unibo.pps.bunny.view.scalaFX.utilities.Direction._
-import it.unibo.pps.bunny.view.scalaFX.utilities.{ BunnyImageUtils, Direction, ImageType }
 
 import scala.language.postfixOps
 import scala.util.Random
@@ -40,7 +40,7 @@ object BunnyView {
       x = newX
       y = newY
       preserveRatio = true
-      scaleX = Direction.scaleXValue(Right)
+      scaleX = scaleXValue(Right)
     }
     BunnyViewImpl(image, bunny, Right, newX, newY)
   }

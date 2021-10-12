@@ -1,9 +1,11 @@
 package it.unibo.pps.bunny.view.scalaFX.utilities
 
-/** Enumeration that describes the direction of bunnies jumps */
-object Direction extends Enumeration {
-  type Direction = Value
-  val Left, Right = Value
+/** Interface that describes the direction of bunnies jumps */
+sealed trait Direction
+case object Left extends Direction
+case object Right extends Direction
+
+object DirectionUtils {
 
   /**
    * Method that returns the appropriate scaleX value to set into ImageView in order to adopt the correct image

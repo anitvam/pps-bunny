@@ -44,11 +44,11 @@ case class WolvesFactor(
   /**
    * Kills the specified bunnies on different percentage
    * @param bunnies
-   *   the population used to find bunnies on which apply NORMAL DAMAGE
+   *   the population used to find bunnies on which apply normal damage
    * @param bunniesWithLowDamage
-   *   the population on which apply LOW DAMAGE
+   *   the population on which apply low damage
    * @param bunniesWithHighDamage
-   *   the population on which apply HIGH DAMAGE
+   *   the population on which apply high damage
    */
   private def killBunnies(
       bunnies: Population,

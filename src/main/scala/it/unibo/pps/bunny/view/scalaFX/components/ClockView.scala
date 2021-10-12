@@ -11,11 +11,11 @@ import scalafx.scene.transform.Rotate
 
 trait ClockView {
 
-  /** angle of the clock hand */
+  /** Angle of the clock hand */
   protected val angle: Double = 360 / NUMBER_OF_PHASE
 
   /**
-   * Initialization of the clock element in the GUI
+   * Initialization of the clock element inside the GUI
    * @return
    *   the clock element as a scalafx Group of Node
    */

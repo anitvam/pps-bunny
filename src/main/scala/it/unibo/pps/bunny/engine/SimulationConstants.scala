@@ -4,10 +4,9 @@ import scala.language.postfixOps
 
 object SimulationConstants {
 
+  /** Constants for the speed of the simulation */
   val DEFAULT_SPEED: Double = 1
-
   val TWO_PER_SPEED: Double = 0.5
-
   val FOUR_PER_SPEED: Double = 0.25
 
   /** Double value associated to the deviation period to show the wolves in the gui */
@@ -30,6 +29,7 @@ object SimulationConstants {
 
   /** Number of generations in a genealogical tree */
   val MAX_GENEALOGICAL_TREE_GENERATIONS: Int = 4
+
   /** Number of phases in the loop of simulation */
   val NUMBER_OF_PHASE = 4
 

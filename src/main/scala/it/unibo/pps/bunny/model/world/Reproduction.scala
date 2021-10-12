@@ -13,6 +13,13 @@ import scala.language.postfixOps
 
 object Reproduction {
 
+  /**
+   * Represents a couple of bunnies.
+   * @param mom
+   *   the mother bunny
+   * @param dad
+   *   the father bunny
+   */
   case class Couple(mom: Bunny, dad: Bunny) {
     def toSeq: Population = Seq(mom, dad)
     if (mom.gender != Female || dad.gender != Male) throw new CoupleGendersException()
@@ -20,9 +27,9 @@ object Reproduction {
 
   /**
    * @param bunnies
-   *   a seq of bunnies
+   *   a [[Population]] of bunnies
    * @return
-   *   a seq of random couples formed from all of the bunnies (or most of them, if they are odd)
+   *   a [[Seq]] of random couples formed from all of the bunnies (or most of them, if they are odd)
    */
   def combineCouples(bunnies: Population): Seq[Couple] = {
     val split = bunnies partition (_.gender == Female)
@@ -31,11 +38,11 @@ object Reproduction {
 
   /**
    * @param couple
-   *   the couple of bunny
+   *   the [[Couple]] of bunnies
    * @param mutations
-   *   list of the mutations
+   *   the [[Mutations]]
    * @return
-   *   the 4 children of the couple, one for each cell of the Punnett's square
+   *   a [[Population]] with the 4 children of the couple, one for each cell of the Punnett's square
    */
   def generateChildren(couple: Couple, mutations: Mutations = List()): Population = {
     var childrenGenotypes = (List fill CHILDREN_FOR_EACH_COUPLE)(PartialGenotype(Map()))
@@ -60,17 +67,17 @@ object Reproduction {
           yield childrenGenotypes(i) + childrenGenes(i)).toList sortBy (_.mutatedAllelesQuantity)
     })
     // Creates the bunnies with the complete genotypes, half of them are going to be Males and half Females
-    val createBunny: (Genotype, Gender) => Bunny = (genotype, gender) =>
-      ChildBunny(CompleteGenotype(genotype.genes), Option(couple.mom), Option(couple.dad), gender)
+    val createBunny: (Genotype, Gender) => Bunny =
+      (genotype, gender) => ChildBunny(CompleteGenotype(genotype.genes), Option(couple.mom), Option(couple.dad), gender)
     val genotypesSplit = childrenGenotypes splitAt CHILDREN_FOR_EACH_COUPLE / 2
     (genotypesSplit._1 map (createBunny(_, Male))) ++ (genotypesSplit._2 map (createBunny(_, Female)))
   }
 
   /**
    * @param bunnies
-   *   a seq of bunnies
+   *   a [[Population]] of bunnies
    * @return
-   *   a seq with the children of the bunnies
+   *   a [[Population]] with the children of the original bunnies
    */
   def generateAllChildren(bunnies: Population, mutations: Mutations = List()): Population = {
     val couples = combineCouples(bunnies)
@@ -81,9 +88,9 @@ object Reproduction {
 
   /**
    * @param bunnies
-   *   bunnies from the last generation
+   *   [[Population]] from the last generation
    * @return
-   *   the new bunnies, adding the children and removing the ones who are dead
+   *   the new [[Population]], adding the children and removing the ones who are dead
    */
   def nextGenerationBunnies(bunnies: Population, mutations: Mutations = List()): Population = {
     bunnies foreach (_.increaseAge())
@@ -91,7 +98,7 @@ object Reproduction {
   }
 
   /**
-   * Generator for the first two bunnies of the simulation.
+   * Generator for the first two bunnies of the simulation
    */
   val initialCoupleGenerator: () => Couple =
     () => Couple(mom = baseBunnyGenerator(Female), dad = baseBunnyGenerator(Male))

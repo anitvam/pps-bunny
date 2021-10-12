@@ -2,11 +2,11 @@ package it.unibo.pps.bunny.model
 
 import it.unibo.pps.bunny.engine.SimulationConstants._
 import it.unibo.pps.bunny.model.bunny.Bunny._
-import it.unibo.pps.bunny.model.bunny.{Bunny, Female, Male}
-import it.unibo.pps.bunny.model.genome.{Gene, Genes, StandardAllele}
+import it.unibo.pps.bunny.model.bunny.{ Bunny, Female, Male }
+import it.unibo.pps.bunny.model.genome.{ Gene, Genes, StandardAllele }
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.Reproduction._
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{ FlatSpec, Matchers }
 
 class TestReproduction extends FlatSpec with Matchers {
 
@@ -128,6 +128,7 @@ class TestReproduction extends FlatSpec with Matchers {
   }
 
   private var genBunnies: Seq[Bunny] = List.fill(bunniesNum)(randomBunnyGenerator())
+
   "Next generation" should "contain the right number of bunnies after many generations and they should all be alive" in {
     val generations = 8
     var num = genBunnies.size
@@ -143,4 +144,5 @@ class TestReproduction extends FlatSpec with Matchers {
       num = genBunnies.size
     }
   }
+
 }

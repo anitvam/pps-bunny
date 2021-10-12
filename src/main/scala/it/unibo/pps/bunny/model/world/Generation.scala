@@ -10,29 +10,19 @@ trait Generation {
   /** @return the current [[Environment]] */
   def environment: Environment
 
-  /** @return the [[Population]] with both alive and dead bunny */
-  def population: Population
-
-  /**
-   * Updates the population
-   * @param bunnies
-   *   the new set of bunnies
-   */
-  def population_=(bunnies: Population): Unit
+  /** The [[Population]] with both alive and dead bunnies */
+  var population: Population
 
   /** @return the alive [[Population]] */
   def livingPopulation: Population = population.filter(_.alive)
 
-  def populationAtTheEnd: Population
+  /** The [[Population]] at the end of the Generation */
+  var populationAtTheEnd: Population
 
-  def populationAtTheEnd_=(population: Population): Unit
+  /** Generation end value: true if the population isEnded, otherwise false */
+  var isEnded: Boolean
 
-  /** @return true if the population isEnded, otherwise false */
-  def isEnded: Boolean
-
-  /** Sets this Generation end value */
-  def isEnded_=(ended: Boolean): Unit
-
+  /** Method that terminates the actual Generation */
   def terminate(): Unit = {
     this.isEnded = true
     populationAtTheEnd = this.population.map(HistoryBunny(_))
@@ -63,16 +53,16 @@ object GenerationsUtils {
   /** The phase of a Generation that is identified by its number */
   trait GenerationPhase {
 
-    /** @return the generation number to which the phase refers */
+    /** @return the generation number on which the phase refers */
     def generationNumber: Int
 
-    /** @return the phase of the generation */
+    /** @return the phase of the Generation */
     def phase: Double
 
     /** @return after how many milliseconds from the start of generation there is the phase instant */
     def instant: Double
 
-    /** @return the name of the generationsPhase */
+    /** @return the name of the GenerationsPhase */
     def name: String
 
   }

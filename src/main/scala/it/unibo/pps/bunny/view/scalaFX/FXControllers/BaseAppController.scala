@@ -4,17 +4,18 @@ import it.unibo.pps.bunny.controller.Controller
 import it.unibo.pps.bunny.engine.SimulationConstants.PhasesConstants._
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.GenerationsUtils.GenerationPhase
-import it.unibo.pps.bunny.util.PimpScala.RichOption
-import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants._
-import it.unibo.pps.bunny.view.scalaFX.components.charts.PopulationChart
-import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart
-import it.unibo.pps.bunny.view.scalaFX.components.{ BunnyView, ClockView }
-import it.unibo.pps.bunny.view.scalaFX.utilities.FxmlUtils.{ loadPanelAndGetController, setFitParent }
 import javafx.fxml.FXML
 import scalafx.scene.control.{ Button, Label }
 import scalafx.scene.layout.{ AnchorPane, Background }
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
+import it.unibo.pps.bunny.util.PimpScala.RichOption
+import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants._
+import it.unibo.pps.bunny.view.scalaFX.components.{ BunnyView, ClockView }
+import it.unibo.pps.bunny.view.scalaFX.components.charts.PopulationChart
+import it.unibo.pps.bunny.view.scalaFX.components.charts.pedigree.PedigreeChart
+import it.unibo.pps.bunny.view.scalaFX.utilities.FxmlUtils.{ loadPanelAndGetController, setFitParent }
+
 import scala.language.{ implicitConversions, postfixOps }
 
 sealed trait BaseAppControllerInterface {
@@ -25,7 +26,11 @@ sealed trait BaseAppControllerInterface {
   /** Method to reset the application interface and start a new simulation */
   def reset(): Unit
 
-  /** Method to get the simulation panel */
+  /**
+   * Method to get the simulation panel
+   * @return
+   *   the [[AnchorPane]] that contains the simulation
+   */
   def simulationPane: AnchorPane
 
   /** Method that shows population chart inside chartsPane */
@@ -37,10 +42,20 @@ sealed trait BaseAppControllerInterface {
   /** Method that shows proportions chart inside chartsPane */
   def showProportionsChart(): Unit
 
-  /** Method that handle the click on a Bunny */
+  /**
+   * Method that handles the click on a [[Bunny]]
+   * @param bunny
+   *   the [[BunnyView]] clicked
+   */
   def handleBunnyClick(bunny: BunnyView): Unit
 
-  /** Method that shows new bunnies into the GUI and the actual generation number */
+  /**
+   * Method that shows new bunnies into the GUI and the actual generation number
+   * @param bunnies
+   *   the actual bunnies [[Population]]
+   * @param generationPhase
+   *   the actual [[GenerationPhase]]
+   */
   def updateView(bunnies: Population, generationPhase: GenerationPhase): Unit
 
   /**
@@ -49,9 +64,6 @@ sealed trait BaseAppControllerInterface {
    *   the current background
    */
   def changeBackgroundEnvironment(background: Background): Unit
-
-  /** Method that requires the increment of simulation speed */
-  def changeSimulationSpeed(): Unit
 }
 
 @sfxml
@@ -199,7 +211,8 @@ class BaseAppController(
 
   override def changeBackgroundEnvironment(background: Background): Unit = simulationPane.background = background
 
-  override def changeSimulationSpeed(): Unit = {
+  /** Handler of simulation speed button */
+  def changeSimulationSpeed(): Unit = {
     Controller.changeSimulationSpeed()
     speedButton.text = speedButton.getText match {
       case "1x" => "2x"
@@ -220,18 +233,18 @@ class BaseAppController(
     speedButton.styleClass -= "restart-button"
   }
 
+  private def updateCharts(bunnies: Population, generationPhase: GenerationPhase): Unit = {
+    proportionsChartController --> { _.updateChart(generationPhase, bunnies) }
+    populationChart --> { _.updateChart(generationPhase, bunnies) }
+    chartSelectionPanelController --> { c => if (c.activeChart == Pedigree) showPedigreeChart() }
+  }
+
   private def manageClimateClick(clickedButton: Button, otherButton: Button): Unit = {
     clickedButton.styleClass -= "button-clickable"
     otherButton.styleClass += "button-clickable"
     clickedButton.disable = true
     otherButton.disable = false
     factorsPanelController --> { _.manageEnvironmentBackgroundChange() }
-  }
-
-  private def updateCharts(bunnies: Population, generationPhase: GenerationPhase): Unit = {
-    proportionsChartController --> { _.updateChart(generationPhase, bunnies) }
-    populationChart --> { _.updateChart(generationPhase, bunnies) }
-    chartSelectionPanelController --> { c => if (c.activeChart == Pedigree) showPedigreeChart() }
   }
 
   private def stillAliveBunnyViews: Seq[BunnyView] = {

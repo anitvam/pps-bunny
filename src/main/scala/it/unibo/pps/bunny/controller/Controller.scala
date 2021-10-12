@@ -8,6 +8,7 @@ import it.unibo.pps.bunny.model.bunny.Mutation.{ dominantMutation, recessiveMuta
 import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.genome.KindsUtils.resetDominance
 import it.unibo.pps.bunny.model.world.Generation.Population
+import it.unibo.pps.bunny.model.world.GenerationsUtils.GenerationPhase
 import it.unibo.pps.bunny.model.world.disturbingFactors.Factor
 import it.unibo.pps.bunny.model.world.{ Summer, Winter }
 import scalafx.application.Platform
@@ -18,7 +19,7 @@ object Controller {
   /** Method that starts the simulation */
   def startSimulation(): Unit = simulationLoop().unsafeRunAsyncAndForget()
 
-  /** Method that change the Simulation Speed */
+  /** Method that changes the Simulation Speed */
   def changeSimulationSpeed(): Unit = SimulationEngine.changeSpeed()
 
   /** Method that sets the Summer Climate inside Environment */
@@ -28,7 +29,7 @@ object Controller {
   def setWinterClimate(): Unit = SimulationHistory.getActualGeneration.environment.climate = Winter
 
   /**
-   * Method that insert a mutation inside the simulation
+   * Method that inserts a [[Mutation]] inside the simulation
    * @param mutation
    *   the Mutation to insert
    */
@@ -36,18 +37,28 @@ object Controller {
     SimulationHistory.getActualGeneration.environment introduceMutation mutation
 
   /**
-   * Method that insert a recessive mutation inside the simulation
+   * Method that insert a recessive mutation inside the simulation for the given [[GeneKind]]
    * @param geneKind
-   *   the gene mutated
+   *   the [[GeneKind]] for which a recessive mutation will be inserted
    */
   def insertRecessiveMutationFor(geneKind: GeneKind): Unit = insertMutation(recessiveMutation(geneKind))
 
   /**
-   * Method that insert a dominant mutation inside the simulation
+   * Method that insert a dominant mutation inside the simulation for the given [[GeneKind]]
    * @param geneKind
-   *   the gene mutated
+   *   the [[GeneKind]] for which a dominant mutation will be inserted
    */
   def insertDominantMutationFor(geneKind: GeneKind): Unit = insertMutation(dominantMutation(geneKind))
+
+  /**
+   * Method that updates the view
+   * @param generationPhase
+   *   the actual generation phase
+   * @param population
+   *   the actual population
+   */
+  def updateView(generationPhase: GenerationPhase, population: Population): Unit =
+    ScalaFXView.updateView(generationPhase, population)
 
   /**
    * Method that shows the end of the simulation on the Application GUI
@@ -65,20 +76,20 @@ object Controller {
     resetEngine()
   }
 
-  /** @return the population of the actual generation, it contains also dead bunnies */
+  /** @return the [[Population]] of the actual generation, it contains also dead bunnies */
   def population: Population = SimulationHistory.getActualGeneration.population
 
   /**
-   * Method to introduce a new [[Factor]] in the environment of the actual generation
+   * Method to introduce a new [[Factor]] inside the actual generation
    * @param factor
    *   the new factor added by the user
    */
   def introduceFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment introduceFactor factor
 
   /**
-   * Method to remove a [[Factor]] from the environment of the actual generation
+   * Method to remove a [[Factor]] from the actual generation
    * @param factor
-   *   the new factor added by the user
+   *   the factor to be removed
    */
   def removeFactor(factor: Factor): Unit = SimulationHistory.getActualGeneration.environment removeFactor factor
 
