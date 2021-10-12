@@ -1,7 +1,8 @@
 package it.unibo.pps.bunny.model
 
 import it.unibo.pps.bunny.model.bunny.Mutation.{ dominantMutation, recessiveMutation }
-import it.unibo.pps.bunny.model.genome.Genes.{ EARS, FUR_COLOR, FUR_LENGTH }
+import it.unibo.pps.bunny.model.genome.Genes.{ FUR_COLOR, FUR_LENGTH }
+import it.unibo.pps.bunny.model.genome.KindsUtils.resetDominance
 import it.unibo.pps.bunny.model.world.Environment.fromPreviousOne
 import it.unibo.pps.bunny.model.world.disturbingFactors.PimpFactors._
 import it.unibo.pps.bunny.model.world.disturbingFactors._
@@ -9,6 +10,7 @@ import it.unibo.pps.bunny.model.world.{ Environment, Summer, Winter }
 import org.scalatest.{ FlatSpec, Matchers }
 
 class TestEnvironment extends FlatSpec with Matchers {
+  resetDominance()
   val env: Environment = Environment(Summer, List())
   val prevEnv: Environment = Environment(Winter, List(WolvesFactor()))
   val newEnv: Environment = fromPreviousOne(prevEnv)
