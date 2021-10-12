@@ -97,32 +97,52 @@ Come libreria di testing è stata utilizzata [ScalaTest](https://www.scalatest.o
 
 ## Requisiti
 
-### Requisiti Business 
+### Requisiti Business
+L'obiettivo del progetto è quello di sviluppare un simulatore per l'evoluzione di una popolazione di conigli. Il simulatore sarà corredato da un'interfaccia grafica che permetterà all'utente di interferire con la naturale evoluzione della specie.
+Il sistema permetterà di modificare il patrimonio genetico dei coniglietti in modo tale da poter individuare, durante la simulazione, quali tratti favoriscono lo sviluppo della specie in diverse tipologie di ambiente.
+Sarà inoltre possibile studiare come le varie caratteristiche genetiche vengono ereditate dalle generazioni future.
+
+L'interfaccia grafica permetterà all'utente di visualizzare ogni singolo coniglietto con l'insieme dei tratti ereditati dai genitori e l'ambiente di simulazione in cui la popolazione si trova, caratterizzato da 3 principali componenti:
+* Il clima: estivo o invernale 
+* La presenza o meno dei predatori
+* La tipologia di risorse alimentari presenti
+
+Il sistema permetterà inoltre all'utente di avere un aggiornamento real-time dell'andamento della simulazione in termini di cardinalità della popolazione e della distribuzione delle diverse caratteristiche genetiche.
+Tali informazioni saranno inoltre rappresentate da opportuni grafici.
+
+### Requisiti Utente
+Di seguito sono riportati i requisiti visti nell'ottica di cosa può fare l'utente con l'applicativo.
+* L'utente potrà visualizzare lo stato attuale della simulazione nel pannello principale dell'interfaccia: quanti conigli sono presenti e quali caratteristiche possiedono, le condizioni ambientali e l'avanzamento temporale delle generazioni;
+* Tale pannello sarà realizzato con un'interfaccia grafica 2D accattivante ed intuitiva.
+* L'utente potrà modificare il clima in cui si riproducono i coniglietti.
+* L'utente potrà scegliere quali mutazioni introdurre, specificando quali di esse sono dominanti e quali recessive.
+* L'utente potrà gestire i vari fattori che condizioneranno l'evoluzione.
+* L'utente potrà visualizzare il patrimonio genetico di qualsiasi coniglietto. Ogni gene è rappresentato da una lettera dell'alfabeto, se maiscuola corrisponde all'allele dominante mentre se minuscola all'allele recessivo. Ogni coniglietto perciò mantiene una coppia di lettere per ogni gene, corrispondenti agli alleli ereditati dai genitori. Ad esempio, se il gene *Orecchie* corrisponde alla lettera <tt>e</tt> e il coniglietto è eterozigote per quel gene, allora sarà rappresentato dalla coppia di lettere <tt>eE</tt>.
+* L'utente potrà decidere di visualizzare vari grafici:
+  * Un grafico a linee che mostrerà la cardinalità della popolazione di conigli con l'avanzare delle generazioni.
+  * L' albero genealogico di uno specifico coniglio a sua scelta, per evidenziare quali caratteristiche sono state ereditate dai loro antenati.
+  * Dei grafici a torta rappresentanti la proporzione fra coniglietti con i due fenotipi disponibili per ogni gene, all'inizio e al termine di ciascuna generazione.
+* L'utente potrà incrementare la velocità della simulazione
+
+### Requisiti Funzionali 
 Di seguito sono riportati i requisiti individuati durante lo studio del dominio e le regole scelte per la sua rappresentazione.
 * Il numero massimo di generazioni è 1000, considerato come numero limite difficilmente raggiungibile senza che i conigli muoiano tutti o superino il loro numero massimo.
 * Il numero massimo di coniglietti è 1000, il raggiungimento di tale numero indicherà la fine della simulazione.
 * Ogni coniglietto vive per quattro generazioni.
 
-* Ogni coniglietto avrà inizialmente solamente geni con alleli di tipo base, per i quali la dominanza non è stata ancora scelta. Nel momento in cui viene introdotta la mutazione verrà anche specificato se essa è dominante o recessiva. Finchè l'utente non compie questa scelta, i coniglietti procederanno nella riproduzione con i caratteri stabiliti inizialmente come base.
+* Ogni coniglietto sarà caratterizzato da un genere, un'età e un patrimonio genetico.
+* Il patrimonio genetico di ogni coniglietto sarà inizialmente costituito solo da geni con alleli di tipo base, per i quali la dominanza non è stata ancora scelta. Nel momento in cui viene introdotta la mutazione verrà anche specificato se essa è dominante o recessiva. Finchè l'utente non compie questa scelta, i coniglietti procederanno nella riproduzione con i caratteri stabiliti inizialmente come base.
 * Ogni generazione di conigli avrà alcuni tratti specifici ereditati dai suoi antenati e altri scaturiti da mutazioni genetiche, grazie a tali caratteristiche essi potranno avere più o meno probabilità di sopravvivenza nello specifico ambiente in cui vengono inseriti. Di seguito sono riportati i geni presi in considerazione nell'applicativo con le possibili mutazioni genetiche e la lettera che vi è associata.
 
 | Gene | Base | Mutazione | Lettera |
 | ----- | ----- | ----- | ----- |
-| Colore della pelliccia | Bianco | Bruno | F |
+| Colore della pelliccia | Bianco | Marrone | F |
 | Lunghezza del pelo| Corto | Lungo | L |
 | Denti | Corti | Lunghi | T |
 | Orecchie | Alte | Basse | E |
 | Salto | Normale | Alto | J |
 
-* Sarà possibile influenzare l'evoluzione della specie attraverso vari fattori disturbanti:
-    * La variazione delle condizioni ambientali, in particolare la presenza di temperature ostili.
-    * La presenza di predatori.
-    * La gestione delle risorse alimentari, che possono essere scarse, difficilmente raggiungibili o difficilmente masticabili.
-* L’ambiente può avere un clima caldo o freddo, che andrà a influenzare l'efficacia dei fattori sopracitati.
-* Ogni fattore disturbante elimina una certa percentuale di coniglietti dall’ambiente, in ogni generazione i fattori agiscono uno alla volta sulla popolazione di coniglietti rimasti rispetto all'azione di un eventuale fattore precedente.
-* Ogni generazione dura 12 secondi, dei quali 3 secondi a cavallo fra le due generazioni sono dedicati alla riproduzione e 9 secondi per l'eliminazione dei coniglieti dovuta alla presenza dei fattori disturbanti (3 secondi per ogni tipologia) nel seguente ordine: predatori, temperature ostili, risorse alimentari.
-
-* Per quanto riguarda la riproduzione, dalla totalità dei coniglietti si formano casualmente delle coppie, ognuna delle quali genera quattro figli in modo da avere tutte le combinazioni degli alleli rappresentate dal [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett). </br> Ad esempio, avendo 21 coniglietti si formano 10 coppie, ognuna delle quali fa 4 figli per un totale di 40 figli, quindi al termine della riproduzione avremo 21 + 40 = 61 coniglietti. </br> Di seguito è riportato un esempio di [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett) per il gene riguardante il colore della pelliccia (lettera <tt>f</tt>), con i figli dati dalla coppia d'esempio <tt>ff + fF</tt>.
+* Per quanto riguarda la riproduzione, dalla totalità dei coniglietti si formano casualmente delle coppie con il vincolo che ciascuna sia composta da un coniglietto maschio e uno femmina. Ogni coppia genera quattro figli in modo da avere tutte le combinazioni degli alleli rappresentate dal [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett). </br> Ad esempio, avendo 21 coniglietti si formano 10 coppie, ognuna delle quali fa 4 figli per un totale di 40 figli, quindi al termine della riproduzione avremo 21 + 40 = 61 coniglietti. </br> Di seguito è riportato un esempio di [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett) per il gene riguardante il colore della pelliccia (lettera <tt>f</tt>), con i figli dati dalla coppia d'esempio <tt>ff + fF</tt>.
 
 | x | F  | f | 
 | --- | --- | --- |
@@ -136,32 +156,30 @@ Di seguito sono riportati i requisiti individuati durante lo studio del dominio 
 | f | ff  | *FF* | 
 | f | ff  | ff | 
 
-* Nel caso in cui siano definite più mutazioni (su vari geni) durante la medesima generazione si cercherà di mantenere un'unica mutazione per coniglio, le mutazioni si andranno ad accumulare sullo stesso figlio solo nel caso in cui non si disponga di abbastanza conigli.
+* Nel caso in cui siano definite più mutazioni (su vari geni) durante la medesima generazione, si cercherà di mantenere un'unica mutazione per coniglio, le mutazioni si andranno ad accumulare sullo stesso figlio solo nel caso in cui non si disponga di abbastanza conigli.
 
-### Requisiti Utente
-Di seguito sono riportati i requisiti visti nell'ottica di cosa può fare l'utente con l'applicativo.
-* L'utente visualizzerà lo stato attuale della simulazione nel pannello principale: quanti conigli sono presenti e quali caratteristiche possiedono, le condizioni ambientali e l'avanzamento temporale delle generazioni;
-* Tale pannello sarà realizzato con un'interfaccia grafica 2D accattivante ed intuitiva.
-* L'utente potrà modificare il clima in cui si riproducono i coniglietti.
-* L'utente potrà scegliere quali mutazioni introdurre, specificando quali di esse sono dominanti e quali recessive.
-* L'utente potrà aggiungere vari fattori che condizioneranno l'evoluzione.
-* L'utente potrà visualizzare il patrimonio genetico di qualsiasi coniglietto. Ogni gene è rappresentato da una lettera dell'alfabeto, se maiscuola corrisponde all'allele dominante mentre se minuscole all'allele recessivo. Ogni coniglietto perciò mantiene una coppia di lettere per ogni gene, corrispondenti agli alleli dei genitori. Ad esempio, se il gene *Orecchie* corrisponde alla lettera <tt>e</tt> e il coniglietto è eterozigote per quel gene, allora sarà rappresentato dalla coppia di lettere <tt>eE</tt>.
-* L'utente potrà decidere di visualizzare vari grafici:
-  * Un grafico a linee che rappresenta la popolazione di conigli con l'avanzare delle generazioni.
-  * L' albero genealogico di uno specifico coniglio a sua scelta, per evidenziare quali caratteristiche sono state ereditate dai loro antenati.
-  * Per ogni generazione, un grafico contenente la proporzione fra coniglietti con i due fenotipi disponibili per ogni gene.
+* Sarà possibile influenzare l'evoluzione della specie attraverso vari fattori disturbanti:
+  * La variazione delle condizioni ambientali, in particolare la presenza di temperature ostili.
+  * La presenza di predatori.
+  * La gestione delle risorse alimentari, che possono essere scarse, difficilmente raggiungibili o difficilmente masticabili.
+* L’ambiente può avere un clima caldo o freddo, che andrà a influenzare l'efficacia dei fattori sopracitati.
+* Ogni fattore disturbante elimina una certa percentuale di coniglietti dall’ambiente, in ogni generazione i fattori agiscono uno alla volta sulla popolazione di coniglietti rimasta rispetto all'azione di un eventuale fattore precedente.
+* Ogni generazione, come impostazione di partenza, ha una durata di 12 secondi, dei quali 3 sono dedicati alla riproduzione e 9 all'eliminazione dei coniglieti dovuta alla presenza dei fattori disturbanti (3 secondi per ogni tipologia). I fattori sono applicati nel seguente ordine: predatori, risorse alimentari, temperature ostili.
+* Sarà possibile incrementare la velocità dello svolgimento della simulazione, andando a diminuire il tempo dedicato a ciascuna fase di ogni generazione.
 
-### Requisiti Funzionali 
-// simulazione in generazioni
-
-### Requisiti non Funzionali 
-// Interfaccia utente responsive (?)
+### Requisiti non Funzionali
+Di seguito sono descritti i requisiti non funzionali dell'applicativo:
+* _Usabilità_: L'interfaccia grafica dovrà essere semplice ed intuitiva così da permettere ad un utente non esperto del dominio di comprendere quali sono le principali operazioni che può eseguire
+* _User Experience_: L'interfaccia grafica sarà implementata in modo da rendere l'esperienza dell'utente con la simulazione ludica
+* _Cross Platform_: Sarà possibile eseguire il sistema sui 3 principali sistemi operativi: Linux, Windows, MacOs.
 
 ### Requisiti di Implementazione 
-* La JVM >= v1.11 è richiesta per la nostra implementazione in ScalaFX
-// Model con ScalaTest, GUI manualmente (?)
-// Cats
-// ScalaFMT?
+Di seguito vengono riportati i requisiti relativi all'implementazione del sistema:
+* Il sistema sarà sviluppato in Scala 2.13.6 e per eventuali feature sarà possibile integrare delle teorie Prolog
+* Il sistema farà riferimento al JDK 11, eventuali librerie esterne utilizzate dovranno supportare almeno tale versione
+* Il testing del sistema sarà effettuato utilizzando ScalaTest, in questo modo sarà minimizzata la presenza di errori e facilitato l'aggiornamento di eventuali funzionalità.
+* Il codice sorgente sarà verificato mediante l'utilizzo del linter ScalaFMT
+
 
 ## Design architetturale
 // Architettura complessiva
