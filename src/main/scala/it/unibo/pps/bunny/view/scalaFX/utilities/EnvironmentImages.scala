@@ -11,59 +11,63 @@ trait ClimateImage {
   val image: Image
 }
 
-case class WinterImage(image: Image = new Image("/img/environment/cold_environment/cold_normal.png"))
+object ClimateImageFactory {
+  def apply(url: String) = new Image(url)
+}
+
+case class WinterImage(image: Image = ClimateImageFactory("/img/environment/cold_environment/cold_normal.png"))
     extends ClimateImage
 
-case class SummerImage(image: Image = new Image("/img/environment/hot_environment/hot_normal.png")) extends ClimateImage
+case class SummerImage(image: Image = ClimateImageFactory("/img/environment/hot_environment/hot_normal.png")) extends ClimateImage
 
-case class WinterImageHighFood(image: Image = new Image("/img/environment/cold_environment/cold_high_food.png"))
+case class WinterImageHighFood(image: Image = ClimateImageFactory("/img/environment/cold_environment/cold_high_food.png"))
     extends ClimateImage
 
-case class SummerImageHighFood(image: Image = new Image("/img/environment/hot_environment/hot_high_food.png"))
+case class SummerImageHighFood(image: Image = ClimateImageFactory("/img/environment/hot_environment/hot_high_food.png"))
     extends ClimateImage
 
 case class WinterImageHighToughFood(
-    image: Image = new Image("/img/environment/cold_environment/cold_high_tough_food.png")
+    image: Image = ClimateImageFactory("/img/environment/cold_environment/cold_high_tough_food.png")
 ) extends ClimateImage
 
 case class SummerImageHighToughFood(
-    image: Image = new Image("/img/environment/hot_environment/hot_high_tough_food.png")
+    image: Image = ClimateImageFactory("/img/environment/hot_environment/hot_high_tough_food.png")
 ) extends ClimateImage
 
 case class WinterImageLimitedHighFood(
-    image: Image = new Image("/img/environment/cold_environment/cold_rare_high_food.png")
+    image: Image = ClimateImageFactory("/img/environment/cold_environment/cold_rare_high_food.png")
 ) extends ClimateImage
 
 case class SummerImageLimitedHighFood(
-    image: Image = new Image("/img/environment/hot_environment/hot_rare_high_food.png")
+    image: Image = ClimateImageFactory("/img/environment/hot_environment/hot_rare_high_food.png")
 ) extends ClimateImage
 
 case class WinterImageLimitedHighToughFood(
-    image: Image = new Image("/img/environment/cold_environment/cold_rare_high_tough_food.png")
+    image: Image = ClimateImageFactory("/img/environment/cold_environment/cold_rare_high_tough_food.png")
 ) extends ClimateImage
 
 case class SummerImageLimitedHighToughFood(
-    image: Image = new Image("/img/environment/hot_environment/hot_rare_high_tough_food.png")
+    image: Image = ClimateImageFactory("/img/environment/hot_environment/hot_rare_high_tough_food.png")
 ) extends ClimateImage
 
-case class WinterImageLimitedFood(image: Image = new Image("/img/environment/cold_environment/cold_rare_normal.png"))
+case class WinterImageLimitedFood(image: Image = ClimateImageFactory("/img/environment/cold_environment/cold_rare_normal.png"))
     extends ClimateImage
 
-case class SummerImageLimitedFood(image: Image = new Image("/img/environment/hot_environment/hot_rare_normal.png"))
+case class SummerImageLimitedFood(image: Image = ClimateImageFactory("/img/environment/hot_environment/hot_rare_normal.png"))
     extends ClimateImage
 
 case class WinterImageLimitedToughFood(
-    image: Image = new Image("/img/environment/cold_environment/cold_rare_tough_food.png")
+    image: Image = ClimateImageFactory("/img/environment/cold_environment/cold_rare_tough_food.png")
 ) extends ClimateImage
 
 case class SummerImageLimitedToughFood(
-    image: Image = new Image("/img/environment/hot_environment/hot_rare_tough_food.png")
+    image: Image = ClimateImageFactory("/img/environment/hot_environment/hot_rare_tough_food.png")
 ) extends ClimateImage
 
-case class WinterImageToughFood(image: Image = new Image("/img/environment/cold_environment/cold_tough_food.png"))
+case class WinterImageToughFood(image: Image = ClimateImageFactory("/img/environment/cold_environment/cold_tough_food.png"))
     extends ClimateImage
 
-case class SummerImageToughFood(image: Image = new Image("/img/environment/hot_environment/hot_tough_food.png"))
+case class SummerImageToughFood(image: Image = ClimateImageFactory("/img/environment/hot_environment/hot_tough_food.png"))
     extends ClimateImage
 
 object EnvironmentImageUtils {

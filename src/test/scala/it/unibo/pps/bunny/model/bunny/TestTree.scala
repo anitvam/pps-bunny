@@ -2,7 +2,7 @@ package it.unibo.pps.bunny.model.bunny
 
 import it.unibo.pps.bunny.engine.SimulationConstants.MAX_GENEALOGICAL_TREE_GENERATIONS
 import it.unibo.pps.bunny.model.bunny.Bunny._
-import it.unibo.pps.bunny.model.bunny.Tree.{treeToNode}
+import it.unibo.pps.bunny.model.bunny.Tree.treeToNode
 import it.unibo.pps.bunny.model.bunny.Tree.{actualGenerations, generateTree}
 import it.unibo.pps.bunny.model.world.Generation.Population
 import it.unibo.pps.bunny.model.world.Reproduction._

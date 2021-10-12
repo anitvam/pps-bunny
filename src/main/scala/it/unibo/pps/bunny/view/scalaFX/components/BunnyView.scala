@@ -17,9 +17,9 @@ import scala.language.postfixOps
 import scala.util.Random
 
 /** Bunny wrapper in order to manage its movement inside of the GUI */
-trait BunnyView extends AnimalView {
+trait BunnyView extends AnimalView with MovementView with DirectionView {
 
-  /** Reference to the model bunny entity */
+  /** Reference to the model [[Bunny]] entity */
   val bunny: Bunny
 
   /** Add clicked effect to this bunny */

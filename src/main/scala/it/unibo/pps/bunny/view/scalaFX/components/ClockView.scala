@@ -1,7 +1,7 @@
 package it.unibo.pps.bunny.view.scalaFX.components
 
+import it.unibo.pps.bunny.engine.SimulationConstants.NUMBER_OF_PHASES
 import it.unibo.pps.bunny.engine.SimulationConstants.PhasesConstants._
-import it.unibo.pps.bunny.engine.SimulationConstants._
 import it.unibo.pps.bunny.model.world.GenerationsUtils.{ GenerationPhase, ReproductionPhase }
 import scalafx.Includes.jfxDoubleProperty2sfx
 import scalafx.scene.Group
@@ -12,12 +12,12 @@ import scalafx.scene.transform.Rotate
 trait ClockView {
 
   /** Angle of the clock hand */
-  protected val angle: Double = 360 / NUMBER_OF_PHASE
+  protected val angle: Double = 360 / NUMBER_OF_PHASES
 
   /**
    * Initialization of the clock element inside the GUI
    * @return
-   *   the clock element as a scalafx Group of Node
+   *   the clock element as a scalafx [[Group]] of Node
    */
   def initialize: Group
 
@@ -41,12 +41,15 @@ object ClockView {
   private case class ClockImpl() extends ClockView {
     private val clockRadius: Double = 35
     private val clock: Circle = Circle(clockRadius, clockRadius, clockRadius)
-    private val spindle = Circle(clockRadius, clockRadius, 5)
+    private val spindle = Circle(clockRadius, clockRadius, radius = 5)
     private val analogueClock: Group = new Group()
     private val ticks = new Group()
     private val clockHand: Line = Line(0, 0, 0, -clockRadius)
     private val labelClock: Label = Label("")
     private var generationPhase: GenerationPhase = ReproductionPhase(1)
+    private val tickStartX, tickEndX = 0
+    private val tickStartY = -23
+    private val tickEndY = -33
 
     override def initialize: Group = {
       clock.id = "clock"
@@ -58,9 +61,8 @@ object ClockView {
       clockHand.translateX = clockRadius
       clockHand.translateY = clockRadius
 
-      for (i <- 0 to NUMBER_OF_PHASE) {
-
-        val tick = Line(0, -23, 0, -33)
+      for (i <- 0 to NUMBER_OF_PHASES) {
+        val tick = Line(tickStartX, tickStartY, tickEndX, tickEndY)
         tick.translateX = clockRadius
         tick.translateY = clockRadius
         tick.styleClass += "tick"

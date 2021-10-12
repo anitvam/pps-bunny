@@ -13,20 +13,18 @@ abstract class AnimalView {
   /** The image of the animal displayed in the GUI */
   val imageView: ImageView
 
-  /** The direction in which the animal moves */
-  protected var direction: Direction
-
-  /** The position on the x-axis in which the animal moves */
-  protected var positionX: Double
-
-  /** The position on the y-axis in which the animal moves */
-  protected var positionY: Double
-
   /** Starts the animation */
   def play(): Unit
 
   /** Stops the animation */
   def stop(): Unit
+
+}
+
+trait DirectionView extends AnimalView {
+
+  /** The direction in which the animal moves */
+  protected var direction: Direction
 
   /**
    * Method that checks the actual direction of the animal and update the orientation of its image according to the
@@ -42,6 +40,16 @@ abstract class AnimalView {
 
     imageView.setScaleX(scaleXValue(direction))
   }
+
+}
+
+trait MovementView extends AnimalView with DirectionView {
+
+  /** The position on the x-axis in which the animal moves */
+  protected var positionX: Double
+
+  /** The position on the y-axis in which the animal moves */
+  protected var positionY: Double
 
   /**
    * Method that moves the animal position according to animal actual [[Direction]]

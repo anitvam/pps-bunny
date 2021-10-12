@@ -64,7 +64,6 @@ object GenerationsUtils {
 
     /** @return the name of the GenerationsPhase */
     def name: String
-
   }
 
   case class ReproductionPhase(

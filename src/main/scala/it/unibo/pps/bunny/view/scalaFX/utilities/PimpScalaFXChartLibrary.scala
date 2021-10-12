@@ -1,12 +1,12 @@
 package it.unibo.pps.bunny.view.scalaFX.utilities
 
 import com.sun.javafx.charts.Legend
+import it.unibo.pps.bunny.util.PimpScala._
+import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.Style.PopulationLegend.CLICKED_ITEM_STYLE
 import javafx.scene.control.Label
 import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
-import scalafx.scene.chart.{ LineChart, PieChart, XYChart }
-import it.unibo.pps.bunny.util.PimpScala._
-import it.unibo.pps.bunny.view.scalaFX.ScalaFXConstants.Style.PopulationLegend.CLICKED_ITEM_STYLE
+import scalafx.scene.chart.{LineChart, PieChart, XYChart}
 
 object PimpScalaFXChartLibrary {
 
@@ -75,7 +75,7 @@ object PimpScalaFXChartLibrary {
 
     /**
      * Filters the sequence and consumes any [[XYChart.Series]] that satisfies the predicate
-     * @param pres
+     * @param pred
      *   predicate on the [[XYChart.Series]]
      * @param consumer
      *   consumer applied to the [[XYChart.Series]]

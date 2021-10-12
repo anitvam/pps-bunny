@@ -31,7 +31,7 @@ object SimulationConstants {
   val MAX_GENEALOGICAL_TREE_GENERATIONS: Int = 4
 
   /** Number of phases in the loop of simulation */
-  val NUMBER_OF_PHASE = 4
+  val NUMBER_OF_PHASES: Int = 4
 
   object PhasesConstants {
 
