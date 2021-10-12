@@ -16,7 +16,7 @@ import scala.language.implicitConversions
 import scala.util.Random
 
 /** Wolf wrapper in order to manage its movement inside of the GUI */
-trait WolfView extends AnimalView {
+trait WolfView extends AnimalView with MovementView with DirectionView {
 
   /** Reference [[FactorsPanelControllerInterface]] to the controller of the factors panel */
   val factorsPanelController: Option[FactorsPanelControllerInterface]
