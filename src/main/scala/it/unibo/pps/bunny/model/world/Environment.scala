@@ -24,7 +24,7 @@ trait Environment {
   /**
    * Introduce the specified [[Factor]] inside the Environment
    * @param factor
-   *   the factor to introduce
+   *   the new factor
    */
   def introduceFactor(factor: Factor): Unit
 
@@ -38,7 +38,7 @@ trait Environment {
   /**
    * Introduce the specified [[Mutation]] inside the Environment
    * @param mutation
-   *   the mutation to insert
+   *   the new mutation
    */
   def introduceMutation(mutation: Mutation): Unit
 }
@@ -71,7 +71,7 @@ object Environment {
 
     override def removeFactor(factor: Factor): Unit = _factors = _factors - factor
 
-    def introduceMutation(mutation: Mutation): Unit = {
+    override def introduceMutation(mutation: Mutation): Unit = {
       KindsUtils.setAlleleDominanceFromMutation(mutation)
       _mutations = mutation :: _mutations
     }
