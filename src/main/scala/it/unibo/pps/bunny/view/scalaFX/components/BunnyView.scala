@@ -19,7 +19,7 @@ import scala.util.Random
 /** Bunny wrapper in order to manage its movement inside of the GUI */
 trait BunnyView extends AnimalView {
 
-  /** Reference to the model bunny entity */
+  /** Reference to the model [[Bunny]] entity */
   val bunny: Bunny
 
   /** Add clicked effect to this bunny */

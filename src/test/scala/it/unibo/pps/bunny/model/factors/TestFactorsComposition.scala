@@ -1,11 +1,8 @@
 package it.unibo.pps.bunny.model.factors
 
 import it.unibo.pps.bunny.model.InvalidFoodFactor
-import scala.reflect.{ classTag, ClassTag }
-import it.unibo.pps.bunny.model.world.disturbingFactors.{
-  FoodFactor, HighFoodFactor, LimitedFoodFactor, LimitedHighFoodFactor, ToughFoodFactor, _
-}
-import org.scalatest.{ FlatSpec, Matchers }
+import it.unibo.pps.bunny.model.world.disturbingFactors._
+import org.scalatest.{FlatSpec, Matchers}
 
 class TestFactorsComposition extends FlatSpec with Matchers {
 

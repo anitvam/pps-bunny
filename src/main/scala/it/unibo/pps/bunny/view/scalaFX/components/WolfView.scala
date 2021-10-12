@@ -18,10 +18,11 @@ import scala.util.Random
 /** Wolf wrapper in order to manage its movement inside of the GUI */
 trait WolfView extends AnimalView {
 
-  /** Reference to the factor panel controller entity */
+  /** Reference [[FactorsPanelControllerInterface]] to the controller of the factors panel */
   val factorsPanelController: Option[FactorsPanelControllerInterface]
   var isShown = false
 
+  /** Method that allows to start [[WolfView]] movement immediately without delay */
   def playInstantly(): Unit
 
 }
@@ -56,10 +57,11 @@ object WolfView {
       var positionY: Double
   ) extends WolfView {
 
-    private val isAnimationDelayed: Long => Boolean =
-      _ < WOLVES_INSTANT_DEVIATION * 1000 * Controller.getCurrentSimulationSpeed
+    private val isAnimationDelayed: Long => Boolean = _ < timePhaseInSeconds(WOLVES_INSTANT_DEVIATION)
 
-    private val areWolvesVisible: Long => Boolean = _ <= WOLVES_PHASE * 1000 * Controller.getCurrentSimulationSpeed
+    private def timePhaseInSeconds(phase: Double): Double = phase * 1000 * Controller.getCurrentSimulationSpeed
+
+    private val areWolvesVisible: Long => Boolean = _ <= timePhaseInSeconds(WOLVES_PHASE)
 
     private val timer: AnimationTimer = AnimationTimer(_ => {
       if (!isAnimationDelayed(lastTime) || !isPlayDelayed) {

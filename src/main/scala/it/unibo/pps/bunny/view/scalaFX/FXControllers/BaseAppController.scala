@@ -232,6 +232,7 @@ class BaseAppController(
   private def resetSpeedButton(): Unit = {
     speedButton.onAction = _ => changeSimulationSpeed()
     speedLabel.text = "Speed: 1x"
+    speedButton.text = ">>"
     speedButton.styleClass -= "restart-button"
   }
 

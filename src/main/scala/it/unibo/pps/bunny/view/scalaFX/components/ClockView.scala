@@ -17,7 +17,7 @@ trait ClockView {
   /**
    * Initialization of the clock element inside the GUI
    * @return
-   *   the clock element as a scalafx Group of Node
+   *   the clock element as a scalafx [[Group]] of Node
    */
   def initialize: Group
 
@@ -41,7 +41,7 @@ object ClockView {
   private case class ClockImpl() extends ClockView {
     private val clockRadius: Double = 35
     private val clock: Circle = Circle(clockRadius, clockRadius, clockRadius)
-    private val spindle = Circle(clockRadius, clockRadius, 5)
+    private val spindle = Circle(clockRadius, clockRadius, radius = 5)
     private val analogueClock: Group = new Group()
     private val ticks = new Group()
     private val clockHand: Line = Line(0, 0, 0, -clockRadius)

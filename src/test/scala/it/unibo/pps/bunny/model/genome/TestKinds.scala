@@ -63,7 +63,7 @@ class TestKinds extends FlatSpec with Matchers {
 
     resetDominance()
     setAlleleDominance(Alleles.BROWN_FUR)
-    isDominanceAssigned(Genes.FUR_COLOR) == true
+    isDominanceAssigned(Genes.FUR_COLOR)
     Genes.values.filter(_ != Genes.FUR_COLOR).foreach(isDominanceAssigned(_) == false)
   }
 
