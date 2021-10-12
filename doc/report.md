@@ -107,7 +107,7 @@ Di seguito sono riportati i requisiti individuati durante lo studio del dominio 
 * Ogni generazione di conigli avrà alcuni tratti specifici ereditati dai suoi antenati e altri scaturiti da mutazioni genetiche, grazie a tali caratteristiche essi potranno avere più o meno probabilità di sopravvivenza nello specifico ambiente in cui vengono inseriti. Di seguito sono riportati i geni presi in considerazione nell'applicativo con le possibili mutazioni genetiche e la lettera che vi è associata.
 
 | Gene | Base | Mutazione | Lettera |
-| :-------: | :-----: | :-----: | :--: |
+| ----- | ----- | ----- | ----- |
 | Colore della pelliccia | Bianco | Bruno | F |
 | Lunghezza del pelo| Corto | Lungo | L |
 | Denti | Corti | Lunghi | T |
