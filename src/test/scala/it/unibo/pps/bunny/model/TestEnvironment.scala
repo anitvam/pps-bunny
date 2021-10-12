@@ -10,7 +10,6 @@ import it.unibo.pps.bunny.model.world.{ Environment, Summer, Winter }
 import org.scalatest.{ FlatSpec, Matchers }
 
 class TestEnvironment extends FlatSpec with Matchers {
-  resetDominance()
   val env: Environment = Environment(Summer, List())
   val prevEnv: Environment = Environment(Winter, List(WolvesFactor()))
   val newEnv: Environment = fromPreviousOne(prevEnv)
@@ -68,12 +67,14 @@ class TestEnvironment extends FlatSpec with Matchers {
   }
 
   it should "be able to introduce a new dominant mutation" in {
+    resetDominance()
     env introduceMutation dominantMutation(FUR_COLOR)
     assert(env.mutations.map(_.geneKind).contains(FUR_COLOR))
     assert(env.mutations.find(_.geneKind == FUR_COLOR).get.isDominant)
   }
 
   it should "be able to introduce a new recessive mutation" in {
+    resetDominance()
     env introduceMutation recessiveMutation(FUR_LENGTH)
     assert(env.mutations.map(_.geneKind).contains(FUR_LENGTH))
     assert(!env.mutations.find(_.geneKind == FUR_LENGTH).get.isDominant)
