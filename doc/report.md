@@ -183,15 +183,69 @@ Di seguito vengono riportati i requisiti relativi all'implementazione del sistem
 
 
 ## Design architetturale
-// Architettura complessiva
-Diagramma UML ad alto livello (MVC)
-// Descrizione di pattern architetturali usati
-MVC
-// Scelte tecnologiche cruciali a fini architetturali
-Cats, Monadi
+A seguito dell'analisi dei requisiti e data la natura del progetto si è scelto di adottare il pattern architetturale MVC (Model-View-Controller), in questo modo è possibile incapsulare le responsabilità dei singoli componenti e avere un'architettura modulare e flessibile.
+
+Inoltre, dato che la simulazione si basa fortemente sulla possibilità dell'utente di interagire con essa, risulta fondamentale l'opportunità offerta dal pattern di poter realizzare interfacce grafiche differenti senza dover modificare il model, ad esempio con Framework più moderni.
+
+### Utilizzo del Pattern MVC
+In figura viene riportato un diagramma ad alto livello di come è stato strutturato il sistema per implementare il pattern archietturale scelto.
+![](images/mvc_architecture.png)
+Nello specifico è possibile osservare come l'applicativo si sviluppi su 4 componenti fondamentali:
+* __Model__: modulo che incapsula tutte le classi relative alle entità e ai concetti che compongono il dominio della simulazione
+* __Engine__: modulo che incapsula il loop su cui si basa la simulazione e le entità che gestiscono la storia della simulazione
+* __View__: modulo che incapsula le entità che gestiscono l'interfaccia grafica del sistema e le classi che permettono di visualizzare i grafici
+* __Controller__: componente che gestisce le interazioni tra Model e View e si occupa di avviare e gestire il loop.
 
 ## Design di dettaglio
-Diagramma UML di più basso livello (Sprint 1 e definitivi con confronto)
+### Model
+#### Bunny e Pedigree
+#### Genoma
+#### Reproduction e Mutation
+#### Generazioni e Ambiente
+#### Fattori
+
+
+### Engine
+#### SimulationEngine
+#### Simulation History
+
+
+### View
+// parlare di scalafx e scala-fxml 
+// parlare del fatto che scalafx è un dsl che parte da scalafx e quindi prevede una implementazione orientata alla object orientation
+#### Controllers
+#### AnimalViews
+#### Grafici
+* __Pedigree Chart__
+* __Population Chart__
+* __Proportions Chart__
+
+### Controller
+### Pattern di progettazione
+Si è cercato di utilizzare il più possibile pattern di progettazione al fine di implementare soluzioni ottimali per problemi di design ricorrenti.
+#### Pimp My Library
+_Pimp My Library_ è sicuramente uno dei pattern più utilizzati all'interno del progetto, questo consente di arricchire classi già definite con dei nuovi metodi realizzati ad-hoc. 
+Si è utilizzato infatti il pattern per estendere gli Option, le Tuple e le collection di Scala ma anche le strutture dati relative ai grafici della libreria JavaFX.
+#### Factory
+Si è utilizzato il pattern _Factory_ in due accezioni, sia quella propria di Scala che prevede l'utilizzo dei companion object per la costruzione delle strutture dati mantenendo quindi private le loro implementazioni, come fatto in `Environment` e `Generation`, sia nella versione più generale adottata per costruire e personalizzare le componenti dei grafici `PopulationChart` e `ProportionsChart`.
+#### Builder
+Il pattern _Builder_ è stato utilizzato nella versione implementata da Scala stesso, cioè mediante l'utilizzo di parametri di default nei costruttori. Un esempio è visibile nella creazione dei `Bunny`.
+#### Strategy
+Il pattern _Strategy_ è nativamente supportato dal linguaggio attraverso la possibilità di utilizzare funzioni higher-order. 
+Un esempio di utilizzo è visibile nel `BaseAppController` per il caricamento dei componenti dei vari pannelli.
+#### Template Method
+Il pattern `Template Method` permette di definire la struttura di un comportamento utilizzando dei metodi astratti che verranno poi implementati dalle specifiche estensioni di tale classe. 
+Questo pattern è stato utilizzato all'interno del package `it.unibo.pss.bunny.world.disturbingFactor` per avere un maggiore riuso di codice e rendere di conseguenza più semplici e comprensibili le specifiche implementazioni.
+Un esempio concreto è visibile anche nella classe astratta `ClimateFactor` nel metodo `applyDamage`, il quale utilizza due metodi astratti: `summerAction` e `winterAction`. Questi metodi vengono poi implementati dai fattori che estendono tale classe, 
+distinguendo il comportamento che verrà adottato dal fattore rispettivamente in presenza del clima estivo o del clima invernale.
+#### Singleton
+Il pattern _Singleton_ è facilmente implementabile in Scala ed è stato fondamentale per implementare, in particolare, il `Controller` e `SimulationHistory`.
+### Organizzazione del codice
+Nella figura riportata si evidenzia l'organizzazione in package dei sorgenti del sistema, ognuno dei quali raggruppa le classi relative a specifiche feature.
+Per facilitare la lettura del diagramma sono stati omessi alcuni package minori, in particolare tutti i package relativi all'implementazione in scalaFX dell'applicazione.
+
+![](images/package_architecture.png)  
+
 
 ## Implementazione
 
