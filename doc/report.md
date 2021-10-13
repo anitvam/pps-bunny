@@ -198,8 +198,10 @@ Nello specifico è possibile osservare come l'applicativo si sviluppi su 4 compo
 
 ## Design di dettaglio
 ### Model
-#### Bunny e Pedigree
+#### Bunny
+// mutabilità di age e alive solo dentro bunny, immutabilità di history bunny
 #### Genoma
+// Completed Genotype VS Partial Genotype
 #### Reproduction e Mutation
 #### Generazioni e Ambiente
 #### Fattori
@@ -217,6 +219,7 @@ Nello specifico è possibile osservare come l'applicativo si sviluppi su 4 compo
 #### AnimalViews
 #### Grafici
 * __Pedigree Chart__
+  // Composizione dinamica
 * __Population Chart__
 * __Proportions Chart__
 
@@ -245,31 +248,6 @@ Nella figura riportata si evidenzia l'organizzazione in package dei sorgenti del
 Per facilitare la lettura del diagramma sono stati omessi alcuni package minori, in particolare tutti i package relativi all'implementazione in scalaFX dell'applicazione.
 
 ![](images/package_architecture.png)  
-
-
-### Model
-#### Bunny e Pedigree
-#### Genoma
-#### Reproduction e Mutation
-#### Generazioni e Ambiente
-#### Fattori
-
-
-### Engine
-#### SimulationEngine
-#### Simulation History
-
-
-### View
-#### Controllers
-#### AnimalViews
-#### Grafici
-##### Pedigree Chart
-##### Population Chart
-##### Proportions Chart
-
-// mutabilità di age e alive solo dentro bunny, immutabilità di history bunny
-// Completed Genotype VS Partial Genotype
 
 ## Implementazione
 
@@ -315,6 +293,8 @@ Gli **impliciti** sono stati usati per la conversione automatica di svariati ele
 Nei trait `Genotype` e `Phenotype` sono state usate le funzioni `values` e `apply` per accedere in maniera più comoda e veloce ai valori delle mappe per cui i trait citati fanno da wrapper. 
 
 Sono state usate delle **`Enumeration`** per esprimere le tipologie di Geni e di Alleli disponibili, l'uso di questo costrutto è comodo per poter ciclare su tutti i Geni o gli Alleli, operazione molto frequente sia nei metodi che nei test del Model. Le enumerazioni contengono delle classi protette con le proprietà a cui è associato ogni elemento dell'enumerazione e gli elementi vengono implicitamente trasformati in un oggetto della classe ogni volta che se ne vuole conoscere una proprietà. 
+
+Si è fatto uso di `Type` per rendere più leggibili alcune istruzioni, ad esempio esplicitando il significato che assume la sequenza di *bunny* nelle varie occasioni, in particolare nell'oggetto `Bunny`.
 
 ### Spadoni 
 
