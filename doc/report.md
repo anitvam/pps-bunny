@@ -320,7 +320,7 @@ Sono state usate delle **`Enumeration`** per esprimere le tipologie di Geni e di
 
 ### Rocco
 
-###Testing
+### Testing
 Per verificare la correttezza dell'implementazione delle principali strutture dati realizzate sono stati sviluppati dei test con il framework `ScalaTest`, in particolare con l'ausilio di `FunSpec` per rendere la loro descrizione più naturale.
 Tali test consentono sia una verifica immediata del comportamento delle entità sviluppate sia una verifica continua per le modifiche apportate successivamente, che se effettuate nel modo sbagliato potrebbero comportare dei bug nel codice precedentemente implementato.
 
