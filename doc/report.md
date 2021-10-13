@@ -161,7 +161,7 @@ Di seguito sono riportati i requisiti individuati durante lo studio del dominio 
 
 * Sarà possibile influenzare l'evoluzione della specie attraverso vari fattori disturbanti:
   * La variazione delle condizioni ambientali, in particolare la presenza di temperature ostili.
-  * La presenza di predatori.
+  * L'aggiunta o la rimozione dall'ambiente dei predatori, in particolare dei lupi.
   * La gestione delle risorse alimentari, che possono essere scarse, difficilmente raggiungibili o difficilmente masticabili.
 * L’ambiente può avere un clima caldo o freddo, che andrà a influenzare l'efficacia dei fattori sopracitati.
 * Ogni fattore disturbante elimina una certa percentuale di coniglietti dall’ambiente, in ogni generazione i fattori agiscono uno alla volta sulla popolazione di coniglietti rimasta rispetto all'azione di un eventuale fattore precedente.
