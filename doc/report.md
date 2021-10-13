@@ -270,12 +270,12 @@ Il **Prolog** è stato usato per compiere operazioni matematiche al fine di otte
 * il limite di dimensione del singolo coniglietto in modo che la rappresentazione grafica abbia un minimo di qualità,
 * il rapporto fra la dimensione del coniglietto ed altri elementi dell'albero come il simbolo dell'addizione, le immagini informative sullo stato del coniglio e la misura del font. 
 
-L'idea della teoria sviluppata è la seguente:
+L'idea della *teoria* sviluppata è la seguente:
 * calcolare la dimensione massima che può avere il coniglietto per l'altezza e la larghezza del pannello,
 * controllare che si trovi nel range delle misure possibili, in caso contrario sostituire la dimensione calcolata con l'upper bound o il lower bound,
 * nel caso in cui la dimensione del coniglietto sia quella minima, ricalcolare il numero di generazioni in modo da diminuirle se la quantità originale non riesce a stare nel pannello usando per il coniglietto a dimensione minima invece di quella necessaria per visualizzare tutte le generazioni richieste.
 
-Per quanto riguarda l'integrazione con il Prolog, è stata creto un *engine* semplificato per risolvere solamente goal con un unico risultato in quanto sufficiente per l'uso che è stato fatto della programmazione logica. L'*engine* restituisce un `Option` con il risulato in caso di successo e un `Option` vuoto in caso di fallimento.
+Per quanto riguarda l'integrazione con il Prolog, è stato creato un *engine* semplificato per risolvere solamente goal con un unico risultato in quanto sufficiente per l'uso che è stato fatto della programmazione logica. L'*engine* restituisce un `Option` con il risultato in caso di successo e un `Option` vuoto in caso di fallimento.
 
 #### Funzioni Higher-Order
 Si è fatto ampio uso di **funzioni higher-order**, quindi del pattern Strategy, in particolare quelle messe a disposizione del linguaggio su costrutti come `List` o `Seq`. A tal fine sono state create funzioni usabili come parametro per evitare ripetizione di codice e la creazione di un metodo apposito, ad esempio nella funzione `generateChildren` dell'oggetto `Reproduction` in cui è utile crearsi una funzione `createBunny` che genera un coniglietto a partire dal genotipo e il genere e viene usata due volte in funzioni higher-order per ottenere i conigli di sesso femminile e maschile. </br> 
