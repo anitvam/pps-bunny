@@ -193,6 +193,8 @@ Nello specifico è possibile osservare come l'applicativo si sviluppi su 4 compo
 
 
 ### View
+// parlare di scalafx e scala-fxml 
+// parlare del fatto che scalafx è un dsl che parte da scalafx e quindi prevede una implementazione orientata alla object orientation
 #### Controllers
 #### AnimalViews
 #### Grafici
@@ -214,11 +216,18 @@ Il pattern _Builder_ è stato utilizzato nella versione implementata da Scala st
 Il pattern _Strategy_ è nativamente supportato dal linguaggio attraverso la possibilità di utilizzare funzioni higher-order. 
 Un esempio di utilizzo è visibile nel `BaseAppController` per il caricamento dei componenti dei vari pannelli.
 #### Template Method
-
+Il pattern `Template Method` permette di definire la struttura di un comportamento utilizzando dei metodi astratti che verranno poi implementati dalle specifiche estensioni di tale classe. 
+Questo pattern è stato utilizzato all'interno del package `it.unibo.pss.bunny.world.disturbingFactor` per avere un maggiore riuso di codice e rendere di conseguenza più semplici e comprensibili le specifiche implementazioni.
+Un esempio concreto è visibile anche nella classe astratta `ClimateFactor` nel metodo `applyDamage`, il quale utilizza due metodi astratti: `summerAction` e `winterAction`. Questi metodi vengono poi implementati dai fattori che estendono tale classe, 
+distinguendo il comportamento che verrà adottato dal fattore rispettivamente in presenza del clima estivo o del clima invernale.
 #### Singleton
 Il pattern _Singleton_ è facilmente implementabile in Scala ed è stato fondamentale per implementare il `Controller` e `SimulationHistory`
-
 ### Organizzazione del codice
+Nella figura riportata si evidenzia l'organizzazione in package dei sorgenti del sistema, ognuno dei quali raggruppa le classi relative a specifiche feature.
+Per facilitare la lettura del diagramma sono stati omessi alcuni package minori, in particolare tutti i package relativi all'implementazione in scalaFX dell'applicazione.
+
+![](images/package_architecture.png)  
+
 
 ## Implementazione
 
