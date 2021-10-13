@@ -176,13 +176,38 @@ In figura viene riportato un diagramma ad alto livello di come è stato struttur
 * __View__: modulo che incapsula le entità che gestiscono l'interfaccia grafica del sistema e le classi che permettono di visualizzare i grafici
 * __Controller__: componente che gestisce le interazioni tra Model e View e si occupa di avviare e gestire il loop.
 
-
-
-// Scelte tecnologiche cruciali a fini architetturali
-Cats, Monadi
-
 ## Design di dettaglio
-Diagramma UML di più basso livello (Sprint 1 e definitivi con confronto)
+
+### Model
+#### Bunny e Pedigree
+#### Genoma
+#### Reproduction e Mutation
+#### Generazioni e Ambiente
+#### Fattori
+
+
+### Engine
+#### SimulationEngine
+#### Simulation History
+
+
+### View
+#### Controllers
+#### AnimalViews
+#### Grafici
+* __Pedigree Chart__
+* __Population Chart__
+* __Proportions Chart__
+
+### Controller
+### Pattern di progettazione
+#### Pimp My Library
+#### Facotry
+#### Builder
+#### Strategy
+#### Singleton
+
+### Organizzazione del codice
 
 ## Implementazione
 
