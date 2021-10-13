@@ -237,18 +237,18 @@ Si è fatto ampio uso di **funzioni higher-order**, quindi del pattern Strategy,
 Inoltre, sebbene spesso siano direttamente, sono state create molte funzioni *generator* (ex. `baseBunnyGenerator`, `randomBunnyGenerator`, `spacingGenerator`), *chooser* (ex. `randomGenderChooser`, `randomAlleleKindChooser`) o *viewer* (ex. `infoViewer`, `allelesViewer`) registrate in delle variabili. Si è preferito usare delle variabili invece che devi metodi statici in modo che queste funzionalità fossero eventualmente usabili come parametro di funzione higher-order.
 
 #### Altro
-É stato fatto ampio uso di **`Object`** per la creazione di metodi statici, in particolare sono presenti sia dei Companion Object (ex. `Bunny`) che degli oggetti non legati ad una specifica classe ma contenenti tutti i metodi per realizzare una funzionalità (ex. `Reproduction`) o per supportare altri oggetti (ex. `KindsUtils`).
-
 Si è usata la **for comprehension** per generare le quattro combinazioni di alleli per i figli a partire da quelli dei genitori e creare i genotipi per i conigllietti aggiungendo man mano tutti i geni.
 
-Per controllare la validità delle azioni compiute sui conigli sono stata utilizzate svariate **eccezioni**, spesso attivate nel momento in cui si inizializza in maniera illecita un elemento dei package `it.unibo.pps.bunny.model.world` e `it.unibo.pps.bunny.model.world`.
+É stato fatto ampio uso di **`Object`** per la fruizione di metodi statici, in particolare sono presenti sia dei Companion Object (ex. `Bunny`) che degli oggetti non legati ad una specifica classe ma contenenti tutti i metodi per realizzare una funzionalità (ex. `Reproduction`) o per supportare altri oggetti (ex. `KindsUtils`).
+
+Per controllare la validità delle azioni compiute sui conigli sono stata utilizzate svariate **eccezioni**, spesso attivate nel momento in cui si inizializza in maniera illecita un elemento dei package `it.unibo.pps.bunny.model.genome` e `it.unibo.pps.bunny.model.bunny`.
 
 Gli **impliciti** sono stati usati per la conversione automatica di svariati elementi al fine di alleggerire il codice ed evitare l'uso ripetuto di `asInstanceOf[A]`.
 
-Nei trait `Genotype` e `Phenotype` sono state usate le funzioni 
+Nei trait `Genotype` e `Phenotype` sono state usate le funzioni `values` e `apply` per accedere in maniera più comoda e veloce ai valori delle mappe per cui i trait citati fanno da wrapper. 
 
+Sono state usate delle **`Enumeration`** per esprimere le tipologie di Geni e di Alleli disponibili, l'uso di questo costrutto è comodo per poter ciclare su tutti i Geni o gli Alleli, operazione molto frequente sia nei metodi che nei test del Model. Le enumerazioni contengono delle classi protette con le proprietà a cui è associato ogni elemento dell'enumerazione e gli elementi vengono implicitamente trasformati in un oggetto della classe ogni volta che se ne vuole conoscere una proprietà. 
 
-enumeration,  implicit defs, uso di values e apply nel geno/feno tipo
 ### Spadoni 
 
 ### Rocco
