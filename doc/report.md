@@ -202,6 +202,20 @@ Diagramma UML di più basso livello (Sprint 1 e definitivi con confronto)
 ### Rocco
 
 ###Testing
-- Coverage
+Per verificare la correttezza dell'implementazione delle principali strutture dati realizzate sono stati sviluppati dei test con il framework `ScalaTest`, in particolare con l'ausilio di `FunSpec` per rendere la loro descrizione più naturale.
+Tali test consentono sia una verifica immediata del comportamento delle entità sviluppate sia una verifica continua per le modifiche apportate successivamente, che se effettuate nel modo sbagliato potrebbero comportare dei bug nel codice precedentemente implementato.
+
+Per la metodologia di implementazione dei test si è lasciata la libera scelta ad ogni componente del gruppo: alcuni hanno preferito l'approccio TDD (Test Driven Development) per porzioni di codice importanti e complesse da sviluppare, mentre altri hanno scelto un approccio più tradizionale, cioè implementare prima una certa funzionalità e verificare in seguito che il comportamento sia quello atteso.  
+Sono stati inoltre introdotti test dopo lo sviluppo di un insieme di funzionalità per verificare che la loro integrazione funzioni correttamente.
+
+Si è cercato di mantenere più coverage possibile, per la parte di model dell'applicazione, riuscendo a raggiungere quasi il 100% nei package più critici e importanti del sistema come `it.unibo.pps.bunny.model.bunny` che contiene l'implementazione dei coniglietti, `it.unibo.pps.bunny.model.genome` che contiene della gestione del patrimonio genetico e `it.unibo.pps.bunny.model.world` che contiene la modellazione dell'ambiente di simulazione e della riproduzione.
+
+È fornito di seguito uno screenshot che evidenzia le informazioni sopra riportate, calcolate con l'ausilio del plugin `sbt-scoverage`:
+
+![](images/scoverage_report_2.png)
+
+L'uso della CI su GitHub unito a tale livello di coverage garantisce che sul branch `develop` non sia mai stato inserito del codice non correttamente funzionante, infatti se i test non passano, la pull request effettuata dallo sviluppatore non viene mergiata.
+
+Per quanto riguarda invece il package `it.unibo.pps.bunny.view` non sono stati implementati test di `ScalaTest` per verificarne il funzionamento, in quanto si è deciso di effettuare prevalentemente del beta-testing, cioè di eseguire direttamente l'applicativo per verificare ad esempio il movimento dei coniglietti e la gestione dei pannelli per l'inserimento delle mutazioni e dei fattori, oltre che per avere una controprova visiva del corretto funzionamento delle classi di model e dell'engine.
 
 ## Retrospettiva
