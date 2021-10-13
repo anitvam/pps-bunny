@@ -174,15 +174,24 @@ Cats, Monadi
 ## Design di dettaglio
 Diagramma UML di più basso livello (Sprint 1 e definitivi con confronto)
 
+// mutabilità di age e alive solo dentro bunny, immutabilità di history bunny
+// Completed Genotype VS Partial Genotype
+
 ## Implementazione
 
 ### Baiardi
 
 ### Lucchi
+
+#### TDD
 Per l'implementazione dei concetti fondamentali del modello, ovvero il coniglietto, il genoma e la riproduzione è stata utilizzata la tecnica del **TDD** al fine di produrre di volta in volta solamente il codice necessario per raggiungere obiettivi minimi, mettendo quindi al centro il *cosa* fare prima del *come*. Successivamente il codice è stato manipolato più volte per aumentare la qualità e grazi ad i test a disposizione si è potuto facilmente controllare che sebbene la forma fosse cambiata il comportamento restasse invariato.
 
-Si è fatto uso di **ricorsività** nella costruzione dell'albero genealogico del coniglietto. Si è tentato di trasformare tale ricorsione in una di tipo *tail* senza successo, si è giunti alla conclusione che avendo due chiamate alla funzione ricorsiva dentro la funzione stessa, una per ogni genitore del coniglietto, non fosse possibile lasciare come ultima istruzione della funzione un'unica chiamata ricorsiva perchè i risultati delle due chiamate devono essere combinati insieme in un unico nodo. Inoltre non è stato possibile usare un accumulatore perchè ognuna delle due chiamate si espande autonomamente e tentando di strutturare questo procedimento ci ritrova a specificare manualmente l'intera composizione dell'intero albero perdendo totalmente l'utilitià della ricorsività.
+#### Ricorsione
+Si è fatto uso di **ricorsione** nella costruzione dell'albero genealogico del coniglietto. </br>
+Si è tentato di trasformare tale ricorsione in una di tipo *tail* senza successo, si è giunti alla conclusione che avendo due chiamate alla funzione ricorsiva dentro la funzione stessa, una per ogni genitore del coniglietto, non fosse possibile lasciare come ultima istruzione della funzione un'unica chiamata ricorsiva perchè i risultati delle due chiamate devono essere combinati insieme in un unico nodo. </br>
+Inoltre non è stato possibile usare un accumulatore perchè ognuna delle due chiamate si espande autonomamente e tentando di strutturare questo procedimento ci ritrova a specificare manualmente l'intera composizione dell'intero albero perdendo totalmente l'utilità della ricorsione.
 
+#### Prolog
 Il **Prolog** è stato usato per compiere operazioni matematiche al fine di ottenere le misure migliori possibili con cui parametrizzare l'albero genealogico in modo che fosse visualizzabile in un pannello. In particolare, data una serie di misure, il gruppo di *clausole* permette di ottenere la dimensione del coniglietto e il numero ottimale di generazioni da rappresentare. Le misure inserite nel *goal* nello specifico sono:
 * le dimensioni del pannello,
 * la quantità di generazioni che si vorrebbero visualizzare per l'albero, 
@@ -192,15 +201,19 @@ Il **Prolog** è stato usato per compiere operazioni matematiche al fine di otte
 L'idea della teoria sviluppata è la seguente:
 * calcolare la dimensione massima che può avere il coniglietto per l'altezza e la larghezza del pannello,
 * controllare che si trovi nel range delle misure possibili, in caso contrario sostituire la dimensione calcolata con l'upper bound o il lower bound,
-* nel caso in cui la dimensione del coniglietto sia quella minima, ricalcolare il numero di generazioni in modo da diminuirle se la quantità originale non riesce a stare nel pannello usando per il coniglietto a dimensione minima invece di quella necessaria per visualizzare tutte le generazioni richieste. </br>
+* nel caso in cui la dimensione del coniglietto sia quella minima, ricalcolare il numero di generazioni in modo da diminuirle se la quantità originale non riesce a stare nel pannello usando per il coniglietto a dimensione minima invece di quella necessaria per visualizzare tutte le generazioni richieste.
+
 Per quanto riguarda l'integrazione con il Prolog, è stata creto un *engine* semplificato per risolvere solamente goal con un unico risultato in quanto sufficiente per l'uso che è stato fatto della programmazione logica. L'*engine* restituisce un `Option` con il risulato in caso di successo e un `Option` vuoto in caso di fallimento.
 
-Si è fatto uso di **funzioni higher-order**, usate quindi come parametro per evitare ripetizione di codice e la creazione di un metodo apposito, ad esempio nella funzione `generateChildren` dell'oggetto `Reproduction` in cui è utile crearsi una funzione `createBunny` che genera un coniglietto a partire dal genotipo e il genere e viene usata due volte per ottenere i conigli di sesso femminile e maschile.
+#### Funzioni Higher-Order
+Si è fatto ampio uso di **funzioni higher-order**, in particolare messe a disposizione del linguaggio su costrutti come `List` o `Seq`. A tal fine sono state create funzioni usabili come parametro per evitare ripetizione di codice e la creazione di un metodo apposito, ad esempio nella funzione `generateChildren` dell'oggetto `Reproduction` in cui è utile crearsi una funzione `createBunny` che genera un coniglietto a partire dal genotipo e il genere e viene usata due volte in funzioni higher-order per ottenere i conigli di sesso femminile e maschile. </br> 
+Inoltre, sebbene siano state quasi sempre usate direttamente, sono state create molte funzioni *generator* (ex. `baseBunnyGenerator`, `randomBunnyGenerator`, `spacingGenerator`), *chooser* (ex. `randomGenderChooser`, `randomAlleleKindChooser`) o *viewer* (ex. `infoViewer`, `allelesViewer`) registrare in delle variabili. In questi casi si è preferito usare delle variabili invece che devi metodi statici in modo che queste funzionalità fossero eventualmente usabili come parametro nelle funzioni nel caso non dovessero essere applicate immediatemente al momento. (STRATEGY)?
 
-É stato fatto ampio uso di `Object` per 
+#### Object
+É stato fatto ampio uso di `Object` per la creazione di metodi statici, in particolare sono presenti sia dei Companion Object (ex. `Bunny`) che degli oggetti non legati ad una specifica classe ma contenenti tutti i metodi per realizzare una funzionalità (ex. `Reproduction`) o per supportare altri oggetti (ex. `KindsUtils`).
 
 
-// For comprension, pimp, enumeration, pattern (strategy)
+// For comprension, pimp, enumeration, pattern (strategy), implicit defs, eccezioni!!, uso di values e apply nel geno/feno tipo
 ### Spadoni 
 
 ### Rocco
