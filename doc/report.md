@@ -178,6 +178,7 @@ Diagramma UML di più basso livello (Sprint 1 e definitivi con confronto)
 
 ### Baiardi
 ### Lucchi
+Impl
 // For comprension, prolog, pimp, enumeration, pattern (higher order, strategy), TDD, ricorsive
 ### Spadoni 
 ### Rocco
