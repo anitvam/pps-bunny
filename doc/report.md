@@ -188,7 +188,7 @@ A seguito dell'analisi dei requisiti e data la natura del progetto si è scelto 
 Inoltre, dato che la simulazione si basa fortemente sulla possibilità dell'utente di interagire con essa, risulta fondamentale l'opportunità offerta dal pattern di poter realizzare interfacce grafiche differenti senza dover modificare il model, ad esempio con Framework più moderni.
 
 ### Utilizzo del Pattern MVC
-In figura viene riportato un diagramma ad alto livello di come è stato strutturato il sistema per implementare il pattern archietturale scelto.
+In figura viene riportato un diagramma ad alto livello di come è stato strutturato il sistema per implementare il pattern architetturale scelto.
 ![](images/mvc_architecture.png)
 Nello specifico è possibile osservare come l'applicativo si sviluppi su 4 componenti fondamentali:
 * __Model__: modulo che incapsula tutte le classi relative alle entità e ai concetti che compongono il dominio della simulazione
