@@ -183,6 +183,20 @@ Diagramma UML di più basso livello (Sprint 1 e definitivi con confronto)
 ### Rocco
 
 ###Testing
-- Coverage
+Sono stati inseriti dei test con il framework `ScalaTest`, con l'ausilio di `FunSpec` per rendere la loro descrizione più naturale, per testare l'implementazione delle strutture principali alla base del sistema simulato.
+Tali test consentono una verifica immediata del comportamento delle entità sviluppate anche a fronte di successive modifiche, che se effettuate nel modo sbagliato potrebbero comportare dei bug nel codice precedentemente implementato.
+
+Per la metodologia di implementazione dei test si è lasciata la libera scelta ad ogni componente del gruppo: alcuni hanno preferito l'approccio TDD (Test Driven Development) per pezzi importanti e complessi da sviluppare, mentre altri hanno scelto un approccio più tradizionale, cioè implementare prima una certa funzionalità e verificare in seguito che il comportamento di tale funzioni come atteso.  
+Sono stati inoltre introdotti test dopo lo sviluppo di più funzionalità per verificare che la loro integrazione funzioni come atteso.
+
+Si è cercato di mantenere più coverage possibile per la parte di model dell'applicazione, riuscendo a raggiungere il 100% nei package più critici e importanti del sistema come `it.unibo.pps.bunny.model.bunny` che contiene l'implementazione del coniglietto e `it.unibo.pps.bunny.model.world` che contiene la modellazione dell'ambiente di simulazione e della riproduzione.
+
+Sono di seguito riportati degli screenshot che evidenziano le informazioni sopra riportate:
+![](images/scoverage_report_1.png)
+![](images/scoverage_report_2.png)
+
+Grazie alla copertura di questi test si garantisce, grazie all'impiego della CI su Github, che sul branch `develop` non siano mai inseriti dei pezzi di codice che non funzionano correttamente, perchè se i test non passano la pull request effettuata dallo sviluppatore non viene mergiata.
+
+Per quanto riguarda invece il package `it.unibo.pps.bunny.view` non sono stati implementati molti test di `ScalaTest` per verificarne il funzionamento, in quanto la sua verifica è avvenuta prevalentemente con del beta-testing.
 
 ## Retrospettiva
