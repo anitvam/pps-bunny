@@ -495,3 +495,92 @@ disturbante del cibo introdotto (view.scalaFX.utilities.EnvironmentImages).
 - Coverage
 
 ## Retrospettiva
+
+Nella sezione finale, la retrospettiva, verranno descritti gli Sprint settimanali con le rispettive relazioni e i
+commenti finali del team. Infine nel file Backlog nella cartella `/process` del repository GitHub sono riportati i
+riassunti degli Sprint.
+
+### Sprint
+
+Sono stati realizzati un totale di 5 Sprint della durata di due settimane ciascuno alla fine dei quali il team si è
+riunito per rilasciare un prototipo funzionante, ad eccezione del primo Sprint, per discutere del lavoro svolto,
+compilando il Product Backlog e il meeting report, e infine organizzando il lavoro futuro.
+
+#### Sprint 1
+
+Durante la prima fase il team si è concentrato sulla fase di analisi, molto corposa e fondamentale per il futuro
+sviluppo del progetto e la suddivisione dei task. Durante il primo meeting si sono prese le seguenti decisioni:
+
+* Definizione delle date degli Sprint
+* Definizione dei Product Backlog Item dello Sprint 1
+* Definizione bacheca Trello Sprint 1
+* Definizione analisi del dominio e possibile divisione dei compiti all'interno del team
+* Studio dominio e design applicazione
+
+#### Sprint 2
+
+Durante il secondo Sprint il team si è riunito per la riunione iniziale nella quale si è discussa sia la fine del primo
+Sprint che lo Sprint Planning del secondo. Durante il secondo meeting si sono prese le seguenti decisioni:
+
+* Chiusura di tutti i task Sprint 1
+* Definizione regole del model di base dei conigli e genetica
+* Definizione prima versione model (UML)
+* Creazione della struttura MVC con loop dell'avanzamento delle generazioni
+* Revisione difficoltà dei task
+* Product Backlog per Sprint 2
+* Sprint Planning 2
+
+#### Sprint 3
+
+Durante il terzo Sprint il team si è come al solito riunito prima di tutto per il meeting settimanale nel quale si è
+discusso sia la fine dello Sprint precedente che la definizione dello Sprint Planning del terzo. Durante il terzo
+meeting si sono prese le seguenti decisioni:
+
+* Chiusura di tutti i task Sprint 2
+* Merge di tutte le Pull Request relative allo Sprint 2
+* Rilascio Release v0.1.0
+* Revisione difficoltà dei task
+* Product Backlog per Sprint 3 e 4
+* Sprint Planning 3 con suddivisione dei task
+* Definizione dei pannelli necessari nella GUI, per le mutazioni, per i grafici e l'albero genealogico
+* Definizione e introduzione dell'aspetto delle mutazioni
+* Definizione iniziale del report
+
+#### Sprint 4
+
+Durante il quarto Sprint il team si riunito prima di tutto per il meeting settimanale nel quale si è discusso sia la
+fine dello Sprint precedente che la definizione dello Sprint Planning del quarto. Durante il quarto meeting si sono
+prese le seguenti decisioni:
+
+* Revisione difficoltà dei task
+* Chiusura di tutti i task Sprint 3
+* Merge di tutte le Pull Request relative allo Sprint 3
+* Rilascio Release v.0.2.0
+* Aggiornamento del Product Backlog per Sprint 4
+* Sprint Planning 4
+* Definizione della realizzazione dei fattori disturbanti
+* Definizione del restart e cambiamento di velocità della simulazione
+* Definizione della realizzazione della grafica dell'orologio
+
+#### Sprint 5
+
+Durante l'ultimo Sprint il team si è riunito per la riunione iniziale nella quale si è discussa sia la fine del
+precedente Sprint che lo Sprint Planning del quinto. Non sono ha portato allo sviluppo di nuove feature ma si è
+focalizzato nel miglioramento di tutto il lavoro svolto con la prospettiva di rendere codice il più leggibile e
+riusabile possibile. Durante il quinto meeting si sono prese le seguenti decisioni:
+
+* Revisione difficoltà dei task
+* Chiusura dei task di Sprint 4 e spostamento del task del clock nello sprint 5
+* Merge di tutte le Pull Request relative allo Sprint 4 tranne quella relativa al Clock e alla correzione del problema
+  di gui relativo al task della visualizzazione dei lupi.
+* Rilascio Release v.0.3.0
+* Aggiornamento del Product Backlog per Sprint 5
+* Sprint Planning 5
+* Revisione finale del codice con refactoring e scaladoc
+* Stesura finale del report
+
+// Commenti finali
+
+// Sviluppi futuri
+
+## Guida Utente
