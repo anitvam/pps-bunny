@@ -183,8 +183,8 @@ Diagramma UML di più basso livello (Sprint 1 e definitivi con confronto)
 ### Rocco
 
 ###Testing
-Sono stati inseriti dei test con il framework `ScalaTest`, con l'ausilio di `FunSpec` per rendere la loro descrizione più naturale, per testare l'implementazione delle strutture principali alla base del sistema simulato.
-Tali test consentono una verifica immediata del comportamento delle entità sviluppate anche a fronte di successive modifiche, che se effettuate nel modo sbagliato potrebbero comportare dei bug nel codice precedentemente implementato.
+Per verificare la correttezza dell'implementazione delle principali strutture dati realizzate sono stati sviluppati dei test con il framework `ScalaTest`, in particolare con l'ausilio di `FunSpec` per rendere la loro descrizione più naturale.
+Tali test consentono sia una verifica immediata del comportamento delle entità sviluppate sia una verifica continua per le modifiche apportate successivamente, che se effettuate nel modo sbagliato potrebbero comportare dei bug nel codice precedentemente implementato.
 
 Per la metodologia di implementazione dei test si è lasciata la libera scelta ad ogni componente del gruppo: alcuni hanno preferito l'approccio TDD (Test Driven Development) per pezzi importanti e complessi da sviluppare, mentre altri hanno scelto un approccio più tradizionale, cioè implementare prima una certa funzionalità e verificare in seguito che il comportamento di tale funzioni come atteso.  
 Sono stati inoltre introdotti test dopo lo sviluppo di più funzionalità per verificare che la loro integrazione funzioni come atteso.
