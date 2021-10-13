@@ -166,8 +166,7 @@ Di seguito sono riportati i requisiti visti nell'ottica di cosa può fare l'uten
 ## Design architetturale
 A seguito dell'analisi dei requisiti e data la natura del progetto si è scelto di adottare il pattern architetturale MVC (Model-View-Controller), in questo modo è possibile incapsulare le responsabilità dei singoli componenti e avere un'architettura modulare e flessibile.
 
-Inoltre, dato che la simulazione si basa fortemente sulla possibilità dell'utente di interagire con essa, l'opportunità offerta dal pattern di poter realizzare 
-interfacce grafiche differenti, ad esempio con Framework più moderni, senza dover modificare la componente del model, risulta fondamentale.
+Inoltre, dato che la simulazione si basa fortemente sulla possibilità dell'utente di interagire con essa, risulta fondamentale l'opportunità offerta dal pattern di poter realizzare interfacce grafiche differenti senza dover modificare il model, ad esempio con Framework più moderni.
 
 ### Utilizzo del Pattern MVC
 In figura viene riportato un diagramma ad alto livello di come è stato strutturato il sistema per implementare il pattern archietturale scelto.
