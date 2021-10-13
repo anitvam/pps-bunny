@@ -164,10 +164,20 @@ Di seguito sono riportati i requisiti visti nell'ottica di cosa può fare l'uten
 // ScalaFMT?
 
 ## Design architetturale
-// Architettura complessiva
-Diagramma UML ad alto livello (MVC)
-// Descrizione di pattern architetturali usati
-MVC
+A seguito dell'analisi dei requisiti e data la natura del progetto si è scelto di adottare il pattern architetturale MVC (Model-View-Controller), in questo modo è possibile incapsulare le responsabilità dei singoli componenti e avere un'architettura modulare e flessibile.
+
+Inoltre, dato che la simulazione si basa fortemente sulla possibilità dell'utente di interagire con essa, l'opportunità offerta dal pattern di poter realizzare 
+interfacce grafiche differenti, ad esempio con Framework più moderni, senza dover modificare la componente del model risulta fondametale.
+
+### Utilizzo del Pattern MVC
+In figura viene riportato un diagramma ad alto livello di come è stato strutturato il sistema per implementare il pattern archietturale scelto. Nello specifico è possibile osservare come l'applicativo si sviluppi su 4 componenti fondamentali:
+* __Model__: modulo che incapsula tutte le classi relative alle entità e ai concetti che compongono il dominio della simulazione
+* __Engine__: modulo che incapsula il loop su cui si basa la simulazione e le entità che gestiscono la storia della simulazione
+* __View__: modulo che incapsula le entità che gestiscono l'interfaccia grafica del sistema e le classi che permettono di visualizzare i grafici
+* __Controller__: componente che gestisce le interazioni tra Model e View e si occupa di avviare e gestire il loop.
+
+
+
 // Scelte tecnologiche cruciali a fini architetturali
 Cats, Monadi
 
