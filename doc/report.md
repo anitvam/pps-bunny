@@ -197,6 +197,6 @@ Sono di seguito uno screenshot che evidenzia le informazioni sopra riportate:
 
 L'uso della CI su GitHub unito a tale livello di coverage garantisce che sul branch `develop` non sia mai stato inserito del codice non correttamente funzionante, infatti se i test non passano, la pull request effettuata dallo sviluppatore non viene mergiata.
 
-Per quanto riguarda invece il package `it.unibo.pps.bunny.view` non sono stati implementati molti test di `ScalaTest` per verificarne il funzionamento, in quanto la sua verifica è avvenuta prevalentemente con del beta-testing.
+Per quanto riguarda invece il package `it.unibo.pps.bunny.view` non sono stati implementati test di `ScalaTest` per verificarne il funzionamento, in quanto la sua verifica è avvenuta prevalentemente con del beta-testing, cioè eseguendo direttamente l'applicativo per verificare ad esempio il movimento dei coniglietti e la gestione dei pannelli per l'inserimento delle mutazioni e dei fattori, oltre che avere una controprova visiva del corretto funzionamento delle classi di model e dell'engine.
 
 ## Retrospettiva
