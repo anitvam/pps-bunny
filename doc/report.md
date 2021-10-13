@@ -261,7 +261,7 @@ Per l'implementazione dei concetti fondamentali del modello, ovvero il conigliet
 #### Ricorsione
 Si è fatto uso di **ricorsione** nella costruzione dell'albero genealogico del coniglietto. </br>
 Si è tentato di trasformare tale ricorsione in una di tipo *tail* senza successo, si è giunti alla conclusione che avendo due chiamate alla funzione ricorsiva dentro la funzione stessa, una per ogni genitore del coniglietto, non fosse possibile lasciare come ultima istruzione della funzione un'unica chiamata ricorsiva perchè i risultati delle due chiamate devono essere combinati insieme in un unico nodo. </br>
-Inoltre non è stato possibile usare un accumulatore perchè ognuna delle due chiamate si espande autonomamente e tentando di strutturare questo procedimento ci ritrova a specificare manualmente l'intera composizione dell'intero albero perdendo totalmente l'utilità della ricorsione.
+Inoltre non è stato possibile usare un accumulatore perchè ognuna delle due chiamate si espande autonomamente e tentando di strutturare questo procedimento ci si ritrova a specificare manualmente l'intera composizione dell'albero perdendo totalmente l'utilità della ricorsione.
 
 #### Prolog
 Il **Prolog** è stato usato per compiere operazioni matematiche al fine di ottenere le misure migliori possibili con cui parametrizzare l'albero genealogico in modo che fosse visualizzabile in un pannello. In particolare, data una serie di misure, il gruppo di *clausole* permette di ottenere la dimensione del coniglietto e il numero ottimale di generazioni da rappresentare. Le misure inserite nel *goal* nello specifico sono:
