@@ -264,7 +264,7 @@ Si è tentato di trasformare tale ricorsione in una di tipo *tail* senza success
 Inoltre non è stato possibile usare un accumulatore perchè ognuna delle due chiamate si espande autonomamente e tentando di strutturare questo procedimento ci si ritrova a specificare manualmente l'intera composizione dell'albero perdendo totalmente l'utilità della ricorsione.
 
 #### Prolog
-Il **Prolog** è stato usato per compiere operazioni matematiche al fine di ottenere le misure migliori possibili con cui parametrizzare l'albero genealogico in modo che fosse visualizzabile in un pannello. In particolare, data una serie di misure, il gruppo di *clausole* permette di ottenere la dimensione del coniglietto e il numero ottimale di generazioni da rappresentare. Le misure inserite nel *goal* nello specifico sono:
+Il **Prolog** è stato usato per compiere operazioni matematiche al fine di ottenere le misure migliori possibili con cui parametrizzare l'albero genealogico in modo che fosse visualizzabile senza uscire dai limiti del suo pannello. In particolare, data una serie di misure, il gruppo di *clausole* permette di ottenere la dimensione del coniglietto e il numero ottimale di generazioni da rappresentare. Le misure inserite nel *goal* nello specifico sono:
 * le dimensioni del pannello,
 * la quantità di generazioni che si vorrebbero visualizzare per l'albero, 
 * il limite di dimensione del singolo coniglietto in modo che la rappresentazione grafica abbia un minimo di qualità,
