@@ -214,7 +214,9 @@ Il pattern _Builder_ è stato utilizzato nella versione implementata da Scala st
 Il pattern _Strategy_ è nativamente supportato dal linguaggio attraverso la possibilità di utilizzare funzioni higher-order. 
 Un esempio di utilizzo è visibile nel `BaseAppController` per il caricamento dei componenti dei vari pannelli.
 #### Template Method
+
 #### Singleton
+Il pattern _Singleton_ è facilmente implementabile in Scala ed è stato fondamentale per implementare il `Controller` e `SimulationHistory`
 
 ### Organizzazione del codice
 
