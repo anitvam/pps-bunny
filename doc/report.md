@@ -292,7 +292,7 @@ Gli **impliciti** sono stati usati per la conversione automatica di svariati ele
 
 Sono state usate delle **`Enumeration`** per esprimere le tipologie di Geni e di Alleli disponibili, l'uso di questo costrutto è comodo per poter ciclare su tutti i Geni o gli Alleli, operazione molto frequente sia nei metodi che nei test del Model. Le enumerazioni contengono delle classi protette con le proprietà a cui è associato ogni elemento dell'enumerazione e gli elementi vengono implicitamente trasformati in un oggetto della classe ogni volta che se ne vuole conoscere una proprietà. 
 
-Si è fatto uso di  **`Type`** per rendere più leggibili alcune istruzioni, ad esempio esplicitando il significato che assume la sequenza di *bunny* nelle varie occasioni, in particolare nell'oggetto `Bunny`.
+Si è fatto uso di `Type` per creare degli **alias** e per rendere più leggibili alcune istruzioni, ad esempio esplicitando il significato che assume la sequenza di *bunny* nelle varie occasioni, in particolare nell'oggetto `Bunny`.
 
 Nei trait `Genotype` e `Phenotype` sono state usate le funzioni `values` e `apply` per accedere in maniera più comoda e veloce ai valori delle mappe per cui i trait citati fanno da wrapper. 
 
