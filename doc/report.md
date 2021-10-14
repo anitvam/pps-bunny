@@ -208,7 +208,7 @@ Nello specifico è possibile osservare come l'applicativo si sviluppi su 4 compo
 
 ### Engine
 Il modulo di `Engine` racchiude tutte le strutture dati necessarie per definire il motore della simulazione e l'aggiornamento della stessa. 
-In questo package, al fine di adottare uno stile di programmazione funzionale puro, si è deciso di utilizzare la libreria Cats Effect per definire il `SimulationEngine` e il `GenerationTimer`, 
+In questo package, al fine di adottare uno stile di programmazione funzionale, si è deciso di utilizzare la libreria Cats Effect per definire il `SimulationEngine` e il `GenerationTimer`, 
 nello specifico si utilizza la Monade IO, un tipo di dato lazy che consente di codificare computazioni, sincrone o asincrone, contenenti side-effect come un valore puro.
 
 #### SimulationEngine e GenerationTimer
