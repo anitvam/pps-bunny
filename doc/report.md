@@ -356,7 +356,7 @@ non ancora completi delle informazioni necessarie.
 Una volta avviata la simulazione si potrà aggiungere una mutazione in qualsiasi momento ma vista la logica della genetica verrà applicata di fatto alla generazione successiva, durante la riproduzione, come indicato durante il gioco dalle scritte informative nel pannello. Lo stesso discorso vale per l'introduzione di un fattore disturbante dal momento che ogni fattore a un suo preciso momento di applicazione, ovvero se si introducono i fattori dopo il loro periodo verrano applicati alla generazione successiva. Mentre i fattori possono essere inseririti e tolti a proprio piacimento, le mutazioni no, infatti per rimanere fedeli alla realtà una volta introdotta una mutazione non si potrà più rimuovere. Infine i grafici verranno popolati con le informazioni realtime e si potranno gestire il clima e
 la velocità di esecuzione.
 
-Il simulatore termina o quando i coniglietti conquistano il mondo oppure perchè si sono estinti, in entrambi i casi
+Il simulatore termina quando i coniglietti conquistano il mondo oppure perchè si sono estinti, in entrambi i casi
 viene mostrata una dialog finale con la descrizione dell'accaduto e si può ripartire da capo cliccando sul tasto restart
 che comparirà al posto di quello dello speed up della velocità.
 
