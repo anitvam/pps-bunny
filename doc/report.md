@@ -1,4 +1,4 @@
-# Bunny Survival
+# PPS-BUNNY
 
 [Baiardi Martina](mailto:martina.baiardi4@studio.unibo.it),
 [Lucchi Asia](mailto:asia.lucchi@studio.unibo.it),
@@ -239,7 +239,6 @@ Nello specifico, `Simulation` permette di incapsulare attraverso delle monadi di
 Di seguito viene preposta una descrizione del design dei tre grafici introdotti nel sistema per avere in real-time delle informazioni strutturate dell'andamento della simulazine.
 ####Pedigree Chart
 ####Population Chart
-
 L'obiettivo di questo grafico è quello di fornire all'utente informazioni real-time circa l'andamento della cardinalità della popolazione durante le fasi delle varie generazioni, evidenziando quindi, quanti `Bunny` sono morti a causa dei vari fattori introdotti nell'ambiente e quanti sono i nuovi nati a seguito della riproduzione.
 Per implementare questo tipo di grafico si è utilizzato come base il `LineChart` offerto dalla libreria ScalaFX trasformandolo però in uno _Step Chart_.
 
@@ -252,8 +251,13 @@ i tipi di dato creati non sono toltalmente esenti da side-effect ma ne limitano 
 Si è inoltre, utilizzato il pattern _Pimp my Library_ al fine di aggiungere metodi alle classi relative ai grafici di ScalaFX, in questo modo si è ad esempio facilitato l'accesso alla legenda dei grafici o il modo con cui aggiungere dati al grafico stesso.
 
 ####Proportions Chart
+L'obiettivo del `Proportions Chart` è quello di riassumere come durante una generazione vari la distribuzione dell'allele base e quello mutato di un determinato gene sulla popolazione, permettendo quindi all'utente di determinare quale delle due caratteristiche associate al gene sopravviva meglio a determinati fattori.
 
-### Controller
+Il grafico si sviluppa su due sotto-grafici a torta, il primo mostra la distribuzione degli alleli all'inizio della generazione mentre il secondo mostra la variazione della distribuzione durante le varie fasi.
+Si è inoltre, inserita la modalità _history_ che consente di navigare tra le varie generazione per poter visualizzare l'andamento della distribuzione del gene durante il corso di tutta la simulazione.
+
+Come per il `PopulationChart` si è fatto uso del pattern _Factory_, per generare i singoli grafici a torta, del pattern _Pimp my Library_ per aggiungere dei metodi alla classe `PieChart` di ScalaFX e del pattern _Adapter_, implementato tramite gli impliciti, per convertire i dati del Model in quelli adatti al grafico.
+
 ### Pattern di progettazione
 Si è cercato di utilizzare il più possibile pattern di progettazione al fine di implementare soluzioni ottimali per problemi di design ricorrenti.
 #### Pimp My Library
@@ -284,11 +288,21 @@ Per facilitare la lettura del diagramma sono stati omessi alcuni package minori,
 
 
 ## Implementazione
-
+Nei seguenti paragrafi ciascun componente descriverà per quali parti è responsabile dell'implementazione.
 ### Baiardi
 ### Lucchi
 // For comprension, prolog, pimp, enumeration, pattern (higher order, strategy), TDD, ricorsive
 ### Spadoni 
+La parte di progetto da me interamente sviluppata è quella contenuta nel package `it.unibo.pps.bunny.engine`. 
+Dopo aver consultato alcuni dei progetti consigliati dal docente, nello specifico _evo-sim_ e _Primer_, ho deciso di volermi cimentare nell'implementare il loop della simulazione utilizzando la libreria Cats Effect, 
+che consente di utilizzare il costrutto delle monadi senza la necessità di implementarle da zero.
+
+Inoltre, ho implementato i grafici PopulationChart e Proportions Chart (implementato in `it.unibo.pps.bunny.view.scalaFX.FXControllers.ProportionsChartController.scala`) descritti precedentemente nella parte di Design di Dettaglio.
+Mi sono anche occupata di definire i concetti del Model di `Generation` e `Environment` insieme a Baiardi e ho partecipato, come tutti i componenti del gruppo, all'implementazione del `BaseAppController`. 
+In particolare, di quest'ultimo ho anche realizzato il refactoring necessario al termine del progetto per migliorarne la qualità del codice.
+Infine, ho aiutato Rocco nello sviluppo di `Mutation` e di `WolvesView`.
+
+Per quanto riguarda la parte di test ho realizzato quelli riguardanti `SimulationHistory`, che trasversalmente testa anche `Generation`, e `Environment`.
 ### Rocco
 
 ###Testing
