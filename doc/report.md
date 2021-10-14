@@ -18,12 +18,15 @@ La proposta si ispira al seguente gioco: https://phet.colorado.edu/en/simulation
 Il dominio dell'applicazione riguarda la genetica, perciò si è pensato di fornire una breve introduzione su tale
 argomento e sulla terminologia utilizzata nella relazione.
 
-La genetica studia studia i geni, l'ereditarietà e la variabilità genetica negli organismi viventi. Nello specifico con il termine genoma ci si riferisce alla totalità dei cromosomi e dei geni contenuti nelle cellule. Il patrimonio genetico della prole dipende dagli attributi trasmessi dai genitori e definisce il loro aspetto estetico <br />
+La genetica studia studia i geni, l'ereditarietà e la variabilità genetica negli organismi viventi. Nello specifico con
+il termine genoma ci si riferisce alla totalità dei cromosomi e dei geni contenuti nelle cellule. Il patrimonio genetico
+della prole dipende dagli attributi trasmessi dai genitori e definisce il loro aspetto estetico <br />
 Ogni gene riguarda una caratteristica, che nell'ambito della riproduzione dei conigli può essere ad esempio il *colore
 della pelliccia* o la *forma delle orecchie*. Ogni gene è formato da due alleli ed ogni allele può comparire in due
 forme diverse, ad esempio per il *colore della pelliccia* possono essere la *pelliccia bianca* o la *pelliccia bruna*.
 Una di queste due forme è dominante, mentre l'altra è recessiva. Ciò significa che se compaiono entrambe per un
-determinato gene a prevalere sarà la versione dominante, la quale quindi, sarà visibile sul figlio e farà parte del suo *fenotipo*
+determinato gene a prevalere sarà la versione dominante, la quale quindi, sarà visibile sul figlio e farà parte del
+suo *fenotipo*
 . <br />
 Ogni figlio eredita dai genitori una coppia di alleli, uno dal padre ed uno dalla madre. Tale coppia sarà una delle
 combinazioni degli alleli dei genitori rappresentata
@@ -83,9 +86,13 @@ Di seguito sono riportati gli obiettivi fissati ed i risultati realmente prodott
 | 2 | Implementare una prima versione dell'applicazione, in cui è possibile osservare visivamente la riproduzione dei coniglietti. Nella pratica, si tratta di: <ul><li>Realizzare il model di base per la rappresentazione del coniglietto ed il suo patrimonio genetico.</li><li>Creare la struttura MVC dell'applicativo ed il loop che permette di avanzare nelle generazioni.</li><li> Visualizzare il pannello principale con i coniglietti che saltano.</li></ul>  | Obiettivo portato a termine. |
 | 3 | Integrare alcune feature alla prima versione prodotta, in particolare: <ul><li>Estendere la GUI con tutti i pannelli necessari, in particolare quelli per la scelta delle mutazioni e del grafico.</li><li>Aggiungere  le mutazioni ai conigli.</li><li>Dare la possibilità di scegliere la dominanza delle mutazioni introdotte.</li><li>Dare la possibilità di cambiare clima.</li><li>Visualizzare l'albero genealogico di un qualsiasi coniglio.</li><li>Visualizzare il grafico con la cardinalità della popolazione.</li><li>Visualizzare il grafico con le proporzioni.</li><li>Iniziare la stesura del report.</li></ul> | Obiettivo portato a termine.   |
 | 4 | Integrare nel prototipo prodotto nel precedente sprint le seguenti funzionalità: <ul><li>Realizzare il model dei fattori disturbanti</li><li>Estendere la GUI con il pannello per la scelta dei fattori disturbanti</li><li>Visualizzazione dei predatori durante la simulazione</li><li>Aggiungere al grafico delle proporzioni la funzionalità _
+
 history_</li><li>Aggiungere il _
-restart_ al termine della simulazione</li> <li>Dare la possibilità di modificare la velocità della simulazione</li><li>Aggiungere alla GUI un orologio per visualizzare il trascorrere del tempo della simulazione</li>| Obiettivo portato parzialmente a termine.|
-| 5 | Rifinire il prototipo realizzato nello sprint precedente ed aggiungere la feature mancante: la realizzazione dell'orologio, per poter rilasciare la release definitiva del sistema. Completare la stesura del report. Questo Sprint ha avuto una durata di 10 giorni. | Obiettivo portato a termine. |
+restart_ al termine della simulazione</li> <li>Dare la possibilità di modificare la velocità della simulazione</li><li>
+Aggiungere alla GUI un orologio per visualizzare il trascorrere del tempo della simulazione</li>| Obiettivo portato
+parzialmente a termine.| | 5 | Rifinire il prototipo realizzato nello sprint precedente ed aggiungere la feature
+mancante: la realizzazione dell'orologio, per poter rilasciare la release definitiva del sistema. Completare la stesura
+del report. Questo Sprint ha avuto una durata di 10 giorni. | Obiettivo portato a termine. |
 
 ### Modalità di revisione dei task
 
@@ -242,7 +249,6 @@ rappresentazione.
 | f | ff  | *FF* | 
 | f | ff  | ff | 
 
-
 * Nel caso in cui siano definite più mutazioni (su vari geni) durante la medesima generazione, si cercherà di mantenere
   un'unica mutazione per coniglio, le mutazioni si andranno ad accumulare sullo stesso figlio solo nel caso in cui non
   si disponga di abbastanza conigli.
@@ -396,7 +402,6 @@ in particolare tutti i package relativi all'implementazione in scalaFX dell'appl
 
 ![](images/package_architecture.png)
 
-
 //Pattern di progettazione //Organizzazione del codice
 
 ## Implementazione
@@ -455,8 +460,7 @@ classi di model e dell'engine.
 
 ### Rocco
 
-Nello sviluppo del progetto inizialmente mi sono occupata della realizzazione grafica della board di gioco in maniera
-parallela a Baiardi attraverso, prima lo studio e in seguito l'utilizzo della
+Inizialmente ho sviluppato, insieme a Baiardi, la board di gioco; in questo ambito è stata utilizzata la
 libreria [ScalaFX](https://www.scalafx.org/) e lo strumento di
 supporto [SceneBuilder](https://www.oracle.com/java/technologies/javase/javafxscenebuilder-info.html) necessario per la
 traduzione di quanto strutturato graficamente in codice `fxml`. In particolare gli elementi di GUI che ho interamente
@@ -492,8 +496,8 @@ tutte le feature e nella preventiva intercettazione di eventuali bug.
 Ho fatto largo uso sia di **Object** che **Companion Object**, per l'incapsulamento e la separazione delle funzionalità
 che ho considerato. Un esempio di Object sono le costanti utili alla determinazione delle misure e movimenti dei lupi
 all'interno della GUI, che sono state incapsulate nell'Object `ScalaFXConstants.Wolf`. Per quanto riguarda i Companion
-Object, come `Mutations`, `ClockView` e `WolfView`, sono stati adottati per l'implementazione di metodi e
-funzionalità statici.
+Object, come `Mutations`, `ClockView` e `WolfView`, sono stati adottati per l'implementazione di metodi e funzionalità
+statici.
 
 #### Trait e Mixins
 
@@ -515,15 +519,14 @@ direzione (`DirectionView`).
 
 #### Function Higher-Order
 
-L'utilizzo del pattern Strategy attraverso le funzioni **Higher-Order** lo ritroviamo nel metodo `startWolfAnimation`
-di `FactorsPanelController` e nella variabile `areWolvesVisible` di `WolfView`. In questo modo la strategia con cui nel
-primo caso si avviano i lupi quando è il loro momento e quella di determinare se i lupi sono visibili può essere
-cambiata senza andare ad intaccare il funzionamento del resto dell'applicazione.
+L'utilizzo del pattern Strategy attraverso la funzione **Higher-Order** lo ritroviamo nel metodo `startWolfAnimation`
+di `FactorsPanelController` in seguito all'aiuto fornito da Baiardi e Spadoni. In questo modo la strategia con cui si
+avviano i lupi quando è il loro momento e quella di determinare se i lupi sono visibili può essere cambiata senza andare
+ad intaccare il funzionamento del resto dell'applicazione.
 
-A posteriori posso inoltre suggerire di dare più importanza alla funzione Higher-Order `playWolf` non definendola più
-direttamente di default nel metodo `startWolfAnimation` ma facendola per esempio diventare una variabile parte
-dell'oggetto WolfView o scegliendola tra una serie di strategie che la classe astratta `AnimalView` potrebbe mettere a
-disposizione.
+A posteriori posso suggerire di dare più importanza a questa funzione `playWolf` non definendola più direttamente di
+default nel metodo `startWolfAnimation` ma facendola per esempio diventare una variabile parte dell'oggetto WolfView o
+scegliendola tra una serie di strategie che la classe astratta `AnimalView` potrebbe mettere a disposizione.
 
 #### Altro
 
