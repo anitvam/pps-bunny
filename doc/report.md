@@ -222,13 +222,12 @@ Di seguito è riportata una immagine che rappresenta la struttura delle classi c
 
 #### Fattori
 L'interfaccia `Factor` astrae qualsiasi implementazione dei fattori ed espone il metodo principale che verrà richiamato dall'esterno: `applyDamage`. 
-Questo metodo prende come parametro le uniche informazioni rilevanti per determinare qual è il danno apportato alla popolazione dei conigli a partire da un qualsiasi fattore, cioè la popolazione su cui attribuire il danno e il clima in cui si trova l'ambiente al momento della sua applicazione.
+Questo metodo prende come parametro le uniche informazioni rilevanti per determinare qual è il danno apportato alla popolazione dei conigli a partire da un qualsiasi fattore: la popolazione su cui applicarlo e il clima in cui si trova l'ambiente in quel momento.
 
 I fattori disturbanti si distinguono in tre categorie: lupi, temperature ostili e alimentari. A loro volta i fattori alimentari possono essere di tre tipi: cibo alto, cibo difficilmente masticabile e cibo scarso. 
-La complessità maggiore di questa implementazione è stata infatti modellare l'ultima categoria, in quanto un fattore alimentare può essere combinato con gli altri formando un fattore alimentare composto da più tipologie.
 
 Durante la fase di progettazione è stata valutata la quantità di danno che ciascun fattore può apportare alla popolazione.
-Vengono di seguito riportate la percentuali di danno riguardanti tutte le combinazioni riguardanti i geni interessati da ciascun fattore, tali valori sono stati opportunamente aggiornati dopo una prima implementazione per ottenere un effetto corretto sulla popolazione.
+Vengono di seguito riportate la percentuali di danno riguardanti tutte le combinazioni di geni interessati da ciascun fattore, tali valori sono stati opportunamente aggiornati dopo una prima implementazione per ottenere un effetto corretto sulla popolazione.
 
 #### Predatori
 | Alleli                             | % Estate |  % Inverno  |
@@ -287,13 +286,26 @@ Vengono di seguito riportate la percentuali di danno riguardanti tutte le combin
 | Salto Alto e Denti Lunghi| -60%     | -60%        |
 
 Dai dati sopra riportati è possibile distinguere tre tipologie di danno, cioè tre percentuali applicate da parte dei fattori, cioè `60%`, `70%` e `80%`. 
-Siccome ogni fattore è influenzato da almeno una percentuale, tale valore viene definito all'interno dell'interfaccia principale `Factor` in modo che tutte le sue implementazioni lo prevedano. 
-Di tale interfaccia è stata poi definita un'implementazione standard all'interno della classe astratta `BasicFactor` che attribuisce alla popolazione il danno `normalDamage` previsto dall'interfaccia senza tener conto del clima in quanto solamente alcuni dei danni sopra citati sono influenzati dal clima attuale.
+Siccome ogni fattore è influenzato da almeno una percentuale, tale valore viene definito all'interno dell'interfaccia principale `Factor`. 
+Di tale interfaccia è stata poi definita un'implementazione standard all'interno della classe astratta `BasicFactor` che attribuisce a tutta la popolazione il danno `normalDamage` previsto dall'interfaccia senza tener conto del clima in quanto solamente alcuni dei danni sopra citati ne sono influenzati.
 
-Per implementare i fattori dei lupi è stato definita un'interfaccia aggiuntiva che permettesse di definire gli ulteriori danni apportati da queste entità.
+I fattori che applicano un danno diverso in base al clima sono le temperature ostili e i lupi, per facilitare la loro implementazione è stata definita una classe astratta `ClimateFactor` che implementa il metodo `applyDamage` esponendo due template method: uno per applicare il danno relativo al clima estivo e l'altro per quello invernale.
 
+Un'altra distinzione evidenziata dai dati sopra riportati riguarda il fatto che i fattori possono essere influenzati dalla presenza di nessuno, uno o al massimo due geni. 
+Siccome l'implementazione in `BasicFactor` non tiene conto di alcun gene, sono state implementati due mixin per i casi rimanenti: `FactorOnSingleGene` e `FactorOnDoubleGene` che aggiungono tali informazioni ai fattori.
+
+
+Per implementare i fattori dei lupi è stata definita un'interfaccia aggiuntiva, chiamata `PredatorFactor`, che comprendesse gli ulteriori danni apportati da queste entità: `lowDamage` e `highDamage`.
+
+`FoodFactor` è un'interfaccia che definisce due importanti operazioni: `+` e `-`. Queste operazioni supportano rispettivamente la concatenazione e la suddivisione di due fattori alimentare, implementate nelle classi astratte:
+- `SingleFoodFactor`, interessa i fattori alimentari composti da una sola tipologia e di conseguenza impedisce l'implementazione del metodo `-`. Per quanto riguarda il metodo `+` espone un template method che consente di far definire alle singole implementazioni quali sono i fattori alimentari con cui la classe può essere combinata.
+- `DoubleFoodFactor`, estende da `SingleFoodFactor` e implementa anche l'operazione `-` sempre attraverso un template method.
+- `TripleFoodFactor`, estende da `DoubleFoodFactor` e blocca l'utilizzo del metodo `+` in quanto un fattore alimentare composto da tutte e tre le topologie non può essere concatenato a nessun altro.
+
+È stato infine definito il mixin `FoodFactorOnSingleGene` che implementa il metodo `applyDamage` in modo da poter coprire sia i casi in cui il danno legato al cibo viene applicato su tutta la popolazione e il caso in cui si ha la presenza di un gene. 
+
+Di seguito è fornita una rappresentazione grafica legata alla modellazione dei fattori.
 ![](images/factors_model.png)
-
 
 ### Engine
 #### SimulationEngine
