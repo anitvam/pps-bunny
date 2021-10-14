@@ -230,7 +230,7 @@ Questo metodo prende come parametro le uniche informazioni rilevanti per determi
 I fattori disturbanti si distinguono in tre categorie: lupi, temperature ostili e alimentari. A loro volta i fattori alimentari possono essere di tre tipi tra loro combinabili: cibo alto, cibo difficilmente masticabile e cibo scarso. 
 
 Durante la fase di progettazione è stata valutata la quantità di danno che ciascun fattore può apportare alla popolazione.
-Vengono di seguito riportate la percentuali di danno riguardanti tutte le combinazioni di geni interessati da ciascun fattore, tali valori sono stati opportunamente aggiornati dopo una prima implementazione per ottenere un effetto corretto sulla popolazione.
+Vengono di seguito riportate la percentuali di danno riguardanti tutte le combinazioni di geni interessati da ciascun fattore, tali valori sono stati opportunamente aggiornati dopo una prima implementazione per ottenere un effetto realistico sulla popolazione.
 
 #### Predatori
 | Alleli                             | % Estate |  % Inverno  |
