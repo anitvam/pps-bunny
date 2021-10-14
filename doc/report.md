@@ -207,7 +207,7 @@ Sebbene chiaramente sia stato ampliato e alcune entità siano state aggiornate p
 ![](images/bunny_model.png)
 Il `Bunny` è un trait costruito con l'obiettivo di massimizzare l'immutabilità, infatti è possibile modificare indirettamente solo l'età e la condizione di vita attraverso due operazioni: l'aumento dell'età che avviene procedendo nelle generazioni e l'uccisione diretta del coniglietto a causa di un fattore. </br> 
 Il `Bunny` può essere istanziato come:
-* `ChildBunny`, un coniglio appena nato, 
+* `ChildBunny`, un coniglio appena nato
 * `FirstBunny`, una particolare tipologia di coniglio appena nato senza genitori, usato all'inizio della simulazione
 * `HistoryBunny`, una sorta di snapshot di un coniglio in un certo istante, che è quindi immutabile.  </br> 
 
