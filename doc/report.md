@@ -366,17 +366,17 @@ Nello specifico, `Simulation` permette di incapsulare attraverso delle monadi di
 #### Controllers
 #### AnimalViews
 
-###Grafici
+### Grafici
 
 Di seguito viene proposta una descrizione del design dei tre grafici introdotti nel sistema per avere in tempo reale delle informazioni strutturate riguardanti l'andamento della simulazione.
 
-####Pedigree Chart
+#### Pedigree Chart
 
 Il grafico ha l'obiettivo di mostrare l'albero genealogico del coniglietto selezionato con la possibilità di visionare fino a tre generazioni di antenati, per ogni elemento dell'albero sono rappresentate varie informazioni. Dato l'obiettivo della simulazione è di particolare importanza la visualizzazione degli alleli di ciascun coniglietto al fine di capire perchè l'animale mostra una certa caratterista e come questa sia stata ereditata dei genitori. </br> Il grafico non è associato a un file fxml nè estende altri grafici della libreria, bensì viene generato da zero usando i costrutti standard di ScalaFX. In particolare è realizzato grazie a:
 * `BunnyPedigreeView`, che si occupa di renderizzare un singolo coniglietto dell'albero genealogico, composto dall'immagine del coniglio con le sue mutazioni, il genere, la visualizzazione sintetica degli alleli tramite lettere e alcune icone che indica se il coniglietto è morto o ha appena subito una mutazione;
 * `PedigreeChart`, che costruisce l'albero genealogico vero e proprio, una riga alla volta, sfruttando il `BinaryTree` generabile per ogni coniglietto e predendendo in considerazione la possibilità di avere conigli con un numero variabile di antenati.
 
-####Population Chart
+#### Population Chart
 L'obiettivo di questo grafico è quello di fornire all'utente informazioni real-time circa l'andamento della cardinalità della popolazione durante le fasi delle varie generazioni, evidenziando quindi quanti `Bunny` sono morti a causa dei vari fattori introdotti nell'ambiente e quanti sono i nuovi nati a seguito della riproduzione.
 Per implementare questo tipo di grafico si è utilizzato come base il `LineChart` offerto dalla libreria ScalaFX trasformandolo però in uno _Step Chart_.
 
@@ -388,7 +388,7 @@ i tipi di dato creati non sono toltalmente esenti da side-effect ma ne evitano i
 
 Si è inoltre utilizzato il pattern _Pimp my Library_ al fine di aggiungere metodi alle classi relative ai grafici di ScalaFX, in questo modo si è ad esempio facilitato l'accesso alla legenda dei grafici o il modo con cui aggiungere dati al grafico stesso.
 
-####Proportions Chart
+#### Proportions Chart
 L'obiettivo del `Proportions Chart` è quello di mostrare come la distribuzione dell'allele base e di quello mutato di ciascun gene sulla popolazione vari durante ogni generazione, permettendo quindi all'utente di determinare quale delle due caratteristiche associate al gene si più utile per sopravvivere ai fattori applicati.
 
 Il grafico si sviluppa su due sotto-grafici a torta, il primo mostra la distribuzione degli alleli all'inizio della generazione mentre il secondo mostra la variazione della distribuzione durante le varie fasi.
