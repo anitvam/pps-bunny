@@ -334,7 +334,7 @@ L'applicazione può essere lanciata in diversi modi:
 * tramite `sbt` usando il comando `sbt run mainClass`
 * importando il progetto ed eseguendolo nell'IDE che si preferisce
 
-Una volta messa in esecuzione apparirà una board di gioco, con l'aspetto riportato in [aggiungere screen applicazione], che rappresenta la GUI
+Una volta che l'applicativo è stato messo in esecuzione apparirà una board di gioco con l'aspetto riportato in [aggiungere screen applicazione] che rappresenta la GUI
 principale della simulazione con la quale si può interagire per avviarla. La board è formata da:
 
 * un pannello, il più grande dei quattro, posto in alto a sinistra nel quale avviene la simulazione vera e propria. Qui
