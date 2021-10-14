@@ -349,7 +349,7 @@ principale della simulazione con la quale si può interagire per avviarla. La bo
 * un pannello per l'aggiunta di fattori disturbanti in basso a destra con una check box per ogni tipo di fattore che si
   può introdurre
 
-Tutto comincia quando si preme il pulsante "START", ma nell'attesa di iniziare si possono comunque selezionare le
+La simulazione parte quando si preme il pulsante "START", ma prima si possono comunque selezionare le
 mutazioni e i fattori che si trovano nei due rispettivi pannelli e si possono ispezionare i grafici anche se ovviamente
 non ancora completi delle informazioni necessarie.
 
