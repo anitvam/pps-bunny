@@ -261,7 +261,7 @@ L'obiettivo del `Proportions Chart` è quello di riassumere come durante una gen
 Il grafico si sviluppa su due sotto-grafici a torta, il primo mostra la distribuzione degli alleli all'inizio della generazione mentre il secondo mostra la variazione della distribuzione durante le varie fasi.
 Si è inoltre inserita la modalità _history_ che consente di navigare tra le varie generazione per poter visualizzare l'andamento della distribuzione del gene durante il corso di tutta la simulazione.
 
-Come per il `PopulationChart` si è fatto uso del pattern _Factory_, per generare i singoli grafici a torta, del pattern _Pimp my Library_ per aggiungere dei metodi alla classe `PieChart` di ScalaFX e del pattern _Adapter_, implementato tramite gli impliciti, per convertire i dati del Model in quelli adatti al grafico.
+Come per il `PopulationChart` si è fatto uso del pattern _Factory_ per generare i singoli grafici a torta, del pattern _Pimp my Library_ per aggiungere dei metodi alla classe `PieChart` di ScalaFX e del pattern _Adapter_, implementato tramite gli impliciti, per convertire i dati del Model in quelli adatti al grafico.
 
 ### Pattern di progettazione
 Si è cercato di utilizzare il più possibile pattern di progettazione al fine di implementare soluzioni ottimali per problemi di design ricorrenti.
