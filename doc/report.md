@@ -200,7 +200,8 @@ Nello specifico è possibile osservare come l'applicativo si sviluppi su 4 compo
 
 Di seguito è riportata la prima rappresentazione del Model, prodotta alla conclusione del primo Sprint dopo lo studio del dominio applicativo.
 ![](images/first_model.png)
-Sebbene chiaramente sia stato ampliato e alcune entità siano state aggiornate per addattarsi agli obiettivi posti avanzando negli Sprint, la struttura fondamentale non ha subito modifiche critiche, perciò si può concludere che l'analisi del dominio che era stata svolta inizialmente riusciva a rappresentarlo abbastanza bene.
+Sebbene chiaramente sia stato ampliato e alcune entità siano state aggiornate per adattarsi agli obiettivi posti avanzando negli Sprint, la struttura fondamentale non ha subito modifiche critiche, perciò si può concludere che l'analisi del dominio che era stata svolta inizialmente  è riuscita a rappresentare in modo corretto i punti chiave del sistema.
+
 
 #### Bunny e Genoma
 ![](images/bunny_model.png)
