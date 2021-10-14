@@ -224,11 +224,11 @@ Il `SimulationEngine` è inoltre caratterizzato da una `simulationSpeed`, tale v
 L'avvio della simulazione viene scatenato dal `Controller` a seguito dello start da parte dell'utente, nello specifico si attiva l'esecuzione asincrona del `simulationLoop`, il quale aggiorna l'interfaccia grafica per gestire la prima riproduzione relativa alla creazione dei `Bunny` capostipiti e in seguito avvia il loop della generazione zero.
 
 #### Simulation History e Simulation
-`SimulationHistory` è il Singleton che consente di gestire la storia della simulazione, modellata come una lista di `Generation`, di interagire con la generazione attualmente in esecuzione e di coordinare il passaggio da una generazione all'altra.
+`SimulationHistory` è il Singleton che consente di gestire la storia della simulazione, modellata come una lista di `Generation`, di interagire con la generazione attualmente in esecuzione e di coordinare il passaggio da una generazione all'altra. 
+Viene in particolar modo utilizzato dal `Controller`, per introdurre lato Model le modifiche dell'ambiente di simulazione attivate dall'utente attraverso l'interfaccia grafica e viene utilizzato indirettamente dal `SimulationEngine` all'interno del `generationLoop`.
 
-`Simulation` è l'object di utility che consente di creare le monadi da utilizzare all'interno del `generationLoop`, si occupa ad esempio, di monadizzare l'azione associata alla fase dei lupi descritta in precedenza. 
+`Simulation` è l'object di utility che consente di creare le monadi da utilizzare all'interno del `generationLoop`, si occupa ad esempio, di monadizzare l'azione associata alla fase dei lupi, descritta in precedenza. 
 Nello specifico, `Simulation` permette di incapsulare attraverso delle monadi di tipo `IO[Unit]` le interazioni che il `SimulationEngine` ha con il `Controller` e `SimulationHistory`.
-
 
 ### View
 // parlare di scalafx e scala-fxml 
@@ -297,12 +297,15 @@ La parte di progetto da me interamente sviluppata è quella contenuta nel packag
 Dopo aver consultato alcuni dei progetti consigliati dal docente, nello specifico _evo-sim_ e _Primer_, ho deciso di volermi cimentare nell'implementare il loop della simulazione utilizzando la libreria Cats Effect, 
 che consente di utilizzare il costrutto delle monadi senza la necessità di implementarle da zero.
 
-Inoltre, ho implementato i grafici PopulationChart e Proportions Chart (implementato in `it.unibo.pps.bunny.view.scalaFX.FXControllers.ProportionsChartController.scala`) descritti precedentemente nella parte di Design di Dettaglio.
+Inoltre, ho implementato i grafici PopulationChart e Proportions Chart (quest'ultimo implementato in `it.unibo.pps.bunny.view.scalaFX.FXControllers.ProportionsChartController.scala`), i quali sono stati descritti precedentemente nella parte di Design di Dettaglio e che mi hanno portato a definire il file `PimpScalaFXChartLibrary` che racchiude tutte le classi implementate per attuare il pattern _Pimp My Library_.
+
 Mi sono anche occupata di definire i concetti del Model di `Generation` e `Environment` insieme a Baiardi e ho partecipato, come tutti i componenti del gruppo, all'implementazione del `BaseAppController`. 
 In particolare, di quest'ultimo ho anche realizzato il refactoring necessario al termine del progetto per migliorarne la qualità del codice.
+
+Come elementi generali implementati ho sviluppato la classe di utility `PimpScala` che contiene l'implementazione di metodi aggiuntivi per alcune strutture dati di base di Scala, anche Lucchi ha aggiunto alcuni metodi.
 Infine, ho aiutato Rocco nello sviluppo di `Mutation` e di `WolvesView`.
 
-Per quanto riguarda la parte di test ho realizzato quelli riguardanti `SimulationHistory`, che trasversalmente testa anche `Generation`, e `Environment`.
+Per quanto riguarda la parte di test ho realizzato quelli riguardanti `SimulationHistory`, che trasversalmente testa anche `Generation`, e `Environment`, come metodologia di testing ho preferito adottare quella tradizionale piuttosto che il TDD.
 ### Rocco
 
 ###Testing
