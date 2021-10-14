@@ -227,7 +227,7 @@ L'avvio della simulazione viene scatenato dal `Controller` a seguito dello start
 `SimulationHistory` è il Singleton che consente di gestire la storia della simulazione, modellata come una lista di `Generation`, di interagire con la generazione attualmente in esecuzione e di coordinare il passaggio da una generazione all'altra.
 
 `Simulation` è l'object di utility che consente di creare le monadi da utilizzare all'interno del `generationLoop`, si occupa ad esempio, di monadizzare l'azione associata alla fase dei lupi descritta in precedenza. 
-Nello specifico, `Simulation` permette di gestire attraverso delle monadi di tipo `IO[Unit]` le interazioni che il `SimulationEngine` ha con il `Controller` e `SimulationHistory`.
+Nello specifico, `Simulation` permette di incapsulare attraverso delle monadi di tipo `IO[Unit]` le interazioni che il `SimulationEngine` ha con il `Controller` e `SimulationHistory`.
 
 
 ### View
@@ -235,10 +235,23 @@ Nello specifico, `Simulation` permette di gestire attraverso delle monadi di tip
 // parlare del fatto che scalafx è un dsl che parte da scalafx e quindi prevede una implementazione orientata alla object orientation
 #### Controllers
 #### AnimalViews
-#### Grafici
-* __Pedigree Chart__
-* __Population Chart__
-* __Proportions Chart__
+###Grafici
+Di seguito viene preposta una descrizione del design dei tre grafici introdotti nel sistema per avere in real-time delle informazioni strutturate dell'andamento della simulazine.
+####Pedigree Chart
+####Population Chart
+
+L'obiettivo di questo grafico è quello di fornire all'utente informazioni real-time circa l'andamento della cardinalità della popolazione durante le fasi delle varie generazioni, evidenziando quindi, quanti `Bunny` sono morti a causa dei vari fattori introdotti nell'ambiente e quanti sono i nuovi nati a seguito della riproduzione.
+Per implementare questo tipo di grafico si è utilizzato come base il `LineChart` offerto dalla libreria ScalaFX trasformandolo però in uno _Step Chart_.
+
+Per creare e personalizzare i vari componenti del grafico: gli assi, le serie di dati, i singoli dati e il grafico stesso, si è fatto uso del pattern Factory, in questo modo ad esempio, i dati (`XYChart.Data`)
+possono essere creati facendo riuso di codice e incapsulando la logica che trasforma il LineChart in uno StepChart.  
+
+L'utilizzo del paradigma funzionale puro per quanto riguarda la gestione dei dati da graficare è stato limitato dal fatto che ScalaFX è in realtà il wrapper scala di JavaFX quindi una libreria OOP, dunque
+i tipi di dato creati non sono toltalmente esenti da side-effect ma ne limitano il più possibile.
+
+Si è inoltre, utilizzato il pattern _Pimp my Library_ al fine di aggiungere metodi alle classi relative ai grafici di ScalaFX, in questo modo si è ad esempio facilitato l'accesso alla legenda dei grafici o il modo con cui aggiungere dati al grafico stesso.
+
+####Proportions Chart
 
 ### Controller
 ### Pattern di progettazione
@@ -253,6 +266,9 @@ Il pattern _Builder_ è stato utilizzato nella versione implementata da Scala st
 #### Strategy
 Il pattern _Strategy_ è nativamente supportato dal linguaggio attraverso la possibilità di utilizzare funzioni higher-order. 
 Un esempio di utilizzo è visibile nel `BaseAppController` per il caricamento dei componenti dei vari pannelli.
+#### Adapter
+Anche il pattern _Adapter_ è fornito nativamente dal linguaggio grazie alla possibilità di definire dei metodi impliciti per la conversione dei tipi di dato. 
+Un esempio di uso di tale pattern è visibile nel componente grafico `PopulationChart` in cui si usano per trasformare le tuple Scala in tipi di dati propri del sistema come il `ChartPoint`
 #### Template Method
 Il pattern `Template Method` permette di definire la struttura di un comportamento utilizzando dei metodi astratti che verranno poi implementati dalle specifiche estensioni di tale classe. 
 Questo pattern è stato utilizzato all'interno del package `it.unibo.pss.bunny.world.disturbingFactor` per avere un maggiore riuso di codice e rendere di conseguenza più semplici e comprensibili le specifiche implementazioni.
