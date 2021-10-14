@@ -24,7 +24,7 @@ Ogni gene riguarda una caratteristica, che nell'ambito della riproduzione dei co
 della pelliccia* o la *forma delle orecchie*. Ogni gene è formato da due alleli ed ogni allele può comparire in due
 forme diverse, ad esempio per il *colore della pelliccia* possono essere la *pelliccia bianca* o la *pelliccia bruna*.
 Una di queste due forme è dominante, mentre l'altra è recessiva. Ciò significa che se compaiono entrambe per un
-determinato a prevalere è la versione dominante e quindi sarà visibile sul figlio, ovvero farà parte del suo *fenotipo*
+determinato gene a prevalere sarà la versione dominante, la quale quindi, sarà visibile sul figlio e farà parte del suo *fenotipo*
 . <br />
 Ogni figlio eredita dai genitori una coppia di alleli, uno dal padre ed uno dalla madre. Tale coppia sarà una delle
 combinazioni degli alleli dei genitori rappresentata
