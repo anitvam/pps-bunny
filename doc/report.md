@@ -771,8 +771,8 @@ classi di model e dell'engine.
 
 ## Retrospettiva
 
-Nella sezione finale, la retrospettiva, verranno descritti gli Sprint settimanali con le rispettive relazioni e i
-commenti finali del team. Infine nel file Backlog nella cartella `/process` del repository GitHub sono riportati i
+In questa sezione saranno descritti gli Sprint settimanali con le rispettive relazioni e i
+commenti finali del team. Inoltre nel file Backlog della cartella `/process` del repository GitHub sono riportati i
 riassunti degli Sprint.
 
 ### Sprint
