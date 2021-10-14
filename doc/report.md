@@ -427,6 +427,21 @@ Per facilitare la lettura del diagramma sono stati omessi alcuni package minori,
 ## Implementazione
 Nei seguenti paragrafi ciascun componente descriverà per quali parti è responsabile dell'implementazione.
 ### Baiardi
+Inizialmente mi sono dedicata all'implementazione dell'interfaccia grafica, in particolare ho definito:
+* la struttura base dell'applicazione
+* il movimento dei coniglietti nell'ambiente di simulazione 
+* il pannello di scelta delle mutazioni da introdurre
+* i pannelli visualizzati al termine della simulazione
+
+Ho disegnato tutti i coniglietti con le possibili combinazioni di mutazioni in collaborazione con Spadoni e successivamente ho definito un singleton contenente la `Enumeration BunnyImage` con tutte le `Image` relative ai coniglietti, questa enumeration è particolarmente importante in quanto, grazie al metodo `bunnyToImage`, riesce a convertire l'istanza del model di un coniglietto nell'equivalente immagine ad esso associata. 
+
+Successivamente mi sono dedicata all'implementazione di `Environment` insieme a Spadoni, della cui parte di clima ho altrettanto implementato la visualizzazione grafica. 
+Per questa parte sono stati molto utili gli `impliciti` di scala, che mi hanno permesso di convertire in modo trasparente le immagini di background legate al clima e viceversa.
+
+Mi sono infine dedicata alla complessa definizione dei fattori disturbanti nel package `it.unibo.pps.bunny.model.world.disturbingFactor`, introducendo più volte il pattern template method per semplificare la loro stesura.
+Ho definito dei mixin per l'implementazione dei fattori, come descritto nella sezione di design di dettaglio, ciò è stato fatto per aggiungere comportamenti specifici rispetto all'implementazione base dei fattori.
+
+Per la parte di testing ho preferito un approccio tradizionale rispetto al TDD, effettuando i test dopo una prima implementazione per verificare che le classi funzionino come atteso.
 
 ### Lucchi
 
