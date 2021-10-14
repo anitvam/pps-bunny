@@ -221,7 +221,78 @@ Di seguito è riportata una immagine che rappresenta la struttura delle classi c
 ![](images/environment_model.png)
 
 #### Fattori
+L'interfaccia `Factor` astrae qualsiasi implementazione dei fattori ed espone il metodo principale che verrà richiamato dall'esterno: `applyDamage`. 
+Questo metodo prende come parametro le uniche informazioni rilevanti per determinare qual è il danno apportato alla popolazione dei conigli a partire da un qualsiasi fattore, cioè la popolazione su cui attribuire il danno e il clima in cui si trova l'ambiente al momento della sua applicazione.
 
+I fattori disturbanti si distinguono in tre categorie: lupi, temperature ostili e alimentari. A loro volta i fattori alimentari possono essere di tre tipi: cibo alto, cibo difficilmente masticabile e cibo scarso. 
+La complessità maggiore di questa implementazione è stata infatti modellare l'ultima categoria, in quanto un fattore alimentare può essere combinato con gli altri formando un fattore alimentare composto da più tipologie.
+
+Durante la fase di progettazione è stata valutata la quantità di danno che ciascun fattore può apportare alla popolazione.
+Vengono di seguito riportate la percentuali di danno riguardanti tutte le combinazioni riguardanti i geni interessati da ciascun fattore, tali valori sono stati opportunamente aggiornati dopo una prima implementazione per ottenere un effetto corretto sulla popolazione.
+
+#### Predatori
+| Alleli                             | % Estate |  % Inverno  |
+| ---------------------------------- | :------: | :---------: |
+| Pelliccia Bianca e Orecchie Alte   | -70%     | -60%        |
+| Pelliccia Bianca e Orecchie Basse  | -80%     | -70%        |
+| Pelliccia Marrone e Orecchie Alte  | -60%     | -70%        |
+| Pelliccia Marrone e Orecchie Basse | -70%     | -80%        |
+
+#### Temperature ostili
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| Pelo Lungo               | -60%     | -           |
+| Pelo Corto               | -        | -60%        |
+
+#### Cibo difficilmente masticabile
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| Denti Corti              | -80%     | -80%        |
+| Denti Lunghi             | -        | -           |
+
+#### Cibo in alto
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| Salto Normale            | -80%     | -80%        |
+| Salto Alto               | -        | -           |
+
+#### Cibo scarso
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| qualsiasi                | -80%     | -80%        |
+
+#### Cibo difficilmente masticabile e cibo scarso
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| Denti Corti              | -80%     | -80%        |
+| Denti Lunghi             | -60%     | -60%        |
+
+#### Cibo difficilmente masticabile e cibo in alto
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| Salto Normale            | -80%     | -80%        |
+| Salto Alto e Denti Corti | -60%     | -60%        |
+
+#### Cibo in alto e cibo scarso
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| Salto Normale            | -80%     | -80%        |
+| Salto Alto               | -60%     | -60%        |
+
+#### Cibo in alto, cibo scarso e cibo difficilmente masticabile
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| Salto Normale            | -80%     | -80%        |
+| Salto Alto e Denti Corti | -80%     | -80%        |
+| Salto Alto e Denti Lunghi| -60%     | -60%        |
+
+Dai dati sopra riportati è possibile distinguere tre tipologie di danno, cioè tre percentuali applicate da parte dei fattori, cioè `60%`, `70%` e `80%`. 
+Siccome ogni fattore è influenzato da almeno una percentuale, tale valore viene definito all'interno dell'interfaccia principale `Factor` in modo che tutte le sue implementazioni lo prevedano. 
+Di tale interfaccia è stata poi definita un'implementazione standard all'interno della classe astratta `BasicFactor` che attribuisce alla popolazione il danno `normalDamage` previsto dall'interfaccia senza tener conto del clima in quanto solamente alcuni dei danni sopra citati sono influenzati dal clima attuale.
+
+Per implementare i fattori dei lupi è stato definita un'interfaccia aggiuntiva che permettesse di definire gli ulteriori danni apportati da queste entità.
+
+![](images/factors_model.png)
 
 
 ### Engine
