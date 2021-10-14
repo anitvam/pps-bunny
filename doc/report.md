@@ -221,7 +221,7 @@ Le tipologie di geni e di alleli disponibili sono indicate nelle enumerazioni `G
 Per ogni `GeneKind` sono specificate alcune proprietà, in particolare le due tipologie di alleli a cui è legato, una è quella base mentra l'altra quella mutata. Anche ogni `AlleleKind` sono specificate alcune proprietà, in particolare la dominanza, che è un `Option` perchè inizialmente non è definita e può essere modificata solo tramite appositi metodi.
 
 Il `Bunny` ha un Companion Object in cui sono contenute delle funzioni che ne permettono la generazione e dei metodi per selezionare gruppi di conigli. 
-Il `Gender` è stato modellato tramite due `case object`, elementi statici senza proprietà particolari che servono solo per definire se il sesso sia maschile o femminile.
+Il `Gender` è stato modellato tramite due `case object`, elementi statici senza proprietà particolari che servono solo per definire se il sesso è maschile o femminile.
 
 #### Reproduction e Mutation
 La `Mutation`è un'entità che contiene la tipologia di gene a cui si riferisce e una condizione che determina se è dominante, è possibile genernarne la versione dominante o quella recessiva. </br>
