@@ -492,7 +492,7 @@ tutte le feature e nella preventiva intercettazione di eventuali bug.
 Ho fatto largo uso sia di **Object** che **Companion Object**, per l'incapsulamento e la separazione delle funzionalità
 che ho considerato. Un esempio di Object sono le costanti utili alla determinazione delle misure e movimenti dei lupi
 all'interno della GUI, che sono state incapsulate nell'Object `ScalaFXConstants.Wolf`. Per quanto riguarda i Companion
-Object, come `Mutations`, `ClockView` e `WolfView`, sono stati considerati per l'implementazione di metodi e
+Object, come `Mutations`, `ClockView` e `WolfView`, sono stati adottati per l'implementazione di metodi e
 funzionalità statici.
 
 #### Trait e Mixins
