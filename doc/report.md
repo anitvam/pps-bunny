@@ -574,8 +574,7 @@ per avviarla. La board è formata da:
   può introdurre
 
 La simulazione parte quando si preme il pulsante "START", ma prima si possono comunque selezionare le mutazioni e i
-fattori che si trovano nei due rispettivi pannelli e ispezionare i grafici anche se ovviamente non ancora completi delle
-informazioni necessarie.
+fattori che si trovano nei due rispettivi pannelli.
 
 Una volta avviata la simulazione, si potrà aggiungere una mutazione in qualsiasi momento ma questa verrà introdotta nel
 genotipo dei coniglietti solo durante la fase di riproduzione immediatamente successiva all'inserimento, come indicato
