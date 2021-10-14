@@ -221,6 +221,8 @@ Di seguito è riportata una immagine che rappresenta la struttura delle classi c
 
 ![](images/environment_model.png)
 
+Per rendere più semplice e comprensibile l'implementazione dei metodi `introduceFactor` e `removeFactor` è stato implementato il pattern pimp my library sul type alias `Factors`: `it.unibo.pps.bunny.model.world.disturbingFactor.PimpFactors`. Questa scelta è stata fatta per lasciare visibili le funzionalità della struttura dati `List` di Scala, con cui è stato definito l'alias, e allo stesso tempo avere funzionalità aggiuntive utili per mantenere coerente l'aggiornamento dei `Fattori`.
+
 #### Fattori
 L'interfaccia `Factor` astrae qualsiasi implementazione dei fattori ed espone il metodo principale che verrà richiamato dall'esterno: `applyDamage`. 
 Questo metodo prende come parametro le uniche informazioni rilevanti per determinare qual è il danno apportato alla popolazione dei conigli a partire da un qualsiasi fattore: la popolazione su cui applicarlo e il clima in cui si trova l'ambiente in quel momento.
