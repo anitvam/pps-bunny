@@ -205,6 +205,18 @@ Sebbene chiaramente sia stato ampliato e alcune entità siano state aggiornate p
 
 #### Bunny e Genoma
 ![](images/bunny_model.png)
+Il `Bunny` è un trait costruito con l'obiettivo di massimizzare l'immutabilità, infatti è possibile modificare indirettamente solo l'età e la condizione di vita attraverso due operazioni: l'aumento dell'età che avviene procedendo nelle generazioni e l'uccisione diretta del coniglietto a causa di un fattore. </br> 
+Il `Bunny` può essere istanziato come `ChildBunny`, un coniglio appena nato, `FirstBunny`, una particolare tipologia di coniglio appena nato senza genitori usato all'inizio della simulazione o `HistoryBunny`, una sorta di snapshot di un coniglio in un certo istante, che è quindi immutabile.  </br> 
+Il `Bunny`, oltre alle proprietà sopracitate, mantiene l'informazione sul genere, il riferimento ai genitori ed un `CompletedGenotype`, ovvero un genotipo contenente tutti i geni disponibili. Esiste anche un `PartialGenotype`, usato come supporto durante la generazione di conigli, che però non può essere inserito all'interno del coniglio in quanto una delle regole del dominio è che il genotipo contenga informazioni riguardanti tutti i geni. 
+
+Il `Genotype` è formato principalmente dai geni, ognuno associato alla sua tipologia, e dal fenotipo, che viene costruito a partire dai geni ed è utile per conoscere velocemente le caratteristiche di un coniglietto nel momento in cui agiscono i fattori disturbanti.
+I `Gene`
+Gli `Allele`
+
+Le tipologie di geni e di alleli disponibili sono indicate nelle enumerazioni `GeneKind` e `AlleleKind`. </br> 
+Per ogni `GeneKind` sono specificate alcune proprietà, in particolare le due tipologie di alleli a cui è legato, una è quella base mentra l'altra quella mutata. </br>
+Anche ogni `AlleleKind` sono specificate alcune proprietà, in particolare la dominanza, che è un `Option` perchè inizialmente non è definita e può essere modificata solo tramite appositi metodi.
+
 // mutabilità di age e alive solo dentro bunny, immutabilità di history bunny
 // Completed Genotype VS Partial Genotype
 #### Reproduction e Mutation
@@ -329,3 +341,10 @@ L'uso della CI su GitHub unito a tale livello di coverage garantisce che sul bra
 Per quanto riguarda invece il package `it.unibo.pps.bunny.view` non sono stati implementati test di `ScalaTest` per verificarne il funzionamento, in quanto si è deciso di effettuare prevalentemente del beta-testing, cioè di eseguire direttamente l'applicativo per verificare ad esempio il movimento dei coniglietti e la gestione dei pannelli per l'inserimento delle mutazioni e dei fattori, oltre che per avere una controprova visiva del corretto funzionamento delle classi di model e dell'engine.
 
 ## Retrospettiva
+
+// Sviluppi futuri
+- Pause nella simulazione
+- Altri geni / alleli / mutationi
+- Casi particolari di gnei alleli (eterozigote con caratteristica mista tipo fiore rosa, conigio albino)
+- Fattori disturbanti che considerano il genere (ex. la mamma è più probabile che muoia per proteggere i suoi figli?)
+- Altri fattori disturbanti
