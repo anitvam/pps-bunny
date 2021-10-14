@@ -219,11 +219,10 @@ Ogni `Allele` mantiene il riferimento alla sua tipologia ed indica se è un alle
 Le tipologie di geni e di alleli disponibili sono indicate nelle enumerazioni `GeneKind` e `AlleleKind`. </br> 
 Per ogni `GeneKind` sono specificate alcune proprietà, in particolare le due tipologie di alleli a cui è legato, una è quella base mentra l'altra quella mutata. Anche ogni `AlleleKind` sono specificate alcune proprietà, in particolare la dominanza, che è un `Option` perchè inizialmente non è definita e può essere modificata solo tramite appositi metodi.
 
-Il `Bunny` ha un Companion Object in cui sono contenute funzioni che ne permettono la generazione e metodi per selezionare gruppi di conigli. 
+Il `Bunny` ha un Companion Object in cui sono contenute delle funzioni che ne permettono la generazione e dei metodi per selezionare gruppi di conigli. 
 
 #### Reproduction e Mutation
-La `Mutation`è un semplice trait che contiene la tipologia di gene a cui si riferisce e si concretizza in due forme, quella dominante e quella recessiva assegnando l'apposita proprietà.
-
+La `Mutation`è un'entità che contiene la tipologia di gene a cui si riferisce e una condizione che determina se è dominante, è possibile genernarne la versione dominante o quella recessiva. </br>
 `Reproduction` è un oggetto che contiene una serie di metodi, funzioni e classi utili alla riproduzione. Consente ad esempio di combinare i conigli in coppie, di generare i figli di una coppia includendo o meno delle mutazioni, di generare tutti i figli di un gruppo di conigli e di ottenere i conigli di un generazione a partire dalla precedente, facendo nascere i nuovi conigli e morire quelli troppo anziani. Quest'ultima funzionalità è fondamentale, viene usata da `SimulationHistory` e permette di legare la parte di Model descritta fino ad ora con il progredire delle generazioni nel tempo.
 
 #### Generazioni e Ambiente
