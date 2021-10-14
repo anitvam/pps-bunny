@@ -562,8 +562,8 @@ Una volta che l'applicativo è stato messo in esecuzione apparirà una board di 
 in [aggiungere screen applicazione] che rappresenta la GUI principale della simulazione con la quale si può interagire
 per avviarla. La board è formata da:
 
-* un pannello principale posto in alto a sinistra nel quale avviene la simulazione vera e propria. Qui infatti si
-  ritroveranno i coniglietti, l'orologio nell'angolo in alto a sinistra, i due bottoni per il cambiamento del clima in
+* un pannello principale posto in alto a sinistra nel quale avviene la simulazione vera e propria. Qui si
+  troveranno i coniglietti, l'orologio nell'angolo in alto a sinistra, i due bottoni per il cambiamento del clima in
   alto a destra e il bottone per l'aumento della velocità in basso a destra.
 * un pannello multiplo, sottostante al precedente, che contiene i tre principali grafici:
     * il grafico della popolazione
