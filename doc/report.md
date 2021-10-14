@@ -361,8 +361,6 @@ viene mostrata una dialog finale con la descrizione dell'accaduto e si può ripa
 che comparirà al posto di quello dello speed up della velocità.
 
 Quello che si consiglia è di non applicare inizialmente nessun fattore, ma di lasciare riprodurre per qualche
-generazione i coniglietti. Questo consentirà di evitare di far morirli morire subito e terminare immediatamente il gioco
-se l'intenzione è quella di provare a giocare che un po' di tempo. Se poi si scelgono tutte le mutazioni da applicare,
-si potrebbe notare che alcuni coniglietti presentino più di una mutazione a testa e questo capita volontariamente nel
-caso non ci siano abbastanza figli in una generazione per poterle distribuire in modo uniforme. Per questo motivo quello
-che si suggerisce è d'introdurre una mutazione alla volta in ogni generazione.
+generazione i coniglietti. Questo consentirà di evitare la loro morte precoce e l'immeditata terminazione del gioco, permettendo alla simulazione di svilupparsi per un periodo di tempo maggiore. 
+
+Se si sceglie di applicare tutte le mutazioni, si potrebbe notare che alcuni coniglietti presentino più di una mutazione a testa, questo capita volontariamente nel caso non ci siano abbastanza figli in una generazione per poterle distribuire in modo uniforme. Per questo motivo quello che si suggerisce è d'introdurre una mutazione alla volta in ogni generazione.
