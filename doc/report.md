@@ -356,7 +356,7 @@ non ancora completi delle informazioni necessarie.
 Una volta avviata la simulazione, si potrà aggiungere una mutazione in qualsiasi momento ma questa verrà introdotta nel genotipo dei coniglietti solo durante la fase di riproduzione immediatamente successiva all'inserimento, come indicato durante il gioco dalle scritte informative nel pannello. Similmente anche i fattori sono applicati, una volta aggiunti, solo durante la rispettiva fase delle generazioni successive. Mentre i fattori possono essere inseriti e tolti a proprio piacimento, le mutazioni no. Per quanto riguarda il clima e la velocità di esecuzione della simulazione, questi possono essere variati dall'utente senza vincoli. Durante il corso della simulazione i vari grafici implementati saranno popolati con le informazioni in tempo reale
 la velocità di esecuzione.
 
-Il simulatore termina quando i coniglietti conquistano il mondo oppure perchè si sono estinti, in entrambi i casi
+La simulazione termina o quando i coniglietti conquistano il mondo o quando si sono estinti, in entrambi i casi
 viene mostrata una dialog finale con la descrizione dell'accaduto e si può ripartire da capo cliccando sul tasto restart
 che comparirà al posto di quello dello speed up della velocità.
 
