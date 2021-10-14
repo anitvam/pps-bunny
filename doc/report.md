@@ -256,7 +256,7 @@ i tipi di dato creati non sono toltalmente esenti da side-effect ma ne evitano i
 Si è inoltre utilizzato il pattern _Pimp my Library_ al fine di aggiungere metodi alle classi relative ai grafici di ScalaFX, in questo modo si è ad esempio facilitato l'accesso alla legenda dei grafici o il modo con cui aggiungere dati al grafico stesso.
 
 ####Proportions Chart
-L'obiettivo del `Proportions Chart` è quello di riassumere come durante una generazione vari la distribuzione dell'allele base e quello mutato di un determinato gene sulla popolazione, permettendo quindi all'utente di determinare quale delle due caratteristiche associate al gene sopravviva meglio a determinati fattori.
+L'obiettivo del `Proportions Chart` è quello di mostrare come la distribuzione dell'allele base e di quello mutato di ciascun gene sulla popolazione vari durante ogni generazione, permettendo quindi all'utente di determinare quale delle due caratteristiche associate al gene si più utile per sopravvivere ai fattori applicati.
 
 Il grafico si sviluppa su due sotto-grafici a torta, il primo mostra la distribuzione degli alleli all'inizio della generazione mentre il secondo mostra la variazione della distribuzione durante le varie fasi.
 Si è inoltre inserita la modalità _history_ che consente di navigare tra le varie generazioni per poter visualizzare l'andamento della distribuzione del gene durante il corso di tutta la simulazione.
