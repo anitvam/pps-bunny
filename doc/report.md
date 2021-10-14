@@ -569,8 +569,7 @@ per avviarla. La board è formata da:
     * il grafico della popolazione
     * il grafico delle proporzioni delle mutazioni suddivise per generazioni
     * il grafico dell'albero genealogico
-* un pannello per l'aggiunta delle mutazioni in alto a destra con un bottone per ogni tipo di mutazione che si può
-  introdurre
+* un pannello per l'aggiunta delle mutazioni in alto a destra con due bottoni per ciascuna mutazione, uno permette di introdurre la mutazione come dominante e l'altro come recessiva 
 * un pannello per l'aggiunta di fattori disturbanti in basso a destra con una check box per ogni tipo di fattore che si
   può introdurre
 
