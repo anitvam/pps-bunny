@@ -536,9 +536,6 @@ Altri meccanismi avanzati che ho sperimentato sono:
 * l'applicazione minimale del pattern Factory (oggetto `ClimateImageFactory`) nella costruzione delle immagini a seconda
   del clima e del fattore disturbante del cibo introdotto in `view.scalaFX.utilities.EnvironmentImages`
 
-[comment]: <> (enumeration per le fasi poi trasformato in case class (non compatibile con la ricerca delle implementazioni del
-  trait GenerationPhase ??)
-
 ### Testing
 
 - Coverage
