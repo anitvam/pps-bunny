@@ -582,9 +582,11 @@ durante il gioco dalle scritte informative nel pannello. A differenza delle muta
 essere variati dall'utente senza vincoli. Durante il corso della simulazione i vari grafici implementati saranno
 popolati con le informazioni in tempo reale, seguendo la velocità di esecuzione scelta.
 
-La simulazione termina o quando i coniglietti conquistano il mondo o quando si sono estinti, in entrambi i casi viene
-mostrata una dialog finale con la descrizione dell'accaduto e si può ripartire da capo cliccando sul tasto restart che
-comparirà al posto di quello dello speed up della velocità.
+La simulazione può terminare a causa di tre condizioni: 
+* i coniglietti superano il numero massimo stabilito, conquistando il mondo
+* i coniglietti si sono estinti 
+* il numero di generazioni che sono state effettuate supera il limite massimo imposto dal simulatore. 
+In tutti e tre i casi viene una dialog finale con la descrizione dell'accaduto e si può far ripartire la simulazione cliccando sul tasto restart che al posto di quello dell'incremento della velocità.
 
 Quello che si consiglia è di non applicare inizialmente nessun fattore, ma di lasciare riprodurre per qualche
 generazione i coniglietti. Questo consentirà di evitare la loro morte precoce e l'immeditata terminazione del gioco,
