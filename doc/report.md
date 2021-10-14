@@ -846,17 +846,10 @@ riusabile possibile. Di seguito sono riportate le attività svolte durante l'ult
 
 ### Commenti finali
 
-Per concludere, si riportano di seguito i commenti finali che tengono conto del sistema finale creato e dall'esperienza
+Per concludere, si riporta di seguito un commento che riguarda il sistema finale creato e l'esperienza
 maturata da tutto il team durante il processo di sviluppo.
-
-Il lavoro è stato compiuto rispettando fedelmente gli standard più salienti della metodologia agile e di Scrum, in modo
-particolare nel rilascio di un prototipo funzionante alla fine di ogni Sprint fissato. Tutto sommato il team ha
-rispettato le scadenze, tranne che per il rilascio del prodotto a seguito del penultimo Sprint che è avvenuto con un
-giorno di ritardo. Nel complesso all'interno del team non sono state riscontrate grosse problematiche relative alla
-pianificazione e metodologia di sviluppo.
-
-Considerando a posteriori il lavoro svolto il team si ritiene pienamente soddisfatto in quanto è stata portata a termine
-la totalità delle funzionalità dichiarate nei limiti di tempo predefiniti, senza slittamenti temporali.
+Il lavoro è stato svolto rispettando in buona parte gli standard principali della metodologia agile e di Scrum, in particolar modo attraverso il rilascio di un prototipo funzionante alla fine di ogni Sprint fissato. Le scadenze sono state rispettate nella maggior parte dei casi, con'unica eccezione alla conclusione del quarto Sprtint, avvenuta con un giorno di ritardo. Nel complesso non sono state riscontrate problematiche particolari relative alla pianificazione e la metodologia di sviluppo.
+A posteriori, il team si ritiene sufficientemente soddisfatto dal lavoro svolto in quanto è stata sviluppata la totalità delle funzionalità obbligatorie e parte di quelle facoltative nei limiti di tempo predefiniti.
 
 #### Sviluppi futuri
 
