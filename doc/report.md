@@ -207,6 +207,7 @@ Sebbene chiaramente sia stato ampliato e alcune entità siano state aggiornate p
 #### Bunny e Genoma
 ![](images/bunny_model.png)
 Lo schema fornisce una rappresentazione grafica dei concetti legati al coniglietto e il suo genoma.
+
 Il `Bunny` è un trait costruito con l'obiettivo di massimizzare l'immutabilità, infatti è possibile modificare implicitamente solo l'età e la condizione di vita attraverso due specifiche operazioni: l'aumento dell'età che avviene procedendo nelle generazioni e l'uccisione diretta del coniglietto che è causata da un fattore. </br> 
 Il `Bunny` può essere istanziato come:
 * `ChildBunny`, un coniglio appena nato
