@@ -181,7 +181,6 @@ Di seguito vengono riportati i requisiti relativi all'implementazione del sistem
 * Il testing del sistema sarà effettuato utilizzando ScalaTest, in questo modo sarà minimizzata la presenza di errori e facilitato l'aggiornamento di eventuali funzionalità.
 * Il codice sorgente sarà verificato mediante l'utilizzo del linter ScalaFMT
 
-
 ## Design architetturale
 A seguito dell'analisi dei requisiti e data la natura del progetto si è scelto di adottare il pattern architetturale MVC (Model-View-Controller), in questo modo è possibile incapsulare le responsabilità dei singoli componenti e avere un'architettura modulare e flessibile.
 
@@ -220,15 +219,19 @@ Ogni `Allele` mantiene il riferimento alla sua tipologia ed indica se è un alle
 Le tipologie di geni e di alleli disponibili sono indicate nelle enumerazioni `GeneKind` e `AlleleKind`. </br> 
 Per ogni `GeneKind` sono specificate alcune proprietà, in particolare le due tipologie di alleli a cui è legato, una è quella base mentra l'altra quella mutata. Anche ogni `AlleleKind` sono specificate alcune proprietà, in particolare la dominanza, che è un `Option` perchè inizialmente non è definita e può essere modificata solo tramite appositi metodi.
 
+Il `Bunny` ha un Companion Object in cui sono contenute funzioni che ne permettono la generazione e metodi per selezionare gruppi di conigli. 
+
 #### Reproduction e Mutation
+La `Mutation`è un semplice trait che contiene la tipologia di gene a cui si riferisce e si concretizza in due forme, quella dominante e quella recessiva assegnando l'apposita proprietà.
+
+`Reproduction` è un oggetto che contiene una serie di metodi, funzioni e classi utili alla riproduzione. Consente ad esempio di combinare i conigli in coppie, di generare i figli di una coppia includendo o meno delle mutazioni, di generare tutti i figli di un gruppo di conigli e di ottenere i conigli di un generazione a partire dalla precedente, facendo nascere i nuovi conigli e morire quelli troppo anziani. Quest'ultima funzionalità è fondamentale, viene usata da `SimulationHistory` e permette di legare la parte di Model descritta fino ad ora con il progredire delle generazioni nel tempo.
+
 #### Generazioni e Ambiente
 #### Fattori
-
 
 ### Engine
 #### SimulationEngine
 #### Simulation History
-
 
 ### View
 // parlare di scalafx e scala-fxml 
@@ -236,9 +239,9 @@ Per ogni `GeneKind` sono specificate alcune proprietà, in particolare le due ti
 #### Controllers
 #### AnimalViews
 #### Grafici
-* __Pedigree Chart__ </br>Il grafico del Pedigree non è associato a un file fxml nè estende altri grafici della libreria, bensì viene generato da zero usando i costrutti standard di ScalaFX . In particolare è realizzato grazie a:
+* __Pedigree Chart__ </br> Il grafico ha l'obiettivo di mostrare l'albero genealogico del coniglietto selezionato con al massimo quattro generazioni, per ogni elemento dell'albero sono rappresentate varie informazioni. Dato l'obiettivo della simulazione è di particolare importanza è la visualizzazione degli alleli di ciascun coniglietto per capire perchè l'animale mostra una certa caratterista e come questa è stata ereditata dei genitori. </br> Il grafico non è associato a un file fxml nè estende altri grafici della libreria, bensì viene generato da zero usando i costrutti standard di ScalaFX. In particolare è realizzato grazie a:
   * `BunnyPedigreeView`, che si occupa di renderizzare un singolo coniglietto dell'albero genealogico, composto dall'immagine del coniglio con le sue mutazioni, il genere, la visualizzazione sintetica degli alleli tramite lettere e alcune icone che indica se il coniglietto è morto o ha appena subito una mutazione;
-  * `PedigreeChart`, che costruisce l'albero genealogico vero e proprio, una riga alla volta, sfruttando il `BinaryTree` generabile per ogni coniglietto.
+  * `PedigreeChart`, che costruisce l'albero genealogico vero e proprio, una riga alla volta, sfruttando il `BinaryTree` generabile per ogni coniglietto e predendendo in considerazione la possibilità di avere conigli con un numero variabile di antenati.
 * __Population Chart__
 * __Proportions Chart__
 
@@ -284,7 +287,7 @@ Per l'implementazione dei concetti fondamentali del modello, ovvero il conigliet
 
 #### Ricorsione
 Ho utilizzato la **ricorsione** nella costruzione dell'albero genealogico del coniglietto. </br>
-Ho tentato di trasformare tale ricorsione in una di tipo *tail* senza successo e sono giunta alla conclusione che avendo due chiamate alla funzione ricorsiva dentro la funzione stessa, una per ogni genitore del coniglietto, non fosse possibile lasciare come ultima istruzione della funzione una soal chiamata ricorsiva perchè i risultati delle due chiamate devono essere combinati insieme in un unico nodo. </br>
+Ho tentato di trasformare, anche con l'aiuto di Spadoni, tale ricorsione in una di tipo *tail* senza successo e sono giunta alla conclusione che avendo due chiamate alla funzione ricorsiva dentro la funzione stessa, una per ogni genitore del coniglietto, non fosse possibile lasciare come ultima istruzione della funzione una soal chiamata ricorsiva perchè i risultati delle due chiamate devono essere combinati insieme in un unico nodo. </br>
 Non è stato possibile usare un accumulatore perchè ognuna delle due chiamate si espande autonomamente e tentando di strutturare questo procedimento ci si ritrova a specificare manualmente l'intera composizione dell'albero perdendo totalmente l'utilità della ricorsione.
 
 #### Prolog
@@ -352,4 +355,7 @@ PROPOSTE (poi se me le approvate le scrivo meglio):
 - Fattori disturbanti che considerano il genere (ex. la mamma è più probabile che muoia per proteggere i suoi figli?)
 - Altri fattori disturbanti
 - Migliorare il rendering del pedigree prendendo in considerazione anche la possibilità di avere più geni e quindi una visualizzazione degli alleli più larga o su più righe
+- Report finale
+- Altro grafico proposto dalla Marta (magari lo descrivi tu)
+- Per ogni coniglietto, indicare se è omozigote o eterozigote per ogni suo gene
 - Trasformare l'intera logica del model in (in particolare tutti i controlli fatti tramite eccezioni e la generazione di figli) in prolog
