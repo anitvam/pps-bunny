@@ -305,7 +305,7 @@ Per implementare i fattori dei lupi è stata definita un'interfaccia aggiuntiva,
 - `DoubleFoodFactor`, estende da `SingleFoodFactor` e implementa anche l'operazione `-` sempre attraverso un template method. Infatti, questa classe rappresenta la combinazione di due fattori relativi al cibo, ad esempio cibo alto e scarso, dalla quale è quindi possibile rimuovere uno dei due fattori singoli.
 - `TripleFoodFactor`, estende da `DoubleFoodFactor` e blocca l'utilizzo del metodo `+` in quanto un fattore alimentare composto da tutte e tre le topologie non può essere concatenato a nessun altro.
 
-È stato infine definito il mixin `FoodFactorOnSingleGene` che implementa il metodo `applyDamage` in modo da poter coprire sia i casi in cui il danno legato al cibo viene applicato su tutta la popolazione e il caso in cui si ha la presenza di un gene. 
+È stato infine definito il mixin `FoodFactorOnSingleGene` che estende l'implementazione del metodo `applyDamage` di `BasicFactor` in modo da coprire tutti i fattori alimentari che agiscono su un singolo gene. Il mixin ha l'obiettivo di estrapolare un comportamento comune a vari fattori, ovvero l'applicazione dello stesso danno a tutta la popolazione oppure l'applicazione di un danno elevato ai conigli con l'allele base e un danno ridotto a quelli con l'allele mutato.
 
 Di seguito è fornita una rappresentazione grafica legata alla modellazione dei fattori.
 ![](images/factors_model.png)
