@@ -483,7 +483,7 @@ Per l'implementazione del model delle mutazioni mi sono rifatta alla tecnica **T
 **Red-Green-Refactor**, in modo tale da produrre prima un test fallimentare (**Red**) che consentisse di determinare
 _cosa_ realizzare, di far passare poi i test (**Green**) e infine mettendo mano allo stile del codice in un secondo
 momento (**Refactor**). Questa tecnica ha permesso di testare il funzionamento corretto delle mutazioni senza
-considerare il modo, quindi il _come_, in cui di fatto le mutazioni sia state implementate. Il codice per questo è
+considerare il modo, quindi il _come_, in cui di fatto le mutazioni siano state implementate. Il codice per questo è
 estendibile e ha consentito nel corso dello sviluppo di mantenere traccia della correttezza del funzionamento globale di
 tutte le feature e nella preventiva intercettazione di eventuali bug.
 
