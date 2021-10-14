@@ -350,7 +350,7 @@ principale della simulazione con la quale si può interagire per avviarla. La bo
   può introdurre
 
 La simulazione parte quando si preme il pulsante "START", ma prima si possono comunque selezionare le
-mutazioni e i fattori che si trovano nei due rispettivi pannelli e si possono ispezionare i grafici anche se ovviamente
+mutazioni e i fattori che si trovano nei due rispettivi pannelli e ispezionare i grafici anche se ovviamente
 non ancora completi delle informazioni necessarie.
 
 Una volta avviata la simulazione si potrà aggiungere una mutazione in qualsiasi momento ma vista la logica della genetica verrà applicata di fatto alla generazione successiva, durante la riproduzione, come indicato durante il gioco dalle scritte informative nel pannello. Lo stesso discorso vale per l'introduzione di un fattore disturbante dal momento che ogni fattore a un suo preciso momento di applicazione, ovvero se si introducono i fattori dopo il loro periodo verrano applicati alla generazione successiva. Mentre i fattori possono essere inseririti e tolti a proprio piacimento, le mutazioni no, infatti per rimanere fedeli alla realtà una volta introdotta una mutazione non si potrà più rimuovere. Infine i grafici verranno popolati con le informazioni realtime e si potranno gestire il clima e
