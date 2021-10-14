@@ -181,7 +181,6 @@ Di seguito vengono riportati i requisiti relativi all'implementazione del sistem
 * Il testing del sistema sarà effettuato utilizzando ScalaTest, in questo modo sarà minimizzata la presenza di errori e facilitato l'aggiornamento di eventuali funzionalità.
 * Il codice sorgente sarà verificato mediante l'utilizzo del linter ScalaFMT
 
-
 ## Design architetturale
 A seguito dell'analisi dei requisiti e data la natura del progetto si è scelto di adottare il pattern architetturale MVC (Model-View-Controller), in questo modo è possibile incapsulare le responsabilità dei singoli componenti e avere un'architettura modulare e flessibile.
 
@@ -297,7 +296,6 @@ I fattori che applicano un danno diverso in base al clima sono le temperature os
 Un'altra distinzione evidenziata dai dati sopra riportati riguarda il fatto che i fattori possono essere influenzati dalla presenza di nessuno, uno o al massimo due geni. 
 Siccome l'implementazione in `BasicFactor` non tiene conto di alcun gene, sono state implementati due mixin per i casi rimanenti: `FactorOnSingleGene` e `FactorOnDoubleGene` che aggiungono tali informazioni ai fattori.
 
-
 Per implementare i fattori dei lupi è stata definita un'interfaccia aggiuntiva, chiamata `PredatorFactor`, che comprendesse gli ulteriori danni apportati da queste entità: `lowDamage` e `highDamage`.
 
 `FoodFactor` è un'interfaccia che definisce due importanti metodi: `+` e `-`. Queste operazioni supportano rispettivamente la combinazione e la suddivisione di due fattori alimentari e vengono implementate nelle classi astratte:
@@ -313,7 +311,6 @@ Di seguito è fornita una rappresentazione grafica legata alla modellazione dei 
 ### Engine
 #### SimulationEngine
 #### Simulation History
-
 
 ### View
 // parlare di scalafx e scala-fxml 
