@@ -453,13 +453,15 @@ classi di model e dell'engine.
 
 #### Spadoni
 
-#### Rocco
+### Rocco
 
 Nello sviluppo del progetto inizialmente mi sono occupata della realizzazione grafica della board di gioco in maniera
-parallela a Baiardi attraverso, prima lo studio e in seguito all'utilizzo della libreria scalaFX e lo strumento di
-supporto scene builder, necessario per la traduzione di quanto strutturato graficamente in codice fxml. In particolare
-gli elementi di GUI che ho interamente realizzato sono il pannello dei fattori disturbanti e l'orologio, insieme alla
-logica del suo funzionamento legata alla simulazione.
+parallela a Baiardi attraverso, prima lo studio e in seguito l'utilizzo della
+libreria [ScalaFX](https://www.scalafx.org/) e lo strumento di
+supporto [SceneBuilder](https://www.oracle.com/java/technologies/javase/javafxscenebuilder-info.html) necessario per la
+traduzione di quanto strutturato graficamente in codice `fxml`. In particolare gli elementi di GUI che ho interamente
+realizzato sono il pannello dei fattori disturbanti e l'orologio, insieme alla logica del suo funzionamento legata alla
+simulazione.
 
 Per quanto riguarda l'identificazione di una parte di model interamente a me riconducibile è la parte legata alle
 mutazioni, che hanno consentito poi di mettere mano sia alla creazione dei loro relativi test che alle parti di
@@ -467,23 +469,75 @@ controller legate al loro funzionamento all'interno della simulazione.
 
 Le parti implementate comprendono:
 
-* model.bunny.Mutation
-* model.world.Reproduction (solo la logica di introduzione delle mutazioni durante la riproduzione)
-* view.scalaFX.components.AnimalViewUtils ClockView WolfView
-* view.scalaFX.FXControllers.FactorsPanelController
-* view.scalaFX.FXControllers.BaseAppController (in collaborazione con tutti gli altri componenti del gruppo)
+* `it.unibo.pss.bunny.model.bunny.Mutation`
+* `it.unibo.pss.bunny.model.world.Reproduction` (solo la logica d'introduzione delle mutazioni durante la riproduzione)
+* il package `it.unibo.pss.bunny.view.scalaFX.components` (ad esclusione del file `BunnyView` e il sotto
+  package `charts`)
+* `it.unibo.pss.bunny.view.scalaFX.FXControllers.FactorsPanelController`
+* `it.unibo.pss.bunny.view.scalaFX.FXControllers.BaseAppController` (in collaborazione con tutti gli altri componenti
+  del gruppo)
 
-Particolare attenzione va a AnimalViewUtils che è stata implementata con l'idea di creare un Mixin di trait piuttosto
-che un'unica interfaccia per la descrizione della visualizzazione di un animale e il suo comportamento, nel nostro caso
-il movimento. Ho estrapolato innanzitutto gli elementi comuni ai bunny e ai fattori disturbanti dei lupi, cioè la loro
-rappresentazione grafica, lo start e lo stop della loro animazione nella classe astratta AnimalView mentre la logica
-dell'animazione che potrebbe essere in un futuro implementata diversamente o semplicemente cambiata l'ho delegata ad
-altre due interfacce, MovementView e DirectionView. In questo modo il concetto di movimento legato ad un animale da
-rappresentare dovrà implementare il concetto dell'Animal e in una sorta di decorazione definire il suo comportamento di
-default, come nel nostro caso, o nelle sue implementazioni.
+#### TDD
 
-Minimale pattern Factory (ClimateImageFactory) nella costruzione delle immagini a seconda del clima e del fattore
-disturbante del cibo introdotto (view.scalaFX.utilities.EnvironmentImages).
+Per l'implementazione del model delle mutazioni mi sono rifatta alla tecnica **TDD** cercando di seguire il ciclo
+**Red-Green-Refactor**, in modo tale da produrre prima un test fallimentare (**Red**) che consentisse di determinare
+_cosa_ realizzare, di far passare poi i test (**Green**) e infine mettendo mano allo stile del codice in un secondo
+momento (**Refactor**). Questa tecnica ha permesso di testare il funzionamento corretto delle mutazioni senza
+considerare il modo, quindi il _come_, in cui di fatto le mutazioni sia state implementate. Il codice per questo è
+estendibile e ha consentito nel corso dello sviluppo di mantenere traccia della correttezza del funzionamento globale di
+tutte le feature e nella preventiva intercettazione di eventuali bug.
+
+#### Object e Companion Object
+
+Ho fatto largo uso sia di **Object** che **Companion Object**, per l'incapsulamento e la separazione delle funzionalità
+che ho considerato. Un esempio di Object sono le costanti utili alla determinazione delle misure e movimenti dei lupi
+all'interno della GUI, che sono state incapsulate nell'Object `ScalaFXConstants.Wolf`. Per quanto riguarda i Companion
+Object, come `Mutations`, `ClockView` e `WolfView`, sono stati considerati per l'implementazione di metodi e
+funzionalità statici.
+
+#### Trait e Mixins
+
+Particolare attenzione va a `AnimalViewUtils` che è stato implementato come oggetto con l'idea di creare un **Mixin** di
+trait e abstract classes piuttosto che un'unica interfaccia, per la descrizione della visualizzazione di un animale e il
+suo comportamento, che nel nostro caso è il movimento. Questo è nato perchè ho notato che entrambi gli oggetti BunnyView
+e WolfView avevano le stesse caratteristiche e le stesse modalità di applicazione di queste ultime, ma differivano solo
+nella mera esecuzione del movimento. Nel caso dei conigli è un saltello mentre in quello dei lupi si tratta di una
+semplice corsa.
+
+Di conseguenza, ho estrapolato innanzitutto gli elementi comuni ai bunny e ai fattori disturbanti dei lupi, cioè
+lo `start()` e lo `stop()` della loro animazione e la loro rappresentazione grafica, nella classe astratta `AnimalView`
+mentre la logica dell'animazione che potrebbe essere in un futuro implementata diversamente o semplicemente cambiata l'
+ho delegata ad altre due interfacce, `MovementView` e `DirectionView`, che per comodità hanno implementato i metodi
+principali di default dato che sono esattamente identici per i due oggetti che le utilizzano. In questo modo il concetto
+di animale da rappresentare graficamente dovrà implementare il concetto dell'`AnimalView` e in una sorta di decorazione
+definire o meno il suo comportamento attraverso l'implementazione delle interfaccie di movimento (`MovementView`) e
+direzione (`DirectionView`).
+
+#### Function Higher-Order
+
+L'utilizzo del pattern Strategy attraverso le funzioni **Higher-Order** lo ritroviamo nel metodo `startWolfAnimation`
+di `FactorsPanelController` e nella variabile `areWolvesVisible` di `WolfView`. In questo modo la strategia con cui nel
+primo caso si avviano i lupi quando è il loro momento e quella di determinare se i lupi sono visibili può essere
+cambiata senza andare ad intaccare il funzionamento del resto dell'applicazione.
+
+A posteriori posso inoltre suggerire di dare più importanza alla funzione Higher-Order `playWolf` non definendola più
+direttamente di default nel metodo `startWolfAnimation` ma facendola per esempio diventare una variabile parte
+dell'oggetto WolfView o scegliendola tra una serie di strategie che la classe astratta `AnimalView` potrebbe mettere a
+disposizione.
+
+#### Altro
+
+Altri meccanismi avanzati che ho sperimentato sono:
+
+* l'utilizzo degli **alias** attraverso l'utilizzo di `Type` in `it.unibo.pps.bunny.model.world.Environment` per la
+  determinazione di un nuovo tipo per le Mutazioni (`type Mutations = List[Mutation]`).
+* l'utilizzo degli impliciti per la conversione automatica degli elementi in `getBackgroundCorrespondingToClimate`
+  dell'oggetto `EnvironmentImages`
+* l'applicazione minimale del pattern Factory (oggetto `ClimateImageFactory`) nella costruzione delle immagini a seconda
+  del clima e del fattore disturbante del cibo introdotto in `view.scalaFX.utilities.EnvironmentImages`
+
+[comment]: <> (enumeration per le fasi poi trasformato in case class (non compatibile con la ricerca delle implementazioni del
+  trait GenerationPhase ??)
 
 ### Testing
 
