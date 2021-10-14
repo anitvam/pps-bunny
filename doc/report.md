@@ -206,7 +206,11 @@ Sebbene chiaramente sia stato ampliato e alcune entità siano state aggiornate p
 #### Bunny e Genoma
 ![](images/bunny_model.png)
 Il `Bunny` è un trait costruito con l'obiettivo di massimizzare l'immutabilità, infatti è possibile modificare indirettamente solo l'età e la condizione di vita attraverso due operazioni: l'aumento dell'età che avviene procedendo nelle generazioni e l'uccisione diretta del coniglietto a causa di un fattore. </br> 
-Il `Bunny` può essere istanziato come `ChildBunny`, un coniglio appena nato, `FirstBunny`, una particolare tipologia di coniglio appena nato senza genitori usato all'inizio della simulazione o `HistoryBunny`, una sorta di snapshot di un coniglio in un certo istante, che è quindi immutabile.  </br> 
+Il `Bunny` può essere istanziato come:
+* `ChildBunny`, un coniglio appena nato, 
+* `FirstBunny`, una particolare tipologia di coniglio appena nato senza genitori, usato all'inizio della simulazione
+* `HistoryBunny`, una sorta di snapshot di un coniglio in un certo istante, che è quindi immutabile.  </br> 
+
 Il `Bunny`, oltre alle proprietà sopracitate, mantiene l'informazione sul genere, il riferimento ai genitori ed un `CompletedGenotype`, ovvero un genotipo contenente tutti i geni disponibili. Esiste anche un `PartialGenotype`, usato come supporto durante la generazione di conigli, che però non può essere inserito all'interno del coniglio in quanto una delle regole del dominio è che il genotipo contenga informazioni riguardanti tutti i geni. 
 
 Il `Genotype` è formato principalmente dai geni, ognuno associato alla sua tipologia, e dal fenotipo, che viene costruito a partire dai geni ed è utile per conoscere velocemente le caratteristiche di un coniglietto nel momento in cui agiscono i fattori disturbanti. </br> 
@@ -232,8 +236,9 @@ Per ogni `GeneKind` sono specificate alcune proprietà, in particolare le due ti
 #### Controllers
 #### AnimalViews
 #### Grafici
-* __Pedigree Chart__
-  // Composizione dinamica
+* __Pedigree Chart__ </br>Il grafico del Pedigree non è associato a un file fxml nè estende altri grafici della libreria, bensì viene generato da zero usando i costrutti standard di ScalaFX . In particolare è realizzato grazie a:
+  * `BunnyPedigreeView`, che si occupa di renderizzare un singolo coniglietto dell'albero genealogico, composto dall'immagine del coniglio con le sue mutazioni, il genere, la visualizzazione sintetica degli alleli tramite lettere e alcune icone che indica se il coniglietto è morto o ha appena subito una mutazione;
+  * `PedigreeChart`, che costruisce l'albero genealogico vero e proprio, una riga alla volta, sfruttando il `BinaryTree` generabile per ogni coniglietto.
 * __Population Chart__
 * __Proportions Chart__
 
@@ -340,8 +345,11 @@ Per quanto riguarda invece il package `it.unibo.pps.bunny.view` non sono stati i
 ## Retrospettiva
 
 // Sviluppi futuri
+PROPOSTE (poi se me le approvate le scrivo meglio): 
 - Pause nella simulazione
 - Altri geni / alleli / mutationi
 - Casi particolari di gnei alleli (eterozigote con caratteristica mista tipo fiore rosa, conigio albino)
 - Fattori disturbanti che considerano il genere (ex. la mamma è più probabile che muoia per proteggere i suoi figli?)
 - Altri fattori disturbanti
+- Migliorare il rendering del pedigree prendendo in considerazione anche la possibilità di avere più geni e quindi una visualizzazione degli alleli più larga o su più righe
+- Trasformare l'intera logica del model in (in particolare tutti i controlli fatti tramite eccezioni e la generazione di figli) in prolog
