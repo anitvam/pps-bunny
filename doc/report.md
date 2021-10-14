@@ -347,16 +347,3 @@ L'uso della CI su GitHub unito a tale livello di coverage garantisce che sul bra
 Per quanto riguarda invece il package `it.unibo.pps.bunny.view` non sono stati implementati test di `ScalaTest` per verificarne il funzionamento, in quanto si è deciso di effettuare prevalentemente del beta-testing, cioè di eseguire direttamente l'applicativo per verificare ad esempio il movimento dei coniglietti e la gestione dei pannelli per l'inserimento delle mutazioni e dei fattori, oltre che per avere una controprova visiva del corretto funzionamento delle classi di model e dell'engine.
 
 ## Retrospettiva
-
-// Sviluppi futuri
-PROPOSTE (poi se me le approvate le scrivo meglio): 
-- Pause nella simulazione
-- Altri geni / alleli / mutationi
-- Casi particolari di gnei alleli (eterozigote con caratteristica mista tipo fiore rosa, conigio albino)
-- Fattori disturbanti che considerano il genere (ex. la mamma è più probabile che muoia per proteggere i suoi figli?)
-- Altri fattori disturbanti
-- Migliorare il rendering del pedigree prendendo in considerazione anche la possibilità di avere più geni e quindi una visualizzazione degli alleli più larga o su più righe
-- Report finale
-- Altro grafico proposto dalla Marta (magari lo descrivi tu)
-- Per ogni coniglietto, indicare se è omozigote o eterozigote per ogni suo gene
-- Trasformare l'intera logica del model in (in particolare tutti i controlli fatti tramite eccezioni e la generazione di figli) in prolog
