@@ -774,8 +774,7 @@ Inoltre nel file Backlog della cartella `/process` del repository GitHub sono ri
 ### Sprint
 
 Sono stati realizzati un totale di 5 Sprint, alla conclusione di ognuno il team si è riunito per rilasciare un prototipo
-funzionante, ad eccezione del primo Sprint. Inoltre si è discusso del lavoro svolto, compilando il Product Backlog e il
-meeting report, e infine si è organizzato il lavoro futuro.
+funzionante, ad eccezione del primo Sprint e per discutere del lavoro svolto, congiuntamente si è anche provveduto ad eseguire lo Sprint Planning dello Sprint successivo.
 
 #### Sprint 1
 
