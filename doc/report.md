@@ -593,8 +593,3 @@ comparirà al posto di quello dello speed up della velocità.
 Quello che si consiglia è di non applicare inizialmente nessun fattore, ma di lasciare riprodurre per qualche
 generazione i coniglietti. Questo consentirà di evitare la loro morte precoce e l'immeditata terminazione del gioco,
 permettendo alla simulazione di svilupparsi per un periodo di tempo maggiore.
-
-Se si sceglie di applicare tutte le mutazioni, si potrebbe notare che alcuni coniglietti presentino più di una mutazione
-a testa, questo capita volontariamente nel caso non ci siano abbastanza figli in una generazione per poterle distribuire
-in modo uniforme. Per questo motivo quello che si suggerisce è d'introdurre una mutazione alla volta in ogni
-generazione.
