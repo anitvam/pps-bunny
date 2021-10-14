@@ -558,8 +558,8 @@ L'applicazione può essere lanciata in diversi modi:
 * scaricando il repository ed eseguendolo tramite `sbt` con il comando `sbt run`
 * importando il progetto ed eseguendolo nell'IDE che si preferisce
 
-Una volta che l'applicativo è stato messo in esecuzione apparirà una board di gioco con l'aspetto riportato
-in [aggiungere screen applicazione] che rappresenta la GUI principale della simulazione con la quale si può interagire
+Una volta che l'applicativo è stato messo in esecuzione apparirà una board di gioco, con l'aspetto riportato
+nello screenshost seguente, che rappresenta la GUI principale della simulazione con la quale si può interagire
 per avviarla. La board è formata da:
 
 * un pannello principale posto in alto a sinistra nel quale avviene la simulazione vera e propria. Qui si
@@ -572,6 +572,8 @@ per avviarla. La board è formata da:
 * un pannello per l'aggiunta delle mutazioni in alto a destra con due bottoni per ciascuna mutazione, uno permette di introdurre la mutazione come dominante e l'altro come recessiva 
 * un pannello per l'aggiunta di fattori disturbanti in basso a destra con una check box per ogni tipo di fattore che si
   può introdurre
+  
+![Screen-Gui](./images/GUI_screenshot.png)
 
 La simulazione parte quando si preme il pulsante "START", ma prima si possono comunque selezionare le mutazioni e i
 fattori che si trovano nei due rispettivi pannelli.
@@ -587,7 +589,3 @@ La simulazione può terminare a causa di tre condizioni:
 * i coniglietti si sono estinti 
 * il numero di generazioni che sono state effettuate supera il limite massimo imposto dal simulatore. 
 In tutti e tre i casi viene una dialog finale con la descrizione dell'accaduto e si può far ripartire la simulazione cliccando sul tasto restart che al posto di quello dell'incremento della velocità.
-
-Quello che si consiglia è di non applicare inizialmente nessun fattore, ma di lasciare riprodurre per qualche
-generazione i coniglietti. Questo consentirà di evitare la loro morte precoce e l'immeditata terminazione del gioco,
-permettendo alla simulazione di svilupparsi per un periodo di tempo maggiore.
