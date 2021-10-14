@@ -455,11 +455,8 @@ classi di model e dell'engine.
 
 #### Rocco
 
-Nello sviluppo del progetto inizialmente mi sono occupata della realizzazione grafica della board di gioco in maniera
-parallela a Baiardi attraverso, prima lo studio e in seguito all'utilizzo della libreria scalaFX e lo strumento di
-supporto scene builder, necessario per la traduzione di quanto strutturato graficamente in codice fxml. In particolare
-gli elementi di GUI che ho interamente realizzato sono il pannello dei fattori disturbanti e l'orologio, insieme alla
-logica del suo funzionamento legata alla simulazione.
+Nello sviluppo del progetto inizialmente mi sono occupata della realizzazione grafica della board di gioco parallelamente a Baiardi, inizialmente con lo studio e in seguito con l'utilizzo della libreria scalaFX e lo strumento di
+supporto scene builder, necessario per la traduzione di quanto strutturato graficamente in codice fxml. In particolare gli elementi di GUI che ho interamente realizzato sono il pannello dei fattori disturbanti e l'orologio, insieme alla logica del suo funzionamento legata alla simulazione.
 
 Per quanto riguarda l'identificazione di una parte di model interamente a me riconducibile è la parte legata alle
 mutazioni, che hanno consentito poi di mettere mano sia alla creazione dei loro relativi test che alle parti di
