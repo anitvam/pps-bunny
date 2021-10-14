@@ -58,8 +58,6 @@ object Genes extends Enumeration {
   type GeneKind = Value
 
   import Alleles.AlleleKind
-  import scala.language.implicitConversions
-
   implicit def valueToGenesVal(x: Value): GenesVal = x.asInstanceOf[GenesVal]
   implicit def valueToString(x: Value): String = x.prettyName
 

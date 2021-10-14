@@ -11,7 +11,7 @@ import it.unibo.pps.bunny.model.{ IllegalGenotypeBuildException, InconsistentGen
 sealed trait Phenotype {
 
   /** A [[Map]] that contains for each gene the visible [[AlleleKind]] on the bunny */
-  val visibleTraits: Map[GeneKind, AlleleKind]
+  protected val visibleTraits: Map[GeneKind, AlleleKind]
 
   /** An [[Iterable]] on all the [[AlleleKind]] visible on the bunny */
   val values: Iterable[AlleleKind] = visibleTraits.values
@@ -30,7 +30,6 @@ sealed trait Phenotype {
 
 object Phenotype {
   def apply(visibleTraits: Map[GeneKind, AlleleKind]): Phenotype = PhenotypeImpl(visibleTraits)
-
   private case class PhenotypeImpl(override val visibleTraits: Map[GeneKind, AlleleKind]) extends Phenotype
 }
 
@@ -40,7 +39,7 @@ object Phenotype {
 sealed trait Genotype {
 
   /** A [[Map]] that contains all the Genes of the bunny, each one identified from its [[GeneKind]] */
-  val genes: Map[GeneKind, Gene]
+  protected val genes: Map[GeneKind, Gene]
 
   /** An [[Iterable]] over the Genes of the bunny */
   val values: Iterable[Gene] = genes.values
