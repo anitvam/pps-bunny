@@ -520,9 +520,7 @@ riassunti degli Sprint.
 
 ### Sprint
 
-Sono stati realizzati un totale di 5 Sprint della durata di due settimane ciascuno alla fine dei quali il team si è
-riunito per rilasciare un prototipo funzionante, ad eccezione del primo Sprint, per discutere del lavoro svolto,
-compilando il Product Backlog e il meeting report, e infine organizzando il lavoro futuro.
+Sono stati realizzati un totale di 5 Sprint, alla conclusione di ognuno il team si è riunito per rilasciare un prototipo funzionante, ad eccezione del primo Sprint. Inoltre si è discusso del lavoro svolto, compilando il Product Backlog e il meeting report, e infine si è organizzato il lavoro futuro.
 
 #### Sprint 1
 
