@@ -206,7 +206,7 @@ Nello specifico è possibile osservare come l'applicativo si sviluppi su 4 compo
 #### Reproduction e Mutation
 #### Generazioni e Ambiente
 Una `Generation` rappresenta l'unità di tempo della simulazione. Essa contiene il riferimento dell'attuale popolazione dei coniglietti e dell'Ambiente.
-L'`Environment` rappresenta lo stato dell'ambiente di simulazione all'interno di una generazione, infatti contiene il riferimento dei fattori disturbanti; delle mutazioni e del clima scelti dall'utente durante lo svolgimento della simulazione. 
+L'`Environment` rappresenta lo stato dell'ambiente di simulazione all'interno di una generazione, infatti contiene il riferimento dei fattori disturbanti, delle mutazioni e del clima scelti dall'utente durante lo svolgimento della simulazione. 
 
 La modifica dello stato dell'Environment avviene principalmente attraverso `introduceMutation`, `introduceFactor` e `removeFactor`. 
 Questi metodi sono stati esposti perchè implementano le operazioni necessarie per poter introdurre e rimuovere in modo corretto fattori e mutazioni, mentre invece per quanto riguarda il clima è possibile modificare il valore direttamente dal suo campo, in quanto la sua modifica non prevede operazioni particolari.
