@@ -324,3 +324,52 @@ L'uso della CI su GitHub unito a tale livello di coverage garantisce che sul bra
 Per quanto riguarda invece il package `it.unibo.pps.bunny.view` non sono stati implementati test di `ScalaTest` per verificarne il funzionamento, in quanto si è deciso di effettuare prevalentemente del beta-testing, cioè di eseguire direttamente l'applicativo per verificare ad esempio il movimento dei coniglietti e la gestione dei pannelli per l'inserimento delle mutazioni e dei fattori, oltre che per avere una controprova visiva del corretto funzionamento delle classi di model e dell'engine.
 
 ## Retrospettiva
+
+## Guida utente
+
+L'applicazione può essere lanciata in diversi modi:
+
+* tramite il jar del proprio sistema operativo fornito nella sezione release di GitHub sia con il comando `$ java -jar `
+  path-to-downloaded-jar`` che il doppio click diretto sul jar scariato
+* tramite `sbt` usando il comando `sbt run mainClass`
+* importando il progetto ed eseguendolo nell'IDE che si preferisce
+
+Una volta messa in esecuzione apparirà una board di gioco, con l'aspetto riportato in [aggiungere screen applicazione], che rappresenta la GUI
+principale della simulazione con la quale si può interagire per avviarla. La board è formata da:
+
+* un pannello, il più grande dei quattro, posto in alto a sinistra nel quale avviene la simulazione vera e propria. Qui
+  infatti si ritroveranno i coniglietti, l'orologio nell'angolo in alto a sinistra, i due bottoni per il cambiamento del
+  clima in alto a destra e il bottone per l'aumento della velocità in basso a destra.
+* un pannello multiplo, sotto al pannello di gioco principale, in basso a sinistra che contiene i tre principali
+  grafici:
+  * il grafico della popolazione
+  * il grafico delle proporzioni delle mutazioni suddivise per generazioni
+  * il grafico dell'albero genealogico
+* un pannello per l'aggiunta delle mutazioni in alto a destra con un bottone per ogni tipo di mutazione che si può
+  introdurre
+* un pannello per l'aggiunta di fattori disturbanti in basso a destra con una check box per ogni tipo di fattore che si
+  può introdurre
+
+Tutto comincia quando si preme il pulsante "START", ma nell'attesa di iniziare si possono comunque selezionare le
+mutazioni e i fattori che si trovano nei due rispettivi pannelli e si possono ispezionare i grafici anche se ovviamente
+non ancora completi delle informazioni necessarie.
+
+Una volta avviata la simulazione si potrà aggiungere una mutazione in qualsiasi momento ma vista la logica della
+genetica verrà applicata di fatto alla generazione successiva durante la riproduzione, come poi indicato durante il
+gioco dalle scritte d'informazione nel pannello. Stesso discorso vale per l'introduzione di un fattore distrurbante dal
+momento che ogni fattore a un suo preciso momento di applicazione, se si introducono i fattori dopo il loro periodo
+verrano applicati alla generazione successiva. Mentre per i fattori vale la regola che si possono inserire e togliere a
+proprio piacimento per le mutazioni no, infatti per rimanere fedeli alla realtà una volta introdotta una mutazione non
+si potrà più rimuovere. Infine i grafici verranno popolati con le informazioni realtime e si potranno gestire il clima e
+la velocità di esecuzione.
+
+Il simulatore termina o quando i coniglietti conquistano il mondo oppure perchè si sono estinti, in entrambi i casi
+viene mostrata una dialog finale con la descrizione dell'accaduto e si può ripartire da capo cliccando sul tasto restart
+che comparirà al posto di quello dello speed up della velocità.
+
+Quello che si consiglia è di non applicare inizialmente nessun fattore, ma di lasciare riprodurre per qualche
+generazione i coniglietti. Questo consentirà di evitare di far morirli morire subito e terminare immediatamente il gioco
+se l'intenzione è quella di provare a giocare che un po' di tempo. Se poi si scelgono tutte le mutazioni da applicare,
+si potrebbe notare che alcuni coniglietti presentino più di una mutazione a testa e questo capita volontariamente nel
+caso non ci siano abbastanza figli in una generazione per poterle distribuire in modo uniforme. Per questo motivo quello
+che si suggerisce è d'introdurre una mutazione alla volta in ogni generazione.
