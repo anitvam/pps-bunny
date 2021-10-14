@@ -253,7 +253,7 @@ possono essere creati facendo riuso di codice e incapsulando la logica che trasf
 L'utilizzo del paradigma funzionale puro per quanto riguarda la gestione dei dati da graficare è stato limitato dal fatto che ScalaFX è in realtà il wrapper scala di JavaFX quindi una libreria OOP, dunque
 i tipi di dato creati non sono toltalmente esenti da side-effect ma ne evitano il più possibile.
 
-Si è inoltre, utilizzato il pattern _Pimp my Library_ al fine di aggiungere metodi alle classi relative ai grafici di ScalaFX, in questo modo si è ad esempio facilitato l'accesso alla legenda dei grafici o il modo con cui aggiungere dati al grafico stesso.
+Si è inoltre utilizzato il pattern _Pimp my Library_ al fine di aggiungere metodi alle classi relative ai grafici di ScalaFX, in questo modo si è ad esempio facilitato l'accesso alla legenda dei grafici o il modo con cui aggiungere dati al grafico stesso.
 
 ####Proportions Chart
 L'obiettivo del `Proportions Chart` è quello di riassumere come durante una generazione vari la distribuzione dell'allele base e quello mutato di un determinato gene sulla popolazione, permettendo quindi all'utente di determinare quale delle due caratteristiche associate al gene sopravviva meglio a determinati fattori.
