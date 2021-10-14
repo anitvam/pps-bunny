@@ -555,7 +555,7 @@ L'applicazione può essere lanciata in diversi modi:
 * eseguendo il jar del proprio sistema operativo fornito nella sezione release di GitHub attraverso il
   comando `$ java -jar `
   path-to-downloaded-jar``
-* scaricando il repository ed eseguendolo tramite `sbt` il comando `sbt run`
+* scaricando il repository ed eseguendolo tramite `sbt` con il comando `sbt run`
 * importando il progetto ed eseguendolo nell'IDE che si preferisce
 
 Una volta che l'applicativo è stato messo in esecuzione apparirà una board di gioco con l'aspetto riportato
