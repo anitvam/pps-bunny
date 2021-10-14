@@ -288,7 +288,7 @@ Vengono di seguito riportate la percentuali di danno riguardanti tutte le combin
 | Salto Alto e Denti Corti | -80%     | -80%        |
 | Salto Alto e Denti Lunghi| -60%     | -60%        |
 
-Dai dati sopra riportati è possibile distinguere tre tipologie di danno, cioè tre percentuali applicate da parte dei fattori, cioè `60%`, `70%` e `80%`. 
+Dai dati sopra riportati è possibile distinguere tre tipologie di danno, cioè tre percentuali applicate da parte dei fattori: `60%`, `70%` e `80%`. 
 Siccome ogni fattore è influenzato da almeno una percentuale, tale valore viene definito all'interno dell'interfaccia principale `Factor`. 
 Di tale interfaccia è stata poi definita un'implementazione standard all'interno della classe astratta `BasicFactor` che attribuisce a tutta la popolazione il danno `normalDamage` previsto dall'interfaccia senza tener conto del clima in quanto solamente alcuni dei danni sopra citati ne sono influenzati.
 
