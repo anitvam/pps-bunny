@@ -223,10 +223,12 @@ Il `SimulationEngine` è inoltre caratterizzato da una `simulationSpeed`, tale v
 
 L'avvio della simulazione viene scatenato dal `Controller` a seguito dello start da parte dell'utente, nello specifico si attiva l'esecuzione asincrona del `simulationLoop`, il quale aggiorna l'interfaccia grafica per gestire la prima riproduzione relativa alla creazione dei `Bunny` capostipiti e in seguito avvia il loop della generazione zero.
 
-#### Simulation History
+#### Simulation History e Simulation
+`SimulationHistory` è il Singleton che consente di gestire la storia della simulazione, modellata come una lista di `Generation`, di interagire con la generazione attualmente in esecuzione e di coordinare il passaggio da una generazione all'altra.
 
+`Simulation` è l'object di utility che consente di creare le monadi da utilizzare all'interno del `generationLoop`, si occupa ad esempio, di monadizzare l'azione associata alla fase dei lupi descritta in precedenza. 
+Nello specifico, `Simulation` permette di gestire attraverso delle monadi di tipo `IO[Unit]` le interazioni che il `SimulationEngine` ha con il `Controller` e `SimulationHistory`.
 
-#### Simulation
 
 ### View
 // parlare di scalafx e scala-fxml 
