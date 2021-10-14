@@ -778,14 +778,9 @@ funzionante, ad eccezione del primo Sprint e per discutere del lavoro svolto, co
 
 #### Sprint 1
 
-Durante la prima fase il team si è concentrato sulla fase di analisi, molto corposa e fondamentale per il futuro
-sviluppo del progetto e la suddivisione dei task. Di seguito sono riportate le attività svolte durante il primo meeting:
+Durante il primo sprint, il team si è concentrato sulla fase di analisi del dominio, parte fondamentale per il futuro
+sviluppo del progetto. Ogni membro del gruppo, in autonomia, ha prodotto un diagramma UML  ad alto livello del model, tali diagrammi sono poi stati discussi e uniti per generare il diagramma su cui successivamente si è basata l'intera implementazione del Model. Si è inoltre iniziato compilare il Product Backlog, a definire una prima suddivisione dei task e a preparare il repository del progetto, configurando SBT e la CI
 
-* Definizione delle date degli Sprint
-* Definizione dei Product Backlog Item dello Sprint 1
-* Definizione bacheca Trello Sprint 1
-* Definizione analisi del dominio e possibile divisione dei compiti all'interno del team
-* Studio dominio e design applicazione
 
 #### Sprint 2
 
