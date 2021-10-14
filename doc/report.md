@@ -340,7 +340,7 @@ principale della simulazione con la quale si può interagire per avviarla. La bo
 * un pannello principale posto in alto a sinistra nel quale avviene la simulazione vera e propria. Qui
   infatti si ritroveranno i coniglietti, l'orologio nell'angolo in alto a sinistra, i due bottoni per il cambiamento del
   clima in alto a destra e il bottone per l'aumento della velocità in basso a destra.
-* un pannello multiplo, sotto al pannello di gioco principale, che contiene i tre principali grafici:
+* un pannello multiplo, sottostante al precedente, che contiene i tre principali grafici:
   * il grafico della popolazione
   * il grafico delle proporzioni delle mutazioni suddivise per generazioni
   * il grafico dell'albero genealogico
