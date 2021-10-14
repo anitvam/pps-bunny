@@ -209,16 +209,13 @@ Il `Bunny` è un trait costruito con l'obiettivo di massimizzare l'immutabilità
 Il `Bunny` può essere istanziato come `ChildBunny`, un coniglio appena nato, `FirstBunny`, una particolare tipologia di coniglio appena nato senza genitori usato all'inizio della simulazione o `HistoryBunny`, una sorta di snapshot di un coniglio in un certo istante, che è quindi immutabile.  </br> 
 Il `Bunny`, oltre alle proprietà sopracitate, mantiene l'informazione sul genere, il riferimento ai genitori ed un `CompletedGenotype`, ovvero un genotipo contenente tutti i geni disponibili. Esiste anche un `PartialGenotype`, usato come supporto durante la generazione di conigli, che però non può essere inserito all'interno del coniglio in quanto una delle regole del dominio è che il genotipo contenga informazioni riguardanti tutti i geni. 
 
-Il `Genotype` è formato principalmente dai geni, ognuno associato alla sua tipologia, e dal fenotipo, che viene costruito a partire dai geni ed è utile per conoscere velocemente le caratteristiche di un coniglietto nel momento in cui agiscono i fattori disturbanti.
-I `Gene`
-Gli `Allele`
+Il `Genotype` è formato principalmente dai geni, ognuno associato alla sua tipologia, e dal fenotipo, che viene costruito a partire dai geni ed è utile per conoscere velocemente le caratteristiche di un coniglietto nel momento in cui agiscono i fattori disturbanti. </br> 
+Ogni `Gene` mantiene il riferimento alla sua tipologia e ai due alleli da cui è composto, uno ricevuto dalla madre ed uno dal padre. </br> 
+Ogni `Allele` mantiene il riferimento alla sua tipologia ed indica se è un allele che ha subito una mutazione, perciò la sua tipologia è sicuramente mutate e non corrisponde a quella che avrebbe dovuto ereditare dal genitore.
 
 Le tipologie di geni e di alleli disponibili sono indicate nelle enumerazioni `GeneKind` e `AlleleKind`. </br> 
-Per ogni `GeneKind` sono specificate alcune proprietà, in particolare le due tipologie di alleli a cui è legato, una è quella base mentra l'altra quella mutata. </br>
-Anche ogni `AlleleKind` sono specificate alcune proprietà, in particolare la dominanza, che è un `Option` perchè inizialmente non è definita e può essere modificata solo tramite appositi metodi.
+Per ogni `GeneKind` sono specificate alcune proprietà, in particolare le due tipologie di alleli a cui è legato, una è quella base mentra l'altra quella mutata. Anche ogni `AlleleKind` sono specificate alcune proprietà, in particolare la dominanza, che è un `Option` perchè inizialmente non è definita e può essere modificata solo tramite appositi metodi.
 
-// mutabilità di age e alive solo dentro bunny, immutabilità di history bunny
-// Completed Genotype VS Partial Genotype
 #### Reproduction e Mutation
 #### Generazioni e Ambiente
 #### Fattori
