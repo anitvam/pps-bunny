@@ -18,12 +18,15 @@ La proposta si ispira al seguente gioco: https://phet.colorado.edu/en/simulation
 Il dominio dell'applicazione riguarda la genetica, perciò si è pensato di fornire una breve introduzione su tale
 argomento e sulla terminologia utilizzata nella relazione.
 
-La genetica studia studia i geni, l'ereditarietà e la variabilità genetica negli organismi viventi. Nello specifico con il termine genoma ci si riferisce alla totalità dei cromosomi e dei geni contenuti nelle cellule. Il patrimonio genetico della prole dipende dagli attributi trasmessi dai genitori e definisce il loro aspetto estetico <br />
+La genetica studia studia i geni, l'ereditarietà e la variabilità genetica negli organismi viventi. Nello specifico con
+il termine genoma ci si riferisce alla totalità dei cromosomi e dei geni contenuti nelle cellule. Il patrimonio genetico
+della prole dipende dagli attributi trasmessi dai genitori e definisce il loro aspetto estetico <br />
 Ogni gene riguarda una caratteristica, che nell'ambito della riproduzione dei conigli può essere ad esempio il *colore
 della pelliccia* o la *forma delle orecchie*. Ogni gene è formato da due alleli ed ogni allele può comparire in due
 forme diverse, ad esempio per il *colore della pelliccia* possono essere la *pelliccia bianca* o la *pelliccia bruna*.
 Una di queste due forme è dominante, mentre l'altra è recessiva. Ciò significa che se compaiono entrambe per un
-determinato gene a prevalere sarà la versione dominante, la quale quindi, sarà visibile sul figlio e farà parte del suo *fenotipo*
+determinato gene a prevalere sarà la versione dominante, la quale quindi, sarà visibile sul figlio e farà parte del
+suo *fenotipo*
 . <br />
 Ogni figlio eredita dai genitori una coppia di alleli, uno dal padre ed uno dalla madre. Tale coppia sarà una delle
 combinazioni degli alleli dei genitori rappresentata
@@ -83,9 +86,13 @@ Di seguito sono riportati gli obiettivi fissati ed i risultati realmente prodott
 | 2 | Implementare una prima versione dell'applicazione, in cui è possibile osservare visivamente la riproduzione dei coniglietti. Nella pratica, si tratta di: <ul><li>Realizzare il model di base per la rappresentazione del coniglietto ed il suo patrimonio genetico.</li><li>Creare la struttura MVC dell'applicativo ed il loop che permette di avanzare nelle generazioni.</li><li> Visualizzare il pannello principale con i coniglietti che saltano.</li></ul>  | Obiettivo portato a termine. |
 | 3 | Integrare alcune feature alla prima versione prodotta, in particolare: <ul><li>Estendere la GUI con tutti i pannelli necessari, in particolare quelli per la scelta delle mutazioni e del grafico.</li><li>Aggiungere  le mutazioni ai conigli.</li><li>Dare la possibilità di scegliere la dominanza delle mutazioni introdotte.</li><li>Dare la possibilità di cambiare clima.</li><li>Visualizzare l'albero genealogico di un qualsiasi coniglio.</li><li>Visualizzare il grafico con la cardinalità della popolazione.</li><li>Visualizzare il grafico con le proporzioni.</li><li>Iniziare la stesura del report.</li></ul> | Obiettivo portato a termine.   |
 | 4 | Integrare nel prototipo prodotto nel precedente sprint le seguenti funzionalità: <ul><li>Realizzare il model dei fattori disturbanti</li><li>Estendere la GUI con il pannello per la scelta dei fattori disturbanti</li><li>Visualizzazione dei predatori durante la simulazione</li><li>Aggiungere al grafico delle proporzioni la funzionalità _
+
 history_</li><li>Aggiungere il _
-restart_ al termine della simulazione</li> <li>Dare la possibilità di modificare la velocità della simulazione</li><li>Aggiungere alla GUI un orologio per visualizzare il trascorrere del tempo della simulazione</li>| Obiettivo portato parzialmente a termine.|
-| 5 | Rifinire il prototipo realizzato nello sprint precedente ed aggiungere la feature mancante: la realizzazione dell'orologio, per poter rilasciare la release definitiva del sistema. Completare la stesura del report. Questo Sprint ha avuto una durata di 10 giorni. | Obiettivo portato a termine. |
+restart_ al termine della simulazione</li> <li>Dare la possibilità di modificare la velocità della simulazione</li><li>
+Aggiungere alla GUI un orologio per visualizzare il trascorrere del tempo della simulazione</li>| Obiettivo portato
+parzialmente a termine.| | 5 | Rifinire il prototipo realizzato nello sprint precedente ed aggiungere la feature
+mancante: la realizzazione dell'orologio, per poter rilasciare la release definitiva del sistema. Completare la stesura
+del report. Questo Sprint ha avuto una durata di 10 giorni. | Obiettivo portato a termine. |
 
 ### Modalità di revisione dei task
 
@@ -242,7 +249,6 @@ rappresentazione.
 | f | ff  | *FF* | 
 | f | ff  | ff | 
 
-
 * Nel caso in cui siano definite più mutazioni (su vari geni) durante la medesima generazione, si cercherà di mantenere
   un'unica mutazione per coniglio, le mutazioni si andranno ad accumulare sullo stesso figlio solo nel caso in cui non
   si disponga di abbastanza conigli.
@@ -396,7 +402,6 @@ in particolare tutti i package relativi all'implementazione in scalaFX dell'appl
 
 ![](images/package_architecture.png)
 
-
 //Pattern di progettazione //Organizzazione del codice
 
 ## Implementazione
@@ -488,3 +493,52 @@ disturbante del cibo introdotto (view.scalaFX.utilities.EnvironmentImages).
 ### Testing
 
 - Coverage
+
+## Guida utente
+
+L'applicazione può essere lanciata in diversi modi:
+
+* tramite il jar del proprio sistema operativo fornito nella sezione release di GitHub sia con il comando `$ java -jar `
+  path-to-downloaded-jar`` che il doppio click diretto sul jar scariato
+* tramite `sbt` usando il comando `sbt run mainClass`
+* importando il progetto ed eseguendolo nell'IDE che si preferisce
+
+Una volta messa in esecuzione apparirà una board di gioco, con l'aspetto riportato in [aggiungere screen applicazione], che rappresenta la GUI
+principale della simulazione con la quale si può interagire per avviarla. La board è formata da:
+
+* un pannello, il più grande dei quattro, posto in alto a sinistra nel quale avviene la simulazione vera e propria. Qui
+  infatti si ritroveranno i coniglietti, l'orologio nell'angolo in alto a sinistra, i due bottoni per il cambiamento del
+  clima in alto a destra e il bottone per l'aumento della velocità in basso a destra.
+* un pannello multiplo, sotto al pannello di gioco principale, in basso a sinistra che contiene i tre principali
+  grafici:
+    * il grafico della popolazione
+    * il grafico delle proporzioni delle mutazioni suddivise per generazioni
+    * il grafico dell'albero genealogico
+* un pannello per l'aggiunta delle mutazioni in alto a destra con un bottone per ogni tipo di mutazione che si può
+  introdurre
+* un pannello per l'aggiunta di fattori disturbanti in basso a destra con una check box per ogni tipo di fattore che si
+  può introdurre
+
+Tutto comincia quando si preme il pulsante "START", ma nell'attesa di iniziare si possono comunque selezionare le
+mutazioni e i fattori che si trovano nei due rispettivi pannelli e si possono ispezionare i grafici anche se ovviamente
+non ancora completi delle informazioni necessarie.
+
+Una volta avviata la simulazione si potrà aggiungere una mutazione in qualsiasi momento ma vista la logica della
+genetica verrà applicata di fatto alla generazione successiva durante la riproduzione, come poi indicato durante il
+gioco dalle scritte d'informazione nel pannello. Stesso discorso vale per l'introduzione di un fattore distrurbante dal
+momento che ogni fattore a un suo preciso momento di applicazione, se si introducono i fattori dopo il loro periodo
+verrano applicati alla generazione successiva. Mentre per i fattori vale la regola che si possono inserire e togliere a
+proprio piacimento per le mutazioni no, infatti per rimanere fedeli alla realtà una volta introdotta una mutazione non
+si potrà più rimuovere. Infine i grafici verranno popolati con le informazioni realtime e si potranno gestire il clima e
+la velocità di esecuzione.
+
+Il simulatore termina o quando i coniglietti conquistano il mondo oppure perchè si sono estinti, in entrambi i casi
+viene mostrata una dialog finale con la descrizione dell'accaduto e si può ripartire da capo cliccando sul tasto restart
+che comparirà al posto di quello dello speed up della velocità.
+
+Quello che si consiglia è di non applicare inizialmente nessun fattore, ma di lasciare riprodurre per qualche
+generazione i coniglietti. Questo consentirà di evitare di far morirli morire subito e terminare immediatamente il gioco
+se l'intenzione è quella di provare a giocare che un po' di tempo. Se poi si scelgono tutte le mutazioni da applicare,
+si potrebbe notare che alcuni coniglietti presentino più di una mutazione a testa e questo capita volontariamente nel
+caso non ci siano abbastanza figli in una generazione per poterle distribuire in modo uniforme. Per questo motivo quello
+che si suggerisce è d'introdurre una mutazione alla volta in ogni generazione.
