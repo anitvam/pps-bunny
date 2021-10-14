@@ -240,7 +240,7 @@ Nello specifico, `Simulation` permette di incapsulare attraverso delle monadi di
 
 ###Grafici
 
-Di seguito viene preposta una descrizione del design dei tre grafici introdotti nel sistema per avere in tempo reale delle informazioni strutturate riguardanti l'andamento della simulazine.
+Di seguito viene proposta una descrizione del design dei tre grafici introdotti nel sistema per avere in tempo reale delle informazioni strutturate riguardanti l'andamento della simulazione.
 ####Pedigree Chart
 
 ####Population Chart
