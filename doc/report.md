@@ -2,8 +2,8 @@
 
 [Baiardi Martina](mailto:martina.baiardi4@studio.unibo.it),
 [Lucchi Asia](mailto:asia.lucchi@studio.unibo.it),
-[Spadoni Marta](mailto:alessia.rocco@studio.unibo.it),
-[Rocco Alessia](mailto:marta.spadoni2@studio.unibo.it)
+[Spadoni Marta](mailto:marta.spadoni2@studio.unibo.it),
+[Rocco Alessia](mailto:alessia.rocco@studio.unibo.it)
 
 ## Descrizione
 `pps-bunny` è un simulatore per osservare l'evoluzione naturale di una famiglia di conigli nel corso delle generazioni.
@@ -205,10 +205,28 @@ Nello specifico è possibile osservare come l'applicativo si sviluppi su 4 compo
 #### Fattori
 
 ### Engine
-#### SimulationEngine
-#### Simulation
+Il modulo di `Engine` racchiude tutte le strutture dati necessarie per definire il motore della simulazione e l'aggiornamento della stessa. 
+In questo package al fine di adottare uno stile di programmazione funzionale puro si è deciso di utilizzare la libreria Cats Effect per definire il `SimulationEngine` e il `GenerationTimer`, 
+nello specifico si utilizza la Monade IO, un tipo di dato lazy che consente di codificare computazioni, sincrone o asincrone, contenenti side-effect come un valore puro.
+
+#### SimulationEngine e GenerationTimer
+Data la struttura sequenziale e periodica della simulazione è stato naturale modellare il suo andamento come una successione temporizzata delle varie fasi che la caratterizzano.
+Si è quindi voluto dapprima modellare in modo funzionale il timer che scandisce il tempo all'interno di ciascuna generazione, il `GenerationTimer`. 
+Quest'ultimo fornisce un metodo per ritardare l'esecuzione di un task di uno specifico intervallo di tempo, attraverso una monade IO che può essere eseguita anche in modo asincrono.
+
+Il vero motore della simulazione è però `SimulationEngine`, il quale fornisce una descrizione monadica del loop della simulazione.
+Nello specifico, dato che ciascuna generazione è caratterizzata dalle medesime fasi si è deciso di modellare il singolo ciclo di una generazione, il `generationLoop`, come il susseguirsi delle sue fasi.
+Ogni `generationPhase` è caratterizzata da un'azione che va a modificare il contesto della simulazione e un istante temporale in cui tale azione deve essere eseguita, ad esempio, per quanto riguarda la fase dei lupi, questa ha come azione associata il "pasto" dei predatori, che comporterà la morte di alcuni coniglietti, e come istante assegnato il terzo secondo dall'inizio della simulazione.
+Il loop generale della simulazione si ottiene mediante ricorsione, infatti se al termine del `generationLoop`non si è verificata una delle tre condizioni che portano alla terminazione della simulazione, si esegue un nuovo `generationLoop`.
+
+Il `SimulationEngine` è inoltre caratterizzato da una `simulationSpeed`, tale valore permette di diminuire gli intervalli di tempo di attesa tra le varie fasi, così da velocizzare ciascuna generazione.
+
+L'avvio della simulazione viene scatenato dal `Controller` a seguito dello start da parte dell'utente, nello specifico si attiva l'esecuzione asincrona del `simulationLoop`, il quale aggiorna l'interfaccia grafica per gestire la prima riproduzione relativa alla creazione dei `Bunny` capostipiti e in seguito avvia il loop della generazione zero.
+
 #### Simulation History
 
+
+#### Simulation
 
 ### View
 // parlare di scalafx e scala-fxml 
