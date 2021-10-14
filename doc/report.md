@@ -1,9 +1,9 @@
-# Bunny Survival
+# PPS-BUNNY
 
 [Baiardi Martina](mailto:martina.baiardi4@studio.unibo.it),
 [Lucchi Asia](mailto:asia.lucchi@studio.unibo.it),
-[Spadoni Marta](mailto:alessia.rocco@studio.unibo.it),
-[Rocco Alessia](mailto:marta.spadoni2@studio.unibo.it)
+[Spadoni Marta](mailto:marta.spadoni2@studio.unibo.it),
+[Rocco Alessia](mailto:alessia.rocco@studio.unibo.it)
 
 ## Descrizione
 `pps-bunny` è un simulatore per osservare l'evoluzione naturale di una famiglia di conigli nel corso delle generazioni.
@@ -189,6 +189,7 @@ Inoltre, dato che la simulazione si basa fortemente sulla possibilità dell'uten
 ### Utilizzo del Pattern MVC
 In figura viene riportato un diagramma ad alto livello di come è stato strutturato il sistema per implementare il pattern architetturale scelto.
 ![](images/mvc_architecture.png)
+
 Nello specifico è possibile osservare come l'applicativo si sviluppi su 4 componenti fondamentali:
 * __Model__: modulo che incapsula tutte le classi relative alle entità e ai concetti che compongono il dominio della simulazione
 * __Engine__: modulo che incapsula il loop su cui si basa la simulazione e le entità che gestiscono la storia della simulazione
@@ -205,6 +206,7 @@ Sebbene chiaramente sia stato ampliato e alcune entità siano state aggiornate p
 
 #### Bunny e Genoma
 ![](images/bunny_model.png)
+Lo schema fornisce una rappresentazione grafica dei concetti legati al coniglietto e il suo genoma.
 Il `Bunny` è un trait costruito con l'obiettivo di massimizzare l'immutabilità, infatti è possibile modificare implicitamente solo l'età e la condizione di vita attraverso due specifiche operazioni: l'aumento dell'età che avviene procedendo nelle generazioni e l'uccisione diretta del coniglietto che è causata da un fattore. </br> 
 Il `Bunny` può essere istanziato come:
 * `ChildBunny`, un coniglio appena nato
@@ -228,25 +230,172 @@ Il `Gender` è stato modellato tramite due `case object`, elementi statici senza
 `Reproduction` è un singleton che contiene una serie di metodi, funzioni e classi utili alla riproduzione. Consente ad esempio di combinare i conigli in coppie, di generare i figli di una coppia includendo o meno delle mutazioni, di generare tutti i figli di un gruppo di conigli e di ottenere i conigli di una generazione a partire dalla precedente, facendo nascere i nuovi conigli e morire quelli troppo anziani. Quest'ultima funzionalità è fondamentale, viene usata da `SimulationHistory` e permette di legare la parte di Model descritta fino ad ora con il progredire delle generazioni nel tempo.
 
 #### Generazioni e Ambiente
+Una `Generation` rappresenta l'unità di tempo della simulazione. Essa contiene il riferimento dell'attuale popolazione dei coniglietti e dell'Ambiente.
+L'`Environment` rappresenta lo stato dell'ambiente di simulazione all'interno di una generazione, infatti contiene il riferimento dei fattori disturbanti, delle mutazioni e del clima scelti dall'utente durante lo svolgimento della simulazione. 
+
+La modifica dello stato dell'Environment avviene principalmente attraverso `introduceMutation`, `introduceFactor` e `removeFactor`. 
+Questi metodi sono stati esposti perchè implementano le operazioni necessarie per poter introdurre e rimuovere in modo corretto fattori e mutazioni, mentre invece per quanto riguarda il clima è possibile modificare il valore direttamente dal suo campo, in quanto la sua modifica non prevede operazioni particolari.
+Non è stato previsto un metodo per rimuovere le mutazioni, in quanto una volta introdotte durante la simulazione non è possibile modificarle o rimuoverle.
+
+Per avere un'interfaccia più pulita, si è scelto di definire due type alias: `Mutations` e `Factors`, i quali sono rispettivamente una `List<Mutation>` e una `List<Factor>`.
+Per memorizzare queste informazioni, al fine di rispettare il paradigma funzionale,  si è scelto di utilizzare strutture dati immutabili in una variabile mutabile lasciando il vantaggio di poterle aggiornare senza dover creare nuovamente l'istanza di Environment.
+
+La modellazione del clima invece è stata fatta utilizzando dei `case object` che definiscono i tue tipi di clima che è possibile scegliere nella simulazione: Estate e Inverno.
+
+Di seguito è riportata una immagine che rappresenta la struttura delle classi citate.
+
+![](images/environment_model.png)
+
+Per rendere più semplice e comprensibile l'implementazione dei metodi `introduceFactor` e `removeFactor` è stato implementato il pattern pimp my library sul type alias `Factors`: `it.unibo.pps.bunny.model.world.disturbingFactor.PimpFactors`. Questa scelta è stata fatta per sfruttare allo stesso tempo sia le funzionalità della struttura dati `List` di Scala, con cui è stato definito l'alias, sia quelle aggiuntive utili per mantenere coerente l'aggiornamento dei `Fattori`.
+
 #### Fattori
+L'interfaccia `Factor` astrae qualsiasi implementazione dei fattori ed espone il metodo principale che verrà richiamato dall'esterno: `applyDamage`. 
+Questo metodo prende come parametro le uniche informazioni rilevanti per determinare qual è il danno apportato alla popolazione dei conigli a partire da un qualsiasi fattore: la popolazione su cui applicarlo e il clima in cui si trova l'ambiente in quel momento.
+
+I fattori disturbanti si distinguono in tre categorie: lupi, temperature ostili e alimentari. A loro volta i fattori alimentari possono essere di tre tipi tra loro combinabili: cibo alto, cibo difficilmente masticabile e cibo scarso. 
+
+Durante la fase di progettazione è stata valutata la quantità di danno che ciascun fattore può apportare alla popolazione.
+Vengono di seguito riportate la percentuali di danno riguardanti tutte le combinazioni di geni interessati da ciascun fattore, tali valori sono stati opportunamente aggiornati dopo una prima implementazione per ottenere un effetto realistico sulla popolazione.
+
+##### Predatori
+| Alleli                             | % Estate |  % Inverno  |
+| ---------------------------------- | :------: | :---------: |
+| Pelliccia Bianca e Orecchie Alte   | -70%     | -60%        |
+| Pelliccia Bianca e Orecchie Basse  | -80%     | -70%        |
+| Pelliccia Marrone e Orecchie Alte  | -60%     | -70%        |
+| Pelliccia Marrone e Orecchie Basse | -70%     | -80%        |
+
+##### Temperature ostili
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| Pelo Lungo               | -60%     | -           |
+| Pelo Corto               | -        | -60%        |
+
+##### Cibo difficilmente masticabile
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| Denti Corti              | -80%     | -80%        |
+| Denti Lunghi             | -        | -           |
+
+##### Cibo in alto
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| Salto Normale            | -80%     | -80%        |
+| Salto Alto               | -        | -           |
+
+##### Cibo scarso
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| qualsiasi                | -80%     | -80%        |
+
+##### Cibo difficilmente masticabile e cibo scarso
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| Denti Corti              | -80%     | -80%        |
+| Denti Lunghi             | -60%     | -60%        |
+
+##### Cibo difficilmente masticabile e cibo in alto
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| Salto Normale            | -80%     | -80%        |
+| Salto Alto e Denti Corti | -60%     | -60%        |
+
+##### Cibo in alto e cibo scarso
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| Salto Normale            | -80%     | -80%        |
+| Salto Alto               | -60%     | -60%        |
+
+##### Cibo in alto, cibo scarso e cibo difficilmente masticabile
+| Alleli                   | % Estate |  % Inverno  |
+| ------------------------ | :------: | :---------: |
+| Salto Normale            | -80%     | -80%        |
+| Salto Alto e Denti Corti | -80%     | -80%        |
+| Salto Alto e Denti Lunghi| -60%     | -60%        |
+
+Dai dati sopra riportati è possibile distinguere tre tipologie di danno, cioè tre percentuali applicate da parte dei fattori: `60%`, `70%` e `80%`. 
+Siccome ogni fattore è influenzato da almeno una percentuale, tale valore viene definito all'interno dell'interfaccia principale `Factor`. 
+Di tale interfaccia è stata poi definita un'implementazione standard all'interno della classe astratta `BasicFactor` che attribuisce a tutta la popolazione il danno `normalDamage` previsto dall'interfaccia senza tener conto del clima in quanto solamente alcuni dei danni sopra citati ne sono influenzati.
+
+I fattori che applicano un danno diverso in base al clima sono le temperature ostili e i lupi, per facilitare la loro implementazione è stata definita una classe astratta `ClimateFactor` che implementa il metodo `applyDamage` esponendo due template method: uno per applicare il danno relativo al clima estivo e l'altro per quello invernale.
+
+Un'altra distinzione evidenziata dai dati sopra riportati riguarda il fatto che i fattori possono essere influenzati dalla presenza di nessuno, uno o al massimo due geni. 
+Siccome l'implementazione in `BasicFactor` non tiene conto di alcun gene, sono state implementati due mixin per i casi rimanenti: `FactorOnSingleGene` e `FactorOnDoubleGene` che aggiungono tali informazioni ai fattori.
+
+Per implementare i fattori dei lupi è stata definita un'interfaccia aggiuntiva, chiamata `PredatorFactor`, che comprendesse gli ulteriori danni apportati da queste entità: `lowDamage` e `highDamage`.
+
+`FoodFactor` è un'interfaccia che definisce due importanti metodi: `+` e `-`. Queste operazioni supportano rispettivamente la combinazione e la suddivisione di due fattori alimentari e vengono implementate nelle classi astratte:
+- `SingleFoodFactor`, rappresenta i fattori alimentari composti da una sola tipologia, ad esempio il cibo alto, e di conseguenza impedisce l'implementazione del metodo `-`. Per quanto riguarda il metodo `+`, questo espone un template method che consente di far definire alle singole implementazioni quali sono i fattori alimentari con cui la classe può essere combinata.
+- `DoubleFoodFactor`, estende da `SingleFoodFactor` e implementa anche l'operazione `-` sempre attraverso un template method. Infatti, questa classe rappresenta la combinazione di due fattori relativi al cibo, ad esempio cibo alto e scarso, dalla quale è quindi possibile rimuovere uno dei due fattori singoli.
+- `TripleFoodFactor`, estende da `DoubleFoodFactor` e blocca l'utilizzo del metodo `+` in quanto un fattore alimentare composto da tutte e tre le topologie non può essere concatenato a nessun altro.
+
+È stato infine definito il mixin `FoodFactorOnSingleGene` che estende l'implementazione del metodo `applyDamage` di `BasicFactor` in modo da coprire tutti i fattori alimentari che agiscono su un singolo gene. Il mixin ha l'obiettivo di estrapolare un comportamento comune a vari fattori, ovvero l'applicazione dello stesso danno a tutta la popolazione oppure l'applicazione di un danno elevato ai conigli con l'allele base e un danno ridotto a quelli con l'allele mutato.
+
+Di seguito è fornita una rappresentazione grafica legata alla modellazione dei fattori.
+![](images/factors_model.png)
 
 ### Engine
-#### SimulationEngine
-#### Simulation History
+Il modulo di `Engine` racchiude tutte le strutture dati necessarie per definire il motore della simulazione e l'aggiornamento della stessa. 
+In questo package, al fine di adottare uno stile di programmazione funzionale, si è deciso di utilizzare la libreria Cats Effect per definire il `SimulationEngine` e il `GenerationTimer`, 
+nello specifico si utilizza la Monade IO, un tipo di dato lazy che consente di codificare computazioni, sincrone o asincrone, contenenti side-effect come un valore puro.
+
+#### SimulationEngine e GenerationTimer
+Data la struttura sequenziale e periodica della simulazione è stato naturale modellare il suo andamento come una successione temporizzata delle varie fasi che la compongono.
+Si è quindi voluto dapprima modellare in modo funzionale il timer che scandisce il tempo all'interno di ciascuna generazione, il `GenerationTimer`. 
+Quest'ultimo fornisce un metodo per ritardare l'esecuzione di un task di uno specifico intervallo di tempo attraverso una monade IO che può essere eseguita anche in modo asincrono.
+
+Il vero motore della simulazione è però `SimulationEngine`, il quale fornisce una descrizione monadica del loop della simulazione.
+Nello specifico, dato che ciascuna generazione è caratterizzata dalle medesime fasi si è deciso di modellare il singolo ciclo di una generazione, il `generationLoop`, come il susseguirsi delle sue fasi.
+Ogni `generationPhase` è caratterizzata da un'azione che va a modificare il contesto della simulazione e un istante temporale in cui tale azione deve essere eseguita. Ad esempio, per quanto riguarda la fase dei lupi, questa ha come azione associata il "pasto" dei predatori, che comporterà la morte di alcuni coniglietti, e come istante assegnato il terzo secondo dall'inizio della simulazione.
+Il loop generale della simulazione si ottiene mediante ricorsione, infatti se al termine del `generationLoop` non si è verificata una delle tre condizioni che portano alla terminazione della simulazione, si esegue un nuovo `generationLoop`.
+
+Il `SimulationEngine` è inoltre caratterizzato da una `simulationSpeed`, tale valore permette di diminuire gli intervalli di tempo di attesa tra le varie fasi, così da velocizzare ciascuna generazione.
+
+L'avvio della simulazione viene scatenato dal `Controller` a seguito dello start da parte dell'utente, nello specifico si attiva l'esecuzione asincrona del `simulationLoop`, il quale aggiorna l'interfaccia grafica per gestire la prima riproduzione relativa alla creazione dei `Bunny` capostipiti e in seguito avvia il loop della generazione zero.
+
+#### Simulation History e Simulation
+`SimulationHistory` è il Singleton che consente di gestire la storia della simulazione, modellata come una lista di `Generation`, di interagire con la generazione attualmente in esecuzione e di coordinare il passaggio da una generazione all'altra. 
+Viene in particolar modo utilizzato dal `Controller`, per introdurre lato Model le modifiche dell'ambiente di simulazione attivate dall'utente attraverso l'interfaccia grafica e viene utilizzato indirettamente dal `SimulationEngine` all'interno del `generationLoop`.
+
+`Simulation` è l'object di utility che consente di creare le monadi da utilizzare all'interno del `generationLoop`, ad esempio si occupa di monadizzare l'azione associata alla fase dei lupi descritta in precedenza. 
+Nello specifico, `Simulation` permette di incapsulare attraverso delle monadi di tipo `IO[Unit]` le interazioni che il `SimulationEngine` ha con il `Controller` e `SimulationHistory`.
 
 ### View
 // parlare di scalafx e scala-fxml 
 // parlare del fatto che scalafx è un dsl che parte da scalafx e quindi prevede una implementazione orientata alla object orientation
 #### Controllers
 #### AnimalViews
-#### Grafici
-* __Pedigree Chart__ </br> Il grafico ha l'obiettivo di mostrare l'albero genealogico del coniglietto selezionato con la possibilità di visionare fino a tre generazioni di antenati, per ogni elemento dell'albero sono rappresentate varie informazioni. Dato l'obiettivo della simulazione è di particolare importanza la visualizzazione degli alleli di ciascun coniglietto al fine di capire perchè l'animale mostra una certa caratterista e come questa sia stata ereditata dei genitori. </br> Il grafico non è associato a un file fxml nè estende altri grafici della libreria, bensì viene generato da zero usando i costrutti standard di ScalaFX. In particolare è realizzato grazie a:
-  * `BunnyPedigreeView`, che si occupa di renderizzare un singolo coniglietto dell'albero genealogico, composto dall'immagine del coniglio con le sue mutazioni, il genere, la visualizzazione sintetica degli alleli tramite lettere e alcune icone che indica se il coniglietto è morto o ha appena subito una mutazione;
-  * `PedigreeChart`, che costruisce l'albero genealogico vero e proprio, una riga alla volta, sfruttando il `BinaryTree` generabile per ogni coniglietto e predendendo in considerazione la possibilità di avere conigli con un numero variabile di antenati.
-* __Population Chart__
-* __Proportions Chart__
 
-### Controller
+###Grafici
+
+Di seguito viene proposta una descrizione del design dei tre grafici introdotti nel sistema per avere in tempo reale delle informazioni strutturate riguardanti l'andamento della simulazione.
+
+####Pedigree Chart
+
+Il grafico ha l'obiettivo di mostrare l'albero genealogico del coniglietto selezionato con la possibilità di visionare fino a tre generazioni di antenati, per ogni elemento dell'albero sono rappresentate varie informazioni. Dato l'obiettivo della simulazione è di particolare importanza la visualizzazione degli alleli di ciascun coniglietto al fine di capire perchè l'animale mostra una certa caratterista e come questa sia stata ereditata dei genitori. </br> Il grafico non è associato a un file fxml nè estende altri grafici della libreria, bensì viene generato da zero usando i costrutti standard di ScalaFX. In particolare è realizzato grazie a:
+* `BunnyPedigreeView`, che si occupa di renderizzare un singolo coniglietto dell'albero genealogico, composto dall'immagine del coniglio con le sue mutazioni, il genere, la visualizzazione sintetica degli alleli tramite lettere e alcune icone che indica se il coniglietto è morto o ha appena subito una mutazione;
+* `PedigreeChart`, che costruisce l'albero genealogico vero e proprio, una riga alla volta, sfruttando il `BinaryTree` generabile per ogni coniglietto e predendendo in considerazione la possibilità di avere conigli con un numero variabile di antenati.
+
+####Population Chart
+L'obiettivo di questo grafico è quello di fornire all'utente informazioni real-time circa l'andamento della cardinalità della popolazione durante le fasi delle varie generazioni, evidenziando quindi quanti `Bunny` sono morti a causa dei vari fattori introdotti nell'ambiente e quanti sono i nuovi nati a seguito della riproduzione.
+Per implementare questo tipo di grafico si è utilizzato come base il `LineChart` offerto dalla libreria ScalaFX trasformandolo però in uno _Step Chart_.
+
+Per creare e personalizzare i vari componenti del grafico, ovvero gli assi, le serie di dati, i singoli dati e il grafico stesso, si è fatto uso del pattern Factory, in questo modo ad esempio, i dati (`XYChart.Data`)
+possono essere creati facendo riuso di codice e incapsulando la logica che trasforma il LineChart in uno StepChart.  
+
+L'utilizzo del paradigma funzionale puro per quanto riguarda la gestione dei dati da graficare è stato limitato dal fatto che ScalaFX è in realtà il wrapper scala di JavaFX quindi una libreria OOP, dunque
+i tipi di dato creati non sono toltalmente esenti da side-effect ma ne evitano il più possibile.
+
+Si è inoltre utilizzato il pattern _Pimp my Library_ al fine di aggiungere metodi alle classi relative ai grafici di ScalaFX, in questo modo si è ad esempio facilitato l'accesso alla legenda dei grafici o il modo con cui aggiungere dati al grafico stesso.
+
+####Proportions Chart
+L'obiettivo del `Proportions Chart` è quello di mostrare come la distribuzione dell'allele base e di quello mutato di ciascun gene sulla popolazione vari durante ogni generazione, permettendo quindi all'utente di determinare quale delle due caratteristiche associate al gene si più utile per sopravvivere ai fattori applicati.
+
+Il grafico si sviluppa su due sotto-grafici a torta, il primo mostra la distribuzione degli alleli all'inizio della generazione mentre il secondo mostra la variazione della distribuzione durante le varie fasi.
+Si è inoltre inserita la modalità _history_ che consente di navigare tra le varie generazioni per poter visualizzare l'andamento della distribuzione del gene durante il corso di tutta la simulazione.
+
+Come per il `PopulationChart` si è fatto uso del pattern _Factory_ per generare i singoli grafici a torta, del pattern _Pimp my Library_ per aggiungere dei metodi alla classe `PieChart` di ScalaFX e del pattern _Adapter_, implementato tramite gli impliciti, per convertire i dati del Model in quelli adatti al grafico.
+
 ### Pattern di progettazione
 Si è cercato di utilizzare il più possibile pattern di progettazione al fine di implementare soluzioni ottimali per problemi di design ricorrenti.
 #### Pimp My Library
@@ -259,6 +408,9 @@ Il pattern _Builder_ è stato utilizzato nella versione implementata da Scala st
 #### Strategy
 Il pattern _Strategy_ è nativamente supportato dal linguaggio attraverso la possibilità di utilizzare funzioni higher-order. 
 Un esempio di utilizzo è visibile nel `BaseAppController` per il caricamento dei componenti dei vari pannelli.
+#### Adapter
+Anche il pattern _Adapter_ è fornito nativamente dal linguaggio grazie alla possibilità di definire dei metodi impliciti per la conversione dei tipi di dato. 
+Un esempio di uso di tale pattern è visibile nel componente grafico `PopulationChart` in cui si usano per trasformare le tuple Scala in tipi di dati propri del sistema come il `ChartPoint`.
 #### Template Method
 Il pattern `Template Method` permette di definire la struttura di un comportamento utilizzando dei metodi astratti che verranno poi implementati dalle specifiche estensioni di tale classe. 
 Questo pattern è stato utilizzato all'interno del package `it.unibo.pss.bunny.world.disturbingFactor` per avere un maggiore riuso di codice e rendere di conseguenza più semplici e comprensibili le specifiche implementazioni.
@@ -273,7 +425,7 @@ Per facilitare la lettura del diagramma sono stati omessi alcuni package minori,
 ![](images/package_architecture.png)  
 
 ## Implementazione
-
+Nei seguenti paragrafi ciascun componente descriverà per quali parti è responsabile dell'implementazione.
 ### Baiardi
 
 ### Lucchi
@@ -327,6 +479,19 @@ Nei trait `Genotype` e `Phenotype` ho usato la proprietà `values` e il metodo `
 
 ### Spadoni 
 
+La parte di progetto da me interamente sviluppata è quella contenuta nel package `it.unibo.pps.bunny.engine`. 
+Dopo aver consultato alcuni dei progetti consigliati dal docente, nello specifico _evo-sim_ e _Primer_, ho deciso di volermi cimentare nell'implementare il loop della simulazione utilizzando la libreria Cats Effect, 
+che consente di utilizzare il costrutto delle monadi senza la necessità di implementarle da zero.
+
+Inoltre, ho implementato i grafici PopulationChart e Proportions Chart (quest'ultimo implementato in `it.unibo.pps.bunny.view.scalaFX.FXControllers.ProportionsChartController.scala`), i quali sono stati descritti precedentemente nella parte di Design di Dettaglio e che mi hanno portato a definire il file `PimpScalaFXChartLibrary` che racchiude tutte le classi implementate per attuare il pattern _Pimp My Library_.
+
+Mi sono anche occupata di definire i concetti del Model di `Generation` e `Environment` insieme a Baiardi e ho partecipato, come tutti i componenti del gruppo, all'implementazione del `BaseAppController`. 
+In particolare, di quest'ultimo ho anche realizzato il refactoring necessario al termine del progetto per migliorarne la qualità del codice.
+
+Fra gli elementi generali, ho sviluppato la classe di utility `PimpScala` che contiene l'implementazione di metodi aggiuntivi per alcune strutture dati di base di Scala, alla quale anche Lucchi hanno aggiunto alcuni metodi.
+Infine, ho aiutato Rocco nello sviluppo di `Mutation` e di `WolvesView`.
+
+Per quanto riguarda la parte di test ho realizzato quelli riguardanti `SimulationHistory`, che trasversalmente valida anche `Generation`, e `Environment`, come metodologia di testing ho preferito adottare quella tradizionale piuttosto che il TDD.
 ### Rocco
 
 ### Testing
