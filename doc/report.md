@@ -288,7 +288,7 @@ Per l'implementazione dei concetti fondamentali del modello, ovvero il conigliet
 
 #### Ricorsione
 Ho utilizzato la **ricorsione** nella costruzione dell'albero genealogico del coniglietto. </br>
-Ho tentato di trasformare, anche con l'aiuto di Spadoni, tale ricorsione in una di tipo *tail* senza successo e sono giunta alla conclusione che avendo due chiamate alla funzione ricorsiva dentro la funzione stessa, una per ogni genitore del coniglietto, non fosse possibile lasciare come ultima istruzione della funzione una soal chiamata ricorsiva perchè i risultati delle due chiamate devono essere combinati insieme in un unico nodo. </br>
+Ho tentato di trasformare, anche con l'aiuto di Spadoni, tale ricorsione in una di tipo *tail* senza successo e sono giunta alla conclusione che avendo due chiamate alla funzione ricorsiva dentro la funzione stessa, una per ogni genitore del coniglietto, non fosse possibile lasciare come ultima istruzione della funzione una sola chiamata ricorsiva perchè i risultati delle due chiamate devono essere combinati insieme in un unico nodo. </br>
 Non è stato possibile usare un accumulatore perchè ognuna delle due chiamate si espande autonomamente e tentando di strutturare questo procedimento ci si ritrova a specificare manualmente l'intera composizione dell'albero perdendo totalmente l'utilità della ricorsione.
 
 #### Prolog
