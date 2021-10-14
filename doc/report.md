@@ -251,7 +251,7 @@ Per creare e personalizzare i vari componenti del grafico, ovvero gli assi, le s
 possono essere creati facendo riuso di codice e incapsulando la logica che trasforma il LineChart in uno StepChart.  
 
 L'utilizzo del paradigma funzionale puro per quanto riguarda la gestione dei dati da graficare è stato limitato dal fatto che ScalaFX è in realtà il wrapper scala di JavaFX quindi una libreria OOP, dunque
-i tipi di dato creati non sono toltalmente esenti da side-effect ma ne limitano il più possibile.
+i tipi di dato creati non sono toltalmente esenti da side-effect ma ne evitano il più possibile.
 
 Si è inoltre, utilizzato il pattern _Pimp my Library_ al fine di aggiungere metodi alle classi relative ai grafici di ScalaFX, in questo modo si è ad esempio facilitato l'accesso alla legenda dei grafici o il modo con cui aggiungere dati al grafico stesso.
 
