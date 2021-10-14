@@ -331,7 +331,7 @@ L'applicazione può essere lanciata in diversi modi:
 
 * tramite il jar del proprio sistema operativo fornito nella sezione release di GitHub sia con il comando `$ java -jar `
   path-to-downloaded-jar`` che il doppio click diretto sul jar scaricato
-* tramite `sbt` usando il comando `sbt run mainClass`
+* tramite `sbt` usando il comando `sbt run`
 * importando il progetto ed eseguendolo nell'IDE che si preferisce
 
 Una volta che l'applicativo è stato messo in esecuzione apparirà una board di gioco con l'aspetto riportato in [aggiungere screen applicazione] che rappresenta la GUI
