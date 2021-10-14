@@ -259,7 +259,7 @@ Si è inoltre utilizzato il pattern _Pimp my Library_ al fine di aggiungere meto
 L'obiettivo del `Proportions Chart` è quello di riassumere come durante una generazione vari la distribuzione dell'allele base e quello mutato di un determinato gene sulla popolazione, permettendo quindi all'utente di determinare quale delle due caratteristiche associate al gene sopravviva meglio a determinati fattori.
 
 Il grafico si sviluppa su due sotto-grafici a torta, il primo mostra la distribuzione degli alleli all'inizio della generazione mentre il secondo mostra la variazione della distribuzione durante le varie fasi.
-Si è inoltre, inserita la modalità _history_ che consente di navigare tra le varie generazione per poter visualizzare l'andamento della distribuzione del gene durante il corso di tutta la simulazione.
+Si è inoltre inserita la modalità _history_ che consente di navigare tra le varie generazione per poter visualizzare l'andamento della distribuzione del gene durante il corso di tutta la simulazione.
 
 Come per il `PopulationChart` si è fatto uso del pattern _Factory_, per generare i singoli grafici a torta, del pattern _Pimp my Library_ per aggiungere dei metodi alla classe `PieChart` di ScalaFX e del pattern _Adapter_, implementato tramite gli impliciti, per convertire i dati del Model in quelli adatti al grafico.
 
