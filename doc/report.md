@@ -29,8 +29,7 @@ determinato gene a prevalere sarà la versione dominante, la quale quindi, sarà
 suo *fenotipo*
 . <br />
 Ogni figlio eredita dai genitori una coppia di alleli, uno dal padre ed uno dalla madre. Tale coppia sarà una delle
-combinazioni degli alleli dei genitori rappresentata
-nel  [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett), uno schema che per una qualsiasi coppia
+combinazioni degli alleli dei genitori rappresentata nel  [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett), uno schema che per una qualsiasi coppia
 di genitori con certi alleli mostra le quattro combinazioni di alleli possibili per formare il gene del figlio.
 
 #### Glossario
@@ -97,8 +96,7 @@ del report. Questo Sprint ha avuto una durata di 10 giorni. | Obiettivo portato 
 ### Modalità di revisione dei task
 
 Durante lo Sprint Planning viene assegnato a ogni membro l'insieme di task che ha il compito di portare a termine entro
-lo sprint successivo. Per ciascun task pianificato vengono definite una Issue su GitHub e una scheda Trello nella
-sezione "To Do" entrambe assegnate alla persona incaricata di implementare il task.
+lo sprint successivo. Per ciascun task pianificato vengono definite una Issue su GitHub e una scheda Trello nella sezione "To Do" entrambe assegnate alla persona incaricata di implementare il task.
 
 La scheda su Trello fornisce la possibilità di aggiungere dei commenti e dei punti elenco, permettendo ad ogni
 sviluppatore di avere tutte le informazioni relative a quel task in un solo punto e visibili da tutti gli altri membri.
@@ -454,6 +452,7 @@ Per implementare i fattori dei lupi è stata definita un'interfaccia aggiuntiva,
 È stato infine definito il mixin `FoodFactorOnSingleGene` che estende l'implementazione del metodo `applyDamage` di `BasicFactor` in modo da coprire tutti i fattori alimentari che agiscono su un singolo gene. Il mixin ha l'obiettivo di estrapolare un comportamento comune a vari fattori, ovvero l'applicazione dello stesso danno a tutta la popolazione oppure l'applicazione di un danno elevato ai conigli con l'allele base e un danno ridotto a quelli con l'allele mutato.
 
 Di seguito è fornita una rappresentazione grafica legata alla modellazione dei fattori.
+
 ![](images/factors_model.png)
 
 ### Engine
@@ -579,6 +578,7 @@ il `Controller` e `SimulationHistory`.
 Nella figura riportata si evidenzia l'organizzazione in package dei sorgenti del sistema, ognuno dei quali raggruppa le
 classi relative a specifiche feature. Per facilitare la lettura del diagramma sono stati omessi alcuni package minori,
 in particolare tutti i package relativi all'implementazione in scalaFX dell'applicazione.
+
 
 ![](images/package_architecture.png)
 
@@ -738,9 +738,6 @@ Altri meccanismi avanzati sono:
   del clima e del fattore disturbante del cibo introdotto in `view.scalaFX.utilities.EnvironmentImages`
 
 ### Testing
-### Testing
-Per verificare la correttezza dell'implementazione delle principali strutture dati realizzate sono stati sviluppati dei test con il framework `ScalaTest`, in particolare con l'ausilio di `FunSpec` per rendere la loro descrizione più naturale.
-Tali test consentono sia una verifica immediata del comportamento delle entità sviluppate sia una verifica continua per le modifiche apportate successivamente, che se effettuate nel modo sbagliato potrebbero comportare dei bug nel codice precedentemente implementato.
 
 Per la metodologia di implementazione dei test si è lasciata la libera scelta ad ogni componente del gruppo: alcuni
 hanno preferito l'approccio TDD (Test Driven Development) per porzioni di codice importanti e complesse da sviluppare,
@@ -771,13 +768,14 @@ classi di model e dell'engine.
 
 ## Retrospettiva
 
-In questa sezione saranno descritti gli Sprint settimanali con le rispettive relazioni e i
-commenti finali del team. Inoltre nel file Backlog della cartella `/process` del repository GitHub sono riportati i
-riassunti degli Sprint.
+In questa sezione saranno descritti gli Sprint settimanali con le rispettive relazioni e i commenti finali del team.
+Inoltre nel file Backlog della cartella `/process` del repository GitHub sono riportati i riassunti degli Sprint.
 
 ### Sprint
 
-Sono stati realizzati un totale di 5 Sprint, alla conclusione di ognuno il team si è riunito per rilasciare un prototipo funzionante, ad eccezione del primo Sprint. Inoltre si è discusso del lavoro svolto, compilando il Product Backlog e il meeting report, e infine si è organizzato il lavoro futuro.
+Sono stati realizzati un totale di 5 Sprint, alla conclusione di ognuno il team si è riunito per rilasciare un prototipo
+funzionante, ad eccezione del primo Sprint. Inoltre si è discusso del lavoro svolto, compilando il Product Backlog e il
+meeting report, e infine si è organizzato il lavoro futuro.
 
 #### Sprint 1
 
@@ -806,7 +804,8 @@ Sprint che lo Sprint Planning del secondo. Di seguito sono riportate le attivit�
 #### Sprint 3
 
 Durante il terzo Sprint il team si è come al solito riunito prima di tutto per il meeting settimanale nel quale si è
-discusso sia la fine dello Sprint precedente che la definizione dello Sprint Planning del terzo. Di seguito sono riportate le attività svolte durante il terzo meeting:
+discusso sia la fine dello Sprint precedente che la definizione dello Sprint Planning del terzo. Di seguito sono
+riportate le attività svolte durante il terzo meeting:
 
 * Chiusura di tutti i task Sprint 2
 * Merge di tutte le Pull Request relative allo Sprint 2
@@ -821,7 +820,8 @@ discusso sia la fine dello Sprint precedente che la definizione dello Sprint Pla
 #### Sprint 4
 
 Durante il quarto Sprint il team si riunito prima di tutto per il meeting settimanale nel quale si è discusso sia la
-fine dello Sprint precedente che la definizione dello Sprint Planning del quarto. Di seguito sono riportate le attività svolte durante il quarto meeting:
+fine dello Sprint precedente che la definizione dello Sprint Planning del quarto. Di seguito sono riportate le attività
+svolte durante il quarto meeting:
 
 * Revisione difficoltà dei task
 * Chiusura di tutti i task Sprint 3
@@ -852,7 +852,20 @@ riusabile possibile. Di seguito sono riportate le attività svolte durante l'ult
 
 ### Commenti finali
 
-#### Sviluppi Futuri
+Per concludere, si riportano di seguito i commenti finali che tengono conto del sistema finale creato e dall'esperienza
+maturata da tutto il team durante il processo di sviluppo.
+
+Il lavoro è stato compiuto rispettando fedelmente gli standard più salienti della metodologia agile e di Scrum, in modo
+particolare nel rilascio di un prototipo funzionante alla fine di ogni Sprint fissato. Tutto sommato il team ha
+rispettato le scadenze, tranne che per il rilascio del prodotto a seguito del penultimo Sprint che è avvenuto con un
+giorno di ritardo. Nel complesso all'interno del team non sono state riscontrate grosse problematiche relative alla
+pianificazione e metodologia di sviluppo.
+
+Considerando a posteriori il lavoro svolto il team si ritiene pienamente soddisfatto in quanto è stata portata a termine
+la totalità delle funzionalità dichiarate nei limiti di tempo predefiniti, senza slittamenti temporali.
+
+#### Sviluppi futuri
+
 Per quanto riguarda gli sviluppi futuri il team ritiene che ci siano una moltitudine di aspetti che si possono appronfondire e varie funzionalità che sarebbe interessante aggiungere o ampliare. Di seguito sono riportate alcune proposte:
 * Aggiunta della pausa nella simulazione.
 * Aggiunta di altre mutazioni sui medesimi geni.
