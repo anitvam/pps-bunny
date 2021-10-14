@@ -14,7 +14,7 @@ case object Male extends Gender
 case object Female extends Gender
 
 /** Represents a Bunny. */
-trait Bunny {
+sealed trait Bunny {
   val genotype: CompleteGenotype
   val mom: Option[Bunny]
   val dad: Option[Bunny]

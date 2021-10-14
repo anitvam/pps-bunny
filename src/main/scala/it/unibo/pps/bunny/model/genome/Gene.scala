@@ -5,7 +5,6 @@ import it.unibo.pps.bunny.model.genome.Genes.GeneKind
 import it.unibo.pps.bunny.model.genome.KindsUtils.getGeneKind
 import it.unibo.pps.bunny.model.{ InconsistentAlleleException, InconsistentMutatedAlleleException }
 import it.unibo.pps.bunny.util.PimpScala.RichOption
-
 import scala.language.postfixOps
 
 /**
@@ -51,7 +50,7 @@ case class JustMutatedAllele(kind: AlleleKind) extends Allele {
 /**
  * Represents a Gene of a specific Bunny.
  */
-trait Gene {
+sealed trait Gene {
 
   /** The [[GeneKind]] of this Gene */
   val kind: GeneKind
