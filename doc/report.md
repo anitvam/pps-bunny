@@ -525,7 +525,7 @@ Sono stati realizzati un totale di 5 Sprint, alla conclusione di ognuno il team 
 #### Sprint 1
 
 Durante la prima fase il team si è concentrato sulla fase di analisi, molto corposa e fondamentale per il futuro
-sviluppo del progetto e la suddivisione dei task. Durante il primo meeting si sono prese le seguenti decisioni:
+sviluppo del progetto e la suddivisione dei task. Di seguito sono riportate le attività svolte durante il primo meeting:
 
 * Definizione delle date degli Sprint
 * Definizione dei Product Backlog Item dello Sprint 1
@@ -536,7 +536,7 @@ sviluppo del progetto e la suddivisione dei task. Durante il primo meeting si so
 #### Sprint 2
 
 Durante il secondo Sprint il team si è riunito per la riunione iniziale nella quale si è discussa sia la fine del primo
-Sprint che lo Sprint Planning del secondo. Durante il secondo meeting si sono prese le seguenti decisioni:
+Sprint che lo Sprint Planning del secondo. Di seguito sono riportate le attività svolte durante il secondo meeting:
 
 * Chiusura di tutti i task Sprint 1
 * Definizione regole del model di base dei conigli e genetica
@@ -549,8 +549,7 @@ Sprint che lo Sprint Planning del secondo. Durante il secondo meeting si sono pr
 #### Sprint 3
 
 Durante il terzo Sprint il team si è come al solito riunito prima di tutto per il meeting settimanale nel quale si è
-discusso sia la fine dello Sprint precedente che la definizione dello Sprint Planning del terzo. Durante il terzo
-meeting si sono prese le seguenti decisioni:
+discusso sia la fine dello Sprint precedente che la definizione dello Sprint Planning del terzo. Di seguito sono riportate le attività svolte durante il terzo meeting:
 
 * Chiusura di tutti i task Sprint 2
 * Merge di tutte le Pull Request relative allo Sprint 2
@@ -565,8 +564,7 @@ meeting si sono prese le seguenti decisioni:
 #### Sprint 4
 
 Durante il quarto Sprint il team si riunito prima di tutto per il meeting settimanale nel quale si è discusso sia la
-fine dello Sprint precedente che la definizione dello Sprint Planning del quarto. Durante il quarto meeting si sono
-prese le seguenti decisioni:
+fine dello Sprint precedente che la definizione dello Sprint Planning del quarto. Di seguito sono riportate le attività svolte durante il quarto meeting:
 
 * Revisione difficoltà dei task
 * Chiusura di tutti i task Sprint 3
@@ -583,7 +581,7 @@ prese le seguenti decisioni:
 Durante l'ultimo Sprint il team si è riunito per la riunione iniziale nella quale si è discussa sia la fine del
 precedente Sprint che lo Sprint Planning del quinto. Non sono ha portato allo sviluppo di nuove feature ma si è
 focalizzato nel miglioramento di tutto il lavoro svolto con la prospettiva di rendere codice il più leggibile e
-riusabile possibile. Durante il quinto meeting si sono prese le seguenti decisioni:
+riusabile possibile. Di seguito sono riportate le attività svolte durante l'ultimo meeting:
 
 * Revisione difficoltà dei task
 * Chiusura dei task di Sprint 4 e spostamento del task del clock nello sprint 5
