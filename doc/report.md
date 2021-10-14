@@ -337,7 +337,7 @@ L'applicazione può essere lanciata in diversi modi:
 Una volta che l'applicativo è stato messo in esecuzione apparirà una board di gioco con l'aspetto riportato in [aggiungere screen applicazione] che rappresenta la GUI
 principale della simulazione con la quale si può interagire per avviarla. La board è formata da:
 
-* un pannello, il più grande dei quattro, posto in alto a sinistra nel quale avviene la simulazione vera e propria. Qui
+* un pannello principale posto in alto a sinistra nel quale avviene la simulazione vera e propria. Qui
   infatti si ritroveranno i coniglietti, l'orologio nell'angolo in alto a sinistra, i due bottoni per il cambiamento del
   clima in alto a destra e il bottone per l'aumento della velocità in basso a destra.
 * un pannello multiplo, sotto al pannello di gioco principale, che contiene i tre principali grafici:
