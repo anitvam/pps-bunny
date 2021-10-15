@@ -792,7 +792,7 @@ L'obiettivo è stato portato a termine senza particolari difficoltà, grazie anc
 #### Sprint 3
 
 Il terzo Sprint ha avuto come obiettivo l'espansione del prototipo precedentemente prodotto aggiungendo la gestione delle mutazioni sia lato Model che View e una prima versione di ogni grafico del sistema.
-Durante questo Sprint Planning il team era indeciso se implementare prima la parte dei fattori o quella delle mutazioni, a seguito di un'attenta valutazione si però deciso di procedere come descritto in quanto avere già a disposizione la mutazioni nei coniglietti sarebbe stato utile successivamente nella definizione dei Fattori, in particolar modo per la parte di testing di quest'ultimi. A posteriori il team conferma la correttezza della scelta presa.
+Durante questo Sprint Planning il team era indeciso se implementare prima la parte dei fattori o quella delle mutazioni, a seguito di un'attenta valutazione si è scelto di procedere come descritto in quanto avere a disposizione la mutazioni nei coniglietti sarebbe stato utile alla successiva definizione dei fattori, in particolar modo per il testing di quest'ultimi. A posteriori il team si ritiene soddisfatto della scelta compiuta.
 
 #### Sprint 4
 
