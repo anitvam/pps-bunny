@@ -180,7 +180,7 @@ sezione "To Do" entrambe assegnate alla persona incaricata di implementare il ta
 La scheda su Trello fornisce la possibilità di aggiungere dei commenti e dei punti elenco, permettendo ad ogni
 sviluppatore di avere tutte le informazioni relative a quel task in un solo punto e visibili da tutti gli altri membri.
 Trello consente inoltre di trascinare i task in sezioni dedicate per la fase di sviluppo in cui si trovano, per essere
-aggiornati sul lavoro che gli altri componenti del gruppo stanno effettuando.
+aggiornati sul lavoro che gli altri componenti del gruppo stanno svolgendo.
 
 Il flusso di lavoro all'interno del repository che si è deciso di adottare si chiama `Git Flow`. Esso prevede che sul
 branch
@@ -206,8 +206,8 @@ Di seguito elenchiamo gli strumenti adottati:
 ### Strumenti di build e Continuous Integration
 
 Il processo di sviluppo adottato richiede che le feature sviluppate dai vari membri del team siano a ogni pull request
-integrate con quelle già presenti nel branch develop, dunque per rendere il processo di integrazione più fluido,
-garantendo che non vengano inseriti dei bug, si è deciso di introdurre la `Continuous Integration`. Con il file `.github/workflows/ci.yml` viene
+integrate con quelle già presenti nel branch develop, dunque per rendere il processo di integrazione più fluido e 
+garantire che non vengano inseriti dei bug si è deciso di introdurre la `Continuous Integration`. Con il file `.github/workflows/ci.yml` viene
 definita una sequenza di operazioni che sono delegate alle `GitHub Actions`, le quali sono un insieme di macchine
 virtuali che `GitHub` mette a disposizione per poterle eseguire.
 
@@ -402,7 +402,7 @@ Sebbene lo schema sia stato ampliato e alcune entità siano state aggiornate per
 Lo schema fornisce una rappresentazione grafica dei concetti legati al coniglietto e il suo genoma.
 
 Il `Bunny` è un trait costruito con l'obiettivo di massimizzare l'immutabilità, infatti è possibile modificare implicitamente solo l'età e la condizione di vita attraverso due specifiche operazioni: l'aumento dell'età che avviene procedendo nelle generazioni e l'uccisione diretta del coniglietto che è causata da un fattore. </br> 
-Il `Bunny` può essere stanziato come:
+Il `Bunny` può essere istanziato come:
 * `ChildBunny`, un coniglio appena nato;
 * `FirstBunny`, una particolare tipologia di coniglio appena nato senza genitori, usato all'inizio della simulazione;
 * `HistoryBunny`, una sorta di snapshot di un coniglio in un certo istante, che è quindi immutabile.  </br> 
@@ -414,7 +414,7 @@ Ogni `Gene` mantiene il riferimento alla sua tipologia e ai due alleli da cui è
 Ogni `Allele` mantiene il riferimento alla sua tipologia ed indica se è un allele che ha subito una mutazione, questo caso si verifica se l'allele non corrisponde a quello che avrebbe dovuto ereditare dal genitore.
 
 Le tipologie di geni e di alleli disponibili sono indicate nelle enumerazioni `GeneKind` e `AlleleKind`. </br> 
-Per ogni `GeneKind` sono specificate alcune proprietà, in particolare le due tipologie di alleli a cui è legato: quella base e quella mutata.  Anche in ogni `AlleleKind` sono specificate alcune proprietà, in particolare la dominanza, che è un `Option` perché inizialmente non è definita e può essere modificata solo tramite appositi metodi.
+Per ogni `GeneKind` sono specificate alcune proprietà, in particolare le due tipologie di alleli a cui è legato: quella base e quella mutata.  Anche in ogni `AlleleKind` sono specificate alcune proprietà, in particolare la dominanza che è un `Option` perché inizialmente non è definita e può essere modificata solo tramite appositi metodi.
 
 Il `Bunny` ha un Companion Object in cui sono contenute delle funzioni che ne permettono la generazione e dei metodi per selezionare gruppi di conigli. 
 Il `Gender` è stato modellato tramite due `case object`, elementi statici senza proprietà particolari che servono solo per definire se il sesso è maschile o femminile.
@@ -425,15 +425,15 @@ Il `Gender` è stato modellato tramite due `case object`, elementi statici senza
 `Reproduction` è un singleton che contiene una serie di metodi, funzioni e classi utili alla riproduzione. Consente ad esempio di combinare i conigli in coppie, di generare i figli di una coppia includendo o meno delle mutazioni, di generare tutti i figli di un gruppo di conigli e di ottenere i conigli di una generazione a partire dalla precedente, facendo nascere i nuovi conigli e morire quelli troppo anziani. Quest'ultima funzionalità è fondamentale, viene usata da `SimulationHistory` e permette di legare la parte di Model descritta fino ad ora con il progredire delle generazioni nel tempo.
 
 #### Generazioni e Ambiente
-Una `Generation` rappresenta l'unità di tempo della simulazione. Essa contiene il riferimento dell'attuale popolazione dei coniglietti e dell'Ambiente.
-L'`Environment` rappresenta lo stato dell'ambiente di simulazione all'interno di una generazione, infatti contiene il riferimento dei fattori disturbanti, delle mutazioni e del clima scelti dall'utente durante lo svolgimento della simulazione. 
+Una `Generation` rappresenta l'unità di tempo della simulazione. Essa contiene il riferimento all'attuale popolazione dei coniglietti e all'Ambiente.
+L'`Environment` rappresenta lo stato dell'ambiente di simulazione all'interno di una generazione, infatti contiene il riferimento ai fattori disturbanti, alle mutazioni e al clima scelti dall'utente. 
 
 La modifica dello stato dell'Environment avviene principalmente attraverso `introduceMutation`, `introduceFactor` e `removeFactor`. 
-Questi metodi sono stati esposti perché implementano le operazioni necessarie per poter introdurre e rimuovere in modo corretto fattori e mutazioni, mentre invece per quanto riguarda il clima è possibile modificare il valore direttamente dal suo campo, in quanto la sua modifica non prevede operazioni particolari.
+Questi metodi sono stati esposti perché implementano le operazioni necessarie per poter introdurre e rimuovere in modo corretto fattori e mutazioni, mentre invece per quanto riguarda il clima è possibile modificare il valore direttamente dal suo campo, in quanto tale modifica non prevede operazioni particolari.
 Non è stato previsto un metodo per rimuovere le mutazioni, in quanto una volta introdotte durante la simulazione non è possibile modificarle o rimuoverle.
 
 Per avere un'interfaccia più pulita, si è scelto di definire due type alias: `Mutations` e `Factors`, i quali sono rispettivamente una `List<Mutation>` e una `List<Factor>`.
-Per memorizzare queste informazioni, al fine di rispettare il paradigma funzionale,  si è scelto di utilizzare strutture dati immutabili in una variabile mutabile lasciando il vantaggio di poterle aggiornare senza dover creare nuovamente l'istanza di Environment.
+Per memorizzare queste informazioni, al fine di rispettare il paradigma funzionale, si è scelto di utilizzare strutture dati immutabili in una variabile mutabile lasciando il vantaggio di poterle aggiornare senza dover creare nuovamente l'istanza di Environment.
 
 La modellazione del clima invece è stata fatta utilizzando dei `case object` che definiscono i tue tipi di clima che è possibile scegliere nella simulazione: Estate e Inverno.
 
@@ -441,7 +441,7 @@ Di seguito è riportata una immagine che rappresenta la struttura delle classi c
 
 ![](images/environment_model.png)
 
-Per rendere più semplice e comprensibile l'implementazione dei metodi `introduceFactor` e `removeFactor` è stato implementato il pattern pimp my library sul type alias `Factors`: `it.unibo.pps.bunny.model.world.disturbingFactor.PimpFactors`. Questa scelta è stata fatta per sfruttare allo stesso tempo sia le funzionalità della struttura dati `List` di Scala, con cui è stato definito l'alias, sia quelle aggiuntive utili per mantenere coerente l'aggiornamento dei `Fattori`.
+Per rendere più semplice e comprensibile l'implementazione dei metodi `introduceFactor` e `removeFactor` è stato implementato il pattern pimp my library sul type alias `Factors` nell'object `it.unibo.pps.bunny.model.world.disturbingFactor.PimpFactors`. Questa scelta è stata fatta per sfruttare allo stesso tempo sia le funzionalità della struttura dati `List` di Scala, con cui è stato definito l'alias, sia quelle aggiuntive utili per mantenere coerente l'aggiornamento dei `Fattori`.
 
 #### Fattori
 L'interfaccia `Factor` astrae qualsiasi implementazione dei fattori ed espone il metodo principale che verrà richiamato dall'esterno: `applyDamage`. 
@@ -520,9 +520,9 @@ Siccome l'implementazione in `BasicFactor` non tiene conto di alcun gene, sono s
 Per implementare i fattori dei lupi è stata definita un'interfaccia aggiuntiva, chiamata `PredatorFactor`, che comprendesse gli ulteriori danni apportati da queste entità: `lowDamage` e `highDamage`.
 
 `FoodFactor` è un'interfaccia che definisce due importanti metodi: `+` e `-`. Queste operazioni supportano rispettivamente la combinazione e la suddivisione di due fattori alimentari e vengono implementate nelle classi astratte:
-* `SingleFoodFactor`, rappresenta i fattori alimentari composti da una sola tipologia, ad esempio il cibo alto, e di conseguenza impedisce l'implementazione del metodo `-`. Per quanto riguarda il metodo `+`, questo espone un template method che consente di far definire alle singole implementazioni quali sono i fattori alimentari con cui la classe può essere combinata;
-* `DoubleFoodFactor`, estende da `SingleFoodFactor` e implementa anche l'operazione `-` sempre attraverso un template method. Infatti, questa classe rappresenta la combinazione di due fattori relativi al cibo, ad esempio cibo alto e scarso, dalla quale è quindi possibile rimuovere uno dei due fattori singoli;
-* `TripleFoodFactor`, estende da `DoubleFoodFactor` e blocca l'utilizzo del metodo `+` in quanto un fattore alimentare composto da tutte e tre le topologie non può essere concatenato a nessun altro.
+* `SingleFoodFactor` rappresenta i fattori alimentari composti da una sola tipologia, ad esempio il cibo alto, e di conseguenza impedisce l'implementazione del metodo `-`. Per quanto riguarda il metodo `+`, questo espone un template method che consente di far definire alle singole implementazioni quali sono i fattori alimentari con cui la classe può essere combinata;
+* `DoubleFoodFactor` estende da `SingleFoodFactor` e implementa anche l'operazione `-` sempre attraverso un template method. Infatti, questa classe rappresenta la combinazione di due fattori relativi al cibo, ad esempio cibo alto e scarso, dalla quale è quindi possibile rimuovere uno dei due fattori singoli;
+* `TripleFoodFactor` estende da `DoubleFoodFactor` e blocca l'utilizzo del metodo `+` in quanto un fattore alimentare composto da tutte e tre le topologie non può essere concatenato a nessun altro.
 
 È stato infine definito il mixin `FoodFactorOnSingleGene` che estende l'implementazione del metodo `applyDamage` di `BasicFactor` in modo da coprire tutti i fattori alimentari che agiscono su un singolo gene. Il mixin ha l'obiettivo di estrapolare un comportamento comune a vari fattori, ovvero l'applicazione dello stesso danno a tutta la popolazione oppure l'applicazione di un danno elevato ai conigli con l'allele base e un danno ridotto a quelli con l'allele mutato.
 
@@ -554,7 +554,7 @@ Viene in particolar modo utilizzato dal `Controller`, per introdurre lato Model 
 
 `Simulation` è l'object di utility che consente di creare le monadi da utilizzare all'interno del `generationLoop`, ad esempio si occupa di monadizzare l'azione associata alla fase dei lupi descritta in precedenza. 
 Nello specifico, `Simulation` permette di incapsulare attraverso delle monadi di tipo `IO[Unit]` le interazioni che il `SimulationEngine` ha con il `Controller` e `SimulationHistory`. 
-Per evitare ripetizioni di codice e aumentare la leggibilità si è deciso di implementare un metodo implicito per la conversione delle istruzioni Unit in monadi di tipo IO
+Per evitare ripetizioni di codice e aumentare la leggibilità si è deciso di implementare un metodo implicito per la conversione delle istruzioni Unit in monadi di tipo IO.
 
 ### View
 L'implementazione dell'interfaccia grafica è stata fatta attraverso l'utilizzo della libreria ScalaFX, un dsl in Scala di JavaFX. 
