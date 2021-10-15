@@ -797,7 +797,7 @@ hanno preferito l'approccio TDD (Test Driven Development) per porzioni di codice
 mentre altri hanno scelto un approccio più tradizionale, cioè implementare prima una certa funzionalità e verificare in
 seguito che il comportamento sia quello atteso.  
 Sono stati inoltre introdotti test dopo lo sviluppo di un insieme di funzionalità per verificare che la loro
-integrazione funzioni correttamente.
+integrazione funzionasse correttamente.
 
 Si è cercato di mantenere più coverage possibile per la parte di model dell'applicazione, riuscendo a raggiungere quasi
 il 100% nei package più critici e importanti del sistema come `it.unibo.pps.bunny.model.bunny` che contiene
