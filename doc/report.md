@@ -573,7 +573,7 @@ Di seguito viene proposta una descrizione del design dei tre grafici introdotti 
 
 #### Pedigree Chart
 
-Il grafico ha l'obiettivo di mostrare l'albero genealogico del coniglietto selezionato con la possibilità di visionare fino a tre generazioni di antenati, per ogni elemento dell'albero sono rappresentate varie informazioni. Dato l'obiettivo della simulazione è di particolare importanza la visualizzazione degli alleli di ciascun coniglietto al fine di capire perchè l'animale mostra una certa caratterista e come questa sia stata ereditata dei genitori. </br> Il grafico non è associato a un file fxml nè estende altri grafici della libreria, bensì viene generato da zero usando i costrutti standard di ScalaFX. In particolare è realizzato grazie a:
+Il grafico ha l'obiettivo di mostrare l'albero genealogico del coniglietto selezionato con la possibilità di visionare fino a tre generazioni di antenati, per ogni elemento dell'albero sono rappresentate varie informazioni. Dato l'obiettivo della simulazione è di particolare importanza la visualizzazione degli alleli di ciascun coniglietto al fine di capire perchè l'animale mostra una certa caratteristica e come questa sia stata ereditata dei genitori. </br> Il grafico non è associato a un file fxml nè estende altri grafici della libreria, bensì viene generato da zero usando i costrutti standard di ScalaFX. In particolare è realizzato grazie a:
 * `BunnyPedigreeView`, che si occupa di renderizzare un singolo coniglietto dell'albero genealogico, composto dall'immagine del coniglio con le sue mutazioni, il genere, la visualizzazione sintetica degli alleli tramite lettere e alcune icone che indica se il coniglietto è morto o ha appena subito una mutazione;
 * `PedigreeChart`, che costruisce l'albero genealogico vero e proprio, una riga alla volta, sfruttando il `BinaryTree` generabile per ogni coniglietto e predendendo in considerazione la possibilità di avere conigli con un numero variabile di antenati.
 
@@ -643,7 +643,7 @@ il `Controller` e `SimulationHistory`.
 ### Organizzazione del codice
 Nella figura riportata si evidenzia l'organizzazione in package dei sorgenti del sistema, ognuno dei quali raggruppa le
 classi relative a specifiche feature. Per facilitare la lettura del diagramma sono stati omessi alcuni package minori,
-in particolare tutti i package relativi all'implementazione in scalaFX dell'applicazione.
+in particolare tutti i package relativi all'implementazione in ScalaFX dell'applicazione.
 
 ![](images/package_architecture.png)
 
@@ -847,14 +847,14 @@ funzionante (ad eccezione del primo Sprint) e per discutere del lavoro svolto, c
 
 #### Sprint 1
 
-Durante il primo sprint, il team si è concentrato sulla fase di analisi del dominio, parte fondamentale per il futuro
+Durante il primo Sprint, il team si è concentrato sulla fase di analisi del dominio, parte fondamentale per il futuro
 sviluppo del progetto. Ogni membro del gruppo, in autonomia, ha prodotto un diagramma UML ad alto livello del model, tali diagrammi sono poi stati discussi e uniti per generare lo schema su cui successivamente si è basata l'intera implementazione del Model. Si è inoltre iniziato a compilare il Product Backlog, a definire una prima suddivisione dei task e a preparare il repository del progetto, configurando SBT e la CI.
 
 
 #### Sprint 2
 L'obiettivo del secondo Sprint era quello di implementare un primo prototipo funzionante del sistema. Quest'ultimo, basandosi sull'architettura MVC, doveva presentare: la parte di model relativa ai Bunny e al genoma, la componente dell'engine per definire il loop di avanzamento delle generazioni e, lato View, la struttura principale dell'interfaccia grafica e la possibilità di visualizzare i coniglietti nel pannello principale.
 
-Il prototipo sottomesso al termine dello sprint presenta dunque una versione dell'interfaccia grafica minimale all'interno della quale è possibile visionare la riproduzione del coniglietto senza l'introduzione di mutazioni.
+Il prototipo sottomesso al termine dello Sprint presenta dunque una versione dell'interfaccia grafica minimale all'interno della quale è possibile visionare la riproduzione del coniglietto senza l'introduzione di mutazioni.
 
 L'obiettivo è stato portato a termine senza particolari difficoltà, grazie anche alla buona fase di analisi condotta precedentemente.
 
