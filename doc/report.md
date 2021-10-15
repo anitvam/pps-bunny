@@ -38,7 +38,7 @@ di genitori con certi alleli mostra le quattro combinazioni di alleli possibili 
 #### Glossario
 
 * **Gene** - Una caratteristica dell'organismo, è composto da due alleli.
-* **Allele** - Componente del gene che può comparire in due forme, una dominante e un recessiva.
+* **Allele** - Componente del gene che può comparire in due forme, una dominante e una recessiva.
 * **Dominante** - Tipo di allele che, se presente, viene mostrato all'esterno.
 * **Recessivo** - Tipo di allele che viene mostrato solamente se non si trova insieme ad un allele di tipo dominante.
 * **Genotipo** - L'intero patrimonio genetico di un organismo.
