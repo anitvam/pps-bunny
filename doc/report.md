@@ -559,7 +559,7 @@ Per evitare ripetizioni di codice e aumentare la leggibilità si è deciso di im
 ### View
 L'implementazione dell'interfaccia grafica è stata fatta attraverso l'utilizzo della libreria ScalaFX, un dsl in Scala di JavaFX. 
 Per sviluppare con maggiore agilità le parti statiche dell'applicazione, come ad esempio la suddivisione dei pannelli, si è scelto di utilizzare l'estensione della libreria che permette di scrivere codice attraverso un file xml chiamato `fxml`.
-Mentre la possibilità di scrivere tali file è compresa all'interno dell'implementazione di JavaFx, nel dsl in Scala questa funzionalità non è prevista, quindi è stata utilizzata una [libreria esterna](https://github.com/vigoo/scalafxml) che consente di integrarla. Il principale vantaggio di utilizzare gli `fxml` è quello di poterli definire attraverso l'ambiente grafico SceneBuilder che ne fornisce una renderizzazione in tempo reale
+Mentre la possibilità di scrivere tali file è compresa all'interno dell'implementazione di JavaFX, nel dsl in Scala questa funzionalità non è prevista, quindi è stata utilizzata una [libreria esterna](https://github.com/vigoo/scalafxml) che consente di integrarla. Il principale vantaggio di utilizzare gli `fxml` è quello di poterli definire attraverso l'ambiente grafico SceneBuilder che ne fornisce una renderizzazione in tempo reale
 
 ScalaFX, essendo implementato a partire da una libreria scritta in Java, presenta un utilizzo orientato agli oggetti e poco funzionale. 
 Nonostante ciò la libreria si è dimostrata molto versatile e ha permesso una semplice personalizzazione di costrutti particolari come quelli per i grafici.
