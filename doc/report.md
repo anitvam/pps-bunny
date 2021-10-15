@@ -110,7 +110,7 @@ alcuni aspetti del framework **Scrum**:
 
 Il **Product Backlog** contiene le funzionalità fondamentali da sviluppare per la realizzazione dell'applicativo e viene
 aggiornato durante ogni Sprint Planning in base alle esigenze che emergono man mano che il progetto avanza. Per ogni
-feature sono individuati i task che ne permettono il completamento, a ognuno di essi è assegnato un punteggio che indica
+feature sono individuati i task che ne permettono il completamento e a ognuno di essi è assegnato un punteggio che indica
 la difficoltà prevista per portarlo a termine.  <br />
 Durante la **Sprint Review** si aggiorna il punteggio per i task dello Sprint appena concluso, per valutare la
 differenza fra la complessità prevista e quella reale. Inoltre durante la revisione si chiudono le eventuali Pull
