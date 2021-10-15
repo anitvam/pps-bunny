@@ -810,7 +810,7 @@ plugin `sbt-scoverage`:
 ![](images/scoverage_report_2.png)
 
 L'uso della CI su GitHub unito a tale livello di coverage garantisce che sul branch `develop` non sia mai stato inserito
-del codice non correttamente funzionante, infatti se i test non passano, la pull request effettuata dallo sviluppatore
+del codice non correttamente funzionante, infatti, se i test non passano, la pull request effettuata dallo sviluppatore
 non viene mergiata.
 
 Per quanto riguarda invece il package `it.unibo.pps.bunny.view` non sono stati implementati test di `ScalaTest` per
