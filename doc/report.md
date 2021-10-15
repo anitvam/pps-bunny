@@ -402,7 +402,7 @@ Sebbene lo schema sia stato ampliato e alcune entità siano state aggiornate per
 Lo schema fornisce una rappresentazione grafica dei concetti legati al coniglietto e il suo genoma.
 
 Il `Bunny` è un trait costruito con l'obiettivo di massimizzare l'immutabilità, infatti è possibile modificare implicitamente solo l'età e la condizione di vita attraverso due specifiche operazioni: l'aumento dell'età che avviene procedendo nelle generazioni e l'uccisione diretta del coniglietto che è causata da un fattore. </br> 
-Il `Bunny` può essere stanziato come:
+Il `Bunny` può essere istanziato come:
 * `ChildBunny`, un coniglio appena nato;
 * `FirstBunny`, una particolare tipologia di coniglio appena nato senza genitori, usato all'inizio della simulazione;
 * `HistoryBunny`, una sorta di snapshot di un coniglio in un certo istante, che è quindi immutabile.  </br> 
