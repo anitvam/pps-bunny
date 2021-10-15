@@ -169,12 +169,12 @@ Di seguito sono riportati gli obiettivi fissati ed i risultati realmente prodott
 | 2 | Implementare una prima versione dell'applicazione, in cui è possibile osservare visivamente la riproduzione dei coniglietti. Nella pratica, si tratta di: <ul><li>Realizzare il model di base per la rappresentazione del coniglietto ed il suo patrimonio genetico.</li><li>Creare la struttura MVC dell'applicativo ed il loop che permette di avanzare nelle generazioni.</li><li> Visualizzare il pannello principale con i coniglietti che saltano.</li></ul>  | Obiettivo portato a termine. |
 | 3 | Integrare alcune feature alla prima versione prodotta, in particolare: <ul><li>Estendere la GUI con i pannelli per la scelta delle mutazioni e dei grafici.</li><li>Aggiungere  le mutazioni ai conigli.</li><li>Dare la possibilità di scegliere la dominanza delle mutazioni introdotte.</li><li>Dare la possibilità di cambiare clima.</li><li>Visualizzare l'albero genealogico di un qualsiasi coniglio.</li><li>Visualizzare il grafico con la cardinalità della popolazione.</li><li>Visualizzare il grafico con le proporzioni.</li><li>Iniziare la stesura del report.</li></ul> | Obiettivo portato a termine.   |
 | 4 | Integrare al prototipo prodotto nel precedente sprint le seguenti funzionalità: <ul><li>Realizzare il model dei fattori disturbanti.</li><li>Estendere la GUI con il pannello per la scelta dei fattori disturbanti.</li><li>Visualizzazione dei predatori durante la simulazione.</li><li>Aggiungere al grafico delle proporzioni la funzionalità _history_.</li><li>Aggiungere il _restart_ al termine della simulazione</li> <li>Dare la possibilità di modificare la velocità della simulazione.</li><li>Aggiungere alla GUI un orologio per visualizzare il trascorrere del tempo della simulazione.</li> | Obiettivo portato parzialmente a termine.| 
-| 5 | Rifinire il prototipo realizzato nello sprint precedente ed aggiungere la feature mancante relativa alla realizzazione dell'orologio per poter produrre la release definitiva del sistema. Questo Sprint ha avuto una durata di 7 giorni. | Obiettivo portato a termine. |
+| 5 | Rifinire il prototipo realizzato nello Sprint precedente ed aggiungere la feature mancante relativa alla realizzazione dell'orologio per poter produrre la release definitiva del sistema. Questo Sprint ha avuto una durata di 7 giorni. | Obiettivo portato a termine. |
 
 ### Modalità di revisione dei task
 
 Durante lo Sprint Planning viene assegnato a ogni membro l'insieme di task che ha il compito di portare a termine entro
-lo sprint successivo. Per ciascun task pianificato vengono definite una Issue su GitHub e una scheda Trello nella
+lo Sprint successivo. Per ciascun task pianificato vengono definite una Issue su GitHub e una scheda Trello nella
 sezione "To Do" entrambe assegnate alla persona incaricata di implementare il task.
 
 La scheda su Trello fornisce la possibilità di aggiungere dei commenti e dei punti elenco, permettendo ad ogni
