@@ -216,7 +216,7 @@ dai genitori e l'ambiente di simulazione in cui la popolazione si trova, caratte
 
 Il sistema permetterà inoltre all'utente di avere un aggiornamento real-time dell'andamento della simulazione in termini
 di cardinalità della popolazione e della distribuzione delle diverse caratteristiche genetiche. Tali informazioni
-saranno inoltre rappresentate da opportuni grafici.
+saranno rappresentate in opportuni grafici.
 
 ### Requisiti Utente
 
