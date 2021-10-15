@@ -85,14 +85,8 @@ Di seguito sono riportati gli obiettivi fissati ed i risultati realmente prodott
 | 1 | Produrre una modellazione corretta e possibilmente completa del sistema.  <br /> Questo è l'unico Sprint che ha avuto una durata inferiore alle due settimane (circa 10 giorni) e il cui obbiettivo non è un prototipo tangibile per un eventuale utente. Si è scelto di dedicare un intero Sprint alla modellazione in modo che tutti i componenti del team avessero tempo di studiare il dominio e per dare centralità al design dell'applicativo. | Obiettivo portato a termine. |
 | 2 | Implementare una prima versione dell'applicazione, in cui è possibile osservare visivamente la riproduzione dei coniglietti. Nella pratica, si tratta di: <ul><li>Realizzare il model di base per la rappresentazione del coniglietto ed il suo patrimonio genetico.</li><li>Creare la struttura MVC dell'applicativo ed il loop che permette di avanzare nelle generazioni.</li><li> Visualizzare il pannello principale con i coniglietti che saltano.</li></ul>  | Obiettivo portato a termine. |
 | 3 | Integrare alcune feature alla prima versione prodotta, in particolare: <ul><li>Estendere la GUI con tutti i pannelli necessari, in particolare quelli per la scelta delle mutazioni e del grafico.</li><li>Aggiungere  le mutazioni ai conigli.</li><li>Dare la possibilità di scegliere la dominanza delle mutazioni introdotte.</li><li>Dare la possibilità di cambiare clima.</li><li>Visualizzare l'albero genealogico di un qualsiasi coniglio.</li><li>Visualizzare il grafico con la cardinalità della popolazione.</li><li>Visualizzare il grafico con le proporzioni.</li><li>Iniziare la stesura del report.</li></ul> | Obiettivo portato a termine.   |
-| 4 | Integrare nel prototipo prodotto nel precedente sprint le seguenti funzionalità: <ul><li>Realizzare il model dei fattori disturbanti</li><li>Estendere la GUI con il pannello per la scelta dei fattori disturbanti</li><li>Visualizzazione dei predatori durante la simulazione</li><li>Aggiungere al grafico delle proporzioni la funzionalità _
-
-history_</li><li>Aggiungere il _
-restart_ al termine della simulazione</li> <li>Dare la possibilità di modificare la velocità della simulazione</li><li>
-Aggiungere alla GUI un orologio per visualizzare il trascorrere del tempo della simulazione</li>| Obiettivo portato
-parzialmente a termine.| | 5 | Rifinire il prototipo realizzato nello sprint precedente ed aggiungere la feature
-mancante: la realizzazione dell'orologio, per poter rilasciare la release definitiva del sistema. Completare la stesura
-del report. Questo Sprint ha avuto una durata di 10 giorni. | Obiettivo portato a termine. |
+| 4 | Integrare nel prototipo prodotto nel precedente sprint le seguenti funzionalità: <ul><li>Realizzare il model dei fattori disturbanti</li><li>Estendere la GUI con il pannello per la scelta dei fattori disturbanti</li><li>Visualizzazione dei predatori durante la simulazione</li><li>Aggiungere al grafico delle proporzioni la funzionalità _history_</li><li>Aggiungere il _restart_ al termine della simulazione</li> <li>Dare la possibilità di modificare la velocità della simulazione</li><li>Aggiungere alla GUI un orologio per visualizzare il trascorrere del tempo della simulazione</li> | Obiettivo portato parzialmente a termine.| 
+| 5 | Rifinire il prototipo realizzato nello sprint precedente ed aggiungere la feature mancante relativa alla realizzazione dell'orologio, per poter rilasciare la release definitiva del sistema. Completare la stesura del report. Questo Sprint ha avuto una durata di 10 giorni. | Obiettivo portato a termine. |
 
 ### Modalità di revisione dei task
 
@@ -120,12 +114,13 @@ altri membri del team. Nel momento in cui viene fatta questa richiesta viene anc
 risoluzione del task, questa operazione facilita l'individuazione di task che non sono stati svolti.
 
 ### Scelta degli strumenti
-
-- sbt
-- ScalaTest
-- Trello
-- ScalaFMT
-- ScalaFX
+Il team, durante la riunione preliminare, ha definito l'insieme di tool da utilizzare come strumenti di automazione e di supporto al processo di sviluppo.
+Di seguito elenchiamo gli strumenti adottati:
+* _SBT_ per la build automation;
+* _ScalaTest_ per la scrittura e l'automazione dell'esecuzione dei test;
+* _Trello_ per il supporto alla divisione e sviluppo dei task;
+* _ScalaFMT_ per la formattazione del codice scala;
+* _ScalaFX_ per la realizzazione dell'interfaccia grafica.
 
 ### Strumenti di test, build e Continuous Integration
 
