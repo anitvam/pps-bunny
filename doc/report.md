@@ -806,20 +806,7 @@ Come per i due Sprint precedenti, anche per il quarto il team si è posto l'obie
 
 #### Sprint 5
 
-Durante l'ultimo Sprint il team si è riunito per la riunione iniziale nella quale si è discussa sia la fine del
-precedente Sprint che lo Sprint Planning del quinto. Non sono ha portato allo sviluppo di nuove feature ma si è
-focalizzato nel miglioramento di tutto il lavoro svolto con la prospettiva di rendere codice il più leggibile e
-riusabile possibile. Di seguito sono riportate le attività svolte durante l'ultimo meeting:
-
-* Revisione difficoltà dei task
-* Chiusura dei task di Sprint 4 e spostamento del task del clock nello sprint 5
-* Merge di tutte le Pull Request relative allo Sprint 4 tranne quella relativa al Clock e alla correzione del problema
-  di gui relativo al task della visualizzazione dei lupi.
-* Rilascio Release v.0.3.0
-* Aggiornamento del Product Backlog per Sprint 5
-* Sprint Planning 5
-* Revisione finale del codice con refactoring e scaladoc
-* Stesura finale del report
+Al termine del quinto e ultimo Sprint è stato possibile rilasciare una prima versione definitiva del sistema. In particolare, rispetto al prototipo precedentemente prodotto, non sono state aggiunte nuove funzionalità ma si è posta particolare attenzione nel refactoring del codice, nel migliorare la Scaladoc e in generale nel risolvere tutto il debito tecnico precedentemente introdotto.
 
 ### Commenti finali
 
