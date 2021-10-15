@@ -177,7 +177,7 @@ Di seguito elenchiamo gli strumenti adottati:
 * _ScalaFMT_ per la formattazione del codice scala;
 * _ScalaFX_ per la realizzazione dell'interfaccia grafica.
 
-### Strumenti di test, build e Continuous Integration
+### Strumenti di build e Continuous Integration
 
 Il processo di sviluppo adottato richiede che le feature sviluppate dai vari membri del team siano a ogni pull request
 integrate con quelle già presenti nel branch develop, dunque per rendere il processo di integrazione più fluido,
