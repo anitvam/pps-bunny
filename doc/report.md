@@ -363,7 +363,7 @@ Nello specifico, `Simulation` permette di incapsulare attraverso delle monadi di
 ### View
 L'implementazione dell'interfaccia grafica è stata fatta attraverso l'utilizzo della libreria ScalaFX, un dsl in Scala di JavaFX. 
 Per implementare con maggiore agilità le parti statiche dell'applicazione, come ad esempio la suddivisione dei pannelli, si è scelto di utilizzare l'estensione della libreria che permette di scrivere codice attraverso un file xml chiamato `fxml`.
-Mentre la possibilità di scrivere tali file è compresa all'interno dell'implementazione JavaFx, all'interno della libreria scala questa funzionalità non è stata prevista, infatti è stata utilizzata una [libreria esterna](https://github.com/vigoo/scalafxml) che consente di inserire tale funzionalità.
+Mentre la possibilità di scrivere tali file è compresa all'interno dell'implementazione di JavaFx,  nel dsl in Scala questa funzionalità non è prevista, quindi è stata utilizzata una [libreria esterna](https://github.com/vigoo/scalafxml) che consente di integrarla.
 
 ScalaFX, siccome è implementato a partire da una libreria scritta in Java, presenta un utilizzo orientato alla object orientation e poco funzionale. 
 Nonostante ciò la libreria si è dimostrata molto versatile e ha permesso una semplice personalizzazione di costrutti particolari come quelli grafici.
