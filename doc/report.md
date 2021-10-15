@@ -550,15 +550,14 @@ classi di model e dell'engine.
 
 ## Guida utente
 
-L'applicazione può essere lanciata in diversi modi:
+L'applicazione può essere lanciata in due modi:
 
 * eseguendo il jar del proprio sistema operativo fornito nella sezione release di GitHub attraverso il
   comando `$ java -jar <path-to-downloaded-jar>`
 * scaricando il repository ed eseguendolo tramite `sbt` con il comando `sbt run`
 
 Quando l'applicativo viene messo in esecuzione apparirà una board di gioco, con l'aspetto riportato
-nello screenshost seguente, che rappresenta la GUI principale della simulazione con la quale si può interagire
-per avviarla. La board è formata da:
+nello screenshost seguente. La board è formata da:
 * un pannello principale posto in alto a sinistra nel quale avviene la simulazione vera e propria. Qui si
   troveranno i coniglietti, l'orologio nell'angolo in alto a sinistra, i due bottoni per il cambiamento del clima in
   alto a destra e il bottone per l'aumento della velocità in basso a destra.
@@ -585,4 +584,5 @@ La simulazione può terminare a causa di tre condizioni:
 * i coniglietti superano il numero massimo stabilito, conquistando il mondo
 * i coniglietti si sono estinti 
 * il numero di generazioni che sono state effettuate supera il limite massimo imposto dal simulatore. 
+
 In tutti e tre i casi viene visualizzata una dialog finale con la descrizione dell'accaduto e si può decidere di far ripartire la simulazione cliccando sul tasto restart che compare al posto di quello dell'incremento della velocità.
