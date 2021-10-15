@@ -239,7 +239,7 @@ Di seguito sono riportati i requisiti visti nell'ottica di cosa può fare l'uten
       ereditate dagli antenati.
     * Dei grafici a torta rappresentanti la proporzione fra coniglietti con i due fenotipi disponibili per ogni gene,
       all'inizio e al termine di ciascuna generazione.
-* L'utente potrà incrementare la velocità della simulazione
+* L'utente potrà incrementare la velocità della simulazione.
 
 ### Requisiti Funzionali
 
