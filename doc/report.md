@@ -799,7 +799,7 @@ seguito che il comportamento sia quello atteso.
 Sono stati inoltre introdotti test dopo lo sviluppo di un insieme di funzionalità per verificare che la loro
 integrazione funzioni correttamente.
 
-Si è cercato di mantenere più coverage possibile, per la parte di model dell'applicazione, riuscendo a raggiungere quasi
+Si è cercato di mantenere più coverage possibile per la parte di model dell'applicazione, riuscendo a raggiungere quasi
 il 100% nei package più critici e importanti del sistema come `it.unibo.pps.bunny.model.bunny` che contiene
 l'implementazione dei coniglietti, `it.unibo.pps.bunny.model.genome` che contiene della gestione del patrimonio genetico
 e `it.unibo.pps.bunny.model.world` che contiene la modellazione dell'ambiente di simulazione e della riproduzione.
