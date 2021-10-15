@@ -172,7 +172,7 @@ risoluzione del task, questa operazione facilita l'individuazione di task che no
 Il team, durante la riunione preliminare, ha definito l'insieme di tool da utilizzare come strumenti di automazione e di supporto al processo di sviluppo.
 Di seguito elenchiamo gli strumenti adottati:
 * _SBT_ per la build automation;
-* _ScalaTest_ per la scrittura e l'automazione dell'esecuzione dei test;
+* _ScalaTest_ per la scrittura dei test;
 * _Trello_ per il supporto alla divisione e sviluppo dei task;
 * _ScalaFMT_ per la formattazione del codice scala;
 * _ScalaFX_ per la realizzazione dell'interfaccia grafica.
