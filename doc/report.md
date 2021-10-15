@@ -366,7 +366,7 @@ Per implementare con maggiore agilità le parti statiche dell'applicazione, come
 Mentre la possibilità di scrivere tali file è compresa all'interno dell'implementazione di JavaFx,  nel dsl in Scala questa funzionalità non è prevista, quindi è stata utilizzata una [libreria esterna](https://github.com/vigoo/scalafxml) che consente di integrarla.
 
 ScalaFX, essendo implementato a partire da una libreria scritta in Java, presenta un utilizzo orientato agli oggetti e poco funzionale. 
-Nonostante ciò la libreria si è dimostrata molto versatile e ha permesso una semplice personalizzazione di costrutti particolari come quelli grafici.
+Nonostante ciò la libreria si è dimostrata molto versatile e ha permesso una semplice personalizzazione di costrutti particolari come quelli per i grafici.
 #### Controllers
 Avendo utilizzato gli `fxml` all'interno del codice è stato necessario definire dei Controllers. 
 Questi costrutti sono classi fortemente associate ai file `fxml` che contengono il riferimento agli id degli oggetti definiti al loro interno e implementano eventuali event-handler. 
