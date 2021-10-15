@@ -515,16 +515,18 @@ Per quanto riguarda invece il package `it.unibo.pps.bunny.view` non sono stati i
 ## Retrospettiva
 
 ### Sviluppi Futuri
-Per quanto riguarda gli sviluppi futuri il team ritiene che ci siano una moltitudine di aspetti che si possono appronfondire e varie funzionalità che sarebbe possibile aggiungere o ampliare. Di seguito sono riportate alcune proposte:
+Per quanto riguarda gli sviluppi futuri il team ritiene che ci siano una moltitudine di aspetti che si possono appronfondire e varie funzionalità che sarebbe interessante aggiungere o ampliare. Di seguito sono riportate alcune proposte:
 * Aggiunta della pausa nella simulazione.
-* Aggiunta di altre mutazioni sui medesimi geni o di altri geni con associati i loro alleli standard e mutati. 
+* Aggiunta di altre mutazioni sui medesimi geni.
+* Aggiunta di nuovi tipi di geni con associate le rispettive tipologie di alleli standard e mutati. 
 * Aggiunta di ulteriori tipologie di clima.
 * Aggiunta di fattori disturbanti.
-* Per ogni coniglietto, indicare se è omozigote o eterozigote per ogni suo gene
+* Estensione e/o modifica delle fasi durante una generazione.
+* Per ciascun coniglietto, dare la possibilità di visionare se è omozigote o eterozigote per ogni suo gene.
 * Visualizzazione di un report finale alla conclusione della simulazione che mostra sinteticamente gli aspetti salienti della selezione naturale, ad esempio indicando quali mutazioni si sono rivelate più adeguate e quali fattori più nocivi.
 * Visualizzazione di ulteriori grafici, ad esempio (??? Marta non me lo ricordo)
-* Introduzione di casi particolari presenti in natura, ad esempio nel caso del gene eterozigote è possibile che l'animale non presenti nè la caratteristica legata all'allele dominante, nè quella legata all'allele recessivo, bensì un misto fra le due. Questo è un caso estremamente raro, che la simulazione potrebbe mostrare in una bassa percenutale di coniglietti.
+* Miglioramento del il rendering del Pedigree prendendo in considerazione la possibilità di avere più geni rispetto a quelli e attuali e quindi avere visualizzazione degli alleli che supera in larghezza quella del coniglietto o su più righe in modo da mantenere l'albero genealogico più compatto.
 * Possibilità di quantificare più nello specifico la tipologia e quantità di nutrienti che assumono i coniglietti e il conseguente tempo di sovravvivenza.
-* Migliorare il rendering del Pedigree prendendo in considerazione la possibilità di avere più geni rispetto a quelli e attuali e quindi avere visualizzazione degli alleli che supera in larghezza quella del coniglietto o su più righe in modo da mantenere l'albero genealogico più compatto.
 * Possibilità di utilizzare animali diversi rispetti ai coniglietti.
-- Trasformare l'intera logica del model in (in particolare tutti i controlli fatti tramite eccezioni e la generazione di figli) in prolog
+* Trasformazione dell'intera logica del Model in Prolog, infatti al termine dello sviluppo ci si è resti conto che tutti i controlli sul genoma implementati tramite eccezioni e la generazione di figli si prestano in particolar modo ad essere espressi tramite clausole.
+* Introduzione di casi particolari presenti in natura, ad esempio nel caso del gene eterozigote è possibile che l'animale non presenti nè la caratteristica legata all'allele dominante, nè quella legata all'allele recessivo, bensì un misto fra le due. Questo è un caso estremamente raro, che la simulazione potrebbe mostrare in una bassa percenutale di coniglietti.
