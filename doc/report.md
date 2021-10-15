@@ -906,7 +906,7 @@ Per quanto riguarda gli sviluppi futuri il team ritiene che ci siano una moltitu
 
 ## Conclusione
 
-Il team è complessivamente soddisfatto del risultato ottenuto e ritiene che il progetto sia stato molto formativo, ha infatti dato al gruppo la possibilità di apprendere un nuovo paradigma di programmazione, quello funzionale, e una nuova metodologia di sviluppo agile: Scrum. 
+Il team è complessivamente soddisfatto del risultato ottenuto e ritiene che lo sviluppo del progetto sia stato molto formativo, ha infatti dato al gruppo la possibilità di apprendere un nuovo paradigma di programmazione, quello funzionale, e una nuova metodologia di sviluppo agile: Scrum. 
 In particolare il team ha apprezzato la suddivisione in Sprint che hanno permesso uno sviluppo incrementale del sistema attraverso vari prototipi funzionanti.
 
 Il team è inoltre soddisfatto della scelta degli strumenti di sviluppo, in particolare di Trello che ha permesso di monitorare in tempo reale
