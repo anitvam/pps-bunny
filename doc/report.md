@@ -13,6 +13,37 @@ delle mutazioni sia dei conigli che dell'ambiente circostante.
 
 La proposta si ispira al seguente gioco: https://phet.colorado.edu/en/simulation/natural-selection.
 
+### Genetica
+
+Il dominio dell'applicazione riguarda la genetica, perciò si è pensato di fornire una breve introduzione su tale
+argomento e sulla terminologia utilizzata nella relazione.
+
+La genetica studia studia i geni, l'ereditarietà e la variabilità genetica negli organismi viventi. Nello specifico con
+il termine genoma ci si riferisce alla totalità dei cromosomi e dei geni contenuti nelle cellule. Il patrimonio genetico
+della prole dipende dagli attributi trasmessi dai genitori e definisce il loro aspetto estetico <br />
+Ogni gene riguarda una caratteristica, che nell'ambito della riproduzione dei conigli può essere ad esempio il *colore
+della pelliccia* o la *forma delle orecchie*. Ogni gene è formato da due alleli ed ogni allele può comparire in due
+forme diverse, ad esempio per il *colore della pelliccia* possono essere la *pelliccia bianca* o la *pelliccia bruna*.
+Una di queste due forme è dominante, mentre l'altra è recessiva. Ciò significa che se compaiono entrambe per un
+determinato gene a prevalere sarà la versione dominante, la quale quindi, sarà visibile sul figlio e farà parte del
+suo *fenotipo*
+. <br />
+Ogni figlio eredita dai genitori una coppia di alleli, uno dal padre ed uno dalla madre. Tale coppia sarà una delle
+combinazioni degli alleli dei genitori rappresentata
+nel  [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett), uno schema che per una qualsiasi coppia
+di genitori con certi alleli mostra le quattro combinazioni di alleli possibili per formare il gene del figlio.
+
+#### Glossario
+
+* **Gene** - Una caratteristica dell'organismo, è composto da due alleli.
+* **Allele** - Componente del gene che può comparire in due forme, una dominante e un recessiva.
+* **Dominante** - Tipo di allele che, se presente, viene mostrato all'esterno.
+* **Recessivo** - Tipo di allele che viene mostrato solamente se non si trova insieme ad un allele di tipo dominante.
+* **Genotipo** - L'intero patrimonio genetico di un organismo.
+* **Fenotipo** - Le caratteristiche effettivamente mostrate dall'organismo.
+* **Omozigote** - Un gene che contiene due alleli dello stesso tipo, siano essi entrambi dominanti o entrambi recessivi.
+* **Eterozigote** - Un gene che contiene alleli di tipo diverso, uno dominante ed uno recessivo.
+
 ## Indice
 - [Descrizione](#descrizione)
   * [Genetica](#genetica)
@@ -65,37 +96,6 @@ La proposta si ispira al seguente gioco: https://phet.colorado.edu/en/simulation
 - [Sviluppi Futuri](#sviluppi-futuri)
 - [Conclusione](#conclusione)
 - [Guida Utente](#guida-utente)
-
-### Genetica
-
-Il dominio dell'applicazione riguarda la genetica, perciò si è pensato di fornire una breve introduzione su tale
-argomento e sulla terminologia utilizzata nella relazione.
-
-La genetica studia studia i geni, l'ereditarietà e la variabilità genetica negli organismi viventi. Nello specifico con
-il termine genoma ci si riferisce alla totalità dei cromosomi e dei geni contenuti nelle cellule. Il patrimonio genetico
-della prole dipende dagli attributi trasmessi dai genitori e definisce il loro aspetto estetico <br />
-Ogni gene riguarda una caratteristica, che nell'ambito della riproduzione dei conigli può essere ad esempio il *colore
-della pelliccia* o la *forma delle orecchie*. Ogni gene è formato da due alleli ed ogni allele può comparire in due
-forme diverse, ad esempio per il *colore della pelliccia* possono essere la *pelliccia bianca* o la *pelliccia bruna*.
-Una di queste due forme è dominante, mentre l'altra è recessiva. Ciò significa che se compaiono entrambe per un
-determinato gene a prevalere sarà la versione dominante, la quale quindi, sarà visibile sul figlio e farà parte del
-suo *fenotipo*
-. <br />
-Ogni figlio eredita dai genitori una coppia di alleli, uno dal padre ed uno dalla madre. Tale coppia sarà una delle
-combinazioni degli alleli dei genitori rappresentata
-nel  [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett), uno schema che per una qualsiasi coppia
-di genitori con certi alleli mostra le quattro combinazioni di alleli possibili per formare il gene del figlio.
-
-#### Glossario
-
-* **Gene** - Una caratteristica dell'organismo, è composto da due alleli.
-* **Allele** - Componente del gene che può comparire in due forme, una dominante e un recessiva.
-* **Dominante** - Tipo di allele che, se presente, viene mostrato all'esterno.
-* **Recessivo** - Tipo di allele che viene mostrato solamente se non si trova insieme ad un allele di tipo dominante.
-* **Genotipo** - L'intero patrimonio genetico di un organismo.
-* **Fenotipo** - Le caratteristiche effettivamente mostrate dall'organismo.
-* **Omozigote** - Un gene che contiene due alleli dello stesso tipo, siano essi entrambi dominanti o entrambi recessivi.
-* **Eterozigote** - Un gene che contiene alleli di tipo diverso, uno dominante ed uno recessivo.
 
 ## Processo di sviluppo adottato
 
