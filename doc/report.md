@@ -54,7 +54,7 @@ di genitori con certi alleli mostra le quattro combinazioni di alleli possibili 
   * [Obiettivi](#obiettivi)
   * [Modalità di revisione dei task](#modalità-di-revisione-dei-task)
   * [Scelta degli strumenti](#scelta-degli-strumenti)
-  * [Strumenti di test, build e Continuous Integration](#strumenti-di-test,-build-e-continuous-integration)
+  * [Strumenti di build e Continuous Integration](#strumenti-di-build-e-continuous-integration)
 - [Requisiti](#requisiti)
   * [Requisiti Business](#requisiti-business)
   * [Requisiti Utente](#requisiti-utente)
