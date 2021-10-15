@@ -794,8 +794,8 @@ Tali test consentono sia una verifica immediata del comportamento delle entità 
 
 Per la metodologia di implementazione dei test si è lasciata libera scelta ad ogni componente del gruppo: alcuni
 hanno preferito l'approccio TDD (Test Driven Development) per porzioni di codice importanti e complesse da sviluppare,
-mentre altri hanno scelto un approccio più tradizionale, cioè implementare prima una certa funzionalità e verificare in
-seguito che il comportamento sia quello atteso.  
+mentre altri hanno scelto un approccio più tradizionale, cioè prima implementare una certa funzionalità e in
+seguito verificare che il comportamento sia quello atteso.  
 Sono stati inoltre introdotti test dopo lo sviluppo di un insieme di funzionalità per verificare che la loro
 integrazione funzionasse correttamente.
 
