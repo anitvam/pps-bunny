@@ -546,7 +546,7 @@ Il loop generale della simulazione si ottiene mediante ricorsione, infatti se al
 
 Il `SimulationEngine` è inoltre caratterizzato da una `simulationSpeed`, tale valore permette di diminuire gli intervalli di tempo di attesa tra le varie fasi, così da velocizzare ciascuna generazione.
 
-L'avvio della simulazione viene scatenato dal `Controller` a seguito dello start da parte dell'utente attivando l'esecuzione asincrona del `simulationLoop`. Quest'ultimo si occupa  dapprima di aggiornare l'interfaccia grafica per gestire la prima riproduzione relativa alla creazione dei `Bunny` capostipiti e in seguito avvia il loop della generazione zero.
+L'avvio della simulazione viene scatenato dal `Controller` a seguito dello start da parte dell'utente attivando l'esecuzione asincrona del `simulationLoop`. Quest'ultimo si occupa dapprima di aggiornare l'interfaccia grafica per gestire la prima riproduzione relativa alla creazione dei `Bunny` capostipiti e in seguito avvia il loop della generazione zero.
 
 #### Simulation History e Simulation
 `SimulationHistory` è il Singleton che consente di gestire la storia della simulazione, modellata come una lista di `Generation`, di interagire con la generazione attualmente in esecuzione e di coordinare il passaggio da una generazione all'altra. 
