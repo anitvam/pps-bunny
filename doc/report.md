@@ -308,6 +308,32 @@ Nello specifico è possibile osservare come l'applicativo si sviluppi su 4 compo
   di visualizzare i grafici
 * __Controller__: componente che gestisce le interazioni tra Model e View e si occupa di avviare e gestire il loop.
 
+#### View 
+L'applicazione del concetto di View in questo progetto prevede la suddivisione di due gruppi principali di sotto-view: 
+* `FXControllers`, i controller che permettono di gestire i file grafici `fxml`;
+* `components`, gli elementi proncipali di grafica, come `Bunny`, `Wolf` e i `Charts`.
+
+Tutto gli elementi che fanno parte di questo modulo comunicano con il Controller, in particolare l'oggetto `ScalaFXView` viene istanziato come elemento statico per la visualizzazione dell'intero sistema di grafica e messo in esecuzione tramite il proprio metodo di start.
+[Schema alto livello della comunicazione tra controller e view ??]
+
+#### Controller
+Il Controller oltre ad essere il ponte tra model e view, inserendo le mutazioni, gestendo i fattori e riaggiornando la view, si occupa di mettere in esecuzione e gestire il loop della simulazione come indicato dal modulo `Engine`.
+E' costituito da due elementi: il `Controller` vero e proprio e `ScalaFXLauncher` che permette di mettere in esecuzione l'applicazione scalaFX.
+[Schema alto livello della comunicazione tra controller e engine e controller e view ??]
+#### Engine
+Come già descritto precedentemente, l'insieme degli elementi di Engine consente di gestire il loop della simulazione, comunica per tanto con il Controller e mantiene alcuni elementi di Model per tenere traccia degli eventi della simulazione.
+E' costituito da:
+* `SimulationHistory` che mantiene lo storico di ogni generazione;
+* `SimulationEngine` che definisce lo scorrere delle fasi della simulazione;
+* `Simulation` che specifica gli avvenimenti del loop.
+  [Schema alto livello di engine ??]
+#### Model
+Il Model è infine il container per tutte le informazioni della simulazione, che dovranno presentarsi nella View. E' stato strutturato in tre sottosistemi per rispettare la gerarchia descritta ad alto livello nei requisiti:
+* `bunny`, contiene la rappresentazione dell'animale principale della simulazione (il coniglio) e le sue caratteristiche, albero genealogico (`Tree`) e le sue mutazioni (`Mutation`);
+* `genome`, contiene gli aspetti della genetica, come `Gene` e `Genotype`;
+* `world`, contiene tutto quello che riguarda il mondo di contorno alla vita dei `bunny` e che influenzano il progresso della simulazione, come `Factor`, `Environment` e `Generation`.
+Interagisce col Controller al fine di aggiornane ad ogni fase l'ambiente circostante e la vita dei conigli.
+
 ## Design di dettaglio
 
 ### Model
