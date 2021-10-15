@@ -426,7 +426,7 @@ Il `Gender` è stato modellato tramite due `case object`, elementi statici senza
 
 #### Generazioni e Ambiente
 Una `Generation` rappresenta l'unità di tempo della simulazione. Essa contiene il riferimento all'attuale popolazione dei coniglietti e all'Ambiente.
-L'`Environment` rappresenta lo stato dell'ambiente di simulazione all'interno di una generazione, infatti contiene il riferimento dei fattori disturbanti, delle mutazioni e del clima scelti dall'utente durante lo svolgimento della simulazione. 
+L'`Environment` rappresenta lo stato dell'ambiente di simulazione all'interno di una generazione, infatti contiene il riferimento ai fattori disturbanti, alle mutazioni e al clima scelti dall'utente. 
 
 La modifica dello stato dell'Environment avviene principalmente attraverso `introduceMutation`, `introduceFactor` e `removeFactor`. 
 Questi metodi sono stati esposti perché implementano le operazioni necessarie per poter introdurre e rimuovere in modo corretto fattori e mutazioni, mentre invece per quanto riguarda il clima è possibile modificare il valore direttamente dal suo campo, in quanto la sua modifica non prevede operazioni particolari.
