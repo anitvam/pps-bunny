@@ -346,7 +346,7 @@ Di seguito sono descritti i requisiti non funzionali dell'applicativo:
 
 * _Usabilità_: L'interfaccia grafica dovrà essere semplice ed intuitiva così da permettere ad un utente non esperto del
   dominio di comprendere quali sono le principali operazioni che può eseguire
-* _User Experience_: L'interfaccia grafica sarà implementata in modo da rendere l'esperienza dell'utente con la
+* _User Experience_: L'interfaccia grafica sarà implementata in modo da rendere piacevole l'esperienza dell'utente con la
   simulazione ludica
 * _Cross Platform_: Sarà possibile eseguire il sistema sui 3 principali sistemi operativi: Linux, Windows, MacOs.
 
