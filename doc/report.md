@@ -47,10 +47,8 @@ di genitori con certi alleli mostra le quattro combinazioni di alleli possibili 
 * **Eterozigote** - Un gene che contiene alleli di tipo diverso, uno dominante ed uno recessivo.
 
 ## Indice
-- [PPS-BUNNY](#pps-bunny)
   - [Introduzione](#introduzione)
     - [Genetica](#genetica)
-      - [Glossario](#glossario)
   - [Indice](#indice)
   - [Processo di sviluppo adottato](#processo-di-sviluppo-adottato)
     - [Sprint](#sprint)
