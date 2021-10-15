@@ -185,9 +185,7 @@ evitando collisioni, si è deciso di introdurre la `Continuous Integration`. Con
 definita una sequenza di operazioni che si sono delegate alle `GitHub Actions`, le quali sono un insieme di macchine
 virtuali che `GitHub` mette a disposizione per poterle eseguire.
 
-All'interno della nostra pipeline il progetto viene `compilato` e `testato` su macchine di diversi sistemi
-operativi: `MacOS`,
-`Windows` e `Ubuntu`, con due versioni della JVM, ossia la `1.11` e la `1.16`.
+All'interno della nostra pipeline il progetto viene `compilato` e `testato` su macchine di diversi sistemi operativi: `MacOS`, `Windows` e `Ubuntu`, con due versioni della JVM, ossia la `1.11` e la `1.16`.
 
 La `Continuous Integration` definita nel nostro progetto prevede che i test vengano eseguiti tutte le volte che si
 effettua una `push` e una `pull request` sui branch `develop` e `master`. Grazie a questa configurazione, al momento di
