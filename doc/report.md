@@ -21,7 +21,7 @@ La simulazione termina quando i conigli si estinguono oppure se il loro numero r
 Il dominio dell'applicazione riguarda la genetica, perciò si è pensato di fornire una breve introduzione su tale
 argomento e sulla terminologia utilizzata nella relazione.
 
-La genetica studia i geni, l'ereditarietà e la variabilità genetica negli organismi viventi. Nello specifico con
+La genetica studia i geni e la loro ereditarietà negli organismi viventi. Nello specifico con
 il termine genoma ci si riferisce alla totalità dei cromosomi e dei geni contenuti nelle cellule. Il patrimonio genetico
 della prole dipende dagli attributi trasmessi dai genitori e definisce il loro aspetto estetico. <br />
 Ogni gene riguarda una caratteristica, che nell'ambito della riproduzione dei conigli può essere ad esempio il *colore
@@ -31,7 +31,7 @@ Una di queste due forme è dominante, mentre l'altra è recessiva. Ciò signific
 determinato gene a prevalere sarà la versione dominante, la quale quindi, sarà visibile sul figlio e farà parte del
 suo *fenotipo*. <br />
 Ogni figlio eredita dai genitori una coppia di alleli, uno dal padre ed uno dalla madre. Tale coppia sarà una delle
-combinazioni degli alleli dei genitori rappresentata
+combinazioni rappresentata
 nel  [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett), uno schema che per una qualsiasi coppia
 di genitori con certi alleli mostra le quattro combinazioni di alleli possibili per formare il gene del figlio.
 
@@ -156,7 +156,7 @@ team in modo che ogni sviluppatore nel corso della realizzazione del progetto si
 Design, Documentazione) e che per ogni Sprint il carico sia adeguatamente bilanciato fra i componenti. <br />
 Infine durante ogni Sprint Planning si discutono gli aspetti inerenti la modellazione del dominio in modo che tutti i
 membri del gruppo abbiano chiaro come lo si intende rappresentare, al fine di evitare fraintendimenti. <br />
-Per lo Sprint Planning è prevista una durata di circa due ore, in realtà alcune pianificazioni hanno richiesto a
+Per lo Sprint Planning è prevista una durata di circa due ore, in realtà alcune pianificazioni na hanno richiesta a
 malapena una mentre altre, in particolare quelle iniziali, sono arrivate a più di tre ore.
 
 ### Obiettivi
@@ -165,11 +165,11 @@ Di seguito sono riportati gli obiettivi fissati ed i risultati realmente prodott
 
 | Sprint       | Obiettivo    | Risultato     |
 | :------------- | :---------- | :----------- |
-| 1 | Produrre una modellazione corretta e possibilmente completa del sistema.  <br /> Questo è l'unico Sprint che ha avuto una durata inferiore alle due settimane (circa 10 giorni) e il cui obbiettivo non è un prototipo tangibile per un eventuale utente. Si è scelto di dedicare un intero Sprint alla modellazione in modo che tutti i componenti del team avessero tempo di studiare il dominio e per dare centralità al design dell'applicativo. | Obiettivo portato a termine. |
+| 1 | Produrre una modellazione corretta e possibilmente completa del sistema.  <br /> Questo è l'unico Sprint che ha avuto una durata inferiore alle due settimane (circa 10 giorni) e il cui obiettivo non è un prototipo tangibile per un eventuale utente. Si è scelto di dedicare un intero Sprint alla modellazione in modo che tutti i componenti del team avessero tempo di studiare il dominio e per dare centralità al design dell'applicativo. | Obiettivo portato a termine. |
 | 2 | Implementare una prima versione dell'applicazione, in cui è possibile osservare visivamente la riproduzione dei coniglietti. Nella pratica, si tratta di: <ul><li>Realizzare il model di base per la rappresentazione del coniglietto ed il suo patrimonio genetico.</li><li>Creare la struttura MVC dell'applicativo ed il loop che permette di avanzare nelle generazioni.</li><li> Visualizzare il pannello principale con i coniglietti che saltano.</li></ul>  | Obiettivo portato a termine. |
-| 3 | Integrare alcune feature alla prima versione prodotta, in particolare: <ul><li>Estendere la GUI con tutti i pannelli necessari, in particolare quelli per la scelta delle mutazioni e del grafico.</li><li>Aggiungere  le mutazioni ai conigli.</li><li>Dare la possibilità di scegliere la dominanza delle mutazioni introdotte.</li><li>Dare la possibilità di cambiare clima.</li><li>Visualizzare l'albero genealogico di un qualsiasi coniglio.</li><li>Visualizzare il grafico con la cardinalità della popolazione.</li><li>Visualizzare il grafico con le proporzioni.</li><li>Iniziare la stesura del report.</li></ul> | Obiettivo portato a termine.   |
-| 4 | Integrare nel prototipo prodotto nel precedente sprint le seguenti funzionalità: <ul><li>Realizzare il model dei fattori disturbanti</li><li>Estendere la GUI con il pannello per la scelta dei fattori disturbanti</li><li>Visualizzazione dei predatori durante la simulazione</li><li>Aggiungere al grafico delle proporzioni la funzionalità _history_</li><li>Aggiungere il _restart_ al termine della simulazione</li> <li>Dare la possibilità di modificare la velocità della simulazione</li><li>Aggiungere alla GUI un orologio per visualizzare il trascorrere del tempo della simulazione</li> | Obiettivo portato parzialmente a termine.| 
-| 5 | Rifinire il prototipo realizzato nello sprint precedente ed aggiungere la feature mancante relativa alla realizzazione dell'orologio, per poter rilasciare la release definitiva del sistema. Completare la stesura del report. Questo Sprint ha avuto una durata di 10 giorni. | Obiettivo portato a termine. |
+| 3 | Integrare alcune feature alla prima versione prodotta, in particolare: <ul><li>Estendere la GUI con i pannelli per la scelta delle mutazioni e dei grafici.</li><li>Aggiungere  le mutazioni ai conigli.</li><li>Dare la possibilità di scegliere la dominanza delle mutazioni introdotte.</li><li>Dare la possibilità di cambiare clima.</li><li>Visualizzare l'albero genealogico di un qualsiasi coniglio.</li><li>Visualizzare il grafico con la cardinalità della popolazione.</li><li>Visualizzare il grafico con le proporzioni.</li><li>Iniziare la stesura del report.</li></ul> | Obiettivo portato a termine.   |
+| 4 | Integrare al prototipo prodotto nel precedente sprint le seguenti funzionalità: <ul><li>Realizzare il model dei fattori disturbanti.</li><li>Estendere la GUI con il pannello per la scelta dei fattori disturbanti.</li><li>Visualizzazione dei predatori durante la simulazione.</li><li>Aggiungere al grafico delle proporzioni la funzionalità _history_.</li><li>Aggiungere il _restart_ al termine della simulazione</li> <li>Dare la possibilità di modificare la velocità della simulazione.</li><li>Aggiungere alla GUI un orologio per visualizzare il trascorrere del tempo della simulazione.</li> | Obiettivo portato parzialmente a termine.| 
+| 5 | Rifinire il prototipo realizzato nello sprint precedente ed aggiungere la feature mancante relativa alla realizzazione dell'orologio per poter produrre la release definitiva del sistema. Questo Sprint ha avuto una durata di 7 giorni. | Obiettivo portato a termine. |
 
 ### Modalità di revisione dei task
 
@@ -192,15 +192,13 @@ ciascuna delle issue. Di seguito è riportata una immagine che rappresenta il fl
 
 ![Git-Flow Workflow](./images/git_flow.png)
 
-Quando un membro ha completato il suo task, effettua una `pull request` che sottometterà alla revisione da parte degli
-altri membri del team. Nel momento in cui viene fatta questa richiesta viene anche associata la `issue` relativa alla
-risoluzione del task, questa operazione facilita l'individuazione di task che non sono stati svolti.
+Quando un membro ha completato il suo task, effettua una `pull request` per sottomettere il proprio lavoro alla revisione da parte degli altri membri del team. Nel momento in cui viene fatta questa richiesta viene anche associata la `issue` relativa alla risoluzione del task, questa operazione facilita l'individuazione di task che non sono stati svolti. La pull request può essere integrata su main solamente se ottiene l'approvazione di tutti gli altri componenti del gruppo.
 
 ### Scelta degli strumenti
 Il team, durante la riunione preliminare, ha definito l'insieme di tool da utilizzare come strumenti di automazione e di supporto al processo di sviluppo.
 Di seguito elenchiamo gli strumenti adottati:
 * _SBT_ per la build automation;
-* _ScalaTest_ per la scrittura e l'automazione dell'esecuzione dei test;
+* _ScalaTest_ per la scrittura dei test;
 * _Trello_ per il supporto alla divisione e sviluppo dei task;
 * _ScalaFMT_ per la formattazione del codice scala;
 * _ScalaFX_ per la realizzazione dell'interfaccia grafica.
@@ -211,12 +209,9 @@ Il processo di sviluppo adottato richiede che le feature sviluppate dai vari mem
 integrate con quelle già presenti nel branch develop, dunque per rendere il processo di integrazione più fluido,
 evitando collisioni, si è deciso di introdurre la `Continuous Integration`. Con il file `.github/workflows/ci.yml` viene
 definita una sequenza di operazioni che si sono delegate alle `GitHub Actions`, le quali sono un insieme di macchine
-virtuali che `GitHub`
-mette a disposizione per poterle eseguire.
+virtuali che `GitHub` mette a disposizione per poterle eseguire.
 
-All'interno della nostra pipeline il progetto viene `compilato` e `testato` su macchine di diversi sistemi
-operativi: `MacOS`,
-`Windows` e `Ubuntu`, con due versioni della JVM, ossia la `1.11` e la `1.16`.
+All'interno della nostra pipeline il progetto viene `compilato` e `testato` su macchine di diversi sistemi operativi: `MacOS`, `Windows` e `Ubuntu`, con due versioni della JVM, ossia la `1.11` e la `1.16`.
 
 La `Continuous Integration` definita nel nostro progetto prevede che i test vengano eseguiti tutte le volte che si
 effettua una `push` e una `pull request` sui branch `develop` e `master`. Grazie a questa configurazione, al momento di
@@ -244,7 +239,7 @@ dai genitori e l'ambiente di simulazione in cui la popolazione si trova, caratte
 
 Il sistema permetterà inoltre all'utente di avere un aggiornamento real-time dell'andamento della simulazione in termini
 di cardinalità della popolazione e della distribuzione delle diverse caratteristiche genetiche. Tali informazioni
-saranno inoltre rappresentate da opportuni grafici.
+saranno rappresentate in opportuni grafici.
 
 ### Requisiti Utente
 
@@ -265,10 +260,10 @@ Di seguito sono riportati i requisiti visti nell'ottica di cosa può fare l'uten
 * L'utente potrà decidere di visualizzare vari grafici:
     * Un grafico a linee che mostrerà la cardinalità della popolazione di conigli con l'avanzare delle generazioni.
     * L' albero genealogico di uno specifico coniglio a sua scelta, per evidenziare quali caratteristiche sono state
-      ereditate dai loro antenati.
+      ereditate dagli antenati.
     * Dei grafici a torta rappresentanti la proporzione fra coniglietti con i due fenotipi disponibili per ogni gene,
       all'inizio e al termine di ciascuna generazione.
-* L'utente potrà incrementare la velocità della simulazione
+* L'utente potrà incrementare la velocità della simulazione.
 
 ### Requisiti Funzionali
 
@@ -279,7 +274,6 @@ rappresentazione.
   conigli muoiano tutti o superino il loro numero massimo.
 * Il numero massimo di coniglietti è 1000, il raggiungimento di tale numero indicherà la fine della simulazione.
 * Ogni coniglietto vive per quattro generazioni.
-
 * Ogni coniglietto sarà caratterizzato da un genere, un'età e un patrimonio genetico.
 * Il patrimonio genetico di ogni coniglietto sarà inizialmente costituito solo da geni con alleli di tipo base, per i
   quali la dominanza non è stata ancora scelta. Nel momento in cui viene introdotta la mutazione verrà anche specificato
