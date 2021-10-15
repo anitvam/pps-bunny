@@ -128,7 +128,7 @@ team in modo che ogni sviluppatore nel corso della realizzazione del progetto si
 Design, Documentazione) e che per ogni Sprint il carico sia adeguatamente bilanciato fra i componenti. <br />
 Infine durante ogni Sprint Planning si discutono gli aspetti inerenti la modellazione del dominio in modo che tutti i
 membri del gruppo abbiano chiaro come lo si intende rappresentare, al fine di evitare fraintendimenti. <br />
-Per lo Sprint Planning è prevista una durata di circa due ore, in realtà alcune pianificazioni hanno richiesto a
+Per lo Sprint Planning è prevista una durata di circa due ore, in realtà alcune pianificazioni na hanno richiesta a
 malapena una mentre altre, in particolare quelle iniziali, sono arrivate a più di tre ore.
 
 ### Obiettivi
