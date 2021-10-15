@@ -806,7 +806,7 @@ Al termine del quinto e ultimo Sprint è stato possibile rilasciare una prima ve
 
 Per concludere, si riporta di seguito un commento che riguarda il sistema finale creato e l'esperienza
 maturata da tutto il team durante il processo di sviluppo.
-Il lavoro è stato svolto rispettando in buona parte gli standard principali della metodologia agile e di Scrum, in particolar modo attraverso il rilascio di un prototipo funzionante alla fine di ogni Sprint fissato. Le scadenze sono state rispettate nella maggior parte dei casi, con'unica eccezione alla conclusione del quarto Sprtint, avvenuta con un giorno di ritardo. Nel complesso non sono state riscontrate problematiche particolari relative alla pianificazione e la metodologia di sviluppo.
+Il lavoro è stato svolto rispettando in buona parte gli standard principali della metodologia agile e di Scrum, in particolar modo attraverso il rilascio di un prototipo funzionante alla fine di ogni Sprint fissato. Le scadenze sono state rispettate nella maggior parte dei casi, con l'unica eccezione alla conclusione del quarto Sprtint, avvenuta con un giorno di ritardo. Nel complesso non sono state riscontrate problematiche particolari relative alla pianificazione e la metodologia di sviluppo.
 A posteriori, il team si ritiene sufficientemente soddisfatto dal lavoro svolto in quanto è stata sviluppata la totalità delle funzionalità obbligatorie e parte di quelle facoltative nei limiti di tempo predefiniti.
 
 #### Sviluppi futuri
