@@ -797,19 +797,8 @@ Sprint che lo Sprint Planning del secondo. Di seguito sono riportate le attivit�
 
 #### Sprint 3
 
-Durante il terzo Sprint il team si è come al solito riunito prima di tutto per il meeting settimanale nel quale si è
-discusso sia la fine dello Sprint precedente che la definizione dello Sprint Planning del terzo. Di seguito sono
-riportate le attività svolte durante il terzo meeting:
-
-* Chiusura di tutti i task Sprint 2
-* Merge di tutte le Pull Request relative allo Sprint 2
-* Rilascio Release v0.1.0
-* Revisione difficoltà dei task
-* Product Backlog per Sprint 3 e 4
-* Sprint Planning 3 con suddivisione dei task
-* Definizione dei pannelli necessari nella GUI, per le mutazioni, per i grafici e l'albero genealogico
-* Definizione e introduzione dell'aspetto delle mutazioni
-* Definizione iniziale del report
+Il terzo Sprint ha avuto come obiettivo l'espansione del prototipo precedentemente prodotto aggiungendo la gestione delle mutazioni sia lato Model che View e una prima versione di ogni grafico del sistema.
+Durante questo Sprint Planning il team era indeciso se implementare prima la parte dei fattori o quella delle mutazioni, a seguito di un'attenta valutazione si però deciso di procedere come descritto in quanto avere già a disposizione la mutazioni nei coniglietti sarebbe stato utile successivamente nella definizione dei Fattori, in particolar modo per la parte di testing di quest'ultimi. A posteriori il team conferma la correttezza della scelta presa.
 
 #### Sprint 4
 
