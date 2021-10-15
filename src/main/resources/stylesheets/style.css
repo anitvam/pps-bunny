@@ -1,0 +1,172 @@
+.button {
+    -fx-background-color: #dca77b;
+    -fx-background-radius: 1em;
+}
+
+.button-clickable:hover {
+    -fx-background-color: #e6be9b;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.01;
+}
+
+.tree-bunny-text {
+    -fx-padding: 0;
+    -fx-margin: 0;
+}
+
+.tree-chosen-bunny {
+    -fx-border-color: black;
+    -fx-border-radius: 1em;
+}
+
+.button:disabled, .button:disabled > * {
+    -fx-opacity: 1.0;
+}
+
+.chosen-button {
+    -fx-border-color: #8093f1;
+    -fx-border-width: 5;
+    -fx-border-radius: 1em;
+}
+
+.dashed-button {
+    -fx-border-color: #8093f1;
+    -fx-border-width: 5;
+    -fx-border-radius: 1em;
+    -fx-border-style: segments(10, 15, 15, 15) line-cap round;
+}
+
+.panel {
+    -fx-background-color: #fce8d2;
+    -fx-background-radius: 2px;
+}
+
+.summer-button {
+    -fx-background-image: url("/img/environment/hot_icon.png");
+    -fx-background-size: 3em 3em;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.winter-button {
+    -fx-background-image: url("/img/environment/cold_icon.png");
+    -fx-background-size: 3em 3em;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.speedup-button {
+    -fx-background-size: 3em 3em;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.restart-button{
+    -fx-background-image: url("/img/restart.png");
+    -fx-background-size: 2em 2em;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.chart-line-mySymbol {
+    -fx-scale-x: 0.7;
+    -fx-scale-y: 0.7;
+}
+
+.Total {
+    -fx-stroke: black;
+    -fx-background-color: black;
+}
+
+.population-chart-legend-item {
+    -fx-padding: 2px;
+}
+
+.population-chart-legend-item-clicked {
+    -fx-background-color: lightgray;
+    -fx-background-radius: 5px;
+    -fx-padding: 2px;
+}
+
+.Pelo_Marrone, .Pelo_Lungo, .Denti_Lunghi, .Salto_Alto, .Orecchie_Basse {
+    -fx-stroke-dash-array: 0.5 5 5 0.5;
+}
+
+.Pelo_Bianco, .Pelo_Marrone {
+    -fx-stroke: #80cbc4;
+    -fx-background-color: #80cbc4;
+}
+
+
+.Pelo_Corto, .Pelo_Lungo {
+    -fx-stroke: #ffab91;
+    -fx-background-color: #ffab91;
+}
+
+.Denti_Corti, .Denti_Lunghi {
+    -fx-stroke: #90caf9;
+    -fx-background-color: #90caf9;
+}
+
+.Orecchie_Basse, .Orecchie_Alte {
+    -fx-stroke: #ce93d8;
+    -fx-background-color: #ce93d8;
+}
+
+.Salto_Alto, .Salto_Basso {
+    -fx-stroke: #c5e1a5;
+    -fx-background-color: #c5e1a5;
+}
+
+.Pelo_Bianco_Pie {
+    -fx-pie-color: #80cbc4;
+}
+
+.Pelo_Marrone_Pie {
+    -fx-pie-color: #4f9a94;
+}
+
+.Pelo_Corto_Pie {
+    -fx-pie-color: #ffab91;
+}
+
+.Pelo_Lungo_Pie {
+    -fx-pie-color: #c97b63;
+}
+
+.Orecchie_Alte_Pie {
+    -fx-pie-color: #ce93d8;
+}
+
+.Orecchie_Basse_Pie {
+    -fx-pie-color: #9c64a6;
+}
+
+.Salto_Alto_Pie {
+    -fx-pie-color: #94af76;
+}
+
+.Salto_Basso_Pie {
+    -fx-pie-color: #c5e1a5;
+}
+
+.Denti_Corti_Pie {
+    -fx-pie-color: #90caf9;
+}
+
+.Denti_Lunghi_Pie {
+    -fx-pie-color: #5d99c6;
+}
+
+.bunny-information-panel {
+    -fx-background-color: rgba(252,232,210,0.7);
+    -fx-background-radius: 1em;
+}
+
+.bunny-information-image {
+    -fx-background-image: url("/img/bunnies/white/high_ears/normal_teeth/normal_fur/normal.png");
+    -fx-background-size: 7em 7em;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+
+}
