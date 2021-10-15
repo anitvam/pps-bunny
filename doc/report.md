@@ -554,7 +554,7 @@ Viene in particolar modo utilizzato dal `Controller`, per introdurre lato Model 
 
 `Simulation` è l'object di utility che consente di creare le monadi da utilizzare all'interno del `generationLoop`, ad esempio si occupa di monadizzare l'azione associata alla fase dei lupi descritta in precedenza. 
 Nello specifico, `Simulation` permette di incapsulare attraverso delle monadi di tipo `IO[Unit]` le interazioni che il `SimulationEngine` ha con il `Controller` e `SimulationHistory`. 
-Per evitare ripetizioni di codice e aumentare la leggibilità si è deciso di implementare un metodo implicito per la conversione delle istruzioni Unit in monadi di tipo IO
+Per evitare ripetizioni di codice e aumentare la leggibilità si è deciso di implementare un metodo implicito per la conversione delle istruzioni Unit in monadi di tipo IO.
 
 ### View
 L'implementazione dell'interfaccia grafica è stata fatta attraverso l'utilizzo della libreria ScalaFX, un dsl in Scala di JavaFX. 
