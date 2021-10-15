@@ -132,8 +132,8 @@ di genitori con certi alleli mostra le quattro combinazioni di alleli possibili 
 Il processo di sviluppo adottato mette in pratica le metodologie previste dalla programmazione Agile, in particolare
 alcuni aspetti del framework **Scrum**:
 
-* prevedendo delle riunioni periodiche per organizzare il lavoro: lo Sprint Planning e la Sprint Review,
-* producendo artefatti come il Product Backlog e il resoconto di ogni riunione,
+* prevedendo delle riunioni periodiche per organizzare il lavoro: lo Sprint Planning e la Sprint Review;
+* producendo artefatti come il Product Backlog e il resoconto di ogni riunione;
 * tenendo traccia dello svolgimento di ogni task da parte dei singoli componenti del team.
 
 Il **Product Backlog** contiene le funzionalità fondamentali da sviluppare per la realizzazione dell'applicativo e viene
@@ -233,9 +233,9 @@ Sarà inoltre possibile studiare come le varie caratteristiche genetiche vengono
 L'interfaccia grafica permetterà all'utente di visualizzare ogni singolo coniglietto con l'insieme dei tratti ereditati
 dai genitori e l'ambiente di simulazione in cui la popolazione si trova, caratterizzato da 3 principali componenti:
 
-* Il clima: estivo o invernale
-* La presenza o meno dei predatori
-* La tipologia di risorse alimentari presenti
+* Il clima: estivo o invernale;
+* La presenza o meno dei predatori;
+* La tipologia di risorse alimentari presenti.
 
 Il sistema permetterà inoltre all'utente di avere un aggiornamento real-time dell'andamento della simulazione in termini
 di cardinalità della popolazione e della distribuzione delle diverse caratteristiche genetiche. Tali informazioni
@@ -248,19 +248,19 @@ Di seguito sono riportati i requisiti visti nell'ottica di cosa può fare l'uten
 * L'utente potrà visualizzare lo stato attuale della simulazione nel pannello principale dell'interfaccia: quanti
   conigli sono presenti e quali caratteristiche possiedono, le condizioni ambientali e l'avanzamento temporale delle
   generazioni;
-* Tale pannello sarà realizzato con un'interfaccia grafica 2D accattivante ed intuitiva.
-* L'utente potrà modificare il clima in cui si riproducono i coniglietti.
-* L'utente potrà scegliere quali mutazioni introdurre, specificando quali di esse sono dominanti e quali recessive.
-* L'utente potrà gestire i vari fattori che condizioneranno l'evoluzione.
+* Tale pannello sarà realizzato con un'interfaccia grafica 2D accattivante ed intuitiva;
+* L'utente potrà modificare il clima in cui si riproducono i coniglietti;
+* L'utente potrà scegliere quali mutazioni introdurre, specificando quali di esse sono dominanti e quali recessive;
+* L'utente potrà gestire i vari fattori che condizioneranno l'evoluzione;
 * L'utente potrà visualizzare il patrimonio genetico di qualsiasi coniglietto. Ogni gene è rappresentato da una lettera
   dell'alfabeto, se maiscuola corrisponde all'allele dominante mentre se minuscola all'allele recessivo. Ogni
   coniglietto perciò mantiene una coppia di lettere per ogni gene, corrispondenti agli alleli ereditati dai genitori. Ad
   esempio, se il gene *Orecchie* corrisponde alla lettera <tt>e</tt> e il coniglietto è eterozigote per quel gene,
-  allora sarà rappresentato dalla coppia di lettere <tt>eE</tt>.
+  allora sarà rappresentato dalla coppia di lettere <tt>eE</tt>;
 * L'utente potrà decidere di visualizzare vari grafici:
-    * Un grafico a linee che mostrerà la cardinalità della popolazione di conigli con l'avanzare delle generazioni.
+    * Un grafico a linee che mostrerà la cardinalità della popolazione di conigli con l'avanzare delle generazioni;
     * L' albero genealogico di uno specifico coniglio a sua scelta, per evidenziare quali caratteristiche sono state
-      ereditate dagli antenati.
+      ereditate dagli antenati;
     * Dei grafici a torta rappresentanti la proporzione fra coniglietti con i due fenotipi disponibili per ogni gene,
       all'inizio e al termine di ciascuna generazione.
 * L'utente potrà incrementare la velocità della simulazione.
@@ -271,18 +271,18 @@ Di seguito sono riportati i requisiti individuati durante lo studio del dominio 
 rappresentazione.
 
 * Il numero massimo di generazioni è 1000, considerato come numero limite difficilmente raggiungibile senza che i
-  conigli muoiano tutti o superino il loro numero massimo.
-* Il numero massimo di coniglietti è 1000, il raggiungimento di tale numero indicherà la fine della simulazione.
-* Ogni coniglietto vive per quattro generazioni.
-* Ogni coniglietto sarà caratterizzato da un genere, un'età e un patrimonio genetico.
+  conigli muoiano tutti o superino il loro numero massimo;
+* Il numero massimo di coniglietti è 1000, il raggiungimento di tale numero indicherà la fine della simulazione;
+* Ogni coniglietto vive per quattro generazioni;
+* Ogni coniglietto sarà caratterizzato da un genere, un'età e un patrimonio genetico;
 * Il patrimonio genetico di ogni coniglietto sarà inizialmente costituito solo da geni con alleli di tipo base, per i
   quali la dominanza non è stata ancora scelta. Nel momento in cui viene introdotta la mutazione verrà anche specificato
   se essa è dominante o recessiva. Finché l'utente non compie questa scelta, i coniglietti procederanno nella
-  riproduzione con i caratteri stabiliti inizialmente come base.
+  riproduzione con i caratteri stabiliti inizialmente come base;
 * Ogni generazione di conigli avrà alcuni tratti specifici ereditati dai suoi antenati e altri scaturiti da mutazioni
   genetiche, grazie a tali caratteristiche essi potranno avere più o meno probabilità di sopravvivenza nello specifico
   ambiente in cui vengono inseriti. Di seguito sono riportati i geni presi in considerazione nell'applicativo con le
-  possibili mutazioni genetiche e la lettera che vi è associata.
+  possibili mutazioni genetiche e la lettera che vi è associata;
 
 | Gene | Base | Mutazione | Lettera |
 | ----- | ----- | ----- | ----- |
@@ -299,7 +299,7 @@ rappresentazione.
   si formano 10 coppie, ognuna delle quali fa 4 figli per un totale di 40 figli, quindi al termine della riproduzione
   avremo 21 + 40 = 61 coniglietti. </br> Di seguito è riportato un esempio
   di [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett) per il gene riguardante il colore della
-  pelliccia (lettera <tt>f</tt>), con i figli dati dalla coppia d'esempio <tt>ff + fF</tt>.
+  pelliccia (lettera <tt>f</tt>), con i figli dati dalla coppia d'esempio <tt>ff + fF</tt>;
 
 | x | F  | f | 
 | --- | --- | --- |
@@ -314,7 +314,7 @@ rappresentazione.
   della pelliccia (lettera <tt>f</tt>), perciò tutti i coniglietti con fenotipo di base presenti fino a quel momento
   devono essere formati da due alleli recessivi (<tt>ff</tt>), mentre il coniglietto mutato sarà formato da due allei
   dominanti (<tt>FF</tt>). </br> Di seguito è riportato un esempio dei quattro figli generati da un coppia in cui viene
-  introdotta questa mutazione.
+  introdotta questa mutazione;
 
 | x | f  | f | 
 | --- | --- | --- |
@@ -323,20 +323,20 @@ rappresentazione.
 
 * Nel caso in cui siano definite più mutazioni (su vari geni) durante la medesima generazione, si cercherà di mantenere
   un'unica mutazione per coniglio, le mutazioni si andranno ad accumulare sullo stesso figlio solo nel caso in cui non
-  si disponga di abbastanza conigli.
+  si disponga di abbastanza conigli;
 
 * Sarà possibile influenzare l'evoluzione della specie attraverso vari fattori disturbanti:
-    * La variazione delle condizioni ambientali, in particolare la presenza di temperature ostili.
-    * L'aggiunta o la rimozione dall'ambiente dei predatori, in particolare dei lupi.
+    * La variazione delle condizioni ambientali, in particolare la presenza di temperature ostili;
+    * L'aggiunta o la rimozione dall'ambiente dei predatori, in particolare dei lupi;
     * La gestione delle risorse alimentari, che possono essere scarse, difficilmente raggiungibili o difficilmente
       masticabili.
-* L’ambiente può avere un clima caldo o freddo, che andrà a influenzare l'efficacia dei fattori sopracitati.
+* L’ambiente può avere un clima caldo o freddo, che andrà a influenzare l'efficacia dei fattori sopracitati;
 * Ogni fattore disturbante elimina una certa percentuale di coniglietti dall'ambiente, in ogni generazione i fattori
   agiscono uno alla volta sulla popolazione di coniglietti rimasta rispetto all'azione di un eventuale fattore
-  precedente.
+  precedente;
 * Ogni generazione, come impostazione di partenza, ha una durata di 12 secondi, dei quali 3 sono dedicati alla
   riproduzione e 9 all'eliminazione dei coniglietti dovuta alla presenza dei fattori disturbanti (3 secondi per ogni
-  tipologia). I fattori sono applicati nel seguente ordine: predatori, risorse alimentari, temperature ostili.
+  tipologia). I fattori sono applicati nel seguente ordine: predatori, risorse alimentari, temperature ostili;
 * Sarà possibile incrementare la velocità dello svolgimento della simulazione, andando a diminuire il tempo dedicato a
   ciascuna fase di ogni generazione.
 
@@ -345,20 +345,20 @@ rappresentazione.
 Di seguito sono descritti i requisiti non funzionali dell'applicativo:
 
 * _Usabilità_: L'interfaccia grafica dovrà essere semplice ed intuitiva così da permettere ad un utente non esperto del
-  dominio di comprendere quali sono le principali operazioni che può eseguire
+  dominio di comprendere quali sono le principali operazioni che può eseguire;
 * _User Experience_: L'interfaccia grafica sarà implementata in modo da rendere l'esperienza dell'utente con la
-  simulazione ludica
+  simulazione ludica;
 * _Cross Platform_: Sarà possibile eseguire il sistema sui 3 principali sistemi operativi: Linux, Windows, MacOs.
 
 ### Requisiti di Implementazione
 
 Di seguito vengono riportati i requisiti relativi all'implementazione del sistema:
 
-* Il sistema sarà sviluppato in Scala 2.13.6 e per eventuali feature sarà possibile integrare delle teorie Prolog
-* Il sistema farà riferimento al JDK 11, eventuali librerie esterne utilizzate dovranno supportare almeno tale versione
+* Il sistema sarà sviluppato in Scala 2.13.6 e per eventuali feature sarà possibile integrare delle teorie Prolog;
+* Il sistema farà riferimento al JDK 11, eventuali librerie esterne utilizzate dovranno supportare almeno tale versione;
 * Il testing del sistema sarà effettuato utilizzando ScalaTest, in questo modo sarà minimizzata la presenza di errori e
-  facilitato l'aggiornamento di eventuali funzionalità.
-* Il codice sorgente sarà verificato mediante l'utilizzo del linter ScalaFMT
+  facilitato l'aggiornamento di eventuali funzionalità;
+* Il codice sorgente sarà verificato mediante l'utilizzo del linter ScalaFMT.
 
 ## Design architetturale
 
@@ -378,11 +378,11 @@ In figura viene riportato un diagramma ad alto livello di come è stato struttur
 Nello specifico è possibile osservare come l'applicativo si sviluppi su 4 componenti fondamentali:
 
 * __Model__: modulo che incapsula tutte le classi relative alle entità e ai concetti che compongono il dominio della
-  simulazione
+  simulazione;
 * __Engine__: modulo che incapsula il loop su cui si basa la simulazione e le entità che gestiscono la storia della
-  simulazione
+  simulazione;
 * __View__: modulo che incapsula le entità che gestiscono l'interfaccia grafica del sistema e le classi che permettono
-  di visualizzare i grafici
+  di visualizzare i grafici;
 * __Controller__: componente che gestisce le interazioni tra Model e View e si occupa di avviare e gestire il loop.
 
 ## Design di dettaglio
@@ -403,8 +403,8 @@ Lo schema fornisce una rappresentazione grafica dei concetti legati al conigliet
 
 Il `Bunny` è un trait costruito con l'obiettivo di massimizzare l'immutabilità, infatti è possibile modificare implicitamente solo l'età e la condizione di vita attraverso due specifiche operazioni: l'aumento dell'età che avviene procedendo nelle generazioni e l'uccisione diretta del coniglietto che è causata da un fattore. </br> 
 Il `Bunny` può essere stanziato come:
-* `ChildBunny`, un coniglio appena nato
-* `FirstBunny`, una particolare tipologia di coniglio appena nato senza genitori, usato all'inizio della simulazione
+* `ChildBunny`, un coniglio appena nato;
+* `FirstBunny`, una particolare tipologia di coniglio appena nato senza genitori, usato all'inizio della simulazione;
 * `HistoryBunny`, una sorta di snapshot di un coniglio in un certo istante, che è quindi immutabile.  </br> 
 
 Il `Bunny`, oltre alle proprietà sopracitate, mantiene l'informazione sul genere, il riferimento ai genitori ed un `CompletedGenotype`, ovvero il suo patrimonio genetico, contenente tutte le tipologie di gene disponibili. Esiste anche un `PartialGenotype`, usato come supporto durante la generazione di conigli, che però non può essere inserito all'interno del coniglio in quanto una delle regole del dominio è che il genotipo contenga informazioni riguardanti tutti i geni. 
@@ -519,9 +519,9 @@ Siccome l'implementazione in `BasicFactor` non tiene conto di alcun gene, sono s
 Per implementare i fattori dei lupi è stata definita un'interfaccia aggiuntiva, chiamata `PredatorFactor`, che comprendesse gli ulteriori danni apportati da queste entità: `lowDamage` e `highDamage`.
 
 `FoodFactor` è un'interfaccia che definisce due importanti metodi: `+` e `-`. Queste operazioni supportano rispettivamente la combinazione e la suddivisione di due fattori alimentari e vengono implementate nelle classi astratte:
-- `SingleFoodFactor`, rappresenta i fattori alimentari composti da una sola tipologia, ad esempio il cibo alto, e di conseguenza impedisce l'implementazione del metodo `-`. Per quanto riguarda il metodo `+`, questo espone un template method che consente di far definire alle singole implementazioni quali sono i fattori alimentari con cui la classe può essere combinata.
-- `DoubleFoodFactor`, estende da `SingleFoodFactor` e implementa anche l'operazione `-` sempre attraverso un template method. Infatti, questa classe rappresenta la combinazione di due fattori relativi al cibo, ad esempio cibo alto e scarso, dalla quale è quindi possibile rimuovere uno dei due fattori singoli.
-- `TripleFoodFactor`, estende da `DoubleFoodFactor` e blocca l'utilizzo del metodo `+` in quanto un fattore alimentare composto da tutte e tre le topologie non può essere concatenato a nessun altro.
+* `SingleFoodFactor`, rappresenta i fattori alimentari composti da una sola tipologia, ad esempio il cibo alto, e di conseguenza impedisce l'implementazione del metodo `-`. Per quanto riguarda il metodo `+`, questo espone un template method che consente di far definire alle singole implementazioni quali sono i fattori alimentari con cui la classe può essere combinata;
+* `DoubleFoodFactor`, estende da `SingleFoodFactor` e implementa anche l'operazione `-` sempre attraverso un template method. Infatti, questa classe rappresenta la combinazione di due fattori relativi al cibo, ad esempio cibo alto e scarso, dalla quale è quindi possibile rimuovere uno dei due fattori singoli;
+* `TripleFoodFactor`, estende da `DoubleFoodFactor` e blocca l'utilizzo del metodo `+` in quanto un fattore alimentare composto da tutte e tre le topologie non può essere concatenato a nessun altro.
 
 È stato infine definito il mixin `FoodFactorOnSingleGene` che estende l'implementazione del metodo `applyDamage` di `BasicFactor` in modo da coprire tutti i fattori alimentari che agiscono su un singolo gene. Il mixin ha l'obiettivo di estrapolare un comportamento comune a vari fattori, ovvero l'applicazione dello stesso danno a tutta la popolazione oppure l'applicazione di un danno elevato ai conigli con l'allele base e un danno ridotto a quelli con l'allele mutato.
 
@@ -568,10 +568,11 @@ Questi costrutti sono classi fortemente associate ai file `fxml` che contengono 
 Queste classi consentono dunque di attribuire un comportamento dinamico ad un componente grafico definito staticamente all'interno del file fxml.
 
 Sono stati implementati con dei file fxml:
-* la struttura base dei pannelli
-* il pannello relativo alla scelta del grafico
-* il pannello che consente la scelta delle mutazioni
-* il pannello che consente la scelta dei fattori disturbanti
+* la struttura base dei pannelli;
+* il pannello relativo alla scelta del grafico;
+* il pannello che consente la scelta delle mutazioni;
+* il pannello che consente la scelta dei fattori disturbanti.
+
 I rispettivi Controllers sono tutti implementati nel package it.unibo.pps.bunny.view.scalaFX.FXControllers
 
 ### Grafici
@@ -659,10 +660,10 @@ in particolare tutti i package relativi all'implementazione in scalaFX dell'appl
 Nei seguenti paragrafi ciascun componente descriverà per quali parti è responsabile dell'implementazione.
 ### Baiardi
 Inizialmente mi sono dedicata all'implementazione dell'interfaccia grafica, in particolare ho definito:
-* la struttura base dell'applicazione
-* il movimento dei coniglietti nell'ambiente di simulazione 
-* il pannello di scelta delle mutazioni da introdurre
-* i pannelli visualizzati al termine della simulazione
+* la struttura base dell'applicazione;
+* il movimento dei coniglietti nell'ambiente di simulazione;
+* il pannello di scelta delle mutazioni da introdurre;
+* i pannelli visualizzati al termine della simulazione.
 
 Ho disegnato tutti i coniglietti con le possibili combinazioni di mutazioni in collaborazione con Spadoni e successivamente ho definito un singleton contenente la Enumeration `BunnyImage` con tutte le `Image` relative ai coniglietti, questa Enumeration è particolarmente importante in quanto, grazie al metodo `bunnyToImage`, riesce a convertire l'istanza del model di un coniglietto nell'equivalente immagine ad esso associata. 
 
@@ -753,13 +754,13 @@ mutazioni, che ha permesso di mettere mano anche alla creazione dei relativi tes
 
 Le parti implementate comprendono:
 
-* `it.unibo.pss.bunny.model.bunny.Mutation`
-* `it.unibo.pss.bunny.model.world.Reproduction` (solo la logica d'introduzione delle mutazioni durante la riproduzione)
+* `it.unibo.pss.bunny.model.bunny.Mutation`;
+* `it.unibo.pss.bunny.model.world.Reproduction` (solo la logica d'introduzione delle mutazioni durante la riproduzione);
 * il package `it.unibo.pss.bunny.view.scalaFX.components` (ad esclusione del file `BunnyView` e il sotto
-  package `charts`)
-* `it.unibo.pss.bunny.view.scalaFX.FXControllers.FactorsPanelController`
+  package `charts`);
+* `it.unibo.pss.bunny.view.scalaFX.FXControllers.FactorsPanelController`;
 * `it.unibo.pss.bunny.view.scalaFX.FXControllers.BaseAppController` (in collaborazione con tutti gli altri componenti
-  del gruppo)
+  del gruppo).
 
 #### TDD
 Per l'implementazione del model delle mutazioni mi sono rifatta alla tecnica **TDD** cercando di seguire il ciclo
@@ -806,11 +807,11 @@ serie di strategie che la classe astratta `AnimalView` potrebbe mettere a dispos
 Altri meccanismi avanzati sono:
 
 * l'utilizzo degli **alias** attraverso l'utilizzo di `Type` in `it.unibo.pps.bunny.model.world.Environment` per la
-  determinazione di un nuovo tipo per le Mutazioni (`type Mutations = List[Mutation]`).
+  determinazione di un nuovo tipo per le Mutazioni (`type Mutations = List[Mutation]`);
 * l'utilizzo degli impliciti per la conversione automatica degli elementi in `getBackgroundCorrespondingToClimate`
-  dell'oggetto `EnvironmentImages`, creato con l'aiuto di Spadoni e Baiardi.
+  dell'oggetto `EnvironmentImages`, creato con l'aiuto di Spadoni e Baiardi;
 * l'applicazione minimale del pattern Factory (oggetto `ClimateImageFactory`) nella costruzione delle immagini a seconda
-  del clima e del fattore disturbante del cibo introdotto in `view.scalaFX.utilities.EnvironmentImages`
+  del clima e del fattore disturbante del cibo introdotto in `view.scalaFX.utilities.EnvironmentImages`.
 
 ## Testing
 Per verificare la correttezza dell'implementazione delle principali strutture dati realizzate sono stati sviluppati dei test con il framework `ScalaTest`, in particolare con l'ausilio di `FunSpec` per rendere la loro descrizione più naturale.
@@ -888,18 +889,18 @@ A posteriori, il team si ritiene sufficientemente soddisfatto dal lavoro svolto 
 
 ## Sviluppi Futuri
 Per quanto riguarda gli sviluppi futuri il team ritiene che ci siano una moltitudine di aspetti che si possono appronfondire e varie funzionalità che sarebbe interessante aggiungere o ampliare. Di seguito sono riportate alcune proposte:
-* Aggiunta della pausa nella simulazione.
-* Aggiunta di altre mutazioni sui medesimi geni.
-* Aggiunta di nuovi tipi di geni con associate le rispettive tipologie di alleli standard e mutati. 
-* Aggiunta di ulteriori tipologie di clima.
-* Aggiunta di ulteriori fattori disturbanti.
-* Per ciascun coniglietto, dare la possibilità di visionare se è omozigote o eterozigote per ogni suo gene.
-* Visualizzazione di un report finale alla conclusione della simulazione che mostra sinteticamente gli aspetti salienti della selezione naturale, ad esempio indicando quali mutazioni si sono rivelate più adeguate e quali fattori più nocivi.
-* Visualizzazione di ulteriori grafici, ad esempio uno relativo alla cardinalità dei coniglietti che presentano un insieme di caratteristiche scelte dall'utente.
-* Miglioramento del rendering del Pedigree prendendo in considerazione la possibilità di avere più geni rispetto a quelli attuali e quindi avere la visualizzazione degli alleli che supera in larghezza quella del coniglietto o su più righe in modo da mantenere l'albero genealogico maggiormente compatto.
-* Possibilità di quantificare più nello specifico la tipologia e quantità di nutrienti che assumono i coniglietti e il conseguente tempo di sovravvivenza.
-* Possibilità di utilizzare animali diversi rispetti ai coniglietti.
-* Trasformazione dell'intera logica del Model in Prolog, infatti al termine dello sviluppo ci si è resti conto che tutti i controlli sul genoma implementati tramite eccezioni e la generazione di figli si prestano in particolar modo ad essere espressi tramite clausole.
+* Aggiunta della pausa nella simulazione;
+* Aggiunta di altre mutazioni sui medesimi geni;
+* Aggiunta di nuovi tipi di geni con associate le rispettive tipologie di alleli standard e mutati; 
+* Aggiunta di ulteriori tipologie di clima;
+* Aggiunta di ulteriori fattori disturbanti;
+* Per ciascun coniglietto, dare la possibilità di visionare se è omozigote o eterozigote per ogni suo gene;
+* Visualizzazione di un report finale alla conclusione della simulazione che mostra sinteticamente gli aspetti salienti della selezione naturale, ad esempio indicando quali mutazioni si sono rivelate più adeguate e quali fattori più nocivi;
+* Visualizzazione di ulteriori grafici, ad esempio uno relativo alla cardinalità dei coniglietti che presentano un insieme di caratteristiche scelte dall'utente;
+* Miglioramento del rendering del Pedigree prendendo in considerazione la possibilità di avere più geni rispetto a quelli attuali e quindi avere la visualizzazione degli alleli che supera in larghezza quella del coniglietto o su più righe in modo da mantenere l'albero genealogico maggiormente compatto;
+* Possibilità di quantificare più nello specifico la tipologia e quantità di nutrienti che assumono i coniglietti e il conseguente tempo di sovravvivenza;
+* Possibilità di utilizzare animali diversi rispetti ai coniglietti;
+* Trasformazione dell'intera logica del Model in Prolog, infatti al termine dello sviluppo ci si è resti conto che tutti i controlli sul genoma implementati tramite eccezioni e la generazione di figli si prestano in particolar modo ad essere espressi tramite clausole;
 * Introduzione di casi particolari presenti in natura, ad esempio nel caso del gene eterozigote è possibile che l'animale non presenti nè la caratteristica legata all'allele dominante, nè quella legata all'allele recessivo, bensì un misto fra le due. Questo è un caso estremamente raro, che la simulazione potrebbe mostrare in una bassa percenutale di coniglietti.
 
 ## Conclusione
@@ -916,22 +917,22 @@ Il team ritiene inoltre cruciale la scelta di adottare il _Workflow_ GitFlow in 
 L'applicazione può essere lanciata in diversi modi:
 
 * eseguendo il jar del proprio sistema operativo fornito nella sezione release di GitHub attraverso il
-  comando `$ java -jar <path-to-downloaded-jar>`
-* scaricando il repository ed eseguendolo tramite `sbt` con il comando `sbt run`
+  comando `$ java -jar <path-to-downloaded-jar>`;
+* scaricando il repository ed eseguendolo tramite `sbt` con il comando `sbt run`.
 
 Quando l'applicativo viene messo in esecuzione apparirà una board di gioco, con l'aspetto riportato
 nello screenshot seguente, che rappresenta la GUI principale della simulazione con la quale si può interagire
 per avviarla. La board è formata da:
 * un pannello principale posto in alto a sinistra nel quale avviene la simulazione vera e propria. Qui si
   troveranno i coniglietti, l'orologio nell'angolo in alto a sinistra, i due bottoni per il cambiamento del clima in
-  alto a destra e il bottone per l'aumento della velocità in basso a destra.
+  alto a destra e il bottone per l'aumento della velocità in basso a destra;
 * un pannello, sottostante al precedente, all'interno del quale è possibile scegliere quale dei tre grafici si vuole visualizzare:
-  * il grafico della popolazione
-  * il grafico delle proporzioni delle mutazioni suddivise per generazioni
-  * il grafico dell'albero genealogico
-* un pannello per l'aggiunta delle mutazioni in alto a destra con due bottoni per ciascuna mutazione, uno permette di introdurre la mutazione come dominante e l'altro come recessiva
+  * il grafico della popolazione;
+  * il grafico delle proporzioni delle mutazioni suddivise per generazioni;
+  * il grafico dell'albero genealogico.
+* un pannello per l'aggiunta delle mutazioni in alto a destra con due bottoni per ciascuna mutazione, uno permette di introdurre la mutazione come dominante e l'altro come recessiva;
 * un pannello per l'aggiunta di fattori disturbanti in basso a destra con una check box per ogni tipo di fattore che si
-  può introdurre
+  può introdurre.
 
 ![Screen-Gui](./images/GUI_screenshot.png)
 
