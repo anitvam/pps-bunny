@@ -520,7 +520,7 @@ Per quanto riguarda gli sviluppi futuri il team ritiene che ci siano una moltitu
 * Aggiunta di altre mutazioni sui medesimi geni.
 * Aggiunta di nuovi tipi di geni con associate le rispettive tipologie di alleli standard e mutati. 
 * Aggiunta di ulteriori tipologie di clima.
-* Aggiunta di fattori disturbanti.
+* Aggiunta di ulteriori fattori disturbanti.
 * Per ciascun coniglietto, dare la possibilità di visionare se è omozigote o eterozigote per ogni suo gene.
 * Visualizzazione di un report finale alla conclusione della simulazione che mostra sinteticamente gli aspetti salienti della selezione naturale, ad esempio indicando quali mutazioni si sono rivelate più adeguate e quali fattori più nocivi.
 * Visualizzazione di ulteriori grafici, ad esempio (??? Marta non me lo ricordo)
