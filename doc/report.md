@@ -771,6 +771,47 @@ classi di model e dell'engine.
 
 ## Retrospettiva
 
+In questa sezione saranno descritti gli Sprint settimanali con le rispettive relazioni e i commenti finali del team.
+Inoltre nel file Backlog della cartella `/process` del repository GitHub sono riportati i riassunti degli Sprint Planning.
+
+### Sprint
+
+Sono stati realizzati un totale di 5 Sprint, alla conclusione di ognuno il team si è riunito per rilasciare un prototipo
+funzionante (ad eccezione del primo Sprint) e per discutere del lavoro svolto, congiuntamente si è anche provveduto ad eseguire lo Sprint Planning dello Sprint successivo.
+
+#### Sprint 1
+
+Durante il primo sprint, il team si è concentrato sulla fase di analisi del dominio, parte fondamentale per il futuro
+sviluppo del progetto. Ogni membro del gruppo, in autonomia, ha prodotto un diagramma UML ad alto livello del model, tali diagrammi sono poi stati discussi e uniti per generare lo schema su cui successivamente si è basata l'intera implementazione del Model. Si è inoltre iniziato a compilare il Product Backlog, a definire una prima suddivisione dei task e a preparare il repository del progetto, configurando SBT e la CI.
+
+
+#### Sprint 2
+L'obiettivo del secondo Sprint era quello di implementare un primo prototipo funzionante del sistema. Quest'ultimo, basandosi sull'architettura MVC, doveva presentare: la parte di model relativa ai Bunny e al genoma, la componente dell'engine per definire il loop di avanzamento delle generazioni e, lato View, la struttura principale dell'interfaccia grafica e la possibilità di visualizzare i coniglietti nel pannello principale.
+
+Il prototipo sottomesso al termine dello sprint presenta dunque una versione dell'interfaccia grafica minimale all'interno della quale è possibile visionare la riproduzione del coniglietto senza l'introduzione di mutazioni.
+
+L'obiettivo è stato portato a termine senza particolari difficoltà, grazie anche alla buona fase di analisi condotta precedentemente.
+
+#### Sprint 3
+
+Il terzo Sprint ha avuto come obiettivo l'espansione del prototipo precedentemente prodotto attraverso l'aggiunta della gestione delle mutazioni sia lato Model che View e lo sviluppo di una prima versione per ogni grafico del sistema.
+Durante questo Sprint Planning il team era indeciso se implementare prima la parte dei fattori o quella delle mutazioni, a seguito di un'attenta valutazione si è scelto di procedere come descritto in quanto avere a disposizione la mutazioni nei coniglietti sarebbe stato utile alla successiva definizione dei fattori, in particolar modo per il testing di quest'ultimi. A posteriori il team si ritiene soddisfatto della scelta compiuta.
+
+#### Sprint 4
+
+Come per i due Sprint precedenti, anche per il quarto il team si è posto l'obiettivo di realizzare un prodotto concreto e, in questo caso, il prototipo è molto vicino alla versione finale del sistema. Nello specifico, si sono introdotti i fattori disturbanti, sia lato Model che View e si è aggiunta la possibilità di modificare la velocità del loop e di eseguire il restart al termine di ogni simulazione. Si è inoltre voluto inserire un nuovo componente nell'interfaccia grafica: un orologio, questo permette all'utente di comprendere in che momento della generazione si trova durante la simulazione.
+
+#### Sprint 5
+
+Al termine del quinto e ultimo Sprint è stato possibile rilasciare una prima versione definitiva del sistema. In particolare, rispetto al prototipo precedentemente prodotto, non sono state aggiunte nuove funzionalità ma si è posta particolare attenzione nel refactoring del codice, nel migliorare la Scaladoc e in generale nel risolvere tutto il debito tecnico precedentemente introdotto.
+
+### Commenti finali
+
+Per concludere, si riporta di seguito un commento che riguarda il sistema finale creato e l'esperienza
+maturata da tutto il team durante il processo di sviluppo.
+Il lavoro è stato svolto rispettando in buona parte gli standard principali della metodologia agile e di Scrum, in particolar modo attraverso il rilascio di un prototipo funzionante alla fine di ogni Sprint fissato. Le scadenze sono state rispettate nella maggior parte dei casi, con l'unica eccezione alla conclusione del quarto Sprtint, avvenuta con un giorno di ritardo. Nel complesso non sono state riscontrate problematiche particolari relative alla pianificazione e la metodologia di sviluppo.
+A posteriori, il team si ritiene sufficientemente soddisfatto dal lavoro svolto in quanto è stata sviluppata la totalità delle funzionalità obbligatorie e parte di quelle facoltative nei limiti di tempo predefiniti.
+
 ### Sviluppi Futuri
 Per quanto riguarda gli sviluppi futuri il team ritiene che ci siano una moltitudine di aspetti che si possono appronfondire e varie funzionalità che sarebbe interessante aggiungere o ampliare. Di seguito sono riportate alcune proposte:
 * Aggiunta della pausa nella simulazione.
