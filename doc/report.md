@@ -587,7 +587,7 @@ problemi di design ricorrenti.
 
 #### Pimp My Library
 
-_Pimp My Library_ è sicuramente uno dei pattern più utilizzati all'interno del progetto, questo consente di arricchire
+_Pimp My Library_ è sicuramente uno dei pattern più utilizzati all'interno del progetto in quanto consente di arricchire
 classi già definite con dei nuovi metodi realizzati ad-hoc. Si è utilizzato infatti il pattern per estendere gli Option,
 le Tuple e le collection di Scala ma anche le strutture dati relative ai grafici della libreria JavaFX.
 
