@@ -160,7 +160,7 @@ noi definito
 `feature/<iniziale_nome><iniziale_cognome>-<nome_feature>`, al cui interno viene sviluppato il codice per risolvere
 ciascuna delle issue. Di seguito è riportata una immagine che rappresenta il flusso di sviluppo:
 
-![Git-Flow Workflow](./images/git_flow.svg)
+![Git-Flow Workflow](./images/git_flow.png)
 
 Quando un membro ha completato il suo task, effettua una `pull request` che sottometterà alla revisione da parte degli
 altri membri del team. Nel momento in cui viene fatta questa richiesta viene anche associata la `issue` relativa alla
