@@ -354,11 +354,11 @@ Di seguito sono descritti i requisiti non funzionali dell'applicativo:
 
 Di seguito vengono riportati i requisiti relativi all'implementazione del sistema:
 
-* Il sistema sarà sviluppato in Scala 2.13.6 e per eventuali feature sarà possibile integrare delle teorie Prolog
-* Il sistema farà riferimento al JDK 11, eventuali librerie esterne utilizzate dovranno supportare almeno tale versione
+* Il sistema sarà sviluppato in Scala 2.13.6 e per eventuali feature sarà possibile integrare delle teorie Prolog.
+* Il sistema farà riferimento al JDK 11, eventuali librerie esterne utilizzate dovranno supportare almeno tale versione.
 * Il testing del sistema sarà effettuato utilizzando ScalaTest, in questo modo sarà minimizzata la presenza di errori e
   facilitato l'aggiornamento di eventuali funzionalità.
-* Il codice sorgente sarà verificato mediante l'utilizzo del linter ScalaFMT
+* Il codice sorgente sarà verificato mediante l'utilizzo del linter ScalaFMT.
 
 ## Design architetturale
 
