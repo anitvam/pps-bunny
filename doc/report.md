@@ -575,6 +575,7 @@ Sono stati implementati con dei file fxml:
 * il pannello che consente la scelta delle mutazioni;
 * il pannello che consente la scelta dei fattori disturbanti.
 * la struttura del grafico Proportions Chart
+
 I rispettivi Controllers sono tutti implementati nel package it.unibo.pps.bunny.view.scalaFX.FXControllers
 
 ### Grafici
