@@ -740,8 +740,7 @@ Altri meccanismi avanzati sono:
 * l'applicazione minimale del pattern Factory (oggetto `ClimateImageFactory`) nella costruzione delle immagini a seconda
   del clima e del fattore disturbante del cibo introdotto in `view.scalaFX.utilities.EnvironmentImages`
 
-### Testing
-### Testing
+## Testing
 Per verificare la correttezza dell'implementazione delle principali strutture dati realizzate sono stati sviluppati dei test con il framework `ScalaTest`, in particolare con l'ausilio di `FunSpec` per rendere la loro descrizione più naturale.
 Tali test consentono sia una verifica immediata del comportamento delle entità sviluppate sia una verifica continua per le modifiche apportate successivamente, che se effettuate nel modo sbagliato potrebbero comportare dei bug nel codice precedentemente implementato.
 
@@ -815,7 +814,7 @@ maturata da tutto il team durante il processo di sviluppo.
 Il lavoro è stato svolto rispettando in buona parte gli standard principali della metodologia agile e di Scrum, in particolar modo attraverso il rilascio di un prototipo funzionante alla fine di ogni Sprint fissato. Le scadenze sono state rispettate nella maggior parte dei casi, con l'unica eccezione alla conclusione del quarto Sprtint, avvenuta con un giorno di ritardo. Nel complesso non sono state riscontrate problematiche particolari relative alla pianificazione e la metodologia di sviluppo.
 A posteriori, il team si ritiene sufficientemente soddisfatto dal lavoro svolto in quanto è stata sviluppata la totalità delle funzionalità obbligatorie e parte di quelle facoltative nei limiti di tempo predefiniti.
 
-### Sviluppi Futuri
+## Sviluppi Futuri
 Per quanto riguarda gli sviluppi futuri il team ritiene che ci siano una moltitudine di aspetti che si possono appronfondire e varie funzionalità che sarebbe interessante aggiungere o ampliare. Di seguito sono riportate alcune proposte:
 * Aggiunta della pausa nella simulazione.
 * Aggiunta di altre mutazioni sui medesimi geni.
@@ -830,3 +829,44 @@ Per quanto riguarda gli sviluppi futuri il team ritiene che ci siano una moltitu
 * Possibilità di utilizzare animali diversi rispetti ai coniglietti.
 * Trasformazione dell'intera logica del Model in Prolog, infatti al termine dello sviluppo ci si è resti conto che tutti i controlli sul genoma implementati tramite eccezioni e la generazione di figli si prestano in particolar modo ad essere espressi tramite clausole.
 * Introduzione di casi particolari presenti in natura, ad esempio nel caso del gene eterozigote è possibile che l'animale non presenti nè la caratteristica legata all'allele dominante, nè quella legata all'allele recessivo, bensì un misto fra le due. Questo è un caso estremamente raro, che la simulazione potrebbe mostrare in una bassa percenutale di coniglietti.
+
+## Conclusione
+
+## Guida Utente
+L'applicazione può essere lanciata in diversi modi:
+
+* eseguendo il jar del proprio sistema operativo fornito nella sezione release di GitHub attraverso il
+  comando `$ java -jar <path-to-downloaded-jar>`
+* scaricando il repository ed eseguendolo tramite `sbt` con il comando `sbt run`
+
+Quando l'applicativo viene messo in esecuzione apparirà una board di gioco, con l'aspetto riportato
+nello screenshost seguente, che rappresenta la GUI principale della simulazione con la quale si può interagire
+per avviarla. La board è formata da:
+* un pannello principale posto in alto a sinistra nel quale avviene la simulazione vera e propria. Qui si
+  troveranno i coniglietti, l'orologio nell'angolo in alto a sinistra, i due bottoni per il cambiamento del clima in
+  alto a destra e il bottone per l'aumento della velocità in basso a destra.
+* un pannello, sottostante al precedente, all'interno del quale è possibile scegliere quale dei tre grafici si vuole visualizzare:
+  * il grafico della popolazione
+  * il grafico delle proporzioni delle mutazioni suddivise per generazioni
+  * il grafico dell'albero genealogico
+* un pannello per l'aggiunta delle mutazioni in alto a destra con due bottoni per ciascuna mutazione, uno permette di introdurre la mutazione come dominante e l'altro come recessiva
+* un pannello per l'aggiunta di fattori disturbanti in basso a destra con una check box per ogni tipo di fattore che si
+  può introdurre
+
+![Screen-Gui](./images/GUI_screenshot.png)
+
+La simulazione parte quando si preme il pulsante "START", ma prima si possono comunque selezionare le mutazioni e i
+fattori che si trovano nei due rispettivi pannelli.
+
+Una volta avviata la simulazione, si potrà aggiungere una mutazione in qualsiasi momento ma questa verrà introdotta nel
+genotipo dei coniglietti solo durante la fase di riproduzione immediatamente successiva all'inserimento, come indicato
+durante il gioco dalle scritte informative nel pannello. A differenza delle mutazioni, che una volta applicate non possono essere modificate, l'inserimento dei fattori può essere cambiato a piacimento, visualizzandolo immediatamente nel background della visualizzazione dei coniglietti. Vengono applicati alla popolazione solamente i fattori che sono attivi durante la rispettiva fase di simulazione.  Per quanto riguarda il clima e la velocità di esecuzione della simulazione, questi possono
+essere variati dall'utente senza vincoli. Durante il corso della simulazione i vari grafici implementati saranno
+popolati con le informazioni in tempo reale, seguendo la velocità di esecuzione scelta.
+
+La simulazione può terminare a causa di tre condizioni:
+* i coniglietti superano il numero massimo stabilito, conquistando il mondo
+* i coniglietti si sono estinti
+* il numero di generazioni che sono state effettuate supera il limite massimo imposto dal simulatore. 
+  
+In tutti e tre i casi viene visualizzata una dialog finale con la descrizione dell'accaduto e si può decidere di far ripartire la simulazione cliccando sul tasto restart che compare al posto di quello dell'incremento della velocità.
