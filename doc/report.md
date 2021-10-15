@@ -164,9 +164,7 @@ ciascuna delle issue. Di seguito è riportata una immagine che rappresenta il fl
 
 ![Git-Flow Workflow](./images/git_flow.png)
 
-Quando un membro ha completato il suo task, effettua una `pull request` che sottometterà alla revisione da parte degli
-altri membri del team. Nel momento in cui viene fatta questa richiesta viene anche associata la `issue` relativa alla
-risoluzione del task, questa operazione facilita l'individuazione di task che non sono stati svolti.
+Quando un membro ha completato il suo task, effettua una `pull request` per sottomettere il proprio lavoro alla revisione da parte degli altri membri del team. Nel momento in cui viene fatta questa richiesta viene anche associata la `issue` relativa alla risoluzione del task, questa operazione facilita l'individuazione di task che non sono stati svolti. La pull request può essere integrata su main solamente se ottiene l'approvazione di tutti gli altri componenti del gruppo.
 
 ### Scelta degli strumenti
 Il team, durante la riunione preliminare, ha definito l'insieme di tool da utilizzare come strumenti di automazione e di supporto al processo di sviluppo.
