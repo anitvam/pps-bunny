@@ -47,10 +47,8 @@ di genitori con certi alleli mostra le quattro combinazioni di alleli possibili 
 * **Eterozigote** - Un gene che contiene alleli di tipo diverso, uno dominante ed uno recessivo.
 
 ## Indice
-- [PPS-BUNNY](#pps-bunny)
   - [Introduzione](#introduzione)
     - [Genetica](#genetica)
-      - [Glossario](#glossario)
   - [Indice](#indice)
   - [Processo di sviluppo adottato](#processo-di-sviluppo-adottato)
     - [Sprint](#sprint)
@@ -72,15 +70,6 @@ di genitori con certi alleli mostra le quattro combinazioni di alleli possibili 
       - [Reproduction e Mutation](#reproduction-e-mutation)
       - [Generazioni e Ambiente](#generazioni-e-ambiente)
       - [Fattori](#fattori)
-        - [Predatori](#predatori)
-        - [Temperature ostili](#temperature-ostili)
-        - [Cibo difficilmente masticabile](#cibo-difficilmente-masticabile)
-        - [Cibo in alto](#cibo-in-alto)
-        - [Cibo scarso](#cibo-scarso)
-        - [Cibo difficilmente masticabile e cibo scarso](#cibo-difficilmente-masticabile-e-cibo-scarso)
-        - [Cibo difficilmente masticabile e cibo in alto](#cibo-difficilmente-masticabile-e-cibo-in-alto)
-        - [Cibo in alto e cibo scarso](#cibo-in-alto-e-cibo-scarso)
-        - [Cibo in alto, cibo scarso e cibo difficilmente masticabile](#cibo-in-alto-cibo-scarso-e-cibo-difficilmente-masticabile)
     - [Engine](#engine)
       - [SimulationEngine e GenerationTimer](#simulationengine-e-generationtimer)
       - [Simulation History e Simulation](#simulation-history-e-simulation)
