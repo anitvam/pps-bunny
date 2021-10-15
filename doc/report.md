@@ -939,7 +939,7 @@ La board è formata da:
 * un pannello per l'aggiunta di fattori disturbanti in basso a destra con una check box per ogni tipo di fattore che si
   può introdurre.
 
-La simulazione parte quando si preme il pulsante "START", ma prima si possono comunque selezionare le mutazioni e i
+La simulazione parte quando si preme il pulsante "START", prima si possono comunque selezionare le mutazioni e i
 fattori che si trovano nei due rispettivi pannelli.
 
 Una volta avviata la simulazione, si potrà aggiungere una mutazione in qualsiasi momento ma questa verrà introdotta nel
