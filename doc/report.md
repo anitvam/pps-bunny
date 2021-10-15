@@ -21,7 +21,7 @@ La simulazione termina quando i conigli si estinguono oppure se il loro numero r
 Il dominio dell'applicazione riguarda la genetica, perciò si è pensato di fornire una breve introduzione su tale
 argomento e sulla terminologia utilizzata nella relazione.
 
-La genetica studia i geni, l'ereditarietà e la variabilità genetica negli organismi viventi. Nello specifico con
+La genetica studia i geni e la loro ereditarietà negli organismi viventi. Nello specifico con
 il termine genoma ci si riferisce alla totalità dei cromosomi e dei geni contenuti nelle cellule. Il patrimonio genetico
 della prole dipende dagli attributi trasmessi dai genitori e definisce il loro aspetto estetico. <br />
 Ogni gene riguarda una caratteristica, che nell'ambito della riproduzione dei conigli può essere ad esempio il *colore
