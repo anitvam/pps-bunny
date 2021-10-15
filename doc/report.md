@@ -251,7 +251,7 @@ Di seguito sono riportati i requisiti visti nell'ottica di cosa può fare l'uten
 * Tale pannello sarà realizzato con un'interfaccia grafica 2D accattivante ed intuitiva.
 * L'utente potrà modificare il clima in cui si riproducono i coniglietti.
 * L'utente potrà scegliere quali mutazioni introdurre, specificando quali di esse sono dominanti e quali recessive.
-* L'utente potrà gestire i vari fattori che condizioneranno l'evoluzione.
+* L'utente potrà gestire i vari fattori che condizionano l'evoluzione.
 * L'utente potrà visualizzare il patrimonio genetico di qualsiasi coniglietto. Ogni gene è rappresentato da una lettera
   dell'alfabeto, se maiscuola corrisponde all'allele dominante mentre se minuscola all'allele recessivo. Ogni
   coniglietto perciò mantiene una coppia di lettere per ogni gene, corrispondenti agli alleli ereditati dai genitori. Ad
