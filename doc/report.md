@@ -180,7 +180,7 @@ sezione "To Do" entrambe assegnate alla persona incaricata di implementare il ta
 La scheda su Trello fornisce la possibilità di aggiungere dei commenti e dei punti elenco, permettendo ad ogni
 sviluppatore di avere tutte le informazioni relative a quel task in un solo punto e visibili da tutti gli altri membri.
 Trello consente inoltre di trascinare i task in sezioni dedicate per la fase di sviluppo in cui si trovano, per essere
-aggiornati sul lavoro che gli altri componenti del gruppo stanno effettuando.
+aggiornati sul lavoro che gli altri componenti del gruppo stanno svolgendo.
 
 Il flusso di lavoro all'interno del repository che si è deciso di adottare si chiama `Git Flow`. Esso prevede che sul
 branch
