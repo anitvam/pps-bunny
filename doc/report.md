@@ -208,7 +208,7 @@ Di seguito elenchiamo gli strumenti adottati:
 Il processo di sviluppo adottato richiede che le feature sviluppate dai vari membri del team siano a ogni pull request
 integrate con quelle già presenti nel branch develop, dunque per rendere il processo di integrazione più fluido,
 garantendo che non vengano inseriti dei bug, si è deciso di introdurre la `Continuous Integration`. Con il file `.github/workflows/ci.yml` viene
-definita una sequenza di operazioni che si sono delegate alle `GitHub Actions`, le quali sono un insieme di macchine
+definita una sequenza di operazioni che sono delegate alle `GitHub Actions`, le quali sono un insieme di macchine
 virtuali che `GitHub` mette a disposizione per poterle eseguire.
 
 All'interno della nostra pipeline il progetto viene `compilato` e `testato` su macchine di diversi sistemi operativi: `MacOS`, `Windows` e `Ubuntu`, con due versioni della JVM, ossia la `1.11` e la `1.16`.
