@@ -362,7 +362,7 @@ Di seguito vengono riportati i requisiti relativi all'implementazione del sistem
 
 ## Design architetturale
 
-A seguito dell'analisi dei requisiti e data la natura del progetto si è scelto di adottare il pattern architetturale
+A seguito dell'analisi dei requisiti e data la natura del progetto, si è scelto di adottare il pattern architetturale
 MVC (Model-View-Controller), in questo modo è possibile incapsulare le responsabilità dei singoli componenti e avere
 un'architettura modulare e flessibile.
 
@@ -420,7 +420,8 @@ Il `Bunny` ha un Companion Object in cui sono contenute delle funzioni che ne pe
 Il `Gender` è stato modellato tramite due `case object`, elementi statici senza proprietà particolari che servono solo per definire se il sesso è maschile o femminile.
 
 #### Reproduction e Mutation
-`Mutation` è un'entità che contiene la tipologia di gene a cui si riferisce la mutazione introdotta e una condizione che determina se è dominante o meno.  Attraverso il Companion Object è possibile generare mutazioni dominanti o recessive specificando solo il `Gene` a cui si applicano. </br>
+`Mutation` è un'entità che contiene la tipologia di gene a cui si riferisce la mutazione introdotta e una condizione che determina se è dominante o meno.  Attraverso il Companion Object è possibile generare mutazioni dominanti o recessive specificando solo il `Gene` a cui si applicano.
+
 `Reproduction` è un singleton che contiene una serie di metodi, funzioni e classi utili alla riproduzione. Consente ad esempio di combinare i conigli in coppie, di generare i figli di una coppia includendo o meno delle mutazioni, di generare tutti i figli di un gruppo di conigli e di ottenere i conigli di una generazione a partire dalla precedente, facendo nascere i nuovi conigli e morire quelli troppo anziani. Quest'ultima funzionalità è fondamentale, viene usata da `SimulationHistory` e permette di legare la parte di Model descritta fino ad ora con il progredire delle generazioni nel tempo.
 
 #### Generazioni e Ambiente
