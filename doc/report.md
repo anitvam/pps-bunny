@@ -114,7 +114,7 @@ altri membri del team. Nel momento in cui viene fatta questa richiesta viene anc
 risoluzione del task, questa operazione facilita l'individuazione di task che non sono stati svolti.
 
 ### Scelta degli strumenti
-Il team, durante la riunione preliminare di decisione del progetto e stesura della sua proposta, ha consolidato la scelta dei tool da utilizzare come strumenti di automazione a supporto al processo di sviluppo.
+Il team, durante la riunione preliminare, ha definito l'insieme di tool da utilizzare come strumenti di automazione e di supporto al processo di sviluppo.
 Di seguito elenchiamo gli strumenti adottati:
 * _SBT_ per la build automation;
 * _ScalaTest_ per la scrittura e l'automazione dell'esecuzione dei test;
