@@ -236,7 +236,7 @@ Di seguito sono riportati i requisiti visti nell'ottica di cosa può fare l'uten
 * L'utente potrà decidere di visualizzare vari grafici:
     * Un grafico a linee che mostrerà la cardinalità della popolazione di conigli con l'avanzare delle generazioni.
     * L' albero genealogico di uno specifico coniglio a sua scelta, per evidenziare quali caratteristiche sono state
-      ereditate dai loro antenati.
+      ereditate dagli antenati.
     * Dei grafici a torta rappresentanti la proporzione fra coniglietti con i due fenotipi disponibili per ogni gene,
       all'inizio e al termine di ciascuna generazione.
 * L'utente potrà incrementare la velocità della simulazione
