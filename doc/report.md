@@ -438,8 +438,7 @@ Ho disegnato tutti i coniglietti con le possibili combinazioni di mutazioni in c
 Successivamente mi sono dedicata all'implementazione di `Environment` insieme a Spadoni e in autonomia alla visualizzazione grafica del clima. 
 Per questa parte sono stati molto utili gli `impliciti` di scala, che mi hanno permesso di convertire in modo trasparente le immagini di background legate al clima e viceversa.
 
-Mi sono infine dedicata alla complessa definizione dei fattori disturbanti nel package `it.unibo.pps.bunny.model.world.disturbingFactor`, introducendo più volte il pattern template method per semplificare la loro stesura.
-Ho definito dei mixin per l'implementazione dei fattori, come descritto nella sezione di design di dettaglio, ciò è stato fatto per aggiungere comportamenti specifici rispetto all'implementazione base dei fattori.
+Mi sono infine dedicata alla complessa definizione dei fattori disturbanti nel package `it.unibo.pps.bunny.model.world.disturbingFactor`, introducendo più volte il pattern template method per semplificare la loro stesura e definendo dei mixin, come descritto nella sezione di design di dettaglio, per aggiungere comportamenti specifici rispetto alla loro implementazione base.
 
 Per la parte di testing ho preferito un approccio tradizionale rispetto al TDD, effettuando i test dopo una prima implementazione per verificare che le classi funzionino come atteso.
 
