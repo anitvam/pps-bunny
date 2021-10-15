@@ -852,7 +852,7 @@ Come per i due Sprint precedenti, anche per il quarto il team si è posto l'obie
 
 #### Sprint 5
 
-Al termine del quinto e ultimo Sprint è stato possibile rilasciare una prima versione definitiva del sistema. In particolare, rispetto al prototipo precedentemente prodotto, non sono state aggiunte nuove funzionalità ma si è posta particolare attenzione nel refactoring del codice, nel migliorare la Scaladoc e in generale nel risolvere tutto il debito tecnico precedentemente introdotto.
+Al termine del quinto e ultimo Sprint è stato possibile rilasciare una prima versione definitiva del sistema. In particolare, rispetto al prototipo precedentemente prodotto, non sono state aggiunte nuove funzionalità ma si è posta particolare attenzione nel refactoring del codice, nel migliorare la Scaladoc e in generale nel estinguere parte del debito tecnico precedentemente introdotto.
 
 ### Commenti finali
 
