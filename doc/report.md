@@ -5,13 +5,16 @@
 [Spadoni Marta](mailto:marta.spadoni2@studio.unibo.it),
 [Rocco Alessia](mailto:alessia.rocco@studio.unibo.it)
 
-## Descrizione
+## Introduzione
 
-`pps-bunny` è un simulatore per osservare l'evoluzione naturale di una famiglia di conigli nel corso delle generazioni.
-Per far interagire l'utente con la simulazione è prevista una interfaccia grafica game-like che permetta di inserire
-delle mutazioni sia dei conigli che dell'ambiente circostante.
+`pps-bunny` è un simulatore che permette di osservare la selezione naturale di una popolazione di conigli nel corso delle generazioni. </br>
+É possibile influenzare l'evoluzione attraverso alcuni fattori disturbanti: la variazione delle condizioni ambientali, la presenza di predatori e la gestione delle risorse alimentari. Tali fattori vengono applicati in fasi diverse delle singole generazioni.
 
-La proposta si ispira al seguente gioco: https://phet.colorado.edu/en/simulation/natural-selection.
+Ogni coniglietto ha alcuni tratti specifici ereditati dai suoi antenati e altri scaturiti da mutazioni genetiche, grazie a tali caratteristiche può avere più o meno probabilità di sopravvivenza ai fattori.
+
+L'applicativo presenta un'interfaccia grafica game-like che permette all'utente di interagire con l'ambiente introducendo le mutazioni e i fattori disturbanti o di visualizzare lo stato della simulazione tramite grafici che mostrano la variazione del numero di coniglietti ancora vivi, la distribuzione delle mutazioni genetiche e l'albero genealogico di ogni coniglietto.  
+
+La simulazione termina quando i conigli si estinguono oppure se il loro numero raggiunge il limite prestabilito.
 
 ### Genetica
 
