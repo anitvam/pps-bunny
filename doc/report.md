@@ -779,7 +779,7 @@ funzionante, ad eccezione del primo Sprint e per discutere del lavoro svolto, co
 #### Sprint 1
 
 Durante il primo sprint, il team si è concentrato sulla fase di analisi del dominio, parte fondamentale per il futuro
-sviluppo del progetto. Ogni membro del gruppo, in autonomia, ha prodotto un diagramma UML ad alto livello del model, tali diagrammi sono poi stati discussi e uniti per generare il diagramma su cui successivamente si è basata l'intera implementazione del Model. Si è inoltre iniziato a compilare il Product Backlog, a definire una prima suddivisione dei task e a preparare il repository del progetto, configurando SBT e la CI
+sviluppo del progetto. Ogni membro del gruppo, in autonomia, ha prodotto un diagramma UML ad alto livello del model, tali diagrammi sono poi stati discussi e uniti per generare lo schema su cui successivamente si è basata l'intera implementazione del Model. Si è inoltre iniziato a compilare il Product Backlog, a definire una prima suddivisione dei task e a preparare il repository del progetto, configurando SBT e la CI.
 
 
 #### Sprint 2
