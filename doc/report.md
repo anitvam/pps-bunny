@@ -813,19 +813,7 @@ riportate le attività svolte durante il terzo meeting:
 
 #### Sprint 4
 
-Durante il quarto Sprint il team si riunito prima di tutto per il meeting settimanale nel quale si è discusso sia la
-fine dello Sprint precedente che la definizione dello Sprint Planning del quarto. Di seguito sono riportate le attività
-svolte durante il quarto meeting:
-
-* Revisione difficoltà dei task
-* Chiusura di tutti i task Sprint 3
-* Merge di tutte le Pull Request relative allo Sprint 3
-* Rilascio Release v.0.2.0
-* Aggiornamento del Product Backlog per Sprint 4
-* Sprint Planning 4
-* Definizione della realizzazione dei fattori disturbanti
-* Definizione del restart e cambiamento di velocità della simulazione
-* Definizione della realizzazione della grafica dell'orologio
+Come per i due Sprint precedenti, anche per il quarto il team si è posto l'obiettivo di realizzare un prodotto concreto e, in questo caso, il prototipo è molto vicino alla versione finale del sistema. Nello specifico, si sono introdotti i fattori disturbanti, sia lato Model che View e si è aggiunta la possibilità di modificare la velocità del loop e di eseguire il restart al termine di ogni simulazione. Si è inoltre voluto inserire un nuovo componente nell'interfaccia grafica: un orologio, questo permette all'utente di comprendere in che momento della generazione si trova durante la simulazione.
 
 #### Sprint 5
 
