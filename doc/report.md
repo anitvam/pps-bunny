@@ -814,10 +814,9 @@ del codice non correttamente funzionante, infatti, se i test non passano, la pul
 non viene mergiata.
 
 Per quanto riguarda invece il package `it.unibo.pps.bunny.view` non sono stati implementati test di `ScalaTest` per
-verificarne il funzionamento, in quanto si è deciso di effettuare prevalentemente del beta-testing, cioè di eseguire
+verificarne il funzionamento in quanto si è deciso di effettuare prevalentemente del beta-testing, cioè di eseguire
 direttamente l'applicativo per verificare ad esempio il movimento dei coniglietti e la gestione dei pannelli per l'
-inserimento delle mutazioni e dei fattori, oltre che per avere una controprova visiva del corretto funzionamento delle
-classi di model e dell'engine.
+inserimento delle mutazioni e dei fattori, oltre che per avere una prova visiva del corretto funzionamento delle classi di model e dell'engine.
 
 ## Retrospettiva
 
