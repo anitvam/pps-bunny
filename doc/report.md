@@ -91,26 +91,10 @@ di genitori con certi alleli mostra le quattro combinazioni di alleli possibili 
   - [Implementazione](#implementazione)
     - [Baiardi](#baiardi)
     - [Lucchi](#lucchi)
-      - [TDD](#tdd)
-      - [Ricorsione](#ricorsione)
-      - [Prolog](#prolog)
-      - [Funzioni Higher-Order](#funzioni-higher-order)
-      - [Altro](#altro)
     - [Spadoni](#spadoni)
     - [Rocco](#rocco)
-      - [TDD](#tdd-1)
-      - [Object e Companion Object](#object-e-companion-object)
-      - [Trait e Mixins](#trait-e-mixins)
-      - [Function Higher-Order](#function-higher-order)
-      - [Altro](#altro-1)
   - [Testing](#testing)
   - [Retrospettiva](#retrospettiva)
-    - [Sprint](#sprint-1)
-      - [Sprint 1](#sprint-1)
-      - [Sprint 2](#sprint-2)
-      - [Sprint 3](#sprint-3)
-      - [Sprint 4](#sprint-4)
-      - [Sprint 5](#sprint-5)
     - [Commenti finali](#commenti-finali)
   - [Sviluppi Futuri](#sviluppi-futuri)
   - [Conclusione](#conclusione)
@@ -603,7 +587,7 @@ problemi di design ricorrenti.
 
 #### Pimp My Library
 
-_Pimp My Library_ è sicuramente uno dei pattern più utilizzati all'interno del progetto, questo consente di arricchire
+_Pimp My Library_ è sicuramente uno dei pattern più utilizzati all'interno del progetto in quanto consente di arricchire
 classi già definite con dei nuovi metodi realizzati ad-hoc. Si è utilizzato infatti il pattern per estendere gli Option,
 le Tuple e le collection di Scala ma anche le strutture dati relative ai grafici della libreria JavaFX.
 
@@ -663,7 +647,7 @@ Per questa parte sono stati molto utili gli `impliciti` di scala, che mi hanno p
 
 Mi sono infine dedicata alla complessa definizione dei fattori disturbanti nel package `it.unibo.pps.bunny.model.world.disturbingFactor`, introducendo più volte il pattern template method per semplificare la loro stesura e definendo dei mixin, come descritto nella sezione di design di dettaglio, per aggiungere comportamenti specifici rispetto alla loro implementazione base.
 
-Per la parte di testing ho preferito un approccio tradizionale rispetto al TDD, effettuando i test dopo una prima implementazione per verificare che le classi funzionino come atteso.
+Per la parte di testing ho preferito un approccio tradizionale rispetto al TDD, effettuando i test dopo una prima implementazione per verificare che le classi si comportassero come atteso.
 
 ### Lucchi
 
@@ -673,7 +657,7 @@ Nel package `it.unibo.pps.bunny.util` mi sono occupata di `Scala2P` e ho aggiunt
 Ho lavorato marginalmente con l'fxml e gli elementi del package `it.unibo.pps.bunny.view.scalaFX.FXControllers`, ad esempio per l'introduzione del Reset dopo la conclusione della simulazione, l'aggiunta della legenda dei Geni e e l'aiuto nella risoluzione di alcuni bug.
 
 #### TDD
-Per l'implementazione dei concetti fondamentali del modello, ovvero il coniglietto, il genoma e la riproduzione ho utilizzato la tecnica del **TDD** al fine di produrre di volta in volta solamente il codice necessario per raggiungere obiettivi minimi, mettendo quindi al centro il *cosa* fare prima del *come*. Successivamente il codice è stato manipolato più volte per aumentare la qualità e grazie ai test a disposizione si è potuto facilmente controllare che il comportamento restasse invariato anche a fronte dei cambiamenti nella forma.
+Per l'implementazione dei concetti fondamentali del modello, ovvero il coniglietto, il genoma e la riproduzione ho utilizzato la tecnica del **TDD** al fine di produrre di volta in volta solamente il codice necessario per raggiungere obiettivi minimi, mettendo quindi al centro il *cosa* fare prima del *come*. Successivamente il codice è stato manipolato più volte per aumentare la qualità e avendo i test a disposizione si è potuto facilmente controllare che il comportamento restasse invariato anche a fronte dei cambiamenti nella forma.
 
 #### Ricorsione
 Ho utilizzato la **ricorsione** nella costruzione dell'albero genealogico del coniglietto. </br>
@@ -808,14 +792,14 @@ Altri meccanismi avanzati sono:
 Per verificare la correttezza dell'implementazione delle principali strutture dati realizzate sono stati sviluppati dei test con il framework `ScalaTest`, in particolare con l'ausilio di `FunSpec` per rendere la loro descrizione più naturale.
 Tali test consentono sia una verifica immediata del comportamento delle entità sviluppate sia una verifica continua per le modifiche apportate successivamente, che se effettuate nel modo sbagliato potrebbero comportare dei bug nel codice precedentemente implementato.
 
-Per la metodologia di implementazione dei test si è lasciata la libera scelta ad ogni componente del gruppo: alcuni
+Per la metodologia di implementazione dei test si è lasciata libera scelta ad ogni componente del gruppo: alcuni
 hanno preferito l'approccio TDD (Test Driven Development) per porzioni di codice importanti e complesse da sviluppare,
 mentre altri hanno scelto un approccio più tradizionale, cioè implementare prima una certa funzionalità e verificare in
 seguito che il comportamento sia quello atteso.  
 Sono stati inoltre introdotti test dopo lo sviluppo di un insieme di funzionalità per verificare che la loro
-integrazione funzioni correttamente.
+integrazione funzionasse correttamente.
 
-Si è cercato di mantenere più coverage possibile, per la parte di model dell'applicazione, riuscendo a raggiungere quasi
+Si è cercato di mantenere più coverage possibile per la parte di model dell'applicazione, riuscendo a raggiungere quasi
 il 100% nei package più critici e importanti del sistema come `it.unibo.pps.bunny.model.bunny` che contiene
 l'implementazione dei coniglietti, `it.unibo.pps.bunny.model.genome` che contiene della gestione del patrimonio genetico
 e `it.unibo.pps.bunny.model.world` che contiene la modellazione dell'ambiente di simulazione e della riproduzione.
@@ -826,14 +810,13 @@ plugin `sbt-scoverage`:
 ![](images/scoverage_report_2.png)
 
 L'uso della CI su GitHub unito a tale livello di coverage garantisce che sul branch `develop` non sia mai stato inserito
-del codice non correttamente funzionante, infatti se i test non passano, la pull request effettuata dallo sviluppatore
+del codice non correttamente funzionante, infatti, se i test non passano, la pull request effettuata dallo sviluppatore
 non viene mergiata.
 
 Per quanto riguarda invece il package `it.unibo.pps.bunny.view` non sono stati implementati test di `ScalaTest` per
-verificarne il funzionamento, in quanto si è deciso di effettuare prevalentemente del beta-testing, cioè di eseguire
+verificarne il funzionamento in quanto si è deciso di effettuare prevalentemente del beta-testing, cioè di eseguire
 direttamente l'applicativo per verificare ad esempio il movimento dei coniglietti e la gestione dei pannelli per l'
-inserimento delle mutazioni e dei fattori, oltre che per avere una controprova visiva del corretto funzionamento delle
-classi di model e dell'engine.
+inserimento delle mutazioni e dei fattori, oltre che per avere una prova visiva del corretto funzionamento delle classi di model e dell'engine.
 
 ## Retrospettiva
 
