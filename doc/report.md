@@ -833,7 +833,12 @@ Per quanto riguarda gli sviluppi futuri il team ritiene che ci siano una moltitu
 ## Conclusione
 
 Il team è complessivamente soddisfatto del risultato ottenuto e ritiene che il progetto sia stato molto formativo, ha infatti dato al gruppo la possibilità di apprendere un nuovo paradigma di programmazione, quello funzionale, e una nuova metodologia di sviluppo agile: Scrum. 
-In particolare di quest'ultimo il team ha apprezzato la suddivisione in Sprint che hanno portato ad uno sviluppo incrementale del sistema attraverso vari prototipi funzionanti.
+In particolare di quest'ultimo il team ha apprezzato la suddivisione in Sprint che hanno portato a uno sviluppo incrementale del sistema attraverso vari prototipi funzionanti.
+
+Il team è inoltre soddisfatto della scelta degli strumenti di sviluppo, in particolare di Trello che ha permesso di monitorare in maniera realtime
+lo stato di avanzamento dei task definiti nei vari Sprint Planning, evitando quindi al gruppo di dover realizzare anche meeting intermedi durante gli Sprint. 
+
+Il team ritiene inoltre cruciale la scelta di adottare il _Workflow_ GitFlow in quanto ha permesso di lavorare in parallelo in modo molto semplice, limitando i conflitti e permettendo di revisionare le funzionalità implementate dagli altri componenti prima di includerle nel branch `develop`, aumentando quindi il livello generale di qualità del codice.
 
 ## Guida Utente
 L'applicazione può essere lanciata in diversi modi:
