@@ -917,7 +917,7 @@ Il team ritiene inoltre cruciale la scelta di adottare il _Workflow_ GitFlow in 
 ## Guida Utente
 L'applicazione può essere lanciata in diversi modi:
 
-* eseguendo il jar del proprio sistema operativo fornito nella sezione release di GitHub attraverso il
+* eseguendo il jar relativo al proprio sistema operativo fornito nella sezione release di GitHub attraverso il
   comando `$ java -jar <path-to-downloaded-jar>`;
 * scaricando il repository ed eseguendolo tramite `sbt` con il comando `sbt run`.
 
