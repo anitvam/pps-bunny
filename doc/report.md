@@ -23,7 +23,7 @@ argomento e sulla terminologia utilizzata nella relazione.
 
 La genetica studia i geni, l'ereditarietà e la variabilità genetica negli organismi viventi. Nello specifico con
 il termine genoma ci si riferisce alla totalità dei cromosomi e dei geni contenuti nelle cellule. Il patrimonio genetico
-della prole dipende dagli attributi trasmessi dai genitori e definisce il loro aspetto estetico <br />
+della prole dipende dagli attributi trasmessi dai genitori e definisce il loro aspetto estetico. <br />
 Ogni gene riguarda una caratteristica, che nell'ambito della riproduzione dei conigli può essere ad esempio il *colore
 della pelliccia* o la *forma delle orecchie*. Ogni gene è formato da due alleli ed ogni allele può comparire in due
 forme diverse, ad esempio per il *colore della pelliccia* possono essere la *pelliccia bianca* o la *pelliccia bruna*.
