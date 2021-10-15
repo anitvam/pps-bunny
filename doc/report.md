@@ -362,7 +362,7 @@ Di seguito vengono riportati i requisiti relativi all'implementazione del sistem
 
 ## Design architetturale
 
-A seguito dell'analisi dei requisiti e data la natura del progetto si è scelto di adottare il pattern architetturale
+A seguito dell'analisi dei requisiti e data la natura del progetto, si è scelto di adottare il pattern architetturale
 MVC (Model-View-Controller), in questo modo è possibile incapsulare le responsabilità dei singoli componenti e avere
 un'architettura modulare e flessibile.
 
