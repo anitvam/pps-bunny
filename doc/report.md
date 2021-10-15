@@ -480,7 +480,8 @@ L'avvio della simulazione viene scatenato dal `Controller` a seguito dello start
 Viene in particolar modo utilizzato dal `Controller`, per introdurre lato Model le modifiche dell'ambiente di simulazione attivate dall'utente attraverso l'interfaccia grafica e viene utilizzato indirettamente dal `SimulationEngine` all'interno del `generationLoop`.
 
 `Simulation` è l'object di utility che consente di creare le monadi da utilizzare all'interno del `generationLoop`, ad esempio si occupa di monadizzare l'azione associata alla fase dei lupi descritta in precedenza. 
-Nello specifico, `Simulation` permette di incapsulare attraverso delle monadi di tipo `IO[Unit]` le interazioni che il `SimulationEngine` ha con il `Controller` e `SimulationHistory`.
+Nello specifico, `Simulation` permette di incapsulare attraverso delle monadi di tipo `IO[Unit]` le interazioni che il `SimulationEngine` ha con il `Controller` e `SimulationHistory`. 
+Per evitare ripetizioni di codice e aumentare la leggibilità si è deciso di implementare un metodo implicito per la conversione delle istruzioni Unit in monadi di tipo IO
 
 ### View
 L'implementazione dell'interfaccia grafica è stata fatta attraverso l'utilizzo della libreria ScalaFX, un dsl in Scala di JavaFX. 
@@ -653,15 +654,17 @@ Nei trait `Genotype` e `Phenotype` ho usato la proprietà `values` e il metodo `
 
 La parte di progetto da me interamente sviluppata è quella contenuta nel package `it.unibo.pps.bunny.engine`. 
 Dopo aver consultato alcuni dei progetti consigliati dal docente, nello specifico _evo-sim_ e _Primer_, ho deciso di volermi cimentare nell'implementare il loop della simulazione utilizzando la libreria Cats Effect, 
-che consente di utilizzare il costrutto delle monadi senza la necessità di implementarle da zero.
+la quale consente di utilizzare il costrutto delle monadi senza la necessità di implementarle da zero.
 
-Inoltre, ho implementato i grafici PopulationChart e Proportions Chart (quest'ultimo implementato in `it.unibo.pps.bunny.view.scalaFX.FXControllers.ProportionsChartController.scala`), i quali sono stati descritti precedentemente nella parte di Design di Dettaglio e che mi hanno portato a definire il file `PimpScalaFXChartLibrary` che racchiude tutte le classi implementate per attuare il pattern _Pimp My Library_.
+Inoltre, ho realizzato i grafici PopulationChart e Proportions Chart (quest'ultimo implementato in `it.unibo.pps.bunny.view.scalaFX.FXControllers.ProportionsChartController.scala`), i quali sono stati descritti precedentemente nella parte di Design di Dettaglio e che mi hanno portato a definire il file `PimpScalaFXChartLibrary` che racchiude tutte le classi implementate per attuare il pattern _Pimp My Library_.
 
-Mi sono anche occupata di definire i concetti del Model di `Generation` e `Environment` insieme a Baiardi e ho partecipato, come tutti i componenti del gruppo, all'implementazione del `BaseAppController`. 
+Mi sono anche occupata di definire i concetti del Model di `Generation` e `Environment` insieme a Baiardi e in relazione all'`Environment` ho sviluppato nel file `PimpFactors` dei metodi per manipolare più facilemente la lista dei fattori in esso contenuta. 
+
+Ho partecipato, come tutti i componenti del gruppo, all'implementazione del `BaseAppController`. 
 In particolare, di quest'ultimo ho anche realizzato il refactoring necessario al termine del progetto per migliorarne la qualità del codice.
 
 Fra gli elementi generali, ho sviluppato la classe di utility `PimpScala` che contiene l'implementazione di metodi aggiuntivi per alcune strutture dati di base di Scala, alla quale anche Lucchi hanno aggiunto alcuni metodi.
-Infine, ho aiutato Rocco nello sviluppo di `Mutation` e di `WolvesView`.
+Infine, ho aiutato Rocco nello sviluppo di `Mutation` e di `WolvesView`, nello specifico in `Mutation` ho realizzato la Factory per le mutazioni recessive e dominanti.
 
 Per quanto riguarda la parte di test ho realizzato quelli riguardanti `SimulationHistory`, che trasversalmente valida anche `Generation`, e `Environment`, come metodologia di testing ho preferito adottare quella tradizionale piuttosto che il TDD.
 
