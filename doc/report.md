@@ -435,7 +435,7 @@ Inizialmente mi sono dedicata all'implementazione dell'interfaccia grafica, in p
 
 Ho disegnato tutti i coniglietti con le possibili combinazioni di mutazioni in collaborazione con Spadoni e successivamente ho definito un singleton contenente la Enumeration `BunnyImage` con tutte le `Image` relative ai coniglietti, questa Enumeration è particolarmente importante in quanto, grazie al metodo `bunnyToImage`, riesce a convertire l'istanza del model di un coniglietto nell'equivalente immagine ad esso associata. 
 
-Successivamente mi sono dedicata all'implementazione di `Environment` insieme a Spadoni, anche per quanto riguarda la visualizzazione grafica del clima. 
+Successivamente mi sono dedicata all'implementazione di `Environment` insieme a Spadoni e in autonomia alla visualizzazione grafica del clima. 
 Per questa parte sono stati molto utili gli `impliciti` di scala, che mi hanno permesso di convertire in modo trasparente le immagini di background legate al clima e viceversa.
 
 Mi sono infine dedicata alla complessa definizione dei fattori disturbanti nel package `it.unibo.pps.bunny.model.world.disturbingFactor`, introducendo più volte il pattern template method per semplificare la loro stesura.
