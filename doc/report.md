@@ -362,10 +362,23 @@ Viene in particolar modo utilizzato dal `Controller`, per introdurre lato Model 
 Nello specifico, `Simulation` permette di incapsulare attraverso delle monadi di tipo `IO[Unit]` le interazioni che il `SimulationEngine` ha con il `Controller` e `SimulationHistory`.
 
 ### View
-// parlare di scalafx e scala-fxml 
-// parlare del fatto che scalafx è un dsl che parte da scalafx e quindi prevede una implementazione orientata alla object orientation
+L'implementazione dell'interfaccia grafica è stata fatta attraverso l'utilizzo della libreria ScalaFX, un dsl in Scala di JavaFX. 
+Per implementare con maggiore agilità le parti statiche dell'applicazione, come ad esempio la suddivisione dei pannelli, si è scelto di utilizzare l'estensione della libreria che permette di scrivere codice attraverso un file xml chiamato `fxml`.
+Mentre la possibilità di scrivere tali file è compresa all'interno dell'implementazione di JavaFx,  nel dsl in Scala questa funzionalità non è prevista, quindi è stata utilizzata una [libreria esterna](https://github.com/vigoo/scalafxml) che consente di integrarla. Il principale vantaggio di utilizzare gli `fxml` è quello di poterli definire attraverso l'ambiente grafico SceneBuilder che ne fornisce una renderizzazione in tempo reale
+
+ScalaFX, essendo implementato a partire da una libreria scritta in Java, presenta un utilizzo orientato agli oggetti e poco funzionale. 
+Nonostante ciò la libreria si è dimostrata molto versatile e ha permesso una semplice personalizzazione di costrutti particolari come quelli per i grafici.
 #### Controllers
-#### AnimalViews
+Avendo utilizzato gli `fxml` all'interno del codice è stato necessario definire dei Controllers. 
+Questi costrutti sono classi fortemente associate ai file `fxml` che contengono il riferimento agli id degli oggetti definiti al loro interno e implementano eventuali event-handler. 
+Queste classi consentono dunque di attribuire un comportamento dinamico ad un componente grafico definito staticamente all'interno del file fxml.
+
+Sono stati implementati con dei file fxml:
+* la struttura base dei pannelli
+* il pannello relativo alla scelta del grafico
+* il pannello che consente la scelta delle mutazioni
+* il pannello che consente la scelta dei fattori disturbanti
+I rispettivi Controllers sono tutti implementati nel package it.unibo.pps.bunny.view.scalaFX.FXControllers
 
 ### Grafici
 
