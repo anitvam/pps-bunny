@@ -296,7 +296,7 @@ rappresentazione.
   che ciascuna sia composta da un coniglietto maschio e uno femmina. Ogni coppia genera quattro figli, due di sesso maschile e due di sesso femminile, in modo da avere
   tutte le combinazioni degli alleli rappresentate
   dal [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett). </br> Ad esempio, avendo 21 coniglietti
-  si formano 10 coppie, ognuna delle quali fa 4 figli per un totale di 40 figli, quindi al termine della riproduzione
+  si formano 10 coppie, ognuna delle quali genera 4 figli per un totale di 40, quindi al termine della riproduzione
   avremo 21 + 40 = 61 coniglietti. </br> Di seguito è riportato un esempio
   di [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett) per il gene riguardante il colore della
   pelliccia (lettera <tt>f</tt>), con i figli dati dalla coppia d'esempio <tt>ff + fF</tt>.
