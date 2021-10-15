@@ -29,8 +29,7 @@ della pelliccia* o la *forma delle orecchie*. Ogni gene è formato da due alleli
 forme diverse, ad esempio per il *colore della pelliccia* possono essere la *pelliccia bianca* o la *pelliccia bruna*.
 Una di queste due forme è dominante, mentre l'altra è recessiva. Ciò significa che se compaiono entrambe per un
 determinato gene a prevalere sarà la versione dominante, la quale quindi, sarà visibile sul figlio e farà parte del
-suo *fenotipo*
-. <br />
+suo *fenotipo*. <br />
 Ogni figlio eredita dai genitori una coppia di alleli, uno dal padre ed uno dalla madre. Tale coppia sarà una delle
 combinazioni degli alleli dei genitori rappresentata
 nel  [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett), uno schema che per una qualsiasi coppia
