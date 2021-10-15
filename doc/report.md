@@ -563,6 +563,7 @@ Mentre la possibilità di scrivere tali file è compresa all'interno dell'implem
 
 ScalaFX, essendo implementato a partire da una libreria scritta in Java, presenta un utilizzo orientato agli oggetti e poco funzionale. 
 Nonostante ciò la libreria si è dimostrata molto versatile e ha permesso una semplice personalizzazione di costrutti particolari come quelli per i grafici.
+
 #### Controllers
 Avendo utilizzato gli `fxml` all'interno del codice è stato necessario definire dei Controllers. 
 Questi costrutti sono classi fortemente associate ai file `fxml` che contengono il riferimento agli id degli oggetti definiti al loro interno e implementano eventuali event-handler. 
