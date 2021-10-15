@@ -553,19 +553,16 @@ classi di model e dell'engine.
 L'applicazione può essere lanciata in diversi modi:
 
 * eseguendo il jar del proprio sistema operativo fornito nella sezione release di GitHub attraverso il
-  comando `$ java -jar `
-  path-to-downloaded-jar``
+  comando `$ java -jar <path-to-downloaded-jar>`
 * scaricando il repository ed eseguendolo tramite `sbt` con il comando `sbt run`
-* importando il progetto ed eseguendolo nell'IDE che si preferisce
 
-Una volta che l'applicativo è stato messo in esecuzione apparirà una board di gioco, con l'aspetto riportato
+Quando l'applicativo viene messo in esecuzione apparirà una board di gioco, con l'aspetto riportato
 nello screenshost seguente, che rappresenta la GUI principale della simulazione con la quale si può interagire
 per avviarla. La board è formata da:
-
 * un pannello principale posto in alto a sinistra nel quale avviene la simulazione vera e propria. Qui si
   troveranno i coniglietti, l'orologio nell'angolo in alto a sinistra, i due bottoni per il cambiamento del clima in
   alto a destra e il bottone per l'aumento della velocità in basso a destra.
-* un pannello multiplo, sottostante al precedente, che contiene i tre principali grafici:
+* un pannello, sottostante al precedente, all'interno del quale è possibile scegliere quale dei tre grafici si vuole visualizzare:
     * il grafico della popolazione
     * il grafico delle proporzioni delle mutazioni suddivise per generazioni
     * il grafico dell'albero genealogico
@@ -588,4 +585,4 @@ La simulazione può terminare a causa di tre condizioni:
 * i coniglietti superano il numero massimo stabilito, conquistando il mondo
 * i coniglietti si sono estinti 
 * il numero di generazioni che sono state effettuate supera il limite massimo imposto dal simulatore. 
-In tutti e tre i casi viene una dialog finale con la descrizione dell'accaduto e si può far ripartire la simulazione cliccando sul tasto restart che al posto di quello dell'incremento della velocità.
+In tutti e tre i casi viene visualizzata una dialog finale con la descrizione dell'accaduto e si può decidere di far ripartire la simulazione cliccando sul tasto restart che compare al posto di quello dell'incremento della velocità.
