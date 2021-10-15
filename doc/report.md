@@ -207,7 +207,7 @@ Di seguito elenchiamo gli strumenti adottati:
 
 Il processo di sviluppo adottato richiede che le feature sviluppate dai vari membri del team siano a ogni pull request
 integrate con quelle già presenti nel branch develop, dunque per rendere il processo di integrazione più fluido,
-evitando collisioni, si è deciso di introdurre la `Continuous Integration`. Con il file `.github/workflows/ci.yml` viene
+garantendo che non vengano inseriti dei bug, si è deciso di introdurre la `Continuous Integration`. Con il file `.github/workflows/ci.yml` viene
 definita una sequenza di operazioni che si sono delegate alle `GitHub Actions`, le quali sono un insieme di macchine
 virtuali che `GitHub` mette a disposizione per poterle eseguire.
 
