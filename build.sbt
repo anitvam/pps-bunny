@@ -3,6 +3,7 @@ import sbt.Keys.libraryDependencies
 ThisBuild / version := "0.4.0"
 ThisBuild / organization := "it.unibo.pps.bunny"
 scalaVersion := "2.13.6"
+name := "pps-bunny"
 
 assembly / mainClass := Some("it.unibo.pps.bunny.controller.ScalaFXLauncher")
 
@@ -20,8 +21,6 @@ scalacOptions ++= Seq(
   "-Ymacro-annotations",
   "-language:implicitConversions"
 )
-
-name := "pps-bunny"
 
 // Add dependency on ScalaFX library
 libraryDependencies ++= Seq(
@@ -42,8 +41,6 @@ libraryDependencies ++= {
     "org.openjfx" % s"javafx-$m" % "16" classifier osName
   )
 }
-
-coverageEnabled := true
 
 // Add ScalaTest dependencies
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % "test"
