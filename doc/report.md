@@ -47,57 +47,85 @@ di genitori con certi alleli mostra le quattro combinazioni di alleli possibili 
 * **Eterozigote** - Un gene che contiene alleli di tipo diverso, uno dominante ed uno recessivo.
 
 ## Indice
-- [Introduzione](#introduzione)
-  * [Genetica](#genetica)
-- [Processo di sviluppo adottato](#processo-di-sviluppo-adottato)
-  * [Sprint](#sprint)
-  * [Obiettivi](#obiettivi)
-  * [Modalità di revisione dei task](#modalità-di-revisione-dei-task)
-  * [Scelta degli strumenti](#scelta-degli-strumenti)
-  * [Strumenti di build e Continuous Integration](#strumenti-di-build-e-continuous-integration)
-- [Requisiti](#requisiti)
-  * [Requisiti Business](#requisiti-business)
-  * [Requisiti Utente](#requisiti-utente)
-  * [Requisiti Funzionali](#requisiti-funzionali)
-  * [Requisiti non Funzionali](#requisiti-non-funzionali)
-  * [Requisiti di Implementazione](#requisiti-di-implementazione)
-- [Design architetturale](#design-architetturale)
-  * [Utilizzo del Pattern MVC](#utilizzo-del-pattern-mvc)
-- [Design di dettaglio](#design-di-dettaglio)
-  * [Model](#model)
-    + [Bunny e Genoma](#bunny-e-genoma)
-    + [Reproduction e Mutation](#reproduction-e-mutation)
-    + [Generazioni e Ambiente](#generazioni-e-ambiente)
-    + [Fattori](#fattori)
-  * [Engine](#engine)
-    + [SimulationEngine e GenerationTimer](#simulationengine-e-generationtimer)
-    + [Simulation History e Simulation](#simulation-history-e-simulation)
-  * [View](#view)
-    + [Controllers](#controllers)
-  * [Grafici](#grafici)
-    + [Pedigree Chart](#pedigree-chart)
-    + [Population Chart](#population-chart)
-    + [Proportions Chart](#proportions-chart)
-  * [Pattern di progettazione](#pattern-di-progettazione)
-    + [Pimp My Library](#pimp-my-library)
-    + [Factory](#factory)
-    + [Builder](#builder)
-    + [Strategy](#strategy)
-    + [Adapter](#adapter)
-    + [Template Method](#template-method)
-    + [Singleton](#singleton)
-  * [Organizzazione del codice](#organizzazione-del-codice)
-- [Implementazione](#implementazione)
-  * [Baiardi](#baiardi)
-  * [Lucchi](#lucchi)
-  * [Spadoni](#spadoni)
-  * [Rocco](#rocco)
-- [Testing](#testing)
-- [Retrospettiva](#retrospettiva)
-  * [Commenti finali](#commenti-finali)
-- [Sviluppi Futuri](#sviluppi-futuri)
-- [Conclusione](#conclusione)
-- [Guida Utente](#guida-utente)
+- [PPS-BUNNY](#pps-bunny)
+  - [Introduzione](#introduzione)
+    - [Genetica](#genetica)
+      - [Glossario](#glossario)
+  - [Indice](#indice)
+  - [Processo di sviluppo adottato](#processo-di-sviluppo-adottato)
+    - [Sprint](#sprint)
+    - [Obiettivi](#obiettivi)
+    - [Modalità di revisione dei task](#modalità-di-revisione-dei-task)
+    - [Scelta degli strumenti](#scelta-degli-strumenti)
+    - [Strumenti di build e Continuous Integration](#strumenti-di-build-e-continuous-integration)
+  - [Requisiti](#requisiti)
+    - [Requisiti Business](#requisiti-business)
+    - [Requisiti Utente](#requisiti-utente)
+    - [Requisiti Funzionali](#requisiti-funzionali)
+    - [Requisiti non Funzionali](#requisiti-non-funzionali)
+    - [Requisiti di Implementazione](#requisiti-di-implementazione)
+  - [Design architetturale](#design-architetturale)
+    - [Utilizzo del Pattern MVC](#utilizzo-del-pattern-mvc)
+  - [Design di dettaglio](#design-di-dettaglio)
+    - [Model](#model)
+      - [Bunny e Genoma](#bunny-e-genoma)
+      - [Reproduction e Mutation](#reproduction-e-mutation)
+      - [Generazioni e Ambiente](#generazioni-e-ambiente)
+      - [Fattori](#fattori)
+        - [Predatori](#predatori)
+        - [Temperature ostili](#temperature-ostili)
+        - [Cibo difficilmente masticabile](#cibo-difficilmente-masticabile)
+        - [Cibo in alto](#cibo-in-alto)
+        - [Cibo scarso](#cibo-scarso)
+        - [Cibo difficilmente masticabile e cibo scarso](#cibo-difficilmente-masticabile-e-cibo-scarso)
+        - [Cibo difficilmente masticabile e cibo in alto](#cibo-difficilmente-masticabile-e-cibo-in-alto)
+        - [Cibo in alto e cibo scarso](#cibo-in-alto-e-cibo-scarso)
+        - [Cibo in alto, cibo scarso e cibo difficilmente masticabile](#cibo-in-alto-cibo-scarso-e-cibo-difficilmente-masticabile)
+    - [Engine](#engine)
+      - [SimulationEngine e GenerationTimer](#simulationengine-e-generationtimer)
+      - [Simulation History e Simulation](#simulation-history-e-simulation)
+    - [View](#view)
+      - [Controllers](#controllers)
+    - [Grafici](#grafici)
+      - [Pedigree Chart](#pedigree-chart)
+      - [Population Chart](#population-chart)
+      - [Proportions Chart](#proportions-chart)
+    - [Pattern di progettazione](#pattern-di-progettazione)
+      - [Pimp My Library](#pimp-my-library)
+      - [Factory](#factory)
+      - [Builder](#builder)
+      - [Strategy](#strategy)
+      - [Adapter](#adapter)
+      - [Template Method](#template-method)
+      - [Singleton](#singleton)
+    - [Organizzazione del codice](#organizzazione-del-codice)
+  - [Implementazione](#implementazione)
+    - [Baiardi](#baiardi)
+    - [Lucchi](#lucchi)
+      - [TDD](#tdd)
+      - [Ricorsione](#ricorsione)
+      - [Prolog](#prolog)
+      - [Funzioni Higher-Order](#funzioni-higher-order)
+      - [Altro](#altro)
+    - [Spadoni](#spadoni)
+    - [Rocco](#rocco)
+      - [TDD](#tdd-1)
+      - [Object e Companion Object](#object-e-companion-object)
+      - [Trait e Mixins](#trait-e-mixins)
+      - [Function Higher-Order](#function-higher-order)
+      - [Altro](#altro-1)
+  - [Testing](#testing)
+  - [Retrospettiva](#retrospettiva)
+    - [Sprint](#sprint-1)
+      - [Sprint 1](#sprint-1)
+      - [Sprint 2](#sprint-2)
+      - [Sprint 3](#sprint-3)
+      - [Sprint 4](#sprint-4)
+      - [Sprint 5](#sprint-5)
+    - [Commenti finali](#commenti-finali)
+  - [Sviluppi Futuri](#sviluppi-futuri)
+  - [Conclusione](#conclusione)
+  - [Guida Utente](#guida-utente)
 
 ## Processo di sviluppo adottato
 
@@ -255,7 +283,7 @@ rappresentazione.
 * Ogni coniglietto sarà caratterizzato da un genere, un'età e un patrimonio genetico.
 * Il patrimonio genetico di ogni coniglietto sarà inizialmente costituito solo da geni con alleli di tipo base, per i
   quali la dominanza non è stata ancora scelta. Nel momento in cui viene introdotta la mutazione verrà anche specificato
-  se essa è dominante o recessiva. Finchè l'utente non compie questa scelta, i coniglietti procederanno nella
+  se essa è dominante o recessiva. Finché l'utente non compie questa scelta, i coniglietti procederanno nella
   riproduzione con i caratteri stabiliti inizialmente come base.
 * Ogni generazione di conigli avrà alcuni tratti specifici ereditati dai suoi antenati e altri scaturiti da mutazioni
   genetiche, grazie a tali caratteristiche essi potranno avere più o meno probabilità di sopravvivenza nello specifico
@@ -309,11 +337,11 @@ rappresentazione.
     * La gestione delle risorse alimentari, che possono essere scarse, difficilmente raggiungibili o difficilmente
       masticabili.
 * L’ambiente può avere un clima caldo o freddo, che andrà a influenzare l'efficacia dei fattori sopracitati.
-* Ogni fattore disturbante elimina una certa percentuale di coniglietti dall’ambiente, in ogni generazione i fattori
+* Ogni fattore disturbante elimina una certa percentuale di coniglietti dall'ambiente, in ogni generazione i fattori
   agiscono uno alla volta sulla popolazione di coniglietti rimasta rispetto all'azione di un eventuale fattore
   precedente.
 * Ogni generazione, come impostazione di partenza, ha una durata di 12 secondi, dei quali 3 sono dedicati alla
-  riproduzione e 9 all'eliminazione dei coniglieti dovuta alla presenza dei fattori disturbanti (3 secondi per ogni
+  riproduzione e 9 all'eliminazione dei coniglietti dovuta alla presenza dei fattori disturbanti (3 secondi per ogni
   tipologia). I fattori sono applicati nel seguente ordine: predatori, risorse alimentari, temperature ostili.
 * Sarà possibile incrementare la velocità dello svolgimento della simulazione, andando a diminuire il tempo dedicato a
   ciascuna fase di ogni generazione.
@@ -380,7 +408,7 @@ Sebbene chiaramente sia stato ampliato e alcune entità siano state aggiornate p
 Lo schema fornisce una rappresentazione grafica dei concetti legati al coniglietto e il suo genoma.
 
 Il `Bunny` è un trait costruito con l'obiettivo di massimizzare l'immutabilità, infatti è possibile modificare implicitamente solo l'età e la condizione di vita attraverso due specifiche operazioni: l'aumento dell'età che avviene procedendo nelle generazioni e l'uccisione diretta del coniglietto che è causata da un fattore. </br> 
-Il `Bunny` può essere istanziato come:
+Il `Bunny` può essere stanziato come:
 * `ChildBunny`, un coniglio appena nato
 * `FirstBunny`, una particolare tipologia di coniglio appena nato senza genitori, usato all'inizio della simulazione
 * `HistoryBunny`, una sorta di snapshot di un coniglio in un certo istante, che è quindi immutabile.  </br> 
@@ -392,7 +420,7 @@ Ogni `Gene` mantiene il riferimento alla sua tipologia e ai due alleli da cui è
 Ogni `Allele` mantiene il riferimento alla sua tipologia ed indica se è un allele che ha subito una mutazione, questo caso si verifica se l'allele non corrisponde a quello che avrebbe dovuto ereditare dal genitore.
 
 Le tipologie di geni e di alleli disponibili sono indicate nelle enumerazioni `GeneKind` e `AlleleKind`. </br> 
-Per ogni `GeneKind` sono specificate alcune proprietà, in particolare le due tipologie di alleli a cui è legato: quella base e quella mutata.  Anche in ogni `AlleleKind` sono specificate alcune proprietà, in particolare la dominanza, che è un `Option` perchè inizialmente non è definita e può essere modificata solo tramite appositi metodi.
+Per ogni `GeneKind` sono specificate alcune proprietà, in particolare le due tipologie di alleli a cui è legato: quella base e quella mutata.  Anche in ogni `AlleleKind` sono specificate alcune proprietà, in particolare la dominanza, che è un `Option` perché inizialmente non è definita e può essere modificata solo tramite appositi metodi.
 
 Il `Bunny` ha un Companion Object in cui sono contenute delle funzioni che ne permettono la generazione e dei metodi per selezionare gruppi di conigli. 
 Il `Gender` è stato modellato tramite due `case object`, elementi statici senza proprietà particolari che servono solo per definire se il sesso è maschile o femminile.
@@ -406,7 +434,7 @@ Una `Generation` rappresenta l'unità di tempo della simulazione. Essa contiene 
 L'`Environment` rappresenta lo stato dell'ambiente di simulazione all'interno di una generazione, infatti contiene il riferimento dei fattori disturbanti, delle mutazioni e del clima scelti dall'utente durante lo svolgimento della simulazione. 
 
 La modifica dello stato dell'Environment avviene principalmente attraverso `introduceMutation`, `introduceFactor` e `removeFactor`. 
-Questi metodi sono stati esposti perchè implementano le operazioni necessarie per poter introdurre e rimuovere in modo corretto fattori e mutazioni, mentre invece per quanto riguarda il clima è possibile modificare il valore direttamente dal suo campo, in quanto la sua modifica non prevede operazioni particolari.
+Questi metodi sono stati esposti perché implementano le operazioni necessarie per poter introdurre e rimuovere in modo corretto fattori e mutazioni, mentre invece per quanto riguarda il clima è possibile modificare il valore direttamente dal suo campo, in quanto la sua modifica non prevede operazioni particolari.
 Non è stato previsto un metodo per rimuovere le mutazioni, in quanto una volta introdotte durante la simulazione non è possibile modificarle o rimuoverle.
 
 Per avere un'interfaccia più pulita, si è scelto di definire due type alias: `Mutations` e `Factors`, i quali sono rispettivamente una `List<Mutation>` e una `List<Factor>`.
@@ -898,7 +926,7 @@ L'applicazione può essere lanciata in diversi modi:
 * scaricando il repository ed eseguendolo tramite `sbt` con il comando `sbt run`
 
 Quando l'applicativo viene messo in esecuzione apparirà una board di gioco, con l'aspetto riportato
-nello screenshost seguente, che rappresenta la GUI principale della simulazione con la quale si può interagire
+nello screenshot seguente, che rappresenta la GUI principale della simulazione con la quale si può interagire
 per avviarla. La board è formata da:
 * un pannello principale posto in alto a sinistra nel quale avviene la simulazione vera e propria. Qui si
   troveranno i coniglietti, l'orologio nell'angolo in alto a sinistra, i due bottoni per il cambiamento del clima in
@@ -923,8 +951,8 @@ essere variati dall'utente senza vincoli. Durante il corso della simulazione i v
 popolati con le informazioni in tempo reale, seguendo la velocità di esecuzione scelta.
 
 La simulazione può terminare a causa di tre condizioni:
-* i coniglietti superano il numero massimo stabilito, conquistando il mondo
-* i coniglietti si sono estinti
+* i coniglietti superano il numero massimo stabilito, conquistando il mondo;
+* i coniglietti si sono estinti;
 * il numero di generazioni che sono state effettuate supera il limite massimo imposto dal simulatore. 
   
 In tutti e tre i casi viene visualizzata una dialog finale con la descrizione dell'accaduto e si può decidere di far ripartire la simulazione cliccando sul tasto restart che compare al posto di quello dell'incremento della velocità.
