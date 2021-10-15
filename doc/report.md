@@ -104,7 +104,7 @@ di genitori con certi alleli mostra le quattro combinazioni di alleli possibili 
 Il processo di sviluppo adottato mette in pratica le metodologie previste dalla programmazione Agile, in particolare
 alcuni aspetti del framework **Scrum**:
 
-* prevedendo delle riunioni periodiche per organizzare il lavoro, lo Sprint Planning e la Sprint Review,
+* prevedendo delle riunioni periodiche per organizzare il lavoro: lo Sprint Planning e la Sprint Review,
 * producendo artefatti come il Product Backlog e il resoconto di ogni riunione,
 * tenendo traccia dello svolgimento di ogni task da parte dei singoli componenti del team.
 
