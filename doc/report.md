@@ -207,14 +207,14 @@ Di seguito elenchiamo gli strumenti adottati:
 
 Il processo di sviluppo adottato richiede che le feature sviluppate dai vari membri del team siano a ogni pull request
 integrate con quelle già presenti nel branch develop, dunque per rendere il processo di integrazione più fluido,
-evitando collisioni, si è deciso di introdurre la `Continuous Integration`. Con il file `.github/workflows/ci.yml` viene
-definita una sequenza di operazioni che si sono delegate alle `GitHub Actions`, le quali sono un insieme di macchine
+garantendo che non vengano inseriti dei bug, si è deciso di introdurre la `Continuous Integration`. Con il file `.github/workflows/ci.yml` viene
+definita una sequenza di operazioni che sono delegate alle `GitHub Actions`, le quali sono un insieme di macchine
 virtuali che `GitHub` mette a disposizione per poterle eseguire.
 
 All'interno della nostra pipeline il progetto viene `compilato` e `testato` su macchine di diversi sistemi operativi: `MacOS`, `Windows` e `Ubuntu`, con due versioni della JVM, ossia la `1.11` e la `1.16`.
 
 La `Continuous Integration` definita nel nostro progetto prevede che i test vengano eseguiti tutte le volte che si
-effettua una `push` e una `pull request` sui branch `develop` e `master`. Grazie a questa configurazione, al momento di
+effettua una `push` e una `pull request` sui branch `develop` e `main`. Grazie a questa configurazione, al momento di
 ogni `pull request` è possibile visualizzare se i test passano o meno, mantenendo il codice in develop sempre
 funzionante.
 
@@ -251,7 +251,7 @@ Di seguito sono riportati i requisiti visti nell'ottica di cosa può fare l'uten
 * Tale pannello sarà realizzato con un'interfaccia grafica 2D accattivante ed intuitiva;
 * L'utente potrà modificare il clima in cui si riproducono i coniglietti;
 * L'utente potrà scegliere quali mutazioni introdurre, specificando quali di esse sono dominanti e quali recessive;
-* L'utente potrà gestire i vari fattori che condizioneranno l'evoluzione;
+* L'utente potrà gestire i vari fattori che condizionano l'evoluzione;
 * L'utente potrà visualizzare il patrimonio genetico di qualsiasi coniglietto. Ogni gene è rappresentato da una lettera
   dell'alfabeto, se maiscuola corrisponde all'allele dominante mentre se minuscola all'allele recessivo. Ogni
   coniglietto perciò mantiene una coppia di lettere per ogni gene, corrispondenti agli alleli ereditati dai genitori. Ad
@@ -293,10 +293,10 @@ rappresentazione.
 | Salto | Normale | Alto | J |
 
 * Per quanto riguarda la riproduzione, dalla totalità dei coniglietti si formano casualmente delle coppie con il vincolo
-  che ciascuna sia composta da un coniglietto maschio e uno femmina. Ogni coppia genera quattro figli in modo da avere
+  che ciascuna sia composta da un coniglietto maschio e uno femmina. Ogni coppia genera quattro figli, due di sesso maschile e due di sesso femminile, in modo da avere
   tutte le combinazioni degli alleli rappresentate
   dal [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett). </br> Ad esempio, avendo 21 coniglietti
-  si formano 10 coppie, ognuna delle quali fa 4 figli per un totale di 40 figli, quindi al termine della riproduzione
+  si formano 10 coppie, ognuna delle quali genera 4 figli per un totale di 40, quindi al termine della riproduzione
   avremo 21 + 40 = 61 coniglietti. </br> Di seguito è riportato un esempio
   di [Quadrato di Punnett](https://it.wikipedia.org/wiki/Quadrato_di_Punnett) per il gene riguardante il colore della
   pelliccia (lettera <tt>f</tt>), con i figli dati dalla coppia d'esempio <tt>ff + fF</tt>;
@@ -346,7 +346,7 @@ Di seguito sono descritti i requisiti non funzionali dell'applicativo:
 
 * _Usabilità_: L'interfaccia grafica dovrà essere semplice ed intuitiva così da permettere ad un utente non esperto del
   dominio di comprendere quali sono le principali operazioni che può eseguire;
-* _User Experience_: L'interfaccia grafica sarà implementata in modo da rendere l'esperienza dell'utente con la
+* _User Experience_: L'interfaccia grafica sarà implementata in modo da rendere piacevole l'esperienza dell'utente con la
   simulazione ludica;
 * _Cross Platform_: Sarà possibile eseguire il sistema sui 3 principali sistemi operativi: Linux, Windows, MacOs.
 
@@ -392,7 +392,7 @@ Di seguito è riportata la prima rappresentazione del Model, prodotta alla concl
 
 ![](images/first_model.png)
 
-Sebbene chiaramente sia stato ampliato e alcune entità siano state aggiornate per adattarsi agli obiettivi posti avanzando negli Sprint, la struttura fondamentale non ha subito modifiche critiche, perciò si può concludere che l'analisi del dominio che era stata svolta inizialmente  è riuscita a rappresentare in modo corretto i punti chiave del sistema.
+Sebbene lo schema sia stato ampliato e alcune entità siano state aggiornate per adattarsi agli obiettivi posti avanzando negli Sprint, la struttura fondamentale non ha subito modifiche critiche, perciò si può concludere che l'analisi del dominio svolta inizialmente è riuscita a rappresentare in modo corretto i punti chiave del sistema.
 
 
 #### Bunny e Genoma
