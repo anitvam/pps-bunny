@@ -433,7 +433,7 @@ Questi metodi sono stati esposti perché implementano le operazioni necessarie p
 Non è stato previsto un metodo per rimuovere le mutazioni, in quanto una volta introdotte durante la simulazione non è possibile modificarle o rimuoverle.
 
 Per avere un'interfaccia più pulita, si è scelto di definire due type alias: `Mutations` e `Factors`, i quali sono rispettivamente una `List<Mutation>` e una `List<Factor>`.
-Per memorizzare queste informazioni, al fine di rispettare il paradigma funzionale,  si è scelto di utilizzare strutture dati immutabili in una variabile mutabile lasciando il vantaggio di poterle aggiornare senza dover creare nuovamente l'istanza di Environment.
+Per memorizzare queste informazioni, al fine di rispettare il paradigma funzionale, si è scelto di utilizzare strutture dati immutabili in una variabile mutabile lasciando il vantaggio di poterle aggiornare senza dover creare nuovamente l'istanza di Environment.
 
 La modellazione del clima invece è stata fatta utilizzando dei `case object` che definiscono i tue tipi di clima che è possibile scegliere nella simulazione: Estate e Inverno.
 
