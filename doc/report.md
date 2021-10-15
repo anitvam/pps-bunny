@@ -120,12 +120,13 @@ altri membri del team. Nel momento in cui viene fatta questa richiesta viene anc
 risoluzione del task, questa operazione facilita l'individuazione di task che non sono stati svolti.
 
 ### Scelta degli strumenti
-
-- sbt
-- ScalaTest
-- Trello
-- ScalaFMT
-- ScalaFX
+Il team, durante la riunione preliminare di decisione del progetto e stesura della sua proposta, ha consolidato la scelta dei tool da utilizzare come strumenti di automazione a supporto al processo di sviluppo.
+Di seguito elenchiamo gli strumenti adottati:
+* _SBT_ per la build automation;
+* _ScalaTest_ per la scrittura e l'automazione dell'esecuzione dei test;
+* _Trello_ per il supporto alla divisione e sviluppo dei task;
+* _ScalaFMT_ per la formattazione del codice scala;
+* _ScalaFX_ per la realizzazione dell'interfaccia grafica.
 
 ### Strumenti di test, build e Continuous Integration
 
