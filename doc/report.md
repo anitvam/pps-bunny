@@ -112,7 +112,7 @@ Il **Product Backlog** contiene le funzionalità fondamentali da sviluppare per 
 aggiornato durante ogni Sprint Planning in base alle esigenze che emergono man mano che il progetto avanza. Per ogni
 feature sono individuati i task che ne permettono il completamento e a ognuno di essi è assegnato un punteggio che indica
 la difficoltà prevista per portarlo a termine.  <br />
-Durante la **Sprint Review** si aggiorna il punteggio per i task dello Sprint appena concluso, per valutare la
+Durante la **Sprint Review** si aggiorna il punteggio dei i task dello Sprint appena concluso per valutare la
 differenza fra la complessità prevista e quella reale. Inoltre durante la revisione si chiudono le eventuali Pull
 Request lasciate in sospeso e si rilascia un eseguibile dello stato attuale dell'applicazione.
 
