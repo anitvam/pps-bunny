@@ -921,10 +921,14 @@ L'applicazione può essere lanciata in diversi modi:
   comando `$ java -jar <path-to-downloaded-jar>`;
 * scaricando il repository ed eseguendolo tramite `sbt` con il comando `sbt run`.
 
-Quando l'applicativo viene messo in esecuzione apparirà una board di gioco, con l'aspetto riportato
-nello screenshot seguente, che rappresenta la GUI principale della simulazione con la quale si può interagire
-per avviarla. La board è formata da:
-* un pannello principale posto in alto a sinistra nel quale avviene la simulazione vera e propria. Qui si
+Quando l'applicativo viene messo in esecuzione apparirà una board di gioco con l'aspetto riportato
+nello screenshot seguente che rappresenta la GUI principale della simulazione con la quale si può interagire
+per avviarla. 
+
+![Screen-Gui](./images/GUI_screenshot.png)
+
+La board è formata da:
+* un pannello principale posto in alto a sinistra nel quale avviene la simulazione vera e propria: qui si
   troveranno i coniglietti, l'orologio nell'angolo in alto a sinistra, i due bottoni per il cambiamento del clima in
   alto a destra e il bottone per l'aumento della velocità in basso a destra;
 * un pannello, sottostante al precedente, all'interno del quale è possibile scegliere quale dei tre grafici si vuole visualizzare:
@@ -934,8 +938,6 @@ per avviarla. La board è formata da:
 * un pannello per l'aggiunta delle mutazioni in alto a destra con due bottoni per ciascuna mutazione, uno permette di introdurre la mutazione come dominante e l'altro come recessiva;
 * un pannello per l'aggiunta di fattori disturbanti in basso a destra con una check box per ogni tipo di fattore che si
   può introdurre.
-
-![Screen-Gui](./images/GUI_screenshot.png)
 
 La simulazione parte quando si preme il pulsante "START", ma prima si possono comunque selezionare le mutazioni e i
 fattori che si trovano nei due rispettivi pannelli.
