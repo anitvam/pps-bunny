@@ -468,8 +468,7 @@ realizzato sono il pannello dei fattori disturbanti e l'orologio, insieme alla l
 simulazione.
 
 Per quanto riguarda l'identificazione di una parte di model interamente a me riconducibile è la parte legata alle
-mutazioni, che hanno consentito poi di mettere mano sia alla creazione dei loro relativi test che alle parti di
-controller legate al loro funzionamento all'interno della simulazione.
+mutazioni, che ha permesso di mettere mano anche alla creazione dei relativi test.
 
 Le parti implementate comprendono:
 
@@ -484,12 +483,7 @@ Le parti implementate comprendono:
 #### TDD
 
 Per l'implementazione del model delle mutazioni mi sono rifatta alla tecnica **TDD** cercando di seguire il ciclo
-**Red-Green-Refactor**, in modo tale da produrre prima un test fallimentare (**Red**) che consentisse di determinare
-_cosa_ realizzare, di far passare poi i test (**Green**) e infine mettendo mano allo stile del codice in un secondo
-momento (**Refactor**). Questa tecnica ha permesso di testare il funzionamento corretto delle mutazioni senza
-considerare il modo, quindi il _come_, in cui di fatto le mutazioni siano state implementate. Il codice per questo è
-estendibile e ha consentito nel corso dello sviluppo di mantenere traccia della correttezza del funzionamento globale di
-tutte le feature e nella preventiva intercettazione di eventuali bug.
+**Red-Green-Refactor**.
 
 #### Object e Companion Object
 
@@ -519,23 +513,24 @@ direzione (`DirectionView`).
 
 #### Function Higher-Order
 
-L'utilizzo del pattern Strategy attraverso la funzione **Higher-Order** lo ritroviamo nel metodo `startWolfAnimation`
-di `FactorsPanelController` in seguito all'aiuto fornito da Baiardi e Spadoni. In questo modo la strategia con cui si
-avviano i lupi quando è il loro momento e quella di determinare se i lupi sono visibili può essere cambiata senza andare
-ad intaccare il funzionamento del resto dell'applicazione.
+L'utilizzo del pattern Strategy attraverso l'utilizzo di una funzione **Higher-Order** si può ritrovare nel
+metodo `startWolfAnimation` di `FactorsPanelController`, metodo raggiunto nella sua forma finale grazie all'aiuto
+fornito da Baiardi e Spadoni. La sua rifattorizzazione a portato a definire la strategia dell'azione che si vuole
+eseguire quando ci si trova nella fase dei lupi e il fatto di averla strutturata come una funzione consente di
+apportargli modifiche senza andare ad intaccare il funzionamento del resto dell'applicazione.
 
-A posteriori posso suggerire di dare più importanza a questa funzione `playWolf` non definendola più direttamente di
-default nel metodo `startWolfAnimation` ma facendola per esempio diventare una variabile parte dell'oggetto WolfView o
-scegliendola tra una serie di strategie che la classe astratta `AnimalView` potrebbe mettere a disposizione.
+A posteriori posso suggerire di dare più importanza a questa funzione `playWolf` non definendola solo direttamente di
+default nel metodo `startWolfAnimation` ma considerandola per esempio parte dell'oggetto WolfView o scegliendola tra una
+serie di strategie che la classe astratta `AnimalView` potrebbe mettere a disposizione.
 
 #### Altro
 
-Altri meccanismi avanzati che ho sperimentato sono:
+Altri meccanismi avanzati sono:
 
 * l'utilizzo degli **alias** attraverso l'utilizzo di `Type` in `it.unibo.pps.bunny.model.world.Environment` per la
   determinazione di un nuovo tipo per le Mutazioni (`type Mutations = List[Mutation]`).
 * l'utilizzo degli impliciti per la conversione automatica degli elementi in `getBackgroundCorrespondingToClimate`
-  dell'oggetto `EnvironmentImages`
+  dell'oggetto `EnvironmentImages`, creato con l'aiuto di Spadoni e Baiardi.
 * l'applicazione minimale del pattern Factory (oggetto `ClimateImageFactory`) nella costruzione delle immagini a seconda
   del clima e del fattore disturbante del cibo introdotto in `view.scalaFX.utilities.EnvironmentImages`
 
