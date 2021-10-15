@@ -689,17 +689,11 @@ sviluppo del progetto. Ogni membro del gruppo, in autonomia, ha prodotto un diag
 
 
 #### Sprint 2
+L'obiettivo del secondo Sprint era quello di implementare un primo prototipo funzionante del sistema. Quest'ultimo, basandosi sull'architettura MVC, doveva presentare: la parte di model relativa ai Bunny e al genoma, la componente dell'engine per definire il loop di avanzamento delle generazioni e, lato View, la struttura principale dell'interfaccia grafica e la possibilità di visualizzare i coniglietti nel pannello principale.
 
-Durante il secondo Sprint il team si è riunito per la riunione iniziale nella quale si è discussa sia la fine del primo
-Sprint che lo Sprint Planning del secondo. Di seguito sono riportate le attività svolte durante il secondo meeting:
+Il prototipo sottomesso al termine dello sprint presenta dunque una versione dell'interfaccia grafica minimale all'interno della quale è possibile visionare la riproduzione del coniglietto senza l'introduzione di mutazioni.
 
-* Chiusura di tutti i task Sprint 1
-* Definizione regole del model di base dei conigli e genetica
-* Definizione prima versione model (UML)
-* Creazione della struttura MVC con loop dell'avanzamento delle generazioni
-* Revisione difficoltà dei task
-* Product Backlog per Sprint 2
-* Sprint Planning 2
+L'obiettivo è stato portato a termine senza particolari difficoltà, grazie anche alla buona fase di analisi condotta precedentemente.
 
 #### Sprint 3
 
