@@ -856,10 +856,13 @@ Al termine del quinto e ultimo Sprint è stato possibile rilasciare una prima ve
 
 ### Commenti finali
 
-Per concludere, si riporta di seguito un commento che riguarda il sistema finale creato e l'esperienza
-maturata da tutto il team durante il processo di sviluppo.
-Il lavoro è stato svolto rispettando in buona parte gli standard principali della metodologia agile e di Scrum, in particolar modo attraverso il rilascio di un prototipo funzionante alla fine di ogni Sprint fissato. Le scadenze sono state rispettate nella maggior parte dei casi, con l'unica eccezione alla conclusione del quarto Sprtint, avvenuta con un giorno di ritardo. Nel complesso non sono state riscontrate problematiche particolari relative alla pianificazione e la metodologia di sviluppo.
-A posteriori, il team si ritiene sufficientemente soddisfatto dal lavoro svolto in quanto è stata sviluppata la totalità delle funzionalità obbligatorie e parte di quelle facoltative nei limiti di tempo predefiniti.
+Il team è complessivamente soddisfatto del risultato ottenuto e ritiene che lo sviluppo del progetto sia stato molto formativo, ha infatti dato al gruppo la possibilità di apprendere un nuovo paradigma di programmazione, quello funzionale, e una nuova metodologia di sviluppo agile: Scrum. 
+In particolare il team ha apprezzato la suddivisione in Sprint che hanno permesso uno sviluppo incrementale del sistema attraverso vari prototipi funzionanti.
+
+Il team è inoltre soddisfatto della scelta degli strumenti di sviluppo, in particolare di Trello che ha permesso di monitorare in tempo reale
+lo stato di avanzamento dei task definiti nei vari Sprint Planning, evitando quindi al gruppo di dover realizzare anche meeting intermedi durante gli Sprint. 
+
+Il team ritiene inoltre cruciale la scelta di adottare il _Workflow_ GitFlow in quanto ha permesso di lavorare in parallelo in modo molto semplice, limitando i conflitti e permettendo di revisionare le funzionalità implementate dagli altri componenti prima di includerle nel branch `develop`, aumentando quindi il livello generale di qualità del codice.
 
 ## Sviluppi Futuri
 Per quanto riguarda gli sviluppi futuri il team ritiene che ci siano una moltitudine di aspetti che si possono appronfondire e varie funzionalità che sarebbe interessante aggiungere o ampliare. Di seguito sono riportate alcune proposte:
@@ -876,16 +879,6 @@ Per quanto riguarda gli sviluppi futuri il team ritiene che ci siano una moltitu
 * Possibilità di utilizzare animali diversi rispetti ai coniglietti;
 * Trasformazione dell'intera logica del Model in Prolog, infatti al termine dello sviluppo ci si è resti conto che tutti i controlli sul genoma implementati tramite eccezioni e la generazione di figli si prestano in particolar modo ad essere espressi tramite clausole;
 * Introduzione di casi particolari presenti in natura, ad esempio nel caso del gene eterozigote è possibile che l'animale non presenti nè la caratteristica legata all'allele dominante, nè quella legata all'allele recessivo, bensì un misto fra le due. Questo è un caso estremamente raro, che la simulazione potrebbe mostrare in una bassa percentuale di coniglietti.
-
-## Conclusione
-
-Il team è complessivamente soddisfatto del risultato ottenuto e ritiene che lo sviluppo del progetto sia stato molto formativo, ha infatti dato al gruppo la possibilità di apprendere un nuovo paradigma di programmazione, quello funzionale, e una nuova metodologia di sviluppo agile: Scrum. 
-In particolare il team ha apprezzato la suddivisione in Sprint che hanno permesso uno sviluppo incrementale del sistema attraverso vari prototipi funzionanti.
-
-Il team è inoltre soddisfatto della scelta degli strumenti di sviluppo, in particolare di Trello che ha permesso di monitorare in tempo reale
-lo stato di avanzamento dei task definiti nei vari Sprint Planning, evitando quindi al gruppo di dover realizzare anche meeting intermedi durante gli Sprint. 
-
-Il team ritiene inoltre cruciale la scelta di adottare il _Workflow_ GitFlow in quanto ha permesso di lavorare in parallelo in modo molto semplice, limitando i conflitti e permettendo di revisionare le funzionalità implementate dagli altri componenti prima di includerle nel branch `develop`, aumentando quindi il livello generale di qualità del codice.
 
 ## Guida Utente
 L'applicazione può essere lanciata in diversi modi:
