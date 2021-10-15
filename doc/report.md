@@ -248,7 +248,6 @@ rappresentazione.
   conigli muoiano tutti o superino il loro numero massimo.
 * Il numero massimo di coniglietti è 1000, il raggiungimento di tale numero indicherà la fine della simulazione.
 * Ogni coniglietto vive per quattro generazioni.
-
 * Ogni coniglietto sarà caratterizzato da un genere, un'età e un patrimonio genetico.
 * Il patrimonio genetico di ogni coniglietto sarà inizialmente costituito solo da geni con alleli di tipo base, per i
   quali la dominanza non è stata ancora scelta. Nel momento in cui viene introdotta la mutazione verrà anche specificato
