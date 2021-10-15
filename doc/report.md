@@ -792,7 +792,7 @@ Altri meccanismi avanzati sono:
 Per verificare la correttezza dell'implementazione delle principali strutture dati realizzate sono stati sviluppati dei test con il framework `ScalaTest`, in particolare con l'ausilio di `FunSpec` per rendere la loro descrizione più naturale.
 Tali test consentono sia una verifica immediata del comportamento delle entità sviluppate sia una verifica continua per le modifiche apportate successivamente, che se effettuate nel modo sbagliato potrebbero comportare dei bug nel codice precedentemente implementato.
 
-Per la metodologia di implementazione dei test si è lasciata la libera scelta ad ogni componente del gruppo: alcuni
+Per la metodologia di implementazione dei test si è lasciata libera scelta ad ogni componente del gruppo: alcuni
 hanno preferito l'approccio TDD (Test Driven Development) per porzioni di codice importanti e complesse da sviluppare,
 mentre altri hanno scelto un approccio più tradizionale, cioè implementare prima una certa funzionalità e verificare in
 seguito che il comportamento sia quello atteso.  
